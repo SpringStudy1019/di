@@ -1,7 +1,6 @@
 package com.ssafy.trend_gaza.user.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,8 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -110,6 +109,32 @@ public class UserController {
 		try {
 			User user = userService.view(userId);
 			return new ResponseEntity<User>(user, HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+		
+	}
+	
+	@PutMapping(value = "/modify")
+	public ResponseEntity<?> modify(@RequestParam String userName, @RequestParam String mobile,
+			@RequestParam String emailId, @RequestParam String emailDomain, @RequestParam String gender,
+			HttpSession session) {
+		User user = (User) session.getAttribute("userinfo");
+	    if (user == null) {
+	        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // User is not logged in
+	    }
+	    String userId = user.getUserId();
+		Map<String, String> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("userName", userName);
+		map.put("mobile", mobile);
+		map.put("emailId", emailId);
+		map.put("emailDomain", emailDomain);
+		map.put("gender", gender);
+		
+		try {
+			userService.modify(map);
+			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

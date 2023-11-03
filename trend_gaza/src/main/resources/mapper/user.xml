@@ -49,7 +49,7 @@
 	
 	<update id="modify" parameterType="Map">
 		update user
-		set 
+		set user_name=#{userName}, mobile=#{mobile}, email_id=#{emailId}, email_domain=#{emailDomain}, gender=#{gender}
 		where user_id=#{userId}
 	</update>
 	
