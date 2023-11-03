@@ -37,12 +37,12 @@
 		where user_name=#{userName} and mobile=#{mobile}
 	</select>
 	
-	<select id="findPwd" parameterType="Map" resultType="int">
-		select user_id from user
+	<select id="findPwd" parameterType="Map" resultType="String">
+		select password from user
 		where user_id=#{userId} and user_name=#{userName} and mobile=#{mobile}
 	</select>
 	
-	<select id="view" parameterType="String" resultType="user">
+	<select id="view" parameterType="String" resultMap="user">
 		select * from user
 		where user_id=#{userId}
 	</select>

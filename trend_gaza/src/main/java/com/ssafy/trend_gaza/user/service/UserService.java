@@ -21,7 +21,7 @@ public interface UserService {
 	String findId(Map<String, String> map) throws Exception;
 	
 	/* 비밀번호 찾기: 아이디, 이름, 핸드폰 번호 입력하면, 임시 비밀번호 발급  */
-	int findPwd(Map<String, String> map) throws Exception;
+	String findPwd(Map<String, String> map) throws Exception;
 	
 	/* 내 정보 조회: 세션에 저장된 사용자 아이디를 받아서 entity 리턴 */
 	User view(String userId) throws Exception;

@@ -87,6 +87,35 @@ public class UserController {
 		
 	}
 	
+	@GetMapping(value = "/findPwd", produces = "text/plain")
+	public ResponseEntity<?> findPwd(@RequestParam String userName, 
+			@RequestParam String userId, @RequestParam String mobile) {
+		Map<String, String> map = new HashMap<>();
+		map.put("userName", userName);
+		map.put("userId", userId);
+		map.put("mobile", mobile);
+		
+		try {
+			String password = userService.findPwd(map);
+			return new ResponseEntity<String>(password, HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+		
+	}
+	
+	@GetMapping(value = "/view")
+	public ResponseEntity<?> view(@RequestParam String userId) {
+		
+		try {
+			User user = userService.view(userId);
+			return new ResponseEntity<User>(user, HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+		
+	}
+	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();

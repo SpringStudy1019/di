@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int findPwd(Map<String, String> map) throws Exception {
+	public String findPwd(Map<String, String> map) throws Exception {
 		return userMapper.findPwd(map);
 	}
 
