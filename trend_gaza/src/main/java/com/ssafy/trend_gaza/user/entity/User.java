@@ -1,6 +1,6 @@
 package com.ssafy.trend_gaza.user.entity;
 
-public class UserInfo {
+public class User {
 
 	private String userId;
 	private String userName;
@@ -12,6 +12,8 @@ public class UserInfo {
 	private String authority;
 	private String joinDate;
 	private String socialId;
+	
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -72,6 +74,7 @@ public class UserInfo {
 	public void setSocialId(String socialId) {
 		this.socialId = socialId;
 	}
+	
 	
 	@Override
 	public String toString() {
