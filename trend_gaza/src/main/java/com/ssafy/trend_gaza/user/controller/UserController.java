@@ -141,10 +141,26 @@ public class UserController {
 		
 	}
 	
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/";
+	@PutMapping(value = "/changePwd")
+	public ResponseEntity<?> changePwd(@RequestParam String newPassword, @RequestParam String password,
+			HttpSession session) {
+		User user = (User) session.getAttribute("userinfo");
+	    if (user == null) {
+	        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // User is not logged in
+	    }
+	    String userId = user.getUserId();
+		Map<String, String> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("newPassword", newPassword);
+		map.put("password", password);
+		
+		try {
+			userService.changePwd(map);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+		
 	}
 	
 	@DeleteMapping
@@ -156,6 +172,12 @@ public class UserController {
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
 	}
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
