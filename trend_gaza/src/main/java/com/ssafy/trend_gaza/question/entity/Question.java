@@ -1,8 +1,8 @@
-package com.ssafy.trend_gaza.review.entity;
+package com.ssafy.trend_gaza.question.entity;
 
 import java.time.LocalDateTime;
 
-public class Review {
+public class Question {
 	
 	private int questionId;
 	private String content;
