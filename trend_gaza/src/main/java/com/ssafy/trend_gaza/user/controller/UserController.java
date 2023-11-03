@@ -1,5 +1,7 @@
 package com.ssafy.trend_gaza.user.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -49,12 +51,14 @@ public class UserController {
 //	} 
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
 		logger.debug("login : {}", loginRequest);
 		try {
 			User user = userService.login(loginRequest);
-			if(user != null)
+			if(user != null) {
+				session.setAttribute("userinfo", user);
 				return new ResponseEntity<User>(user, HttpStatus.OK);
+			}
 			else
 				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
@@ -67,6 +71,11 @@ public class UserController {
 //		
 //	}
 	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
 	
 
 	private ResponseEntity<?> exceptionHandling(Exception e) {
