@@ -1,10 +1,12 @@
 package com.ssafy.trend_gaza.user.service;
 
-import java.util.Map;
-
 import org.springframework.stereotype.Service;
 
+import com.ssafy.trend_gaza.user.dto.ChangePwdRequest;
+import com.ssafy.trend_gaza.user.dto.FindIdRequest;
+import com.ssafy.trend_gaza.user.dto.FindPwdRequest;
 import com.ssafy.trend_gaza.user.dto.LoginRequest;
+import com.ssafy.trend_gaza.user.dto.ModifyRequest;
 import com.ssafy.trend_gaza.user.dto.RegisterRequest;
 import com.ssafy.trend_gaza.user.entity.User;
 import com.ssafy.trend_gaza.user.repository.UserMapper;
@@ -36,13 +38,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String findId(Map<String, String> map) throws Exception {
-		return userMapper.findId(map);
+	public String findId(FindIdRequest findIdRequest) throws Exception {
+		return userMapper.findId(findIdRequest);
 	}
 
 	@Override
-	public String findPwd(Map<String, String> map) throws Exception {
-		return userMapper.findPwd(map);
+	public String findPwd(FindPwdRequest findPwdRequest) throws Exception {
+		return userMapper.findPwd(findPwdRequest);
 	}
 
 	@Override
@@ -51,13 +53,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void modify(Map<String, String> map) throws Exception {
-		userMapper.modify(map);
+	public void modify(ModifyRequest modifyRequest) throws Exception {
+		userMapper.modify(modifyRequest);
 	}
 
 	@Override
-	public void changePwd(Map<String, String> map) throws Exception {
-		userMapper.changePwd(map);
+	public void changePwd(ChangePwdRequest changePwdRequest) throws Exception {
+		userMapper.changePwd(changePwdRequest);
 	}
 
 	@Override

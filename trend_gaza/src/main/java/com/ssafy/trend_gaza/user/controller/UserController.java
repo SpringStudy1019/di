@@ -1,7 +1,6 @@
 package com.ssafy.trend_gaza.user.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,7 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.trend_gaza.user.dto.ChangePwdRequest;
+import com.ssafy.trend_gaza.user.dto.FindIdRequest;
+import com.ssafy.trend_gaza.user.dto.FindPwdRequest;
 import com.ssafy.trend_gaza.user.dto.LoginRequest;
+import com.ssafy.trend_gaza.user.dto.ModifyRequest;
 import com.ssafy.trend_gaza.user.dto.RegisterRequest;
 import com.ssafy.trend_gaza.user.entity.User;
 import com.ssafy.trend_gaza.user.service.UserService;
@@ -50,10 +53,22 @@ public class UserController {
 		
 	}
 	
-//	@GetMapping
-//	public ResponseEntity<?> idCheck() {
-//		
-//	} 
+	@GetMapping("/idCheck")
+	public ResponseEntity<?> idCheck(String userId) {
+		try {
+			int count = userService.idCheck(userId);
+			if (count == 1) {
+				logger.debug("사용 불가능한 아이디입니다.");
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			} else {
+				logger.debug("사용 가능한 아이디입니다.");
+				return new ResponseEntity<>(HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+		
+	} 
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
@@ -71,14 +86,10 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping(value = "/findId", produces = "text/plain")
-	public ResponseEntity<?> findId(@RequestParam String userName, @RequestParam String mobile) {
-		Map<String, String> map = new HashMap<>();
-		map.put("userName", userName);
-		map.put("mobile", mobile);
-		
+	@PostMapping(value = "/findId", produces = "text/plain")
+	public ResponseEntity<?> findId(@RequestBody FindIdRequest findIdRequest) {
 		try {
-			String id = userService.findId(map);
+			String id = userService.findId(findIdRequest);
 			return new ResponseEntity<String>(id, HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
@@ -87,16 +98,29 @@ public class UserController {
 	}
 	
 	@GetMapping(value = "/findPwd", produces = "text/plain")
-	public ResponseEntity<?> findPwd(@RequestParam String userName, 
-			@RequestParam String userId, @RequestParam String mobile) {
-		Map<String, String> map = new HashMap<>();
-		map.put("userName", userName);
-		map.put("userId", userId);
-		map.put("mobile", mobile);
-		
+	public ResponseEntity<?> findPwd(FindPwdRequest findPwdRequest) {
 		try {
-			String password = userService.findPwd(map);
-			return new ResponseEntity<String>(password, HttpStatus.OK);
+			String password = userService.findPwd(findPwdRequest);
+			if (password != null) { // 매칭되는 비밀번호가 있으면
+				UUID uuid = UUID.randomUUID();
+				logger.debug("임시비밀번호: "+uuid);
+				String tempPwd = uuid.toString().substring(0, 8); // 비밀번호 8자리
+				logger.debug("임시비밀번호: "+tempPwd);
+				// 사용자에게 임시 비밀번호 메일 발송 
+				
+				// 사용자의 비밀번호를 암호화하여 DB 변경. 
+//				ChangePwdRequest changePwdRequest = new ChangePwdRequest();
+//				User userinfo = (User) session.getAttribute("userinfo");
+//				changePwdRequest.setUserId(userinfo.getUserId());
+//				changePwdRequest.setPassword(password);
+//				changePwdRequest.setNewPassword(tempPwd);
+//				userService.changePwd(changePwdRequest);
+				
+				return new ResponseEntity<String>(tempPwd, HttpStatus.OK);
+				
+			} 
+			logger.debug("비밀번호를 찾을 수 없습니다.");
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
@@ -116,24 +140,9 @@ public class UserController {
 	}
 	
 	@PutMapping(value = "/modify")
-	public ResponseEntity<?> modify(@RequestParam String userName, @RequestParam String mobile,
-			@RequestParam String emailId, @RequestParam String emailDomain, @RequestParam String gender,
-			HttpSession session) {
-		User user = (User) session.getAttribute("userinfo");
-	    if (user == null) {
-	        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // User is not logged in
-	    }
-	    String userId = user.getUserId();
-		Map<String, String> map = new HashMap<>();
-		map.put("userId", userId);
-		map.put("userName", userName);
-		map.put("mobile", mobile);
-		map.put("emailId", emailId);
-		map.put("emailDomain", emailDomain);
-		map.put("gender", gender);
-		
+	public ResponseEntity<?> modify(@RequestBody ModifyRequest modifyRequest, HttpSession session) {
 		try {
-			userService.modify(map);
+			userService.modify(modifyRequest);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
@@ -142,20 +151,9 @@ public class UserController {
 	}
 	
 	@PutMapping(value = "/changePwd")
-	public ResponseEntity<?> changePwd(@RequestParam String newPassword, @RequestParam String password,
-			HttpSession session) {
-		User user = (User) session.getAttribute("userinfo");
-	    if (user == null) {
-	        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // User is not logged in
-	    }
-	    String userId = user.getUserId();
-		Map<String, String> map = new HashMap<>();
-		map.put("userId", userId);
-		map.put("newPassword", newPassword);
-		map.put("password", password);
-		
+	public ResponseEntity<?> changePwd(@RequestBody ChangePwdRequest changePwdRequest, HttpSession session) {
 		try {
-			userService.changePwd(map);
+			userService.changePwd(changePwdRequest);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);

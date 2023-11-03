@@ -8,7 +8,11 @@
 
 	<typeAliases> 
 	<!--  <typeAlias type="com.ssafy.member.model.MemberDto" alias="memberDto" /> -->
+		<typeAlias type="com.ssafy.trend_gaza.user.dto.ChangePwdRequest" alias="changePwdRequest" />
+		<typeAlias type="com.ssafy.trend_gaza.user.dto.FindIdRequest" alias="findIdRequest" />
+		<typeAlias type="com.ssafy.trend_gaza.user.dto.FindPwdRequest" alias="findPwdRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.user.dto.LoginRequest" alias="loginRequest" />
+		<typeAlias type="com.ssafy.trend_gaza.user.dto.ModifyRequest" alias="modifyRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.user.dto.RegisterRequest" alias="registerRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.user.entity.User" alias="user" />
 		
