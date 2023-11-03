@@ -18,10 +18,10 @@ public interface UserMapper {
 	/* 회원가입 시 아이디 중복 체크 */
 	int idCheck(String userId) throws SQLException;
 	
-	/* 로그인, 로그아웃은 컨트롤러에서 */
+	/* 로그인 */
 	User login(LoginRequest loginRequest) throws SQLException;
 	
-	/* 아이디 찾기 */
+	/* 아이디 찾기: 이름과 핸드폰번호로 아이디 찾기 */
 	String findId(Map<String, String> map) throws SQLException;
 	
 	/* 비밀번호 찾기: 아이디, 이름, 핸드폰 번호 입력하면, 임시 비밀번호 발급  */
