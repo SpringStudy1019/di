@@ -30,5 +30,23 @@
 		where sido_code = #{sido}
 		<include refid="search"></include>	
 	</select>
+	
+	<select id="getLastContentId" resultType="int">
+		select max(content_id) 
+		from attraction_info;
+	</select>
+	
+	<insert id="registerAttractionDetail" parameterType="attractionAdminRequest">
+		insert into attraction_detail(content_id)
+		values (#{attractionId})
+	</insert>
+	
+	<insert id="registerAdminAttraction" parameterType="attractionAdminRequest">
+		insert into attraction_info (content_id, content_type_id, title, addr1, tel, first_image, latitude, longitude) 
+		values (#{attractionId}, #{contentTypeId}, #{title}, #{address}, #{tel}, #{defaultImg}, #{latitude}, #{longitude})
+		<selectKey resultType="int" keyProperty="attractionId" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
 
 </mapper>
