@@ -2,16 +2,16 @@ package com.ssafy.trend_gaza.attraction.entity;
 
 public class Gugun {
 
-	private int gugunCode;
+	private Integer gugunCode;
 	private String gugunName;
-	private int sidoCode;
+	private Integer sidoCode;
 	
 
-	public int getGugunCode() {
+	public Integer getGugunCode() {
 		return gugunCode;
 	}
 
-	public void setGugunCode(int gugunCode) {
+	public void setGugunCode(Integer gugunCode) {
 		this.gugunCode = gugunCode;
 	}
 
@@ -23,11 +23,11 @@ public class Gugun {
 		this.gugunName = gugunName;
 	}
 
-	public int getSidoCode() {
+	public Integer getSidoCode() {
 		return sidoCode;
 	}
 
-	public void setSidoCode(int sidoCode) {
+	public void setSidoCode(Integer sidoCode) {
 		this.sidoCode = sidoCode;
 	}
 	

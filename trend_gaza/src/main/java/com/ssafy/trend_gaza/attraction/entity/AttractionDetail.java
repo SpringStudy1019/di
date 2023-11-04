@@ -2,7 +2,7 @@ package com.ssafy.trend_gaza.attraction.entity;
 
 public class AttractionDetail {
 
-	private int contentId;
+	private Integer contentId;
 	private String cat1;
 	private String cat2;
 	private String cat3;
@@ -11,11 +11,11 @@ public class AttractionDetail {
 	private String booktour;
 
 	
-	public int getContentId() {
+	public Integer getContentId() {
 		return contentId;
 	}
 
-	public void setContentId(int contentId) {
+	public void setContentId(Integer contentId) {
 		this.contentId = contentId;
 	}
 

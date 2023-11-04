@@ -2,15 +2,15 @@ package com.ssafy.trend_gaza.attraction.entity;
 
 public class Sido {
 
-	private int sidoCode;
+	private Integer sidoCode;
 	private String sidoName;
 
 	
-	public int getSidoCode() {
+	public Integer getSidoCode() {
 		return sidoCode;
 	}
 
-	public void setSidoCode(int sidoCode) {
+	public void setSidoCode(Integer sidoCode) {
 		this.sidoCode = sidoCode;
 	}
 

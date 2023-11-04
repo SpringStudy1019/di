@@ -1,8 +1,8 @@
 package com.ssafy.trend_gaza.attraction.entity;
 
 public class AttractionInfo {
-	private int contentId;
-	private int contentTypeId;
+	private Integer contentId;
+	private Integer contentTypeId;
 	private String title;
 	private String addr1;
 	private String addr2;
@@ -10,28 +10,28 @@ public class AttractionInfo {
 	private String tel;
 	private String firstImage;
 	private String firstImage2;
-	private int readcount;
-	private int sidoCode;
-	private int gugunCode;
-	private double latitude;
-	private double longitude;
+	private Integer readcount;
+	private Integer sidoCode;
+	private Integer gugunCode;
+	private Double latitude;
+	private Double longitude;
 	private String mlevel;
-	private int hit;
-	private double distance;
+	private Integer hit;
+	private Double distance;
 
-	public int getContentId() {
+	public Integer getContentId() {
 		return contentId;
 	}
 
-	public void setContentId(int contentId) {
+	public void setContentId(Integer contentId) {
 		this.contentId = contentId;
 	}
 
-	public int getContentTypeId() {
+	public Integer getContentTypeId() {
 		return contentTypeId;
 	}
 
-	public void setContentTypeId(int contentTypeId) {
+	public void setContentTypeId(Integer contentTypeId) {
 		this.contentTypeId = contentTypeId;
 	}
 
@@ -91,43 +91,43 @@ public class AttractionInfo {
 		this.firstImage2 = firstImage2;
 	}
 
-	public int getReadcount() {
+	public Integer getReadcount() {
 		return readcount;
 	}
 
-	public void setReadcount(int readcount) {
+	public void setReadcount(Integer readcount) {
 		this.readcount = readcount;
 	}
 
-	public int getSidoCode() {
+	public Integer getSidoCode() {
 		return sidoCode;
 	}
 
-	public void setSidoCode(int sidoCode) {
+	public void setSidoCode(Integer sidoCode) {
 		this.sidoCode = sidoCode;
 	}
 
-	public int getGugunCode() {
+	public Integer getGugunCode() {
 		return gugunCode;
 	}
 
-	public void setGugunCode(int gugunCode) {
+	public void setGugunCode(Integer gugunCode) {
 		this.gugunCode = gugunCode;
 	}
 
-	public double getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 
@@ -139,19 +139,19 @@ public class AttractionInfo {
 		this.mlevel = mlevel;
 	}
 
-	public int getHit() {
+	public Integer getHit() {
 		return hit;
 	}
 	
-	public void setHit(int hit) {
+	public void setHit(Integer hit) {
 		this.hit = hit;
 	}
 	
-	public double getDistance() {
+	public Double getDistance() {
 		return distance;
 	}
 
-	public void setDistance(double distance) {
+	public void setDistance(Double distance) {
 		this.distance = distance;
 	}
 
