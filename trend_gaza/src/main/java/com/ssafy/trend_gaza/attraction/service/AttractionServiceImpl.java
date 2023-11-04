@@ -47,7 +47,7 @@ public class AttractionServiceImpl implements AttractionService {
 		attractionMapper.registerAdminAttraction(attractionAdminRequest);
 		//AttractionDetail attractionDetail = new AttractionDetail();
 		//attractionDetail.setContentId(contentId);
-		attractionMapper.registerAttractionDetail(attractionAdminRequest);
+//		attractionMapper.registerAttractionDetail(attractionAdminRequest);
 	}
 
 }
