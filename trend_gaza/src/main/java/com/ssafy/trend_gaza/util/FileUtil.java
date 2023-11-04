@@ -32,8 +32,8 @@ public class FileUtil {
 	/*
 	 * 업로드하려는 위치에 폴더가 없으면 생성한다.
 	 */
-	public void makeFolder(String path) {
-		File folder = new File(path);
+	public void makeFolder(String saveFolder) {
+		File folder = new File(saveFolder);
 		
 		if(!folder.exists()) {
 			try {
@@ -50,7 +50,7 @@ public class FileUtil {
 		return realPath + File.separator + today;
 	}
 	
-	public String upload(String originalFileName, MultipartFile multipartFile, String realPath) throws Exception {
+	public String upload(String originalFileName, MultipartFile multipartFile, File folder) throws Exception {
 		String saveFileName = UUID.randomUUID().toString()
 				+ originalFileName.substring(originalFileName.lastIndexOf('.'));
 //		fileInfoDto.setSaveFolder(today);
@@ -58,7 +58,7 @@ public class FileUtil {
 //		fileInfoDto.setSaveFile(saveFileName);
 		//logger.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
 		
-		multipartFile.transferTo(new File(getFolder(realPath), saveFileName));
+		multipartFile.transferTo(new File(folder, saveFileName));
 		
 		return saveFileName;
 	}
