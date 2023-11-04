@@ -49,8 +49,7 @@ public class AttractionController {
 	@GetMapping("/search")
 	public ResponseEntity<List<AttractionInfo>> searchAttractions(@RequestBody Map<String, String> map) {
 		logger.debug("searchAttractions call!");
-		List<AttractionInfo> result = attractionService.searchAttractions(map);
-		return ResponseEntity.ok(new ArrayList<AttractionInfo>(result));
+		return ResponseEntity.ok(attractionService.searchAttractions(map));
 		
 	}
 	

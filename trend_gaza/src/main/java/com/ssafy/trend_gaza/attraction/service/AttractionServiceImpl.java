@@ -33,6 +33,7 @@ public class AttractionServiceImpl implements AttractionService {
 		map.put("keyword", keyword == null ? "" : keyword);
 		
 		return attractionMapper.searchAttractions(map);
+		//return result.stream().map(AttractionResponse::of).toList();
 	}
 
 }
