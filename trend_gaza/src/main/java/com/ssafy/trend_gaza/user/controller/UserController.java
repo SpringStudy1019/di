@@ -45,7 +45,7 @@ public class UserController {
 		logger.debug("register Dto : {}", registerRequest);
 		try {
 			userService.register(registerRequest);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.CREATED);
 
 		} catch (Exception e) {
 			return exceptionHandling(e);
@@ -53,8 +53,8 @@ public class UserController {
 		
 	}
 	
-	@GetMapping("/idCheck")
-	public ResponseEntity<?> idCheck(String userId) {
+	@GetMapping(value = "/idCheck/{userId}")
+	public ResponseEntity<?> idCheck(@PathVariable String userId) {
 		try {
 			int count = userService.idCheck(userId);
 			if (count == 1) {
@@ -97,11 +97,11 @@ public class UserController {
 		
 	}
 	
-	@GetMapping(value = "/findPwd", produces = "text/plain")
+	@PostMapping(value = "/findPwd", produces = "text/plain")
 	public ResponseEntity<?> findPwd(FindPwdRequest findPwdRequest) {
 		try {
 			String password = userService.findPwd(findPwdRequest);
-			if (password != null) { // 매칭되는 비밀번호가 있으면
+			if (password != "") { // 매칭되는 비밀번호가 있으면
 				UUID uuid = UUID.randomUUID();
 				logger.debug("임시비밀번호: "+uuid);
 				String tempPwd = uuid.toString().substring(0, 8); // 비밀번호 8자리
@@ -118,9 +118,10 @@ public class UserController {
 				
 				return new ResponseEntity<String>(tempPwd, HttpStatus.OK);
 				
-			} 
-			logger.debug("비밀번호를 찾을 수 없습니다.");
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			} else {				
+				logger.debug("비밀번호를 찾을 수 없습니다.");
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

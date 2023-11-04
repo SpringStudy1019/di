@@ -2,9 +2,15 @@ package com.ssafy.trend_gaza.user.dto;
 
 public class FindPwdRequest {
 
+//	private  String userId;
+//	private  String userName;
+//	private  String mobile;
+	
 	private final String userId;
 	private final String userName;
 	private final String mobile;
+	
+//	public FindPwdRequest() {}
 	
 	public FindPwdRequest(String userId, String userName, String mobile) {
 		super();
@@ -13,7 +19,7 @@ public class FindPwdRequest {
 		this.mobile = mobile;
 	}
 
-	
+
 	public String getUserId() {
 		return userId;
 	}

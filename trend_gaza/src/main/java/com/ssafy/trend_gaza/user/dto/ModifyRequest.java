@@ -2,12 +2,21 @@ package com.ssafy.trend_gaza.user.dto;
 
 public class ModifyRequest {
 
+//	private  String userId;
+//	private  String userName;
+//	private  String mobile;
+//	private  String emailId;
+//	private  String emailDomain;
+//	private  String gender;
+
 	private final String userId;
 	private final String userName;
 	private final String mobile;
 	private final String emailId;
 	private final String emailDomain;
 	private final String gender;
+	
+//	public ModifyRequest() {}
 	
 	public ModifyRequest(String userId, String userName, String mobile, String emailId, String emailDomain,
 			String gender) {
