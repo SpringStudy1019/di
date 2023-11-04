@@ -2,18 +2,20 @@ package com.ssafy.trend_gaza.attraction.dto;
 
 public class AttractionAdminRequest {
 	
-	private final int attractionId;
-	private final int contentTypeId;
+	private final Integer attractionId;
+	private final Integer contentTypeId;
 	private final String title;
 	private final String address;
 	private final String tel;
 	private final String defaultImg;
 	private final double latitude;
 	private final double longitude;
+	private final Integer sidoCode;
+	private final Integer gugunCode;
 	
 	
-	public AttractionAdminRequest(int attractionId, int contentTypeId, String title, String address, String tel,
-			String defaultImg, double latitude, double longitude) {
+	public AttractionAdminRequest(Integer attractionId, Integer contentTypeId, String title, String address, String tel,
+			String defaultImg, double latitude, double longitude, Integer gugunCode, Integer sidoCode) {
 		super();
 		this.attractionId = attractionId;
 		this.contentTypeId = contentTypeId;
@@ -23,12 +25,15 @@ public class AttractionAdminRequest {
 		this.defaultImg = defaultImg;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.gugunCode = gugunCode;
+		this.sidoCode = sidoCode;
 	}
 	
 	
-	public Integer getAttractionId() {
-		return attractionId;
+	public Integer getAttractionId() { 
+		return attractionId; 
 	}
+	
 	public Integer getContentTypeId() {
 		return contentTypeId;
 	}
@@ -50,4 +55,11 @@ public class AttractionAdminRequest {
 	public Double getLongitude() {
 		return longitude;
 	}
+	public Integer getSidoCode() {
+		return sidoCode;
+	}
+	public Integer getGugunCode() {
+		return gugunCode;
+	}
+	
 }
