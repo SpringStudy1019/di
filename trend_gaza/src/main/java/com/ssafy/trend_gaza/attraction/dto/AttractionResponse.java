@@ -1,56 +1,32 @@
 package com.ssafy.trend_gaza.attraction.dto;
 
+import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
+
 public class AttractionResponse {
 	
 	private String imgUrl;
 	private String title;
-	private String contentTypeId;
-	private int reviewCnt;
+	private Integer contentTypeId;
+	private Integer reviewCnt;
 	private String address;
-	private float reviewScore;
+	private Float reviewScore;
 	
-	
-	public String getImgUrl() {
-		return imgUrl;
-	}
-	public void setImgUrl(String imgUrl) {
+
+	private AttractionResponse(String imgUrl, String title, Integer contentTypeId, Integer reviewCnt, String address,
+			Float reviewScore) {
+		super();
 		this.imgUrl = imgUrl;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
 		this.title = title;
-	}
-	public String getContentTypeId() {
-		return contentTypeId;
-	}
-	public void setContentTypeId(String contentTypeId) {
 		this.contentTypeId = contentTypeId;
-	}
-	public int getReviewCnt() {
-		return reviewCnt;
-	}
-	public void setReviewCnt(int reviewCnt) {
 		this.reviewCnt = reviewCnt;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
 		this.address = address;
-	}
-	public float getReviewScore() {
-		return reviewScore;
-	}
-	public void setReviewScore(float reviewScore) {
 		this.reviewScore = reviewScore;
 	}
-	
-	
-	@Override
-	public String toString() {
-		return "AttractionResponse [imgUrl=" + imgUrl + ", title=" + title + ", contentTypeId=" + contentTypeId
-				+ ", reviewCnt=" + reviewCnt + ", address=" + address + ", reviewScore=" + reviewScore + "]";
+
+
+	public static AttractionResponse of(final AttractionInfo attraction, final Integer reviewCnt, final Float reviewScore) {
+		return new AttractionResponse(attraction.getFirstImage(), attraction.getTitle(),
+				attraction.getContentTypeId(), reviewCnt, attraction.getAddr1(), reviewScore);
 	}
+	
 }
