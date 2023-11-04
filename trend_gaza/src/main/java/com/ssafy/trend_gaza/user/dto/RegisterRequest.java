@@ -2,63 +2,54 @@ package com.ssafy.trend_gaza.user.dto;
 
 public class RegisterRequest {
 
-	private String userId;
-	private String userName;
-	private String password;
-	private String mobile;
-	private String emailId;
-	private String emailDomain;
-	private String gender;
+	private final String userId;
+	private final String userName;
+	private final String password;
+	private final String mobile;
+	private final String emailId;
+	private final String emailDomain;
+	private final String gender;
 	
-	
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
+	public RegisterRequest(String userId, String userName, String password, String mobile, String emailId,
+			String emailDomain, String gender) {
+		super();
 		this.userId = userId;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getMobile() {
-		return mobile;
-	}
-	public void setMobile(String mobile) {
 		this.mobile = mobile;
-	}
-	public String getEmailId() {
-		return emailId;
-	}
-	public void setEmailId(String emailId) {
 		this.emailId = emailId;
-	}
-	public String getEmailDomain() {
-		return emailDomain;
-	}
-	public void setEmailDomain(String emailDomain) {
 		this.emailDomain = emailDomain;
-	}
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	
-	
-	@Override
-	public String toString() {
-		return "RegisterRequest [userId=" + userId + ", userName=" + userName + ", password=" + password + ", mobile="
-				+ mobile + ", emailId=" + emailId + ", emailDomain=" + emailDomain + ", gender=" + gender + "]";
+
+	public String getUserId() {
+		return userId;
 	}
+	
+	public String getUserName() {
+		return userName;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public String getMobile() {
+		return mobile;
+	}
+	
+	public String getEmailId() {
+		return emailId;
+	}
+	
+	public String getEmailDomain() {
+		return emailDomain;
+	}
+	
+	public String getGender() {
+		return gender;
+	}
+	
 
 }
