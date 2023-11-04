@@ -34,7 +34,7 @@ class AttractionServiceImplTest {
 	@Test
 	@DisplayName("관광지 조회 테스트")
 	void testSearchAttractions() {
-		log.debug("관광지 조회 테스트 시작");
+		//log.debug("관광지 조회 테스트 시작");
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sido", "32");
@@ -44,7 +44,7 @@ class AttractionServiceImplTest {
 		List<AttractionInfo> attractionInfo = attractionService.searchAttractions(map);
 		assertEquals(15, attractionInfo.size());
 		
-		log.debug("관광지 조회 테스트 종료");
+		//log.debug("관광지 조회 테스트 종료");
 	}
 
 }
