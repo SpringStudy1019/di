@@ -20,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trend_gaza.user.dto.ChangePwdRequest;
@@ -41,6 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 )
 @Slf4j
 @ComponentScan(basePackages = {"com.ssafy"})
+@Transactional
 class UserControllerTest {
 
 	@Autowired
