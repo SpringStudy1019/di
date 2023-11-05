@@ -9,7 +9,6 @@ import com.ssafy.trend_gaza.review.dto.ReviewModifyRequest;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
 import com.ssafy.trend_gaza.review.entity.Review;
 
-
 @Mapper
 public interface ReviewMapper {
 

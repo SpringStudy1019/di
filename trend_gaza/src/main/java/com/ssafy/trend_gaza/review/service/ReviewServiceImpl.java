@@ -1,6 +1,5 @@
 package com.ssafy.trend_gaza.review.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -22,8 +21,8 @@ public class ReviewServiceImpl implements ReviewService {
 
 	
 	@Override
-	public void register(ReviewRegisterRequest registerRequest) throws Exception {
-		reviewMapper.register(registerRequest);
+	public void register(ReviewRegisterRequest reviewRegisterRequest) throws Exception {
+		reviewMapper.register(reviewRegisterRequest);
 		
 	}
 
@@ -44,7 +43,4 @@ public class ReviewServiceImpl implements ReviewService {
 		
 	}
 
-	
-
-	
 }

@@ -15,11 +15,12 @@
 		</if>
 	</sql>
 	
+	<!-- 
 	<select id="list" resultMap="review">
 		select * from review
 		<include refid="search"></include>
 	</select>
-	
+	 -->
 	<update id="modify" parameterType="reviewModifyRequest">
 		update review
 		
