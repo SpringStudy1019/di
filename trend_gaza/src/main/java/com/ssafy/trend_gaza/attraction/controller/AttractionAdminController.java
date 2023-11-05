@@ -4,6 +4,7 @@ import java.net.URI;
 
 import javax.servlet.ServletContext;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,19 +15,29 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.trend_gaza.attraction.dto.AttractionAdminRequest;
 import com.ssafy.trend_gaza.attraction.service.AttractionService;
+import com.ssafy.trend_gaza.common.CommonResponse;
+import com.ssafy.trend_gaza.common.Response;
+import com.ssafy.trend_gaza.common.ResponseService;
 
 @RestController
 @RequestMapping("/admin/attractions")
 public class AttractionAdminController {
 	
-	private final String UPLOAD_PATH = "/upload";
+	@Value("${file.path}")
+	private String uploadPath;
+	
+	@Value("${file.path.upload-images}")
+	private String uploadImagePath;
+	
+	@Value("${file.path.upload-files}")
+	private String uploadFilePath;
 	
 	private final AttractionService attractionService;
-	private final ServletContext servletContext;
+	private final ResponseService responseService;
 	
-	public AttractionAdminController(AttractionService attractionService, ServletContext servletContext) {
+	public AttractionAdminController(AttractionService attractionService, ResponseService responseService) {
 		this.attractionService = attractionService;
-		this.servletContext = servletContext;
+		this.responseService = responseService;
 	}
 
 	
@@ -36,12 +47,14 @@ public class AttractionAdminController {
 		return ResponseEntity.created(URI.create("/admin/attractions")).build();		
 	}
 	
-	@PostMapping("/upload") public ResponseEntity<?> uploadAttractionImage(@RequestPart("image") MultipartFile multipartFile) throws Exception {
+	@PostMapping("/upload") 
+	public ResponseEntity<CommonResponse> uploadAttractionImage(@RequestPart("image") MultipartFile multipartFile) throws Exception {
 		if(multipartFile.isEmpty() || multipartFile.getOriginalFilename().isEmpty()) {
 			return ResponseEntity.badRequest().build();
 		}
-		String imageUrl = attractionService.uploadAttractionImage(multipartFile, servletContext.getRealPath(UPLOAD_PATH)); 
-		return ResponseEntity.ok().body(imageUrl); 
+		String imageUrl = attractionService.uploadAttractionImage(multipartFile, uploadPath); 
+		
+		return ResponseEntity.ok().body(responseService.getDataResponse(imageUrl)); 
 	}
 	 
 	
