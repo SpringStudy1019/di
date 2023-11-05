@@ -23,7 +23,8 @@
 	 -->
 	<update id="modify" parameterType="reviewModifyRequest">
 		update review
-		
+		set modify_date=now(), score=#{score}, title=#{title}, content=#{content} 
+		where review_idx=#{reviewIdx}
 	</update>
 	
 	

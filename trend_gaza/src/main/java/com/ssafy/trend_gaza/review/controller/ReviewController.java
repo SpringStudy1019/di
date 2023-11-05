@@ -1,13 +1,17 @@
 package com.ssafy.trend_gaza.review.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.trend_gaza.review.dto.ReviewModifyRequest;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
 import com.ssafy.trend_gaza.review.service.ReviewService;
 
@@ -40,6 +44,16 @@ public class ReviewController {
 	}
 	
 	
+	@PutMapping(value = "/modify")
+	public ResponseEntity<?> modify(@RequestBody ReviewModifyRequest reviewModifyRequest, HttpSession session) {
+		try {
+			reviewService.modify(reviewModifyRequest);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+		
+	}
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
 		e.printStackTrace();
