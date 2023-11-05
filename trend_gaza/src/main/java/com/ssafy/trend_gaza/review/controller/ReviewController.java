@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trend_gaza.review.dto.ReviewModifyRequest;
@@ -48,7 +49,7 @@ public class ReviewController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> list(@RequestBody Map<String, String> param) {
+	public ResponseEntity<?> list(@RequestParam Map<String, String> param) {
 		try {
 			List<Review> list = reviewService.list(param);
 			if(list != null && !list.isEmpty()) {
