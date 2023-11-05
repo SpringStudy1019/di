@@ -109,7 +109,7 @@ public class UserController {
 	}
 	
 	@PostMapping(value = "/findPwd", produces = "text/plain")
-	public ResponseEntity<?> findPwd(FindPwdRequest findPwdRequest) {
+	public ResponseEntity<?> findPwd(@RequestBody FindPwdRequest findPwdRequest) {
 		try {
 			String password = userService.findPwd(findPwdRequest);
 			if (password != "") { // 매칭되는 비밀번호가 있으면
