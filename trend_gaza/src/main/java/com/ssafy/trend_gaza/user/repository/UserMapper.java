@@ -38,7 +38,7 @@ public interface UserMapper {
 	void modify(ModifyRequest modifyRequest) throws SQLException;
 	
 	/* 비밀번호 변경: 현재 비밀번호와 새로운 비밀번호 받기  */
-	void changePwd(ChangePwdRequest changePwdRequest) throws SQLException;
+	int changePwd(ChangePwdRequest changePwdRequest) throws SQLException;
 	
 	/* 회원탈퇴 */
 	void delete(String userId) throws SQLException;
