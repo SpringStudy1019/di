@@ -39,4 +39,4 @@ out/
 .DS_Store
 
 ### properties ###
-!**/src/main/*/.properties
+.properties
