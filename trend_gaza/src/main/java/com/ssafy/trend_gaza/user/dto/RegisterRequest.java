@@ -2,14 +2,16 @@ package com.ssafy.trend_gaza.user.dto;
 
 public class RegisterRequest {
 
-	private final String userId;
-	private final String userName;
-	private final String password;
-	private final String mobile;
-	private final String emailId;
-	private final String emailDomain;
-	private final String gender;
+	private  String userId;
+	private  String userName;
+	private  String password;
+	private  String mobile;
+	private  String emailId;
+	private  String emailDomain;
+	private  String gender;
 	
+	public RegisterRequest() {}
+
 	public RegisterRequest(String userId, String userName, String password, String mobile, String emailId,
 			String emailDomain, String gender) {
 		super();
