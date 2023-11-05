@@ -65,8 +65,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void changePwd(ChangePwdRequest changePwdRequest) throws Exception {
-		userMapper.changePwd(changePwdRequest);
+	public int changePwd(ChangePwdRequest changePwdRequest) throws Exception {
+		return userMapper.changePwd(changePwdRequest);
 	}
 
 	@Override
