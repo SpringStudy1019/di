@@ -32,7 +32,7 @@ public interface UserService {
 	void modify(ModifyRequest modifyRequest) throws Exception;
 	
 	/* 비밀번호 변경: 현재 비밀번호와 새로운 비밀번호 받기  */
-	void changePwd(ChangePwdRequest changePwdRequest) throws Exception;
+	int changePwd(ChangePwdRequest changePwdRequest) throws Exception;
 	
 	/* 회원탈퇴: 비밀번호 입력 받아야 함. */
 	void delete(String userId) throws Exception;
