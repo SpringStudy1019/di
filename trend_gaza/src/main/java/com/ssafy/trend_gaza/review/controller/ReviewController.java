@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +31,7 @@ public class ReviewController {
 		this.reviewService = reviewService;
 	}
 	
-	@PostMapping("/register")
+	@PostMapping
 	public ResponseEntity<?> register(@RequestBody ReviewRegisterRequest reviewRegisterRequest) {
 		log.debug("register Dto : {}", reviewRegisterRequest);
 		try {
@@ -44,7 +45,7 @@ public class ReviewController {
 	}
 	
 	
-	@PutMapping(value = "/modify")
+	@PutMapping
 	public ResponseEntity<?> modify(@RequestBody ReviewModifyRequest reviewModifyRequest, HttpSession session) {
 		try {
 			reviewService.modify(reviewModifyRequest);
@@ -53,6 +54,16 @@ public class ReviewController {
 			return exceptionHandling(e);
 		}
 		
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<?> delete(String reviewIdx) {
+		try {
+			reviewService.delete(reviewIdx);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
 	}
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
