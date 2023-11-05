@@ -1,5 +1,6 @@
 package com.ssafy.trend_gaza.user.controller;
 
+import java.net.URI;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
