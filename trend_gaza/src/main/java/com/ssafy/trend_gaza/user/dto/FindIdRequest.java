@@ -2,9 +2,11 @@ package com.ssafy.trend_gaza.user.dto;
 
 public class FindIdRequest {
 
-	private final String userName;
-	private final String mobile;
+	private  String userName;
+	private  String mobile;
 	
+	public FindIdRequest() {}
+
 	public FindIdRequest(String userName, String mobile) {
 		super();
 		this.userName = userName;
