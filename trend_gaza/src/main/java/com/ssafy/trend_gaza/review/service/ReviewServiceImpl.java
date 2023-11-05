@@ -1,6 +1,7 @@
 package com.ssafy.trend_gaza.review.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,8 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<Review> list() throws Exception {
-		return reviewMapper.list();
+	public List<Review> list(Map<String, String> param) throws Exception {
+		return reviewMapper.list(param);
 	}
 
 	@Override

@@ -14,7 +14,6 @@
 		<typeAlias type="com.ssafy.trend_gaza.user.dto.LoginRequest" alias="loginRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.user.dto.ModifyRequest" alias="modifyRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.user.dto.RegisterRequest" alias="registerRequest" />
-		<typeAlias type="com.ssafy.trend_gaza.user.entity.User" alias="user" />
 		<typeAlias type="com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest" alias="reviewRegisterRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.review.dto.ReviewModifyRequest" alias="reviewModifyRequest" />
 		

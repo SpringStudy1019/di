@@ -2,6 +2,7 @@ package com.ssafy.trend_gaza.review.repository;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,7 +17,7 @@ public interface ReviewMapper {
 	void register(ReviewRegisterRequest registerRequest) throws SQLException;
 	
 	/* 리뷰 전체 조회 (+검색) */
-	List<Review> list() throws SQLException;
+	List<Review> list(Map<String, String> param) throws SQLException;
 	
 	/* 리뷰 수정 */
 	void modify(ReviewModifyRequest ModifyRequest) throws SQLException;
