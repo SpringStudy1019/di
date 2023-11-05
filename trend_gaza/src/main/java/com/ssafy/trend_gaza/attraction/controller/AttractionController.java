@@ -47,7 +47,7 @@ public class AttractionController {
 	}
 	
 	@GetMapping("/search")
-	public ResponseEntity<List<AttractionInfo>> searchAttractions(@RequestBody Map<String, String> map) {
+	public ResponseEntity<List<AttractionInfo>> searchAttractions(@RequestParam Map<String, String> map) {
 		logger.debug("searchAttractions call!");
 		return ResponseEntity.ok(attractionService.searchAttractions(map));
 		
