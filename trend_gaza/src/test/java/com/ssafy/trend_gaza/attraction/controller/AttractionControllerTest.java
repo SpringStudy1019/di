@@ -60,8 +60,52 @@ class AttractionControllerTest {
 	}
 
 	@Test
-	@DisplayName("관광지 조회 테스트")
-	void testSearchAttractions() throws Exception {
+	@DisplayName("관광지 조회 테스트 - 지역 검색")
+	void testSearchAttractions1() throws Exception {
+		//log.debug("관광지 조회 테스트 시작");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("sido", "32");
+		map.put("contentTypeId", "");
+		map.put("keyword", "");
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String param = objectMapper.writeValueAsString(map);
+		
+		mockMvc.perform(get("/attractions/search").content(param).contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk())
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+		.andDo(print());
+		
+		//log.debug("관광지 조회 테스트 종료");
+		
+	}
+	
+	@Test
+	@DisplayName("관광지 조회 테스트 - 지역, 컨텐츠 검색")
+	void testSearchAttractions2() throws Exception {
+		//log.debug("관광지 조회 테스트 시작");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("sido", "32");
+		map.put("contentTypeId", "12");
+		map.put("keyword", "");
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String param = objectMapper.writeValueAsString(map);
+		
+		mockMvc.perform(get("/attractions/search").content(param).contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk())
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+		.andDo(print());
+		
+		//log.debug("관광지 조회 테스트 종료");
+		
+	}
+	
+	@Test
+	@DisplayName("관광지 조회 테스트 - 지역, 컨텐츠, 키워드 검색")
+	void testSearchAttractions3() throws Exception {
 		//log.debug("관광지 조회 테스트 시작");
 		
 		Map<String, String> map = new HashMap<String, String>();
