@@ -37,3 +37,6 @@ out/
 .vscode/
 /.metadata/
 .DS_Store
+
+### properties ###
+!**/src/main/*/.properties
