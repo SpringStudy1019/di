@@ -31,6 +31,7 @@ public class FileUtil {
 	
 	/*
 	 * 업로드하려는 위치에 폴더가 없으면 생성한다.
+	 * 1 depth만 생성함
 	 */
 	public void makeFolder(String saveFolder) {
 		File folder = new File(saveFolder);
@@ -45,9 +46,12 @@ public class FileUtil {
 		} 
 	}
 	
-	public String getFolder(String realPath) {
-		String today = new SimpleDateFormat("yyMMdd").format(new Date());
-		return realPath + File.separator + today;
+	public String getFolderName() {
+		return new SimpleDateFormat("yyMMdd").format(new Date());
+	}
+	
+	public String getFolder(String realPath, String today) {
+		return realPath + today;
 	}
 	
 	public String upload(String originalFileName, MultipartFile multipartFile, File folder) throws Exception {
