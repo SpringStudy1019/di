@@ -39,4 +39,4 @@ out/
 .DS_Store
 
 ### properties ###
-.properties
+application-mail.properties
