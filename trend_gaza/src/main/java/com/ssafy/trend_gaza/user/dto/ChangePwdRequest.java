@@ -2,10 +2,12 @@ package com.ssafy.trend_gaza.user.dto;
 
 public class ChangePwdRequest {
 
-	private final String userId;
-	private final String password;
-	private final String newPassword;
-	
+	private  String userId;
+	private  String password;
+	private  String newPassword;
+		
+	public ChangePwdRequest() {}
+
 	public ChangePwdRequest(String userId, String password, String newPassword) {
 		super();
 		this.userId = userId;
