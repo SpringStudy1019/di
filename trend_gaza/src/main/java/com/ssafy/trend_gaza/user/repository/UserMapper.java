@@ -1,6 +1,7 @@
 package com.ssafy.trend_gaza.user.repository;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.mapstruct.Mapper;
 
@@ -41,5 +42,7 @@ public interface UserMapper {
 	
 	/* 회원탈퇴 */
 	void delete(String userId) throws SQLException;
+	
+	void changePwdToTempPwd(Map<String, String> map) throws SQLException;
 	
 }
