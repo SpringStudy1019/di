@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trend_gaza.review.repository.ReviewMapper">
+
+	<resultMap type="com.ssafy.trend_gaza.review.entity.Review" id="review">
+		<result column="review_idx" property="reviewIdx"></result>
+		<result column="score" property="score"></result>
+		<result column="title" property="title"></result>
+		<result column="content" property="content"></result>
+		<result column="register_date" property="registerDate"></result>
+		<result column="modify_date" property="modifyDate"></result>
+		<result column="user_id" property="userId"></result>
+		<result column="content_id" property="contentId"></result>
+	</resultMap>
+	
+	<insert id="register" parameterType="reviewRegisterRequest">
+		insert into review (score, title, content, register_date, user_id, content_id)
+		values (#{score}, #{title}, #{content}, now(), #{userId}, #{contentId})
+	</insert>
+	
+	<sql id="search">
+		<if test="word != null and word != ''">
+			where title like concat('%', #{word}, '%')
+		</if>
+	</sql>
+	
+	<select id="list" resultMap="review">
+		select * from review
+		<include refid="search"></include> 
+	</select>
+	 
+	<update id="modify" parameterType="reviewModifyRequest">
+		update review
+		set modify_date=now(), score=#{score}, title=#{title}, content=#{content} 
+		where review_idx=#{reviewIdx}
+	</update>
+	
+	
+	<delete id="delete" parameterType="String">
+		delete from review
+		where review_idx=#{reviewIdx}
+	</delete>
+	
+</mapper>
