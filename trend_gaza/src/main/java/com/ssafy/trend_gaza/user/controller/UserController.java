@@ -164,8 +164,12 @@ public class UserController {
 	@PutMapping(value = "/changePwd")
 	public ResponseEntity<?> changePwd(@RequestBody ChangePwdRequest changePwdRequest, HttpSession session) {
 		try {
-			userService.changePwd(changePwdRequest);
-			return new ResponseEntity<>(HttpStatus.OK);
+			int result = userService.changePwd(changePwdRequest);
+			if (result == 1) {
+				return new ResponseEntity<>(HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+			}
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
@@ -184,9 +188,9 @@ public class UserController {
 	}
 	
 	@GetMapping("/logout")
-	public String logout(HttpSession session) {
+	public ResponseEntity<?> logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/";
+		return ResponseEntity.created(URI.create("/")).build();	
 	}
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
