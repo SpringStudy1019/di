@@ -64,10 +64,11 @@ public class AttractionServiceImpl implements AttractionService {
 	public String uploadAttractionImage(MultipartFile multipartFile, String realPath) throws Exception {
 		String fileName = multipartFile.getOriginalFilename();
 		
-		String saveFolder = fileUtil.getFolder(realPath);
+		String today = fileUtil.getFolderName();
+		String saveFolder = fileUtil.getFolder(realPath, today);
 		fileUtil.makeFolder(saveFolder);
 		
-		return fileUtil.upload(fileName, multipartFile, new File(saveFolder));
+		return today + File.separator + fileUtil.upload(fileName, multipartFile, new File(saveFolder));
 
 	}
 
