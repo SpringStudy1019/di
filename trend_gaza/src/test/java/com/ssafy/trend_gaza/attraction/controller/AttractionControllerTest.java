@@ -64,15 +64,7 @@ class AttractionControllerTest {
 	void testSearchAttractions1() throws Exception {
 		//log.debug("관광지 조회 테스트 시작");
 		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sido", "32");
-		map.put("contentTypeId", "");
-		map.put("keyword", "");
-		
-		ObjectMapper objectMapper = new ObjectMapper();
-		String param = objectMapper.writeValueAsString(map);
-		
-		mockMvc.perform(get("/attractions/search").content(param).contentType(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/attractions/search?sido=32&contentTypeId=&keyword="))
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 		.andDo(print());
@@ -86,15 +78,7 @@ class AttractionControllerTest {
 	void testSearchAttractions2() throws Exception {
 		//log.debug("관광지 조회 테스트 시작");
 		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sido", "32");
-		map.put("contentTypeId", "12");
-		map.put("keyword", "");
-		
-		ObjectMapper objectMapper = new ObjectMapper();
-		String param = objectMapper.writeValueAsString(map);
-		
-		mockMvc.perform(get("/attractions/search").content(param).contentType(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/attractions/search?sido=32&contentTypeId=12&keyword="))
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 		.andDo(print());
@@ -108,15 +92,7 @@ class AttractionControllerTest {
 	void testSearchAttractions3() throws Exception {
 		//log.debug("관광지 조회 테스트 시작");
 		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sido", "32");
-		map.put("contentTypeId", "12");
-		map.put("keyword", "국립");
-		
-		ObjectMapper objectMapper = new ObjectMapper();
-		String param = objectMapper.writeValueAsString(map);
-		
-		mockMvc.perform(get("/attractions/search").content(param).contentType(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/attractions/search?sido=32&contentTypeId=12&keyword=국립"))
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 		.andDo(print());
