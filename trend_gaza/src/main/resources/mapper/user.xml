@@ -64,4 +64,10 @@
 		where user_id=#{userId}
 	</delete>
 	
+	<update id="changePwdToTempPwd" parameterType="map">
+		update user
+		set password=#{tmpPassword}
+		where user_id=#{userId}
+	</update>
+	
 </mapper>

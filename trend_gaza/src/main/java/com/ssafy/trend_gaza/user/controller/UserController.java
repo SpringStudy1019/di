@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trend_gaza.user.dto.ChangePwdRequest;
@@ -26,6 +27,8 @@ import com.ssafy.trend_gaza.user.dto.ModifyRequest;
 import com.ssafy.trend_gaza.user.dto.RegisterRequest;
 import com.ssafy.trend_gaza.user.entity.User;
 import com.ssafy.trend_gaza.user.service.UserService;
+
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/user")
@@ -95,6 +98,14 @@ public class UserController {
 			return exceptionHandling(e);
 		}
 		
+	}
+	
+	@PostMapping("/send-email")
+	public ResponseEntity<?> sendEmail(@RequestParam String userId) throws Exception {
+		//User loginUser = (User)httpSession.getAttribute("userInfo");
+		//userService.sendEmail(loginUser.getUserId());
+		userService.sendEmail(userId);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/findPwd", produces = "text/plain")

@@ -36,5 +36,7 @@ public interface UserService {
 	
 	/* 회원탈퇴: 비밀번호 입력 받아야 함. */
 	void delete(String userId) throws Exception;
+	
+	void sendEmail(String email) throws Exception;
 
 }
