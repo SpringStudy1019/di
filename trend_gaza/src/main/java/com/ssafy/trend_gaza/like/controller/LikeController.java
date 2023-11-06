@@ -1,5 +1,7 @@
 package com.ssafy.trend_gaza.like.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -66,6 +68,20 @@ public class LikeController {
 		try {
 			int result = likeService.count(reviewIdx);
 			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@GetMapping(value="/select/{reviewIdx}")
+	public ResponseEntity<?> selectUsers(@PathVariable int reviewIdx) {
+		try {
+			List<String> result = likeService.selectUsers(reviewIdx);
+			if (result != null && !result.isEmpty()) {
+				return new ResponseEntity<List<String>>(result, HttpStatus.OK);				
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);				
+			}
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

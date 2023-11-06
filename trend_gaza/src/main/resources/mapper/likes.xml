@@ -31,4 +31,9 @@
 		where review_idx=#{reviewIdx}
 	</select>
 	
+	<select id="selectUsers" parameterType="int" resultType="string">
+		select user_id from likes
+		where review_idx=#{reviewIdx}
+	</select>
+	
 </mapper>

@@ -1,6 +1,7 @@
 package com.ssafy.trend_gaza.like.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,11 @@ private LikeMapper likeMapper;
 	@Override
 	public int count(int reviewIdx) throws SQLException {
 		return likeMapper.count(reviewIdx);
+	}
+
+	@Override
+	public List<String> selectUsers(int reviewIdx) throws Exception {
+		return likeMapper.selectUsers(reviewIdx);
 	}
 
 }
