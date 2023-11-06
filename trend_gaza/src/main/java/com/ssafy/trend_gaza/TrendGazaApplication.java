@@ -6,10 +6,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.ssafy"})
-public class TrendGajaApplication {
+public class TrendGazaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TrendGajaApplication.class, args);
+		SpringApplication.run(TrendGazaApplication.class, args);
 	}
 
 }
