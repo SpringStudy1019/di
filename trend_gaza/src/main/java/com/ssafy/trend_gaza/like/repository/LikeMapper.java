@@ -18,4 +18,7 @@ public interface LikeMapper {
 	
 	/* 좋아요 취소 */ 
 	int offLike(LikeRequest likeRequest) throws SQLException;
+	
+	/* 좋아요 카운트 */ 
+	int count(int reviewIdx) throws SQLException;
 }

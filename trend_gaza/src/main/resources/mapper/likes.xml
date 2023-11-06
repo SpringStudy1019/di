@@ -26,4 +26,9 @@
 		where user_id=#{userId} and review_idx=#{reviewIdx}
 	</delete>
 	
+	<select id="count" parameterType="int" resultType="int">
+		select count(#{review_idx}) from likes
+		where review_idx=#{reviewIdx}
+	</select>
+	
 </mapper>

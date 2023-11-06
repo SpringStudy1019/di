@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +56,16 @@ public class LikeController {
 			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 			}
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@GetMapping(value="/count/{reviewIdx}")
+	public ResponseEntity<?> count(@PathVariable int reviewIdx) {
+		try {
+			int result = likeService.count(reviewIdx);
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

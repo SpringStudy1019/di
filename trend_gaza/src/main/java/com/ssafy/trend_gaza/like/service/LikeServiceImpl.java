@@ -1,5 +1,7 @@
 package com.ssafy.trend_gaza.like.service;
 
+import java.sql.SQLException;
+
 import org.springframework.stereotype.Service;
 
 import com.ssafy.trend_gaza.like.dto.LikeRequest;
@@ -37,6 +39,11 @@ private LikeMapper likeMapper;
 			result = likeMapper.offLike(likeRequest);
 		}
 		return result;
+	}
+
+	@Override
+	public int count(int reviewIdx) throws SQLException {
+		return likeMapper.count(reviewIdx);
 	}
 
 }
