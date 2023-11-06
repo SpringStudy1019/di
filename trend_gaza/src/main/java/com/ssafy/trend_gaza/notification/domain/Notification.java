@@ -1,4 +1,4 @@
-package com.ssafy.trend_gaza.notification;
+package com.ssafy.trend_gaza.notification.domain;
 
 import java.time.LocalDateTime;
 
