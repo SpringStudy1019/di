@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trend_gaza.like.repository.LikeMapper">
+
+	<resultMap type="com.ssafy.trend_gaza.like.entity.Like" id="like">
+		<result column="like_idx" property="likeIdx"/>
+		<result column="user_id" property="userId"/>
+		<result column="review_idx" property="reviewIdx"/>
+	</resultMap>
+	
+
+	<select id="findLike" parameterType="likeRequest" resultMap="like">
+		select * from likes
+		where user_id=#{userId} and review_idx=#{reviewIdx}
+	</select>
+	
+	<insert id="onLike" parameterType="likeRequest">
+		insert into likes (user_id, review_idx)
+		values (#{userId}, #{reviewIdx})
+	</insert>
+	
+	<delete id="offLike" parameterType="likeRequest">
+		delete from likes
+		where user_id=#{userId} and review_idx=#{reviewIdx}
+	</delete>
+	
+	<select id="count" parameterType="int" resultType="int">
+		select count(#{review_idx}) from likes
+		where review_idx=#{reviewIdx}
+	</select>
+	
+	<select id="selectUsers" parameterType="int" resultType="string">
+		select user_id from likes
+		where review_idx=#{reviewIdx}
+	</select>
+	
+</mapper>
