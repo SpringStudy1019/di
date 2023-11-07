@@ -22,7 +22,12 @@
 	
 	<sql id="search">
 		<if test="word != null and word != ''">
-			where title like concat('%', #{word}, '%')
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
 		</if>
 	</sql>
 	
@@ -42,5 +47,12 @@
 		delete from review
 		where review_idx=#{reviewIdx}
 	</delete>
+	
+	<select id="getTotalReviewCount" parameterType="map" resultType="int">
+		select count(review_idx) from review
+		<where>
+			<include refid="search"></include>
+		</where>
+	</select>
 	
 </mapper>

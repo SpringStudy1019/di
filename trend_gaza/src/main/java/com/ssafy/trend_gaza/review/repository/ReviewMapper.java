@@ -24,4 +24,7 @@ public interface ReviewMapper {
 	
 	/* 리뷰 삭제 */ 
 	void delete(String reviewIdx) throws SQLException;
+	
+	/* 리뷰 갯수 세기 */
+	int getTotalReviewCount(Map<String, String> param) throws SQLException;
 }

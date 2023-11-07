@@ -21,6 +21,7 @@ import com.ssafy.trend_gaza.review.dto.ReviewModifyRequest;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
 import com.ssafy.trend_gaza.review.entity.Review;
 import com.ssafy.trend_gaza.review.service.ReviewService;
+import com.ssafy.trend_gaza.util.PageNavigation;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,9 +50,10 @@ public class ReviewController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> list(@RequestParam Map<String, String> param) {
+	public ResponseEntity<?> list(@RequestParam Map<String, String> map) {
 		try {
-			List<Review> list = reviewService.list(param);
+			List<Review> list = reviewService.list(map);
+			PageNavigation pageNavigation = reviewService.makePageNavigation(map);
 			if(list != null && !list.isEmpty()) {
 				return new ResponseEntity<List<Review>>(list, HttpStatus.OK);
 			} else {
