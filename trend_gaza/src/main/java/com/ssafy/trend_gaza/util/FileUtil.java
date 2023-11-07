@@ -11,15 +11,22 @@ import javax.servlet.http.Part;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class FileUtil {
-	
-	private static final FileUtil instance = new FileUtil();
-	
-	public static FileUtil getInstance() {
-		return instance;
-	}
 
+	public static String findContentType(String contentType) {
+        String[] mediaContentType = contentType.split("/");
+        if (mediaContentType.length <= 0)
+        	throw new Exception();
+        	//throw new CustomException(FILE_CONVERT_FAIL);
+        if (!(mediaContentType[0].toUpperCase().equals("IMAGE") || mediaContentType[0].toUpperCase().equals("VIDEO")))
+            throw new Exception();
+        	//throw new CustomException(FILE_CONVERT_FAIL);
+        return mediaContentType[0].toUpperCase();
+    }
 	
 	public String getNewFileName(String originalFileName) {
 		// saveFileName 생성
