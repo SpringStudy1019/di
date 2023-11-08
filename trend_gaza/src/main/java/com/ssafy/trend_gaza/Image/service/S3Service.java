@@ -2,8 +2,10 @@ package com.ssafy.trend_gaza.Image.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -44,7 +46,7 @@ public class S3Service {
 	public List<String> uploadImages(final List<ImageFile> imageFiles) {
         return imageFiles.stream()
                 .map(this::uploadImage)
-                .toList();
+                .collect(Collectors.toList());
     }
 
 	private String uploadImage(final ImageFile imageFile) {
@@ -61,6 +63,6 @@ public class S3Service {
         } catch (final IOException e) {
             throw new ImageException(CustomExceptionStatus.INVALID_IMAGE);
         }
-        imageFile.getHashedName();
+        return imageFile.getHashedName();
 	}
 }
