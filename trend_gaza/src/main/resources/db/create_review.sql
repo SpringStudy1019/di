@@ -6,6 +6,8 @@ CREATE TABLE review (
     score ENUM ('1', '2', '3', '4', '5') NOT NULL,
     title VARCHAR(20) NOT NULL,
     content VARCHAR(2000) NOT NULL,
+    companion ENUM('FAMILY', 'COUPLE', 'BUSINESS', 'FRIEND', 'SOLO') NOT NULL,
+    visit_date TIMESTAMP,
     register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modify_date TIMESTAMP,
     user_id VARCHAR(20) NOT NULL,
