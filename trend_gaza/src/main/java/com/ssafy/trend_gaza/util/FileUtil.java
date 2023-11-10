@@ -21,15 +21,14 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class FileUtil {
 
-//	public static String findContentType(String contentType) {
-//        String[] mediaContentType = contentType.split("/");
-//        if (mediaContentType.length <= 0)
-//        	throw new ImageException(CustomExceptionStatus.FILE_CONVERT_FAIL);
-//        if (!(mediaContentType[0].toUpperCase().equals("IMAGE") || mediaContentType[0].toUpperCase().equals("VIDEO")))
-//            throw new Exception();
-//        	//throw new CustomException(FILE_CONVERT_FAIL);
-//        return mediaContentType[0].toUpperCase();
-//    }
+	public static String findContentType(String contentType) {
+        String[] mediaContentType = contentType.split("/");
+        if (mediaContentType.length <= 0)
+        	throw new ImageException(CustomExceptionStatus.FILE_CONVERT_FAIL);
+        if (!(mediaContentType[0].toUpperCase().equals("IMAGE") || mediaContentType[0].toUpperCase().equals("VIDEO")))
+        	throw new CustomException(CustomExceptionStatus.FILE_CONVERT_FAIL);
+        return mediaContentType[0].toUpperCase();
+    }
 	
 	public String getNewFileName(String originalFileName) {
 		// saveFileName 생성
@@ -63,6 +62,16 @@ public class FileUtil {
 	public String getFolder(String realPath, String today) {
 		return realPath + today;
 	}
+	
+	/*
+	 * S3에서 업로드할 때 폴더는 파일타입/유저아이디/파일타입/파일명으로 한다
+	 */
+	public static String findFolder(String filename, String userId, String contentType) {
+        String folder = "";
+        folder += contentType + "/" + userId + "/" + contentType + "/" + filename;
+        log.info("folder Name : " + folder);
+        return folder;
+    }
 	
 	public String upload(String originalFileName, MultipartFile multipartFile, File folder) throws Exception {
 		String saveFileName = UUID.randomUUID().toString()

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
@@ -36,8 +37,8 @@ public class S3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    @Value("${cloud.aws.s3.folder}")
-    private String folder;
+//    @Value("${cloud.aws.s3.folder}")
+//    private String folder;
 	
 	public S3Service(AmazonS3 amazonS3) {
 		this.s3Client = amazonS3;
@@ -50,7 +51,9 @@ public class S3Service {
     }
 
 	private String uploadImage(final ImageFile imageFile) {
-        final String path = folder + imageFile.getHashedName();
+		final MultipartFile file = imageFile.getFile();
+        final String path = FileUtil.findFolder(file.getOriginalFilename(), imageFile.getUserId(),
+        		FileUtil.findContentType(file.getContentType())) + imageFile.getHashedName();
         final ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(imageFile.getContentType());
         metadata.setContentLength(imageFile.getSize());

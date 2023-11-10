@@ -30,10 +30,10 @@ public class UploadService {
 		this.publisher = publisher;
 	}
 	
-	public ImagesResponse save(final List<MultipartFile> images) {
+	public ImagesResponse save(final List<MultipartFile> images, String userId) {
 		validateSizeOfImages(images);
 		final List<ImageFile> imageFiles = images.stream()
-				.map(ImageFile::new)
+				.map(file -> new ImageFile(file, userId))
 				.collect(Collectors.toList());
 		final List<String> imageNames = uploadImages(imageFiles);
 		return new ImagesResponse(imageNames);

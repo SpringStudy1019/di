@@ -20,11 +20,13 @@ public class ImageFile {
 	
 	private final MultipartFile file;
 	private final String hashedName;
+	private final String userId;
 	
-	public ImageFile(final MultipartFile file) {
+	public ImageFile(final MultipartFile file, final String userId) {
         validateNullImage(file);
         this.file = file;
         this.hashedName = hashName(file);
+        this.userId = userId;
     }
 
     private void validateNullImage(final MultipartFile file) {
@@ -33,7 +35,11 @@ public class ImageFile {
         }
     }
 
-    private String hashName(final MultipartFile image) {
+    public static String getExtensionDelimiter() {
+		return EXTENSION_DELIMITER;
+	}
+
+	private String hashName(final MultipartFile image) {
         final String name = image.getOriginalFilename();
         final String filenameExtension = EXTENSION_DELIMITER + name.substring(name.lastIndexOf('.'));
         final String nameAndDate = name + LocalDateTime.now();
@@ -51,6 +57,10 @@ public class ImageFile {
                 .mapToObj(i -> String.format("%02x", bytes[i] & 0xff))
                 .collect(Collectors.joining());
     }
+    
+    public String getUserId() {
+		return userId;
+	}
 
     public String getContentType() {
         return this.file.getContentType();
