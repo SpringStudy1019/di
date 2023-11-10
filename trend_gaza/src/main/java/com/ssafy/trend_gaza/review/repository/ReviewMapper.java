@@ -17,11 +17,16 @@ public interface ReviewMapper {
 	void register(ReviewRegisterRequest registerRequest) throws SQLException;
 	
 	/* 리뷰 전체 조회 (+검색) */
-	List<Review> list(Map<String, String> param) throws SQLException;
+	List<Review> list(Map<String, Object> param) throws SQLException;
+	
+	/* 리뷰 상세 조회 */
+	Review view(String reviewIdx) throws SQLException;
 	
 	/* 리뷰 수정 */
 	void modify(ReviewModifyRequest ModifyRequest) throws SQLException;
 	
 	/* 리뷰 삭제 */ 
 	void delete(String reviewIdx) throws SQLException;
+	
+	int getTotalReviewCount(Map<String, Object> param) throws SQLException;
 }

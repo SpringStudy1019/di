@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick, ref, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { list } from "@/api/review";
 
@@ -37,15 +37,11 @@ const changeKey = (val) => {
 };
 
 const getReviewList = () => {
-    console.log("서버에서 글목록 얻어오자!");
+    // console.log("서버에서 글목록 얻어오자!");
    // API 호출
     list(param.value,
       ({ data }) => {    // data.DTO필드명
-        console.log(data);
         reviews.value = data;
-        console.log(typeof(data))
-        console.log("리뷰 벨류!!!");
-        console.log(reviews.value);
         currentPage.value = data.currentPage;
         totalPage.value = data.totalPageCount;
     },
@@ -53,6 +49,8 @@ const getReviewList = () => {
         console.log(error);
     });
 };
+
+
 
 const onPageChange = (val) => {
   console.log(val + "번 페이지로 이동 준비 끝!!!");

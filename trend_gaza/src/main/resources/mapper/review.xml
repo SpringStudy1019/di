@@ -22,16 +22,43 @@
 		insert into review (score, title, content, companion, start_date, end_date, register_date, user_id, content_id)
 		values (#{score}, #{title}, #{content}, #{companion}, now(),  now(), now(), #{userId}, #{contentId})
 	</insert>
-	
+	<!-- 
 	<sql id="search">
 		<if test="word != null and word != ''">
 			where title like concat('%', #{word}, '%')
 		</if>
 	</sql>
+	 -->
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
 	
-	<select id="list" resultMap="review">
+	<select id="list" parameterType="map" resultMap="review">
 		select * from review
-		<include refid="search"></include> 
+		<where>
+			<include refid="search"></include>
+		</where>
+		limit #{start}, #{listsize}
+	</select>
+	
+	<select id="getTotalReviewCount" parameterType="map" resultType="int">
+		select count(review_idx)
+		from review
+		<where>
+			<include refid="search"></include>
+		</where>
+	</select>
+	
+	<select id="view" resultMap="review">
+		select * from review
+		where review_idx=#{reviewIdx}
 	</select>
 	 
 	<update id="modify" parameterType="reviewModifyRequest">

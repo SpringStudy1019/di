@@ -9,7 +9,7 @@ function list(param, success, fail) {
 }
 
 function detailReview(reviewIdx, success, fail) {
-    local.get(`${url}/${reviewIdx}`).then(success).catch(fail);
+    local.get(`${url}/view/${reviewIdx}`).then(success).catch(fail);
 }
     
 export {

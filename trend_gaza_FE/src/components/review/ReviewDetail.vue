@@ -6,7 +6,7 @@ import { detailReview } from '../../api/review';
 const route = useRoute();
 const router = useRouter();
 
-const { reviewIdx } = route.params.reviewIdx;
+const { reviewIdx } = route.params;
 
 const review = ref({});
 
@@ -15,12 +15,20 @@ onMounted(() => {
 });
 
 const getReview = () => {
-  // const { articleno } = route.params;
   console.log(reviewIdx + "번글 얻으러 가자!!!");
-    // API 호출
-    detailReview(reviewIdx);
-   
+
+  // API 호출
+  detailReview(reviewIdx,
+    ({ data }) => { // success callback
+      review.value = data; // Store the data in the 'review' ref
+    },
+    (error) => {
+      console.log(error);
+      // Handle any errors here if needed
+    }
+  );
 };
+
 
 function moveList() {
   router.push({ name: "review-list" });
@@ -59,7 +67,10 @@ function onDeleteArticle() {
               <p>
                 <span class="fw-bold">김싸피</span> <br />
                 <span class="text-secondary fw-light">
-                  {{ review.registerDate }}1 점수 : {{ review.score }}
+                  {{ review.registerDate }}
+                </span>
+                <span class="text-secondary fw-light">
+                 점수 : {{ review.score }}
                 </span>
               </p>
             </div>

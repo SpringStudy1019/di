@@ -1,7 +1,9 @@
 <script setup>
+
+import { RouterView } from "vue-router";
 import TheHeadingNavbar from "@/components/layout/TheHeadingNavbar.vue";
 import TheFooter from './components/layout/TheFooter.vue';
-// import { RouterView } from "vue-router";
+
 </script>
 
 <template>
@@ -9,7 +11,7 @@ import TheFooter from './components/layout/TheFooter.vue';
   <div>
     <router-view></router-view>
   </div>
-  <TheFooter />
+  <!-- <TheFooter /> -->
 </template>
 
 <style scoped>
