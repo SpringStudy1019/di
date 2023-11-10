@@ -1,9 +1,20 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { nextTick, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { list } from "@/api/review";
 
+import VSelect from "@/components/common/VSelect.vue";
+import ReviewListItem from '@/components/review/item/ReviewListItem.vue';
+import PageNavigation from "@/components/common/PageNavigation.vue";
+
 const router = useRouter();
+
+const selectOption = ref([
+  { text: "검색조건", value: "" },
+  { text: "리뷰번호", value: "review_idx" },
+  { text: "제목", value: "title" },
+  { text: "작성자 아이디", value: "user_id" },
+]);
 
 const reviews = ref([]);
 const currentPage = ref(1);
@@ -20,12 +31,21 @@ onMounted(() => {
     getReviewList();
 });
 
+const changeKey = (val) => {
+  console.log("ReviewList에서 선택한 조건 : " + val);
+  param.value.key = val;
+};
+
 const getReviewList = () => {
-    console.log("서버에서 글목록 얻어오자!!!", param.value);
+    console.log("서버에서 글목록 얻어오자!");
    // API 호출
     list(param.value,
-    ({ data }) => {    // data.DTO필드명
-        reviews.value = data.review;
+      ({ data }) => {    // data.DTO필드명
+        console.log(data);
+        reviews.value = data;
+        console.log(typeof(data))
+        console.log("리뷰 벨류!!!");
+        console.log(reviews.value);
         currentPage.value = data.currentPage;
         totalPage.value = data.totalPageCount;
     },
@@ -72,7 +92,7 @@ const moveWrite = () => {
                   v-model="param.word"
                   placeholder="검색어..."
                 />
-                <button class="btn btn-dark" type="button" @click="getArticleList">검색</button>
+                <button class="btn btn-dark" type="button" @click="getReviewList">검색</button>
               </div>
             </form>
           </div>
@@ -93,10 +113,10 @@ const moveWrite = () => {
           </thead>
           <tbody>
             <ReviewListItem
-                v-for="review in reviews"
-                :key="review.reviewIdx"
-                :review="review"
-            ></ReviewListItem>
+            v-for="review in reviews"
+            :key="review.idx"
+            :review="review"
+          ></ReviewListItem>
           </tbody>
         </table>
       </div>
