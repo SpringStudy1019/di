@@ -1,13 +1,31 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import TheMainView from "@/views/TheMainView.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: TheMainView
+      name: 'main',
+      //component: TheMainView
+      component: () => import("../views/TheMainView.vue"),
+    },
+    {
+      path: '/review',
+      name: 'review',
+      component: () => import("../views/TheReviewView.vue"),
+      redirect: { name: "review-list" },
+      children: [
+        {
+          path: "list",
+          name: "review-list",
+          component: () => import("@/components/review/ReviewList.vue"),
+        },
+        {
+          path: "view",
+          name: "review-view",
+          component: () => import("@/components/review/ReviewDetail.vue"),
+        },
+      ]
     },
     
   ]
