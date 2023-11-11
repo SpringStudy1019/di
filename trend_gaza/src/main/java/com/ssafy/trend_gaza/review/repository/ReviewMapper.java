@@ -26,7 +26,7 @@ public interface ReviewMapper {
 	Review view(int reviewIdx) throws SQLException;
 	
 	/* 리뷰 수정 */
-	ReviewModifyResponse getModify(int reviewIdx) throws SQLException;
+	Review getModify(int reviewIdx) throws SQLException;
 	void modify(ReviewModifyResponse modifyResponse) throws SQLException;
 	
 	/* 리뷰 삭제 */ 
