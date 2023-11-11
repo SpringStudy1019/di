@@ -81,15 +81,9 @@ public class ReviewController {
 	@GetMapping("/modify/{reviewIdx}")
 	public ResponseEntity<?> getModify(@PathVariable int reviewIdx) {
 		try {
-<<<<<<< HEAD
 			ReviewModifyResponse modifyResponse = reviewService.getModify(reviewIdx);
 			if (modifyResponse != null) {
 				return new ResponseEntity<ReviewModifyResponse>(modifyResponse, HttpStatus.OK);				
-=======
-			Review review = reviewService.getModify(reviewIdx);
-			if (review != null) {
-				return new ResponseEntity<Review>(review, HttpStatus.OK);				
->>>>>>> 210d51d31510651f1e1d4f10791a59d9845b820b
 			} else {
 				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 			}
