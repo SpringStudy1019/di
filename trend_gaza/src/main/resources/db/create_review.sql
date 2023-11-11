@@ -6,6 +6,9 @@ CREATE TABLE review (
     score ENUM ('1', '2', '3', '4', '5') NOT NULL,
     title VARCHAR(20) NOT NULL,
     content VARCHAR(2000) NOT NULL,
+    companion ENUM('FAMILY', 'COUPLE', 'BUSINESS', 'FRIEND', 'SOLO') NOT NULL,
+    start_date TIMESTAMP NOT NULL,
+    end_date TIMESTAMP NOT NULL,
     register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modify_date TIMESTAMP,
     user_id VARCHAR(20) NOT NULL,
@@ -15,3 +18,4 @@ CREATE TABLE review (
 );
 
 select * from review;
+
