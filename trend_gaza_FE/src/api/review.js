@@ -20,8 +20,8 @@ function getModifyReview(reviewIdx, success, fail) {
     local.get(`${url}/modify/${reviewIdx}`).then(success).catch(fail);
 }
 
-function modifyReview(reviewIdx, review, success, fail) {
-    local.put(`${url}/${reviewIdx}`, JSON.stringify(review)).then(success).catch(fail);
+function modifyReview(review, success, fail) {
+    local.put(`${url}`, JSON.stringify(review)).then(success).catch(fail);
 }
 
 function deleteReview(reviewIdx, success, fail) {

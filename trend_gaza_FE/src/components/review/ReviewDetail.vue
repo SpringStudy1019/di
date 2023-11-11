@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { detailReview } from '../../api/review';
+import { detailReview, deleteReview } from '../../api/review';
 
 const route = useRoute();
 const router = useRouter();
@@ -35,13 +35,26 @@ function moveList() {
 }
 
 function moveModify() {
-  router.push({ name: "review-modify", params: { reviewIdx } });
+  router.push({ name: "review-modify", params: { reviewIdx:reviewIdx } });
 }
 
 function onDeleteArticle() {
-  // const { articleno } = route.params;
+  if(!IsAbleToDelete()) {
+    return;
+  }
+  const { reviewIdx } = route.params;
   console.log(reviewIdx + "번글 삭제하러 가자!!!");
    // API 호출
+   deleteReview(reviewIdx,
+    ({data}) => {
+      router.push({ name: "review-list" });
+    }, (error) => {
+      console.log(error);
+    })
+}
+
+function IsAbleToDelete() {
+  return confirm("정말 삭제하시겠습니까?");
 }
 </script>
 
