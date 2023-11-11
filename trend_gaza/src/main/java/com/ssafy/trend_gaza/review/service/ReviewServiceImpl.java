@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.ssafy.trend_gaza.review.dto.ReviewModifyRequest;
+import com.ssafy.trend_gaza.review.dto.ReviewModifyResponse;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
 import com.ssafy.trend_gaza.review.dto.ReviewResponse;
 import com.ssafy.trend_gaza.review.entity.Review;
@@ -56,13 +56,18 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	@Override
-	public Review view(String reviewIdx) throws Exception {
+	public Review view(int reviewIdx) throws Exception {
 		return reviewMapper.view(reviewIdx);
 	}
 
 	@Override
-	public void modify(ReviewModifyRequest ModifyRequest) throws Exception {
-		reviewMapper.modify(ModifyRequest);
+	public ReviewModifyResponse getModify(int reviewIdx) throws Exception {
+		return reviewMapper.getModify(reviewIdx);
+	}
+	
+	@Override
+	public void modify(ReviewModifyResponse modifyResponse) throws Exception {
+		reviewMapper.modify(modifyResponse);
 		
 	}
 
@@ -71,5 +76,6 @@ public class ReviewServiceImpl implements ReviewService {
 		reviewMapper.delete(reviewIdx);
 		
 	}
+
 
 }

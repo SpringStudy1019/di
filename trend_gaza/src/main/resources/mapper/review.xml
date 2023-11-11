@@ -54,8 +54,13 @@
 		select * from review
 		where review_idx=#{reviewIdx}
 	</select>
+	
+	<select id="getModify" parameterType="int" resultType="reviewModifyResponse">
+		select review_idx, score, title, content, companion, start_date, end_date from review
+		where review_idx=#{reviewIdx}
+	</select>
 	 
-	<update id="modify" parameterType="reviewModifyRequest">
+	<update id="modify" parameterType="reviewModifyResponse">
 		update review
 		set modify_date=now(), score=#{score}, title=#{title}, content=#{content} 
 		where review_idx=#{reviewIdx}

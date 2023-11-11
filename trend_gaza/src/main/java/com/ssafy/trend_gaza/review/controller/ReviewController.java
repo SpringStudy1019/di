@@ -20,13 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.trend_gaza.review.dto.ReviewModifyRequest;
+import com.ssafy.trend_gaza.review.dto.ReviewModifyResponse;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
 import com.ssafy.trend_gaza.review.dto.ReviewResponse;
 import com.ssafy.trend_gaza.review.entity.Review;
 import com.ssafy.trend_gaza.review.service.ReviewService;
 
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -66,7 +65,7 @@ public class ReviewController {
 	}
 	
 	@GetMapping(value = "/view/{reviewIdx}")
-	public ResponseEntity<?> view(@PathVariable String reviewIdx) {
+	public ResponseEntity<?> view(@PathVariable int reviewIdx) {
 		try {
 			Review review = reviewService.view(reviewIdx);
 			if(review != null) {
@@ -79,10 +78,25 @@ public class ReviewController {
 		}
 	}
 	
-	@PutMapping
-	public ResponseEntity<?> modify(@RequestBody ReviewModifyRequest reviewModifyRequest, HttpSession session) {
+	@GetMapping("/modify/{reviewIdx}")
+	public ResponseEntity<?> getModify(@PathVariable int reviewIdx) {
 		try {
-			reviewService.modify(reviewModifyRequest);
+			ReviewModifyResponse modifyResponse = reviewService.getModify(reviewIdx);
+			if (modifyResponse != null) {
+				return new ResponseEntity<ReviewModifyResponse>(modifyResponse, HttpStatus.OK);				
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return exceptionHandling(e);
+		}
+	}
+	
+	@PutMapping
+	public ResponseEntity<?> modify(@RequestBody ReviewModifyResponse reviewModifyResponse, HttpSession session) {
+		try {
+			reviewService.modify(reviewModifyResponse);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
