@@ -13,7 +13,6 @@ const route = useRoute();
 const {VITE_VUE_API_URL} = import.meta.env;
 
 const props = defineProps({ type: String, reviewIdx: String });
-console.log("부모에게 받은 값" + props.reviewIdx);
 
 const contentLength = ref(0);
 const titleLength = ref(0);
@@ -49,15 +48,11 @@ if (props.type === "modify") {
 }
 
 const getReview = () => {
-    console.log(props.reviewIdx);
-    console.log(props.reviewIdx + "번글 얻으러 가자!!!");
-
     getModifyReview(props.reviewIdx,
             ({ data }) => { 
-                console.log(data);
                 review.value = data;  
-                score.value = data.score + 1;
-                console.log(formattingDate(data.startDate));
+                score.value = data.score;
+                console.log(score.value);
                 review.value.startDate = formattingDate(data.startDate);
                 review.value.endDate = formattingDate(data.endDate);
                 contentLength.value = data.content.length;
@@ -126,7 +121,7 @@ watch(
     () => review.value.title,
     (value) => {
         let len = value.length;
-        if (len == 0 || len > 30) {
+        if (len == 0 || len > 20) {
             titleErrMsg.value = "제목을 확인해 주세요!!!";
         } else titleErrMsg.value = "";
     },
@@ -137,16 +132,12 @@ watch(
     () => review.value.content,
     (value) => {
         let len = value.length;
-        if (len == 0 || len > 500) {
+        if (len == 0 || len > 2000) {
             contentErrMsg.value = "내용을 확인해 주세요!!!";
         } else contentErrMsg.value = "";
     },
     { immediate: true }
 );
-
-// const changeKey = (val) => {
-//     param.value.key = val;
-// }
 
 function onSubmit() {
     if (scoreErrMsg.value) {
@@ -185,7 +176,7 @@ function writeReview() {
 
 function check(index) {
     score.value = index + 1;
-    review.value.score = score.value - 1;
+    review.value.score = index;
 }
 
 function updateReview() {
@@ -232,7 +223,7 @@ const markingSelectOption = () => {
                     <span class="yello-star" v-if="index < score">
                         <img class="yellow-star" src="@/assets/yelloStar.svg">
                     </span>
-                    <span v-else>
+                    <span v-if="index >= score">
                         <img class="empty-star" src="@/assets/emptyStar.svg">
                     </span>
                 </div>
