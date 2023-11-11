@@ -1,12 +1,10 @@
 package com.ssafy.trend_gaza.util;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.servlet.http.Part;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,11 +62,10 @@ public class FileUtil {
 	}
 	
 	/*
-	 * S3에서 업로드할 때 폴더는 파일타입/유저아이디/파일타입/파일명으로 한다
+	 * S3에서 업로드할 때 폴더는 파일타입/유저아이디/파일타입/으로 한다
 	 */
-	public static String findFolder(String filename, String userId, String contentType) {
-        String folder = "";
-        folder += contentType + "/" + userId + "/" + contentType + "/" + filename;
+	public static String findFolder(String userId, String contentType) {
+        String folder = contentType + "/" + userId + "/" + contentType + "/";
         log.info("folder Name : " + folder);
         return folder;
     }

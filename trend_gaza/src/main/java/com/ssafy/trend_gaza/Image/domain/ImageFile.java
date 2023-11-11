@@ -41,7 +41,7 @@ public class ImageFile {
 
 	private String hashName(final MultipartFile image) {
         final String name = image.getOriginalFilename();
-        final String filenameExtension = EXTENSION_DELIMITER + name.substring(name.lastIndexOf('.'));
+        final String filenameExtension = name.substring(name.lastIndexOf('.'));
         final String nameAndDate = name + LocalDateTime.now();
         try {
             final MessageDigest hashAlgorithm = MessageDigest.getInstance("SHA3-256");
