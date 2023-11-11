@@ -26,12 +26,6 @@ public class AttractionAdminController {
 	@Value("${file.path}")
 	private String uploadPath;
 	
-	@Value("${file.path.upload-images}")
-	private String uploadImagePath;
-	
-	@Value("${file.path.upload-files}")
-	private String uploadFilePath;
-	
 	private final AttractionService attractionService;
 	private final ResponseService responseService;
 	
