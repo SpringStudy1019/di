@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { list } from "@/api/review";
 
 import VSelect from "@/components/common/VSelect.vue";
 import ReviewListItem from '@/components/review/item/ReviewListItem.vue';
 import PageNavigation from "@/components/common/PageNavigation.vue";
+import { list } from "@/api/review";
 
 const router = useRouter();
 
@@ -41,7 +41,7 @@ const getReviewList = () => {
    // API 호출
     list(param.value,
       ({ data }) => {    // data.DTO필드명
-        reviews.value = data;
+        reviews.value = data.reviews;
         currentPage.value = data.currentPage;
         totalPage.value = data.totalPageCount;
     },

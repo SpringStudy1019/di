@@ -55,7 +55,7 @@ function onDeleteArticle() {
       </div>
       <div class="col-lg-10 text-start">
         <div class="row my-2">
-          <h2 class="text-secondary px-5">{{ review.reviewIdx }}. {{ review.title }}</h2>
+          <h2 class="text-bold px-2">{{ review.reviewIdx }}. {{ review.title }}</h2>
         </div>
         <div class="row">
           <div class="col-md-8">
@@ -65,10 +65,12 @@ function onDeleteArticle() {
                 src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
               />
               <p>
-                <span class="fw-bold">김싸피</span> <br />
+                <span class="fw-bold">{{ review.userId }}</span> <br />
                 <span class="text-secondary fw-light">
                   {{ review.registerDate }}
                 </span>
+              </p>
+              <p>
                 <span class="text-secondary fw-light">
                  점수 : {{ review.score }}
                 </span>
