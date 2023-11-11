@@ -15,13 +15,13 @@ public interface CommentMapper {
 	/* 댓글 등록 */ 
 	void register(CommentRegisterRequest registerRequest) throws SQLException;
 	
-	/* 댓글 전체 조회 */
-	List<Comment> list() throws SQLException;
+	/* 리뷰에 달린 댓글 전체 조회 */
+	List<Comment> list(int reviewIdx) throws SQLException;
 	
 	/* 댓글 수정 */
-	CommentModifyResponse getModify(int commentIdx) throws SQLException;
+	Comment getModify(int commentIdx) throws SQLException;
 	void modify(CommentModifyResponse modifyResponse) throws SQLException;
 	
 	/* 댓글 삭제 */ 
-	void delete(String commentIdx) throws SQLException;
+	void delete(int commentIdx) throws SQLException;
 }

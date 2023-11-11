@@ -12,12 +12,12 @@ public interface CommentService {
 	void register(CommentRegisterRequest registerRequest) throws Exception;
 	
 	/* 댓글 전체 조회 */
-	List<Comment> list() throws Exception;
+	List<Comment> list(int reviewIdx) throws Exception;
 	
 	/* 댓글 수정 */
-	CommentModifyResponse getModify(int commentIdx) throws Exception;
+	Comment getModify(int commentIdx) throws Exception;
 	void modify(CommentModifyResponse modifyResponse) throws Exception;
 	
 	/* 댓글 삭제 */ 
-	void delete(String commentIdx) throws Exception;
+	void delete(int commentIdx) throws Exception;
 }

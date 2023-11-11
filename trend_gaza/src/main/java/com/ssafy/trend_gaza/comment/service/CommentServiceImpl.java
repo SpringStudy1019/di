@@ -25,12 +25,12 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public List<Comment> list() throws Exception {
-		return commentMapper.list();
+	public List<Comment> list(int reviewIdx) throws Exception {
+		return commentMapper.list(reviewIdx);
 	}
 
 	@Override
-	public CommentModifyResponse getModify(int commentIdx) throws Exception {
+	public Comment getModify(int commentIdx) throws Exception {
 		return commentMapper.getModify(commentIdx);
 	}
 
@@ -41,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public void delete(String commentIdx) throws Exception {
+	public void delete(int commentIdx) throws Exception {
 		commentMapper.delete(commentIdx);
 		
 	}

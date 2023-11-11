@@ -23,8 +23,8 @@
 		where review_idx = #{reviewIdx}
 	</select>
 	
-	<select id="getModify" parameterType="int" resultType="commentModifyResponse">
-		select comment_idx, content, register_date, modify_date, userId, reviewIdx from review
+	<select id="getModify" parameterType="int" resultMap="comment">
+		select * from comment
 		where comment_idx=#{commentIdx}
 	</select>
 	
@@ -34,7 +34,7 @@
 		where comment_idx=#{commentIdx}
 	</update>
 	
-	<delete id="delete" parameterType="String">
+	<delete id="delete" parameterType="int">
 		delete from comment
 		where comment_idx=#{commentIdx}
 	</delete>
