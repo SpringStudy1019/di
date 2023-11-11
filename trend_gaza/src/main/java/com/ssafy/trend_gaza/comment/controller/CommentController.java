@@ -42,7 +42,7 @@ public class CommentController {
 		
 	}
 	
-	@GetMapping(value = "/view/{reviewIdx}")
+	@GetMapping(value = "/list/{reviewIdx}")
 	public ResponseEntity<?> list(@PathVariable int reviewIdx) {
 		try {
 			List<Comment> list = commentService.list(reviewIdx);
