@@ -18,7 +18,7 @@ import com.ssafy.trend_gaza.comment.dto.CommentRegisterRequest;
 import com.ssafy.trend_gaza.comment.service.CommentService;
 
 @RestController
-@RequestMapping("/controller")
+@RequestMapping("/comment")
 @CrossOrigin("*")
 public class CommentController {
 
