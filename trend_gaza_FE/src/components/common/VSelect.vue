@@ -12,7 +12,7 @@ const onSelect = () => {
 </script>
 
 <template>
-  <select v-model="key" class="form-select form-select-sm ms-5 me-1 w-50" @change="onSelect">
+  <select v-model="key" class="form-select" @change="onSelect">
     <option
       v-for="option in selectOption"
       :key="option.value"
@@ -24,4 +24,8 @@ const onSelect = () => {
   </select>
 </template>
 
-<style scoped></style>
+<style scoped>
+.form-select {
+  margin: 0 auto;
+}
+</style>
