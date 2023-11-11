@@ -1,12 +1,11 @@
 package com.ssafy.trend_gaza.review.service;
 
-import java.util.List;
 import java.util.Map;
 
-import com.ssafy.trend_gaza.review.dto.ReviewModifyRequest;
+import com.ssafy.trend_gaza.review.dto.ReviewModifyResponse;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
+import com.ssafy.trend_gaza.review.dto.ReviewResponse;
 import com.ssafy.trend_gaza.review.entity.Review;
-import com.ssafy.trend_gaza.util.PageNavigation;
 
 public interface ReviewService {
 
@@ -14,16 +13,16 @@ public interface ReviewService {
 	void register(ReviewRegisterRequest registerRequest) throws Exception;
 	
 	/* 리뷰 전체 조회 (+검색) */
-	List<Review> list(Map<String, String> map) throws Exception;
+	ReviewResponse list(Map<String, String> map) throws Exception;
 	
 	/* 리뷰 상세 조회 */
-	Review view(String reviewIdx) throws Exception;
+	Review view(int reviewIdx) throws Exception;
 	
 	/* 리뷰 수정 */
-	void modify(ReviewModifyRequest ModifyRequest) throws Exception;
+	ReviewModifyResponse getModify(int reviewIdx) throws Exception;
+	void modify(ReviewModifyResponse modifyResponse) throws Exception;
 	
 	/* 리뷰 삭제 */ 
 	void delete(String reviewIdx) throws Exception;
 	
-	PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
 }

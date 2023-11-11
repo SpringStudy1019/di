@@ -3,7 +3,7 @@ package com.ssafy.trend_gaza.review.dto;
 import lombok.Builder;
 
 @Builder
-public class ReviewModifyRequest {
+public class ReviewModifyResponse {
 
 	private Integer reviewIdx;
 	private String score;
@@ -13,9 +13,9 @@ public class ReviewModifyRequest {
 	private String startDate;
 	private String endDate;
 	
-	public ReviewModifyRequest() {}
+	public ReviewModifyResponse() {}
 
-	public ReviewModifyRequest(Integer reviewIdx, String score, String title, String content, String companion,
+	public ReviewModifyResponse(Integer reviewIdx, String score, String title, String content, String companion,
 			String startDate, String endDate) {
 		super();
 		this.reviewIdx = reviewIdx;
