@@ -61,7 +61,11 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public ReviewModifyResponse getModify(int reviewIdx) throws Exception {
+=======
+	public Review getModify(int reviewIdx) throws Exception {
+>>>>>>> 210d51d31510651f1e1d4f10791a59d9845b820b
 		return reviewMapper.getModify(reviewIdx);
 	}
 	

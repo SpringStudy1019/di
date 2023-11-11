@@ -55,8 +55,13 @@
 		where review_idx=#{reviewIdx}
 	</select>
 	
+<<<<<<< HEAD
 	<select id="getModify" parameterType="int" resultType="reviewModifyResponse">
 		select review_idx, score, title, content, companion, start_date, end_date from review
+=======
+	<select id="getModify" parameterType="int" resultMap="review">
+		select * from review
+>>>>>>> 210d51d31510651f1e1d4f10791a59d9845b820b
 		where review_idx=#{reviewIdx}
 	</select>
 	 
