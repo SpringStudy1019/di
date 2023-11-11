@@ -19,8 +19,7 @@ public interface ReviewService {
 	Review view(int reviewIdx) throws Exception;
 	
 	/* 리뷰 수정 */
-	ReviewModifyResponse getModify(int reviewIdx) throws Exception;
-
+	Review getModify(int reviewIdx) throws Exception;
 	void modify(ReviewModifyResponse modifyResponse) throws Exception;
 	
 	/* 리뷰 삭제 */ 
