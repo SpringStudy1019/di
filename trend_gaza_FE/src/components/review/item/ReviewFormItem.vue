@@ -15,9 +15,12 @@ const {VITE_VUE_API_URL} = import.meta.env;
 const props = defineProps({ type: String, reviewIdx: String });
 console.log("부모에게 받은 값" + props.reviewIdx);
 
+const contentLength = ref(0);
+const titleLength = ref(0);
+const today = ref(formattingDate(new Date()));
 const score = ref(1);
 const isUesId = ref(false);
-const optionMsg = "------------------------------------------------------------------------------선택------------------------------------------------------------------------------";
+const optionMsg = "------------------------------------------선택------------------------------------------";
 const selectOption = ref([
     { text: optionMsg, value: ""},
     { text: "가족", value: "FAMILY" },
@@ -53,24 +56,17 @@ const getReview = () => {
             ({ data }) => { 
                 console.log(data);
                 review.value = data;  
-                score.value = data.score;
+                score.value = data.score + 1;
+                console.log(formattingDate(data.startDate));
+                review.value.startDate = formattingDate(data.startDate);
+                review.value.endDate = formattingDate(data.endDate);
+                contentLength.value = data.content.length;
+                titleLength.value = data.title.length;
 
-                // select 요소의 각 option을 조사
-                console.log(selectOption.value.length);
-                for (let i = 0; i < selectOption.value.length; i++) {
-                const option = selectOption.value[i];
-                console.log(option);
-
-                // 현재 옵션의 값과 타겟 값이 일치하면 checked 속성 부여
-                if (option.value === data.companion) {
-                    option.selected = true;
-                    // 또는 option.setAttribute('selected', 'selected'); 를 사용할 수도 있습니다.
-                }
-            }
-    },
-    (error) => {
-      console.log(error);
-    });
+                markingSelectOption();
+            },(error) => {
+                console.log(error);
+            });
 }
 
 
@@ -96,7 +92,9 @@ watch(
     (value) => {
         if (value === "") {
             startDateErrMsg.value = "출발 일자를 선택해주세요!!!";
-        } else startDateErrMsg.value = "";
+        } else if (value > review.value.endDate) {
+            startDateErrMsg.value = "출발 일자는 도착일자보다 클 수 없습니다!!!";
+        }else startDateErrMsg.value = "";
     },
     { immediate: true }
 );
@@ -106,7 +104,9 @@ watch(
     (value) => {
         if (value === "") {
             endDateErrMsg.value = "도착 일자를 선택해주세요!!!";
-        } else endDateErrMsg.value = "";
+        } else if (value > today) {
+            endDateErrMsg.value = "현재 일자보다 도착 일자가 클 수 없습니다!!!";
+        }else endDateErrMsg.value = "";
     },
     { immediate: true }
 );
@@ -183,13 +183,13 @@ function writeReview() {
         });
 }
 
-
 function check(index) {
-    this.score = index + 1;
+    score.value = index + 1;
+    review.value.score = score.value - 1;
 }
 
 function updateReview() {
-    review.value.score = score.value - 1;
+    //review.value.score = score.value - 1;
     modifyReview(review.value,
         ({data}) => {
             router.push({name:"review-list"});
@@ -197,6 +197,29 @@ function updateReview() {
         (error) => {
             console.log(error);
         });
+}
+
+function formattingDate(date) {
+    const dateObject = new Date(date);
+    return dateObject.toISOString().split('T')[0];
+}
+
+const countTitle = () => {
+    titleLength.value = review.value.title.length;
+}
+
+const countContent = () => {
+    contentLength.value = review.value.content.length;
+}
+
+const markingSelectOption = () => {
+    for (let i = 0; i < selectOption.value.length; i++) {
+        const option = selectOption.value[i];
+
+        if (option.value === data.companion) {
+            selectOption.value[i].selected = selected;
+        }
+    }
 }
 </script>
 
@@ -218,12 +241,12 @@ function updateReview() {
         <div class="content">
             <h3>언제 다녀오셨나요?</h3>
             <div>
-                <lable for='startDate'>출발 </lable>
-                <input class="review-date" type='date' name='startDate' id='startDate' v-model='review.startDate'/>
+                <label for='startDate'>출발 </label>
+                <input class="review-date" type='date' name='startDate' id='startDate' v-model='review.startDate' :max="today"/>
             </div>
             <div>
                 <label for='endDate'>도착 </label>
-                <input class="review-date" type='date' name='endDate' id='endDate' v-model='review.endDate'/>
+                <input class="review-date" type='date' name='endDate' id='endDate' v-model='review.endDate' :max="today"/>
             </div>
         </div>
         <div class="content">
@@ -232,13 +255,13 @@ function updateReview() {
         </div>
         <div class="content">
             <h3>제목</h3>
-            <input class="review-title" type='text' v-model='review.title' placeholder='제목'/>
-            <span class="max-word-length right-align">20 최대 글자수</span>
+            <input class="review-title" type='text' v-model='review.title' @input="countTitle()" placeholder='제목'/>
+            <span class="max-word-length right-align">{{titleLength}}/20 최대 글자수</span>
         </div>
         <div class="content">
             <h3>리뷰 쓰기</h3>
-            <textarea class="review-body" v-model='review.content'></textarea>
-            <span class="max-word-length right-align">2000 최대 글자수</span>
+            <textarea class="review-body" v-model='review.content' @input="countContent()"></textarea>
+            <span class="max-word-length right-align">{{contentLength}}/2000 최대 글자수</span>
         </div>
         <div class="content">
             <p class="upload-label">[선택 사항] 이미지 업로드하기</p>
