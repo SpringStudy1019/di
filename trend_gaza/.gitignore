@@ -39,3 +39,6 @@ out/
 
 ### env ###
 .env
+
+### properties ###
+application-aws.properties
