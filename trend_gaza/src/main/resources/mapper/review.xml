@@ -22,19 +22,13 @@
 		insert into review (score, title, content, companion, start_date, end_date, register_date, user_id, content_id)
 		values (#{score}, #{title}, #{content}, #{companion}, now(),  now(), now(), #{userId}, #{contentId})
 	</insert>
-	<!-- 
+
 	<sql id="search">
 		<if test="word != null and word != ''">
-			where title like concat('%', #{word}, '%')
-		</if>
-	</sql>
-	 -->
-	<sql id="search">
-		<if test="word != null and word != ''">
-			<if test="key == 'subject'">
-				and subject like concat('%', #{word}, '%')
+			<if test="key == 'title'">
+				and title like concat('%', #{word}, '%')
 			</if>
-			<if test="key != 'subject'">
+			<if test="key != 'title'">
 				and ${key} = #{word}
 			</if>
 		</if>
@@ -60,8 +54,13 @@
 		select * from review
 		where review_idx=#{reviewIdx}
 	</select>
+	
+	<select id="getModify" parameterType="int" resultType="reviewModifyResponse">
+		select review_idx, score, title, content, companion, start_date, end_date from review
+		where review_idx=#{reviewIdx}
+	</select>
 	 
-	<update id="modify" parameterType="reviewModifyRequest">
+	<update id="modify" parameterType="reviewModifyResponse">
 		update review
 		set modify_date=now(), score=#{score}, title=#{title}, content=#{content} 
 		where review_idx=#{reviewIdx}

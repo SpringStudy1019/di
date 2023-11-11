@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { list } from "@/api/review";
 
 import VSelect from "@/components/common/VSelect.vue";
 import ReviewListItem from '@/components/review/item/ReviewListItem.vue';
 import PageNavigation from "@/components/common/PageNavigation.vue";
+import { list } from "@/api/review";
 
 const router = useRouter();
 
@@ -19,10 +19,10 @@ const selectOption = ref([
 const reviews = ref([]);
 const currentPage = ref(1);
 const totalPage = ref(0);
-const { VITE_ARTICLE_LIST_SIZE } = import.meta.env;
+const { VITE_REVIEW_LIST_SIZE } = import.meta.env;
 const param = ref({
   pgno: currentPage.value,
-  spp: VITE_ARTICLE_LIST_SIZE,
+  spp: VITE_REVIEW_LIST_SIZE,
   key: "",
   word: "",
 });
@@ -41,7 +41,7 @@ const getReviewList = () => {
    // API 호출
     list(param.value,
       ({ data }) => {    // data.DTO필드명
-        reviews.value = data;
+        reviews.value = data.reviews;
         currentPage.value = data.currentPage;
         totalPage.value = data.totalPageCount;
     },

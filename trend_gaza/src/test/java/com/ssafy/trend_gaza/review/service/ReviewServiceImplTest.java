@@ -1,10 +1,10 @@
 package com.ssafy.trend_gaza.review.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Disabled;
@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.trend_gaza.review.entity.Review;
+import com.ssafy.trend_gaza.review.dto.ReviewResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,11 +40,22 @@ class ReviewServiceImplTest {
 	@Test
 	@DisplayName("리뷰 검색어 조회 테스트")
 	void testList() {
-		Map<String, String> param = new HashMap<>();
-		param.put("word", "oh");
+		 Map<String, String> map = new HashMap<>();
+        map.put("word", "oh");
+        map.put("pgno", "1");
+        map.put("spp", "20");
+        map.put("key", "title");
+
 		try {
-			List<Review> list = reviewService.list(param);
-			assertEquals(1, list.size());
+			ReviewResponse reviewResponse = reviewService.list(map);
+			log.debug("assertNotNull(reviewResponse)");
+			assertNotNull(reviewResponse);
+			log.debug(" assertNotNull(reviewResponse.getReviews())");
+            assertNotNull(reviewResponse.getReviews());
+            log.debug(" assertEquals(1, reviewResponse.getReviews().size())");
+            assertEquals(1, reviewResponse.getReviews().size());
+            log.debug("assertEquals(1, reviewResponse.getCurrentPage())");
+            assertEquals(1, reviewResponse.getCurrentPage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
