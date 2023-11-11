@@ -19,6 +19,9 @@ public interface ReviewMapper {
 	/* 리뷰 전체 조회 (+검색) */
 	List<Review> list(Map<String, Object> param) throws SQLException;
 	
+	/* 리뷰 카운트 */
+	int getTotalReviewCount(Map<String, Object> param) throws SQLException;
+
 	/* 리뷰 상세 조회 */
 	Review view(String reviewIdx) throws SQLException;
 	
@@ -28,5 +31,4 @@ public interface ReviewMapper {
 	/* 리뷰 삭제 */ 
 	void delete(String reviewIdx) throws SQLException;
 	
-	int getTotalReviewCount(Map<String, Object> param) throws SQLException;
 }

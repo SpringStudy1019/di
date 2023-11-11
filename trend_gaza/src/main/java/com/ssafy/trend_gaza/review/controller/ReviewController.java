@@ -1,11 +1,13 @@
 package com.ssafy.trend_gaza.review.controller;
 
-import java.util.List;
+import java.nio.charset.Charset;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,10 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trend_gaza.review.dto.ReviewModifyRequest;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
+import com.ssafy.trend_gaza.review.dto.ReviewResponse;
 import com.ssafy.trend_gaza.review.entity.Review;
 import com.ssafy.trend_gaza.review.service.ReviewService;
-import com.ssafy.trend_gaza.util.PageNavigation;
 
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -53,13 +56,10 @@ public class ReviewController {
 	@GetMapping
 	public ResponseEntity<?> list(@RequestParam Map<String, String> map) {
 		try {
-			List<Review> list = reviewService.list(map);
-			PageNavigation pageNavigation = reviewService.makePageNavigation(map);
-			if(list != null && !list.isEmpty()) {
-				return new ResponseEntity<List<Review>>(list, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-			}
+			ReviewResponse reviewResponse = reviewService.list(map);
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(reviewResponse);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
