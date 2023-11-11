@@ -7,16 +7,21 @@
 	<properties resource="mapper/dbinfo.properties"/>
 
 	<typeAliases> 
+		<!-- user -->
 		<typeAlias type="com.ssafy.trend_gaza.user.dto.ChangePwdRequest" alias="changePwdRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.user.dto.FindIdRequest" alias="findIdRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.user.dto.FindPwdRequest" alias="findPwdRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.user.dto.LoginRequest" alias="loginRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.user.dto.ModifyRequest" alias="modifyRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.user.dto.RegisterRequest" alias="registerRequest" />
+		<!-- review -->
 		<typeAlias type="com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest" alias="reviewRegisterRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.review.dto.ReviewModifyResponse" alias="reviewModifyResponse" />
+		<!-- like -->
 		<typeAlias type="com.ssafy.trend_gaza.like.dto.LikeRequest" alias="likeRequest" />
-		
+		<!-- comment -->
+		<typeAlias type="com.ssafy.trend_gaza.comment.dto.CommentRegisterRequest" alias="commentRegisterRequest" />
+		<typeAlias type="com.ssafy.trend_gaza.comment.dto.CommentModifyResponse" alias="commentModifyResponse" />
 	</typeAliases>
 	
 	<environments default="development">

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trend_gaza.comment.repository.CommentMapper">
+
+	<resultMap type="com.ssafy.trend_gaza.comment.entity.Comment" id="comment">
+		<result column="comment_idx" property="commentIdx"></result>
+		<result column="content" property="content"></result>
+		<result column="register_date" property="registerDate"></result>
+		<result column="modify_date" property="modifyDate"></result>
+		<result column="user_id" property="userId"></result>
+		<result column="review_idx" property="reviewIdx"></result>
+	</resultMap>
+
+	<insert id="register" parameterType="commentRegisterRequest">
+		insert into comment (content, register_date, user_id, review_idx)
+		values (#{content}, now(), #{userId}, #{reviewIdx})
+	</insert>
+
+	<select id="list" resultMap="comment">
+		select * from comment
+		where review_idx = #{reviewIdx}
+	</select>
+	
+	<select id="getModify" parameterType="int" resultMap="comment">
+		select * from comment
+		where comment_idx=#{commentIdx}
+	</select>
+	
+	<update id="modify" parameterType="commentModifyResponse">
+		update comment
+		set modify_date=now(), content=#{content} 
+		where comment_idx=#{commentIdx}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from comment
+		where comment_idx=#{commentIdx}
+	</delete>
+	
+</mapper>
