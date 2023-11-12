@@ -15,8 +15,7 @@ onMounted(() => {
 });
 
 const getReview = () => {
-  console.log(reviewIdx + "번글 얻으러 가자!!!");
-
+  // console.log(reviewIdx + "번글 얻으러 가자!!!");
   // API 호출
   detailReview(reviewIdx,
     ({ data }) => { // success callback
@@ -107,6 +106,8 @@ function IsAbleToDelete() {
               리뷰삭제
             </button>
           </div>
+
+          <router-view :reviewIdx="reviewIdx"></router-view>
         </div>
       </div>
     </div>
