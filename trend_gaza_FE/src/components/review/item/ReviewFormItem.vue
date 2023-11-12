@@ -87,9 +87,7 @@ watch(
     (value) => {
         if (value === "") {
             startDateErrMsg.value = "출발 일자를 선택해주세요!!!";
-        } else if (value > review.value.endDate) {
-            startDateErrMsg.value = "출발 일자는 도착일자보다 클 수 없습니다!!!";
-        }else startDateErrMsg.value = "";
+        } else startDateErrMsg.value = "";
     },
     { immediate: true }
 );
@@ -101,6 +99,8 @@ watch(
             endDateErrMsg.value = "도착 일자를 선택해주세요!!!";
         } else if (value > today) {
             endDateErrMsg.value = "현재 일자보다 도착 일자가 클 수 없습니다!!!";
+        }else if (value < review.value.startDate) {
+            startDateErrMsg.value = "출발 일자는 도착일자보다 클 수 없습니다!!!";
         }else endDateErrMsg.value = "";
     },
     { immediate: true }
@@ -242,7 +242,7 @@ const markingSelectOption = () => {
         </div>
         <div class="content">
             <h3>누구와 함께 가셨나요?</h3>
-            <VSelect class="select-option" :selectOption='selectOption' v-model='review.companion' />
+            <VSelect class="select-option" :selectOption='selectOption' v-model="review.companion" />
         </div>
         <div class="content">
             <h3>제목</h3>
@@ -259,8 +259,8 @@ const markingSelectOption = () => {
             <input type='file'>
         </div>
         <div class="content">
-            <button type='submit' v-if="type === 'regist'">리뷰 제출</button>
-            <button class="btn-modify" type='submit' v-else>리뷰 수정</button>    
+            <button class="btn" type='submit' v-if="type === 'regist'">리뷰 제출</button>
+            <button class="btn" type='submit' v-else>리뷰 수정</button>    
         </div>
     </form>
 </template>
@@ -306,7 +306,7 @@ const markingSelectOption = () => {
     text-align: right;
 }
 
-.btn-modify {
+.btn {
     background-color: black;
     color: white;
     border-radius: 28px;
