@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailReview, deleteReview } from '../../api/review';
+import { listComment } from '../../api/comment';
 
 const route = useRoute();
 const router = useRouter();
@@ -9,14 +10,14 @@ const router = useRouter();
 const { reviewIdx } = route.params;
 
 const review = ref({});
+const comments = ref([]);
 
-onMounted(() => {
-  getReview();
+onMounted(async () => {
+  await getReview();
+  getCommentList();
 });
 
 const getReview = () => {
-  // console.log(reviewIdx + "번글 얻으러 가자!!!");
-  // API 호출
   detailReview(reviewIdx,
     ({ data }) => { // success callback
       review.value = data; // Store the data in the 'review' ref
@@ -28,6 +29,17 @@ const getReview = () => {
   );
 };
 
+const getCommentList = () => {
+  listComment(reviewIdx,
+    (response) => { 
+      console.log("Success:", response.status, response.data);
+      comments.value = response.data;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
 
 function moveList() {
   router.push({ name: "review-list" });
@@ -107,7 +119,7 @@ function IsAbleToDelete() {
             </button>
           </div>
 
-          <router-view :reviewIdx="parseInt(reviewIdx)"></router-view>
+          <router-view v-if="comments.length" :reviewIdx="parseInt(reviewIdx)"></router-view>
         </div>
       </div>
     </div>
