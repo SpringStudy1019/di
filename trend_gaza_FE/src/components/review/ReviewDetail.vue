@@ -107,7 +107,7 @@ function IsAbleToDelete() {
             </button>
           </div>
 
-          <router-view :reviewIdx="reviewIdx"></router-view>
+          <router-view :reviewIdx="parseInt(reviewIdx)"></router-view>
         </div>
       </div>
     </div>
