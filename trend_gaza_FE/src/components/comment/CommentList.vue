@@ -35,6 +35,7 @@ function deleteComment(commentIdx) {
   }
   deleteCommentRequest(commentIdx,
     ({data}) => {
+        getCommentList();
       router.push({ name: "review-view" });
     }, (error) => {
       console.log(error);
@@ -83,7 +84,7 @@ function isDelete() {
     </div>  
 
     <div class="comment-list">
-      <div v-for="comment in comments" :key="comment.idx" class="comment">
+      <div v-for="comment in comments" :key="comment.commentIdx" class="comment">
         <div class="comment-content">{{ comment.content }}</div>
         <div class="comment-meta">
           <span class="comment-date">{{ comment.registerDate }}</span>
@@ -94,7 +95,7 @@ function isDelete() {
         <button type="button" class="btn btn-outline-primary mb-1 ms-3" @click="moveModify">
               수정
         </button>
-        <button type="button" class="btn btn-outline-danger mb-1 ms-1" @click="deleteComment(comment.id)">
+        <button type="button" class="btn btn-outline-danger mb-1 ms-1" @click="() => deleteComment(comment.commentIdx)">
               삭제
         </button>
         </div>
