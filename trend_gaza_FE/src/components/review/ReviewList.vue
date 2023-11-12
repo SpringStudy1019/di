@@ -31,11 +31,6 @@ onMounted(() => {
     getReviewList();
 });
 
-const changeKey = (val) => {
-  console.log("ReviewList에서 선택한 조건 : " + val);
-  param.value.key = val;
-};
-
 const getReviewList = () => {
     // console.log("서버에서 글목록 얻어오자!");
    // API 호출
@@ -50,10 +45,13 @@ const getReviewList = () => {
     });
 };
 
-
+const changeKey = (val) => {
+  // console.log("ReviewList에서 선택한 조건 : " + val);
+  param.value.key = val;
+};
 
 const onPageChange = (val) => {
-  console.log(val + "번 페이지로 이동 준비 끝!!!");
+  // console.log(val + "번 페이지로 이동 준비 끝!!!");
   currentPage.value = val;
   param.value.pgno = val;
   getReviewList();
@@ -81,7 +79,7 @@ const moveWrite = () => {
             </button>
           </div>
           <div class="col-md-5 offset-5">
-            <form class="d-flex">
+            <form class="d-flex" @submit.prevent="getReviewList">
               <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />
               <div class="input-group input-group-sm">
                 <input
@@ -89,6 +87,7 @@ const moveWrite = () => {
                   class="form-control"
                   v-model="param.word"
                   placeholder="검색어..."
+                  @keyup.enter="getReviewList"
                 />
                 <button class="btn btn-dark" type="button" @click="getReviewList">검색</button>
               </div>
