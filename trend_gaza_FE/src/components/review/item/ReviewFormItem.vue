@@ -109,7 +109,6 @@ watch(
 watch(
     () => review.value.companion,
     (value) => {
-        console.log("동행자" + value);
         let len = value.length;
         if (len == 0) {
             companionErrMsg.value = "동행자를 선택해주세요!!!";
@@ -243,7 +242,7 @@ const markingSelectOption = () => {
         </div>
         <div class="content">
             <h3>누구와 함께 가셨나요?</h3>
-            <VSelect class="select-option" :selectOption='selectOption' />
+            <VSelect class="select-option" :selectOption='selectOption' v-model="review.companion" />
         </div>
         <div class="content">
             <h3>제목</h3>
