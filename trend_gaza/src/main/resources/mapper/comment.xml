@@ -21,6 +21,7 @@
 	<select id="list" resultMap="comment">
 		select * from comment
 		where review_idx = #{reviewIdx}
+		order by register_date desc;
 	</select>
 	
 	<select id="getModify" parameterType="int" resultMap="comment">
