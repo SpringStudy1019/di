@@ -8,12 +8,14 @@ import TheFooter from './components/layout/TheFooter.vue';
 
 <template>
   <TheHeadingNavbar></TheHeadingNavbar>
-  <div>
+  <section>
     <router-view></router-view>
-  </div>
-  <!-- <TheFooter /> -->
+  </section>
+  <TheFooter />
 </template>
 
 <style scoped>
-
+section {
+  min-height: 100vh;
+}
 </style>

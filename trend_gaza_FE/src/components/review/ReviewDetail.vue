@@ -119,7 +119,6 @@ function IsAbleToDelete() {
               리뷰삭제
             </button>
           </div>
-
           <router-view v-if="comments.length" :reviewIdx="parseInt(reviewIdx)"></router-view>
         </div>
       </div>
