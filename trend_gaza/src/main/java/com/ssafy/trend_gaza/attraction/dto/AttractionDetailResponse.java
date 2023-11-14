@@ -1,5 +1,8 @@
 package com.ssafy.trend_gaza.attraction.dto;
 
+import lombok.Builder;
+
+@Builder
 public class AttractionDetailResponse {
 	
 	private int contentId;
@@ -12,53 +15,52 @@ public class AttractionDetailResponse {
 	private double longitude;
 	
 	
+	public AttractionDetailResponse() {}
+	
+	public AttractionDetailResponse(int contentId, int contentTypeId, String title, String address, String tel,
+			String defaultImg, double latitude, double longitude) {
+		super();
+		this.contentId = contentId;
+		this.contentTypeId = contentTypeId;
+		this.title = title;
+		this.address = address;
+		this.tel = tel;
+		this.defaultImg = defaultImg;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+	
+	
 	public int getContentId() {
 		return contentId;
 	}
-	public void setContentId(int contentId) {
-		this.contentId = contentId;
-	}
+
 	public int getContentTypeId() {
 		return contentTypeId;
 	}
-	public void setContentTypeId(int contentTypeId) {
-		this.contentTypeId = contentTypeId;
-	}
+
 	public String getTitle() {
 		return title;
 	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+
 	public String getAddress() {
 		return address;
 	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
+
 	public String getTel() {
 		return tel;
 	}
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
+
 	public String getDefaultImg() {
 		return defaultImg;
 	}
-	public void setDefaultImg(String defaultImg) {
-		this.defaultImg = defaultImg;
-	}
+
 	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
+
 	public double getLongitude() {
 		return longitude;
-	}
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
 	}
 	
 	

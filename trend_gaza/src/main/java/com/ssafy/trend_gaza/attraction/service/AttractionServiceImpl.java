@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.trend_gaza.attraction.dto.AttractionAdminRequest;
+import com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse;
 import com.ssafy.trend_gaza.attraction.entity.AttractionDetail;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.attraction.repository.AttractionMapper;
@@ -70,6 +71,22 @@ public class AttractionServiceImpl implements AttractionService {
 		
 		return today + File.separator + fileUtil.upload(fileName, multipartFile, new File(saveFolder));
 
+	}
+
+
+	@Override
+	public AttractionDetailResponse findAttraction(int id) {
+		AttractionInfo attractionInfo = attractionMapper.getAttractionDetail(id);
+		return AttractionDetailResponse.builder()
+				.contentId(attractionInfo.getContentId())
+				.contentTypeId(attractionInfo.getContentTypeId())
+				.title(attractionInfo.getTitle())
+				.address(attractionInfo.getAddr1())
+				.tel(attractionInfo.getTel())
+				.defaultImg(attractionInfo.getFirstImage())
+				.latitude(attractionInfo.getLatitude())
+				.longitude(attractionInfo.getLongitude())
+				.build();
 	}
 
 }

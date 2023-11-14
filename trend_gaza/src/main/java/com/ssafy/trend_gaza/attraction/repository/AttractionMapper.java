@@ -14,4 +14,5 @@ public interface AttractionMapper {
 	List<AttractionInfo> searchAttractions(Map<String, Object> param);
 	void registerAdminAttraction(AttractionAdminRequest attractionAdminRequest);
 	void registerAttractionDetail(AttractionAdminRequest attractionAdminRequest);
+	AttractionInfo getAttractionDetail(int id);
 }
