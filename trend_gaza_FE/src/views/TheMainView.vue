@@ -1,9 +1,13 @@
 <script setup>
+import { useRouter } from 'vue-router';
+import TheCategory from '../components/category/TheCategory.vue';
+
+const router = useRouter();
 
 </script>
 
 <template>
-    
+    <router-view></router-view>
         <!-- <h1>메인 페이지입니다</h1> -->
         <!-- 검색 -->
         <div class='search'>
@@ -27,45 +31,7 @@
           </div>
         </div>
         <!-- 카테고리 -->
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-1"></div>
-            <div class="col-10">
-              <div class="category">
-                <div class="category-card">
-                  <img src="@/assets/category/museum.png" width="40" height="40" alt="">
-              
-                  <option value="14">문화시설</option>
-                </div>
-                <div class="category-card">
-                  <img src="@/assets/category/concert.png" width="40" height="40" alt="">
-                  <option value="15">축제공연행사</option>
-                </div>
-                <!-- <div class="category-card">
-                  <img src="@/assets/category/destination.png" width="40" height="40" alt="">
-                  <option value="25">여행코스</option>
-                </div> -->
-                <div class="category-card">
-                  <img src="@/assets/category/skiing.png" width="40" height="40" alt="">
-                  <option value="28">레포츠</option>
-                </div>
-                <div class="category-card">
-                  <img src="@/assets/category/hotel.png" width="40" height="40" alt="">
-                  <option value="32">숙박</option>
-                </div>
-                <div class="category-card">
-                  <img src="@/assets/category/shopping-cart.png" width="40" height="40" alt="">
-                  <option value="38">쇼핑</option>
-                </div>
-                <div class="category-card">
-                  <img src="@/assets/category/restaurant.png" width="40" height="40" alt="">
-                  <option value="39">음식점</option>
-                </div>
-              </div>
-            </div>
-            <div class="col-1"></div>
-          </div>
-          </div>
+        <TheCategory />
 
         
         <!-- 추천 여행지 -->

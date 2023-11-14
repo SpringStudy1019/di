@@ -51,7 +51,7 @@ function moveModify() {
 }
 
 function onDeleteArticle() {
-  if(!IsAbleToDelete()) {
+  if(!isDelete()) {
     return;
   }
   const { reviewIdx } = route.params;
@@ -65,7 +65,7 @@ function onDeleteArticle() {
     })
 }
 
-function IsAbleToDelete() {
+function isDelete() {
   return confirm("정말 삭제하시겠습니까?");
 }
 </script>
@@ -119,7 +119,8 @@ function IsAbleToDelete() {
               리뷰삭제
             </button>
           </div>
-          <router-view v-if="comments.length" :reviewIdx="parseInt(reviewIdx)"></router-view>
+          <!-- 리뷰 댓글 -->
+          <router-view :reviewIdx="parseInt(reviewIdx)"></router-view>
         </div>
       </div>
     </div>

@@ -1,13 +1,12 @@
 <script setup>
-
+import VYoutube from '@/components/detail/VYoutube.vue';
 </script>
 
 <template>
-
-    <h2>문화 시설</h2>
     <div>
         
     </div>
+    <VYoutube />
 </template>
 
 <style scoped>
