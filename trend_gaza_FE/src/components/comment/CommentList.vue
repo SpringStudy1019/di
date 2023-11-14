@@ -10,7 +10,7 @@ const props = defineProps({
 
 const comments = ref([]);
 const commentContent = ref('');
-
+ 
 const router = useRouter();
 
 onMounted(() => {
@@ -29,18 +29,25 @@ const getCommentList = () => {
   );
 };
 
+// delete
 function deleteComment(commentIdx) {
     if(!isDelete()) {
     return;
   }
   deleteCommentRequest(commentIdx,
     ({data}) => {
+        getCommentList();
       router.push({ name: "review-view" });
     }, (error) => {
       console.log(error);
     })
 }
 
+function isDelete() {
+  return confirm("정말 삭제하시겠습니까?");
+}
+
+// register
 function registerComment() {
     if (!commentContent.value) {
     return;
@@ -63,10 +70,7 @@ function registerComment() {
         });
 }
 
-
-function isDelete() {
-  return confirm("정말 삭제하시겠습니까?");
-}
+// modify
 
 </script>
 
@@ -83,8 +87,14 @@ function isDelete() {
     </div>  
 
     <div class="comment-list">
-      <div v-for="comment in comments" :key="comment.idx" class="comment">
+      <div v-for="comment in comments" :key="comment.commentIdx" class="comment">
         <div class="comment-content">{{ comment.content }}</div>
+        <!-- <div class="comment-content" v-if="comment.commentIdx !== modifyingComment.commentIdx">
+             {{ comment.content }}
+         </div>
+         <div class="comment-content" v-else>
+             <input v-model="modifyingContent" />
+         </div> -->
         <div class="comment-meta">
           <span class="comment-date">{{ comment.registerDate }}</span>
           <span class="comment-author">{{ comment.userId }}</span>
@@ -94,7 +104,7 @@ function isDelete() {
         <button type="button" class="btn btn-outline-primary mb-1 ms-3" @click="moveModify">
               수정
         </button>
-        <button type="button" class="btn btn-outline-danger mb-1 ms-1" @click="deleteComment(comment.id)">
+        <button type="button" class="btn btn-outline-danger mb-1 ms-1" @click="() => deleteComment(comment.commentIdx)">
               삭제
         </button>
         </div>

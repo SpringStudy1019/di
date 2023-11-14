@@ -40,3 +40,4 @@ out/
 
 ### properties ###
 application-mail.properties
+application-aws.properties

@@ -16,5 +16,6 @@
 <style scoped>
 #fixed-footer {
   width: 100%;
+  position: absolute;
 }
 </style>
