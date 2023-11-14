@@ -12,20 +12,8 @@ const router = createRouter({
     {
       path: '/attraction',
       name: 'attraction',
+      //component: TheMainView
       component: () => import("../views/TheAttractionView.vue"),
-    },
-    {
-      path: '/category',
-      name: 'category',
-      component: () => import("../views/TheMainView.vue"),
-      redirect: { name: "main" },
-      children: [
-        {
-          path: "culture",
-          name: "review-culture",
-          component: () => import("@/components/category/TheCulture.vue"),
-        },
-      ]
     },
     {
       path: '/review',
