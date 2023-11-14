@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,8 +33,8 @@ public class AttractionController {
 	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<AttractionDetailResponse> findAttraction() {
-		return ResponseEntity.ok(new AttractionDetailResponse());
+	public ResponseEntity<AttractionDetailResponse> findAttraction(@PathVariable int id) {
+		return ResponseEntity.ok(attractionService.findAttraction(id));
 	}
 	
 	@GetMapping
