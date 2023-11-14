@@ -44,7 +44,7 @@ public class ImageFile {
         final String filenameExtension = name.substring(name.lastIndexOf('.'));
         final String nameAndDate = name + LocalDateTime.now();
         try {
-            final MessageDigest hashAlgorithm = MessageDigest.getInstance("SHA3-256");
+            final MessageDigest hashAlgorithm = MessageDigest.getInstance("SHA-256");
             final byte[] hashBytes = hashAlgorithm.digest(nameAndDate.getBytes(StandardCharsets.UTF_8));
             return bytesToHex(hashBytes) + filenameExtension;
         } catch (final NoSuchAlgorithmException e) {
