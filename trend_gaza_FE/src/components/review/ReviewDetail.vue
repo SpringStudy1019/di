@@ -12,11 +12,12 @@ const { reviewIdx } = route.params;
 const review = ref({});
 const comments = ref([]);
 
-onMounted(async () => {
-  await getReview();
-  getCommentList();
+onMounted(() => {
+  getReview();
+  getComments();
 });
 
+// 리뷰 번호로 리뷰 얻어오기
 const getReview = () => {
   detailReview(reviewIdx,
     ({ data }) => { // success callback
@@ -29,11 +30,11 @@ const getReview = () => {
   );
 };
 
-const getCommentList = () => {
+// 리뷰 댓글 얻어오기
+const getComments = () => {
   listComment(reviewIdx,
-    (response) => { 
-      console.log("Success:", response.status, response.data);
-      comments.value = response.data;
+    ({ data }) => { 
+      comments.value = data;
     },
     (error) => {
       console.log(error);
