@@ -44,6 +44,18 @@ const router = createRouter({
         }
       ]
     },
+    {
+      path: "/attraction",
+      name: "attraction",
+      component: () => import("../views/TheAttractionView.vue"),
+      children: [
+        {
+          path: "view/:attractionIdx",
+          name: "attraction-view",
+          component: () => import("@/components/attraction/AttractionDetail.vue"),
+        }
+      ]
+    }
     
   ]
 })
