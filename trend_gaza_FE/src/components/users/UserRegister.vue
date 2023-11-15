@@ -1,9 +1,10 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { registUser } from "@/api/user";
+import { registUser, idCheck } from "@/api/user";
 
 const router = useRouter();
+const isAvailable = ref(false);
 const user = ref({
   "emailDomain": "",
   "emailId": "",
@@ -17,6 +18,11 @@ const pwdcheck = ref("");
 
 function registerUser() {
   console.log("Form Data:", user.value);
+  if (!isAvailable.value) {
+      let msg = "아이디를 확인하세요!"
+      alert(msg);
+      return;
+  } 
   registUser(user.value,
     (response) => {
       let msg = "회원가입이 완료되었습니다!"
@@ -26,6 +32,30 @@ function registerUser() {
     (error) => console.log(error)
   )
 }
+
+
+// 아이디 길이체크, 중복체크 로직 
+
+function checkId() {
+  const userId = user.value.userId;
+  if (userId.length < 6 || userId.length > 16) {
+    isAvailable.value = false;
+  } else {
+    idCheck(userId,
+      (response) => {
+        // console.log(response);
+        if (response.status === 200) {
+          // Assuming 200 status means the ID is available
+          isAvailable.value = true;
+        } else {
+          isAvailable.value = false;
+        }
+      },
+      (error) => console.log(error)
+    );
+  }
+}
+watch(() => user.value.userId, checkId);
 
 </script>
 
@@ -46,6 +76,11 @@ function registerUser() {
           <div class="mb-3">
             <label for="userId" class="form-label">아이디 : </label>
             <input type="text" class="form-control" placeholder="아이디..." name="userId" v-model="user.userId"/>
+          </div>
+          <!-- id checking -->
+          <div id="idcheck-result" v-if="user.userId.length>0">
+            <span v-if="isAvailable" class="text-primary">{{ user.userId }}는 사용할 수 있습니다.</span>
+            <span v-else class="text-danger">{{ user.userId }}는 사용할 수 없습니다.</span>
           </div>
           <div class="mb-3">
             <label for="userPwd" class="form-label">비밀번호 : </label>

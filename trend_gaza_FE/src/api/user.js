@@ -19,8 +19,8 @@ local.defaults.headers["refreshToken"] = sessionStorage.getItem("refreshToken");
 await local.post(`/user/refresh`, user).then(success).catch(fail);
 }
 
-async function logout(userid, success, fail) {
-await local.get(`/user/logout/${userid}`).then(success).catch(fail);
+async function logout(userId, success, fail) {
+await local.get(`/user/logout/${userId}`).then(success).catch(fail);
 }
 
 function registUser(user, success, fail) {
@@ -31,7 +31,13 @@ function modifyUser(user, success, fail) {
     local.put(`${url}/modify`, JSON.stringify(user)).then(success).catch(fail);
 }
 
+function idCheck(userId, success, fail) {
+    local.get(`${url}/idCheck/${userId}`).then(success).catch(fail);
+}
+
+
+
 export {
     userConfirm, findById, tokenRegeneration, logout,
-    registUser, modifyUser,
+    registUser, modifyUser, idCheck, 
 };
