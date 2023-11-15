@@ -18,7 +18,7 @@ import { RouterView } from "vue-router";
           <router-link :to="{name: 'main'}" class="nav-link">메인페이지</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">관광지 살펴보기</a>
+          <router-link :to="{name: 'attraction'}" class="nav-link">관광지 살펴보기</router-link>
         </li>
         <li class="nav-item">
           <router-link :to="{name: 'review'}" class="nav-link">커뮤니티</router-link>

@@ -3,6 +3,7 @@ import {ref, onMounted} from 'vue';
 import {useRoute} from "vue-router";
 import AttractionMap from './item/AttractionMap.vue';
 import {getAttractionDetail} from '@/api/attraction';
+import VYoutube from '@/components/detail/VYoutube.vue';
 
 const route = useRoute();
 
@@ -30,6 +31,8 @@ const getAttraction = () => {
     <div v-if='attraction.latitude && attraction.longitude'>
         <AttractionMap :longitude="attraction.longitude" :latitude="attraction.latitude"/>
     </div>
+    <VYoutube />
+
 </template>
 
 <style scoped>

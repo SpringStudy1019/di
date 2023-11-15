@@ -12,11 +12,12 @@ const { reviewIdx } = route.params;
 const review = ref({});
 const comments = ref([]);
 
-onMounted(async () => {
-  await getReview();
-  getCommentList();
+onMounted(() => {
+  getReview();
+  getComments();
 });
 
+// 리뷰 번호로 리뷰 얻어오기
 const getReview = () => {
   detailReview(reviewIdx,
     ({ data }) => { // success callback
@@ -29,11 +30,11 @@ const getReview = () => {
   );
 };
 
-const getCommentList = () => {
+// 리뷰 댓글 얻어오기
+const getComments = () => {
   listComment(reviewIdx,
-    (response) => { 
-      console.log("Success:", response.status, response.data);
-      comments.value = response.data;
+    ({ data }) => { 
+      comments.value = data;
     },
     (error) => {
       console.log(error);
@@ -50,7 +51,7 @@ function moveModify() {
 }
 
 function onDeleteArticle() {
-  if(!IsAbleToDelete()) {
+  if(!isDelete()) {
     return;
   }
   const { reviewIdx } = route.params;
@@ -64,7 +65,7 @@ function onDeleteArticle() {
     })
 }
 
-function IsAbleToDelete() {
+function isDelete() {
   return confirm("정말 삭제하시겠습니까?");
 }
 </script>
@@ -118,7 +119,8 @@ function IsAbleToDelete() {
               리뷰삭제
             </button>
           </div>
-          <router-view v-if="comments.length" :reviewIdx="parseInt(reviewIdx)"></router-view>
+          <!-- 리뷰 댓글 -->
+          <router-view :reviewIdx="parseInt(reviewIdx)"></router-view>
         </div>
       </div>
     </div>

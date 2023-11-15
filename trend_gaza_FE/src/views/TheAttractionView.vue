@@ -1,12 +1,14 @@
 <script setup>
+import AttractionDetail from '../components/attraction/AttractionDetail.vue';
+
 </script>
 
 <template>
-    <div>
-        <router-view></router-view>
-    </div>
+
+    <AttractionDetail />
+    <router-view></router-view>
+ 
 </template>
 
 <style scoped>
-
 </style>

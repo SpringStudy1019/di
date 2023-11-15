@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const { VITE_VUE_API_URL } = import.meta.env;
+const { VITE_VUE_API_URL, VITE_YOUTUBE_URL } = import.meta.env;
 
 // local vue api axios instance
 function localAxios() {
@@ -13,4 +13,14 @@ function localAxios() {
   return instance;
 }
 
-export { localAxios };
+function videoAxios() {
+  const instance = axios.create({
+    baseURL: VITE_YOUTUBE_URL,
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+  });
+  return instance;
+}
+
+export { localAxios, videoAxios };

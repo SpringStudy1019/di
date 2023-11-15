@@ -39,7 +39,8 @@
 		<where>
 			<include refid="search"></include>
 		</where>
-		limit #{start}, #{listsize}
+		order by register_date desc
+		limit #{start}, #{listsize};
 	</select>
 	
 	<select id="getTotalReviewCount" parameterType="map" resultType="int">
