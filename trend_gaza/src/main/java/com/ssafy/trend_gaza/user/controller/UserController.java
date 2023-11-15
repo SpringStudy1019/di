@@ -28,8 +28,7 @@ import com.ssafy.trend_gaza.user.dto.ModifyRequest;
 import com.ssafy.trend_gaza.user.dto.RegisterRequest;
 import com.ssafy.trend_gaza.user.entity.User;
 import com.ssafy.trend_gaza.user.service.UserService;
-
-import springfox.documentation.annotations.ApiIgnore;
+import com.ssafy.trend_gaza.util.JWTUtil;
 
 @RestController
 @RequestMapping("/user")
@@ -38,6 +37,7 @@ public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	private final UserService userService;
+	private JWTUtil jwtUtil; 
 
 	public UserController(UserService userService) {
 		super();
