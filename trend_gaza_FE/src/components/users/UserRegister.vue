@@ -16,7 +16,6 @@ const user = ref({
 const pwdcheck = ref("");
 
 function registerUser() {
- 
   console.log("Form Data:", user.value);
   registUser(user.value,
     (response) => {

@@ -27,9 +27,11 @@ function registUser(user, success, fail) {
     local.post(`${url}/register`, JSON.stringify(user)).then(success).catch(fail);
 }
 
-
+function modifyUser(user, success, fail) {
+    local.put(`${url}/modify`, JSON.stringify(user)).then(success).catch(fail);
+}
 
 export {
     userConfirm, findById, tokenRegeneration, logout,
-    registUser,
+    registUser, modifyUser,
 };

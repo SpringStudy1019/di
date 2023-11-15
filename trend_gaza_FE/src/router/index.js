@@ -46,11 +46,6 @@ const router = createRouter({
           name: "user-mypage",
           component: () => import("@/components/users/UserMyPage.vue"),
         },
-        // {
-        //   path: "modify/:userid",
-        //   name: "user-modify",
-        //   component: () => import("@/components/users/UserModify.vue"),
-        // },
       ],
     },
     {

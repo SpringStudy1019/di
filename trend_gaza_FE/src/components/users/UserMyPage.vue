@@ -1,13 +1,46 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { useUserStore } from '@/stores/user'
+import { useRouter } from "vue-router";
+import { modifyUser } from "@/api/user";
+
 const store = useUserStore()
 const editMode = ref(false);
+const router = useRouter();
 
 const toggleEditMode = () => {
   editMode.value = !editMode.value;
+  // Set editInfo to a copy of userInfo when entering edit mode
+  if (editMode.value) {
+    editInfo.value = { ...store.userInfo };
+  }
 };
 
+const editInfo = ref({
+  "emailDomain": "",
+  "emailId": "",
+  "gender": "",
+  "mobile": "",
+  "userId": "",
+  "userName": ""
+})
+
+const saveChanges = () => {
+  modifyUser(editInfo.value,
+    (response) => {
+      let msg = "정보 수정이 완료되었습니다!"
+      alert(msg);
+      toggleEditMode();
+      store.userInfo = {...editInfo.value};
+      router.push({ name: "user-mypage" });
+    },
+    (error) => console.log(error)
+  )
+};
+
+const resetForm = () => {
+  editInfo.value = { ...store.userInfo };
+};
 </script>
 
 <template>
@@ -76,26 +109,26 @@ const toggleEditMode = () => {
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">
                       <label for="editName">이름:</label>
-                      <input id="editName" type="text" v-model="store.userInfo.userName" />
+                      <input id="editName" type="text" v-model="editInfo.userName" />
                     </li>
                     <li class="list-group-item">
                       <label for="editUserId">아이디:</label>
-                      <input id="editUserId" type="text" v-model="store.userInfo.userId" disabled />
+                      <input id="editUserId" type="text" v-model="editInfo.userId" disabled />
                     </li>
                     <li class="list-group-item">
                       <label for="editUserId">핸드폰번호:</label>
-                      <input id="editUserId" type="text" v-model="store.userInfo.mobile" />
+                      <input id="editUserId" type="text" v-model="editInfo.mobile" />
                     </li>
                     <li class="list-group-item">
                       <label for="editUserEmailId">이메일:</label>
-                      <input id="editUserEmailId" type="text" v-model="store.userInfo.emailId" />
+                      <input id="editUserEmailId" type="text" v-model="editInfo.emailId" />
                       @
                       <!-- <label for="editUserId">이메</label> -->
-                      <input id="editUserEmailDomain" type="text" v-model="store.userInfo.emailDomain" />
+                      <input id="editUserEmailDomain" type="text" v-model="editInfo.emailDomain" />
                     </li>
                     <div class="mb-3">
                       <label for="gender" class="form-label">성별 : </label>
-                      <select class="form-select" aria-label="성별 선택" name="gender" v-model="store.userInfo.gender">
+                      <select class="form-select" aria-label="성별 선택" name="gender" v-model="editInfo.gender">
                           <option selected value="">선택</option>
                           <option value="MALE" >남성</option>
                           <option value="FEMALE">여성</option>
@@ -107,8 +140,8 @@ const toggleEditMode = () => {
             </div>
             <div class="mt-1 mb-3">
               <button @click="saveChanges" type="button" class="btn btn-outline-primary me-2">수정 완료</button>
-              <button type="reset" class="btn btn-outline-secondary me-2">초기화</button>
-              <button type="button" class="btn btn-outline-danger" @click="toggleEditMode" >취소</button>
+              <button @click="resetForm" type="reset" class="btn btn-outline-secondary me-2">초기화</button>
+              <button @click="toggleEditMode" type="button" class="btn btn-outline-danger">취소</button>
             </div>
           </div>
       <!-- -->
