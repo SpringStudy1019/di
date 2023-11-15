@@ -3,7 +3,6 @@ import { ref, watch, onMounted } from "vue";
 
 
 var map;
-//const positions = ref(position);
 const markers = ref([]);
 const props = defineProps({latitude: Number, longitude: Number});
 
@@ -11,6 +10,7 @@ const position = {
     latitude: props.latitude,
     longitude: props.longitude
 }
+
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {

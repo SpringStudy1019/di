@@ -27,7 +27,7 @@ const getAttraction = () => {
 </script>
 
 <template>
-    <div>
+    <div v-if='attraction.latitude && attraction.longitude'>
         <AttractionMap :longitude="attraction.longitude" :latitude="attraction.latitude"/>
     </div>
 </template>
