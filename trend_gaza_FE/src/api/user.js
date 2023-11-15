@@ -27,6 +27,8 @@ function registUser(user, success, fail) {
     local.post(`${url}/register`, JSON.stringify(user)).then(success).catch(fail);
 }
 
+
+
 export {
     userConfirm, findById, tokenRegeneration, logout,
     registUser,

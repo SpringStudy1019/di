@@ -76,7 +76,7 @@ function registerUser() {
             </div>
           </div>
           <div class="mb-3">
-            <label for="userPwd" class="form-label">성별 : </label>
+            <label for="gender" class="form-label">성별 : </label>
             <select class="form-select" aria-label="성별 선택" name="gender" v-model="user.gender">
                 <option selected value="">선택</option>
                 <option value="MALE">남성</option>
