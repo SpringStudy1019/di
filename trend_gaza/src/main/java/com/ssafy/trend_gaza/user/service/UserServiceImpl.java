@@ -43,6 +43,26 @@ public class UserServiceImpl implements UserService {
 	public User login(LoginRequest loginRequest) throws Exception {
 		return userMapper.login(loginRequest);
 	}
+	
+	@Override
+	public User userInfo(String userId) throws Exception {
+		return userMapper.userInfo(userId);
+	}
+
+	@Override
+	public void saveRefreshToken(Map<String, String> map) throws Exception {
+		userMapper.saveRefreshToken(map);
+	}
+
+	@Override
+	public Object getRefreshToken(String userid) throws Exception {
+		return userMapper.getRefreshToken(userid);
+	}
+
+	@Override
+	public void deleteRefreshToken(Map<String, String> map) throws Exception {
+		userMapper.deleteRefreshToken(map);
+	}
 
 	@Override
 	public String findId(FindIdRequest findIdRequest) throws Exception {

@@ -38,12 +38,13 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	private final UserService userService;
 	private JWTUtil jwtUtil; 
-
-	public UserController(UserService userService) {
+	
+	public UserController(UserService userService, JWTUtil jwtUtil) {
 		super();
 		this.userService = userService;
+		this.jwtUtil = jwtUtil;
 	}
-	
+
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
 		logger.debug("register Dto : {}", registerRequest);

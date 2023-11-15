@@ -1,5 +1,7 @@
 package com.ssafy.trend_gaza.user.service;
 
+import java.util.Map;
+
 import com.ssafy.trend_gaza.user.dto.ChangePwdRequest;
 import com.ssafy.trend_gaza.user.dto.FindIdRequest;
 import com.ssafy.trend_gaza.user.dto.FindPwdRequest;
@@ -18,6 +20,10 @@ public interface UserService {
 	
 	/* 로그인, 로그아웃은 컨트롤러에서 */
 	User login(LoginRequest loginRequest) throws Exception;
+	User userInfo(String userId) throws Exception;
+	void saveRefreshToken(Map<String, String> map) throws Exception;
+	Object getRefreshToken(String userid) throws Exception;
+	void deleteRefreshToken(Map<String, String> map) throws Exception;
 	
 	/* 아이디 찾기 */
 	String findId(FindIdRequest findIdRequest) throws Exception;

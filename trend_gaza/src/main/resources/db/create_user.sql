@@ -14,5 +14,6 @@ CREATE TABLE user (
     gender ENUM('MALE', 'FEMALE', 'UNDEFINED') NOT NULL,
     authority ENUM('USER', 'ADMIN') NOT NULL,
     join_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    social_id VARCHAR(20)
+    social_id VARCHAR(20),
+    token varchar(1000) null default null
 );

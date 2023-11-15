@@ -24,6 +24,10 @@ public interface UserMapper {
 	
 	/* 로그인 */
 	User login(LoginRequest loginRequest) throws SQLException;
+	User userInfo(String userId) throws SQLException;
+	void saveRefreshToken(Map<String, String> map) throws SQLException;
+	Object getRefreshToken(String userid) throws SQLException;
+	void deleteRefreshToken(Map<String, String> map) throws SQLException;
 	
 	/* 아이디 찾기: 이름과 핸드폰번호로 아이디 찾기 */
 	String findId(FindIdRequest findIdRequest) throws SQLException;
