@@ -1,5 +1,17 @@
 <script setup>
-import { RouterView } from "vue-router";
+import { useMenuStore } from "@/stores/menu";
+import { storeToRefs } from "pinia";
+
+const menuStore = useMenuStore();
+
+const { menuList } = storeToRefs(menuStore);
+const { changeMenuState } = menuStore;
+
+const logout = () => {
+  console.log("로그아웃!!!!");
+  changeMenuState();
+};
+
 </script>
 
 <template>
@@ -33,8 +45,29 @@ import { RouterView } from "vue-router";
         <img src="src/components/img/bell2.png" width="20" height="20" class="d-inline-block align-top" alt="">
       </li>
       -->
+      <template v-for="menu in menuList" :key="menu.routeName">
+            <template v-if="menu.show">
+              <template v-if="menu.routeName === 'user-logout'">
+                <li class="nav-item">
+                  <router-link to="/" @click.prevent="logout" class="nav-link">{{
+                    menu.name
+                  }}</router-link>
+                </li>
+              </template>
+              <template v-else>
+                <li class="nav-item">
+                  <router-link :to="{ name: menu.routeName }" class="nav-link">{{
+                    menu.name
+                  }}</router-link>
+                </li>
+              </template>
+            </template>
+          </template>
       <li class="d-flex">
-        마이페이지
+        회원가입
+      </li>
+      <li class="d-flex">
+        로그인
       </li>
     </div>
   </div>
