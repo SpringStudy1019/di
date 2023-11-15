@@ -27,6 +27,33 @@ const router = createRouter({
       component: () => import("../views/TheAttractionView.vue"),
     },
     {
+      path: "/user",
+      name: "user",
+      component: () => import("@/views/TheUserView.vue"),
+      children: [
+        {
+          path: "login",
+          name: "user-login",
+          component: () => import("@/components/users/UserLogin.vue"),
+        },
+        {
+          path: "join",
+          name: "user-join",
+          component: () => import("@/components/users/UserRegister.vue"),
+        },
+        {
+          path: "mypage",
+          name: "user-mypage",
+          component: () => import("@/components/users/UserMyPage.vue"),
+        },
+        // {
+        //   path: "modify/:userid",
+        //   name: "user-modify",
+        //   component: () => import("@/components/users/UserModify.vue"),
+        // },
+      ],
+    },
+    {
       path: '/review',
       name: 'review',
       component: () => import("../views/TheReviewView.vue"),
