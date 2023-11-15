@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void register(RegisterRequest registerRequest) throws Exception {
 		userMapper.register(registerRequest);;
-		
 	}
 
 	@Override
@@ -50,7 +49,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void saveRefreshToken(Map<String, String> map) throws Exception {
+	public void saveRefreshToken(String userId, String refreshToken) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("token", refreshToken);
 		userMapper.saveRefreshToken(map);
 	}
 
@@ -60,7 +62,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteRefreshToken(Map<String, String> map) throws Exception {
+	public void deleteRefreshToken(String userId) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("token", null);
 		userMapper.deleteRefreshToken(map);
 	}
 

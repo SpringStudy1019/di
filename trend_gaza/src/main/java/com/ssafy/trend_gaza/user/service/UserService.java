@@ -21,9 +21,9 @@ public interface UserService {
 	/* 로그인, 로그아웃은 컨트롤러에서 */
 	User login(LoginRequest loginRequest) throws Exception;
 	User userInfo(String userId) throws Exception;
-	void saveRefreshToken(Map<String, String> map) throws Exception;
-	Object getRefreshToken(String userid) throws Exception;
-	void deleteRefreshToken(Map<String, String> map) throws Exception;
+	void saveRefreshToken(String userId, String refreshToken) throws Exception;
+	Object getRefreshToken(String userId) throws Exception;
+	void deleteRefreshToken(String userId) throws Exception;
 	
 	/* 아이디 찾기 */
 	String findId(FindIdRequest findIdRequest) throws Exception;
