@@ -9,6 +9,7 @@
 		<result column="content_type_id" property="contentTypeId"/>
 		<result column="title" property="title"/>
 		<result column="addr1" property="addr1"/>
+		<result column="first_image" property="firstImage"/>		
 		<result column="tel" property="tel"/>
 		<result column="latitude" property="latitude"/>
 		<result column="longitude" property="longitude"/>
