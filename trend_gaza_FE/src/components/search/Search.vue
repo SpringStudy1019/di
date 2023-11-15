@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { searchAttraction } from '@/api/attraction';
 
 const keyword = ref("")
@@ -8,11 +8,7 @@ const searchResults = ref([]);
 const inputKeyword = () => {
     searchAttraction(keyword.value,
         ({ data }) => {
-            
             searchResults.value = data.result;
-            for (var i = 0; i < searchResults.value.length; i++) {
-                console.log("출력" + searchResults.value[i].title);
-            }
         },
         (error) => {
             console.log(error);
