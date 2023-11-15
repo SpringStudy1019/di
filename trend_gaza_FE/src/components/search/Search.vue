@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { searchAttraction } from '@/api/attraction';
+import { searchAttraction, getAttractionDetail } from '@/api/attraction';
 
 const keyword = ref("")
 const searchResults = ref([]);
@@ -14,6 +14,10 @@ const inputKeyword = () => {
             console.log(error);
         }
     );
+}
+
+const selectKeyword = (keyword) => {
+    //getAttractionDetail()
 }
 
 </script>
@@ -44,7 +48,7 @@ const inputKeyword = () => {
                         </form>
                         <!-- 검색 결과 표시 -->
                         <ul class="list-group">
-                            <li class="list-group-item" v-for='result in searchResults' :key='result.id'><img src='@/assets/search.svg'>&nbsp;{{ result.title }}</li>
+                            <li class="list-group-item" v-for='result in searchResults' :key='result.id' @click='selectKeyword(result.title)'><img src='@/assets/search.svg'>&nbsp;{{ result.title }}</li>
                         </ul>
                     </div>
                 <div class="col-3"></div>
