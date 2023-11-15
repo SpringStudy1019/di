@@ -45,6 +45,10 @@ const logout = () => {
         <img src="src/components/img/bell2.png" width="20" height="20" class="d-inline-block align-top" alt="">
       </li>
       -->
+      <ul
+          class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll"
+          style="--bs-scroll-height: 100px"
+        >
       <template v-for="menu in menuList" :key="menu.routeName">
             <template v-if="menu.show">
               <template v-if="menu.routeName === 'user-logout'">
@@ -63,12 +67,7 @@ const logout = () => {
               </template>
             </template>
           </template>
-      <li class="d-flex">
-        회원가입
-      </li>
-      <li class="d-flex">
-        로그인
-      </li>
+        </ul>
     </div>
   </div>
 </nav>
