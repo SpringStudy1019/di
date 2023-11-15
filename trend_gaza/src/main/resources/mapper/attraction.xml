@@ -67,5 +67,9 @@
 		from attraction_info
 		where content_id = #{id}
 	</select>
+	
+	<select id="attractionNameList" resultType="string">
+		select title from attraction_info
+	</select>
 
 </mapper>
