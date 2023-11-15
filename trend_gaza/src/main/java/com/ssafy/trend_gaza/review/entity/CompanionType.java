@@ -18,9 +18,9 @@ public enum CompanionType {
 		this.value = value;
 	}
 	
-	public static CompanionType of(String source) {
+	public static CompanionType of(String source) { 
 		return Arrays.stream(CompanionType.values())
-				.filter(companion -> companion.toString().contentEquals(source))
+				.filter(companion -> companion.toString().contentEquals(source)) 
 				.findAny()
 				.orElseThrow(() -> CompanionNotFoundException.EXCEPTION);
 	}
