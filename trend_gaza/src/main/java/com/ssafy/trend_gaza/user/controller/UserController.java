@@ -39,7 +39,7 @@ import com.ssafy.trend_gaza.util.JWTUtil;
 public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-	private final UserService userService;
+	private UserService userService;
 	private JWTUtil jwtUtil; 
 	
 	public UserController(UserService userService, JWTUtil jwtUtil) {
@@ -143,6 +143,23 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
+	@PostMapping("/refresh")
+	public ResponseEntity<?> refreshToken(@RequestBody User user, HttpServletRequest request) throws Exception {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		String token = request.getHeader("refreshToken");
+		if (jwtUtil.checkToken(token)) {
+			if (token.equals(userService.getRefreshToken(user.getUserId()))) {
+				String accessToken = jwtUtil.createAccessToken(user.getUserId());
+				resultMap.put("access-token", accessToken);
+				status = HttpStatus.CREATED;
+			}
+		} else {
+			status = HttpStatus.UNAUTHORIZED;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
 	@PostMapping(value = "/findId", produces = "text/plain")
 	public ResponseEntity<?> findId(@RequestBody FindIdRequest findIdRequest) {
 		try {
@@ -152,7 +169,6 @@ public class UserController {
 			return exceptionHandling(e);
 		}	
 	}
-	
 	
 	@PostMapping("/send-email")
 	public ResponseEntity<?> sendEmail(@RequestParam String userId) throws Exception {

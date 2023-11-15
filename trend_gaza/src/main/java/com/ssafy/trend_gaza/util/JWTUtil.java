@@ -21,18 +21,18 @@ public class JWTUtil {
 	
 	@Value("${jwt.salt}")
 	private String salt;
-	
+
 	@Value("${jwt.access-token.expiretime}")
-	private long accessTokenExpireTime;
-	
+	private long accessTokenExpireTiem;
+
 	@Value("${jwt.refresh-token.expiretime}")
 	private long refreshTokenExpireTime;
-	
+
 	public String createAccessToken(String userId) {
-		return create(userId, "access-token", accessTokenExpireTime);
+		return create(userId, "access-token", accessTokenExpireTiem);
 	}
-	
-	// AccessToken에 비해 유효기간을 길게 설정한다.
+
+//	AccessToken에 비해 유효기간을 길게 설정.
 	public String createRefreshToken(String userId) {
 		return create(userId, "refresh-token", refreshTokenExpireTime);
 	}
