@@ -1,5 +1,8 @@
 package com.ssafy.trend_gaza.like.dto;
 
+import lombok.Builder;
+
+@Builder
 public class LikeRequest {
 
 	private String userId;

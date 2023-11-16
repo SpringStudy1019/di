@@ -11,14 +11,15 @@ import com.ssafy.trend_gaza.like.repository.LikeMapper;
 
 @Service
 public class LikeServiceImpl implements LikeService {
-
-private LikeMapper likeMapper;
+	
+	private LikeMapper likeMapper;
 	
 	public LikeServiceImpl(LikeMapper likeMapper) {
 		super();
 		this.likeMapper = likeMapper;
 	}
 
+	
 	@Override
 	public int onLike(LikeRequest likeRequest) throws Exception {
 		// 좋아요 등록: 좋아요가 없으면 좋아요를 할 수 있다. 좋아요가 있으면 좋아요를 할 수 없다.  
