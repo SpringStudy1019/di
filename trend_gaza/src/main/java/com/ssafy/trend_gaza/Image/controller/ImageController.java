@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ssafy.trend_gaza.Image.dto.ImagesResponse;
 import com.ssafy.trend_gaza.Image.service.UploadService;
 import com.ssafy.trend_gaza.user.entity.User;
+import com.ssafy.trend_gaza.util.AuthenticationUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,8 +32,8 @@ public class ImageController {
 
 	@PostMapping
 	public ResponseEntity<ImagesResponse> uploadImage(@RequestPart final List<MultipartFile> images, HttpSession session) {
-		User loginUser = (User)session.getAttribute("userinfo");
-		final ImagesResponse imagesResponse = uploadService.save(images,loginUser.getUserId());
+		String loginUserId = AuthenticationUtil.getCurrentUserSocialId();
+		final ImagesResponse imagesResponse = uploadService.save(images, loginUserId);
 		final String firstImageName = imagesResponse.getImageNames().get(0);
 		return ResponseEntity.created(URI.create(firstImageName)).body(imagesResponse);
 	}
