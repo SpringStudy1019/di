@@ -2,13 +2,14 @@
 import { ref, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { registReview, modifyReview, detailReview, getModifyReview } from "@/api/review";
+import { useUserStore } from '@/stores/user'
 
 import VSelect from '../../common/VSelect.vue';
 
 import emptyStar from '@/assets/emptyStar.svg';
 
 const router = useRouter();
-const route = useRoute();
+const store = useUserStore()
 
 const {VITE_VUE_API_URL} = import.meta.env;
 
@@ -18,7 +19,7 @@ const contentLength = ref(0);
 const titleLength = ref(0);
 const today = ref(formattingDate(new Date()));
 const score = ref(1);
-const isUesId = ref(false);
+
 const optionMsg = "------------------------------------------선택------------------------------------------";
 const selectOption = ref([
     { text: optionMsg, value: ""},
@@ -33,7 +34,7 @@ const review = ref({
     score: 0,
     title: "",
     content: "",
-    userId: "alswjd",       // 로그인했다는 가정
+    userId: store.userInfo.userId,       // 로그인했다는 가정
     companion: "",
     registerDate: "",
     startDate: "",

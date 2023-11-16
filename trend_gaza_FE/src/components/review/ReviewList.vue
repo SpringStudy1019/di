@@ -67,9 +67,7 @@ const moveWrite = () => {
     <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">리뷰 목록</mark>
-        </h2>
+      
       </div>
       <div class="col-lg-10">
         <div class="row align-self-center mb-2">
@@ -94,18 +92,25 @@ const moveWrite = () => {
             </form>
           </div>
         </div> 
-        
-        <table class="table table-hover">
+
+        <div class="card-columns">
+          <ReviewListItem
+            v-for="review in reviews"
+            :key="review.idx"
+            :review="review"
+          ></ReviewListItem>
+        </div>
+
+        <!-- <table class="table table-hover">
           <thead>
             <tr class="text-center">
               <th scope="col">리뷰 번호</th>
+              <th scope="col">관광지번호</th>
               <th scope="col">제목</th>
               <th scope="col">점수</th>
               <th scope="col">내용</th>
               <th scope="col">작성일</th>
-              <th scope="col">수정일</th>
               <th scope="col">작성자</th>
-              <th scope="col">관광지번호</th>
             </tr>
           </thead>
           <tbody>
@@ -115,8 +120,10 @@ const moveWrite = () => {
             :review="review"
           ></ReviewListItem>
           </tbody>
-        </table>
+        </table> -->
+
       </div>
+
       <PageNavigation
         :current-page="currentPage"
         :total-page="totalPage"
