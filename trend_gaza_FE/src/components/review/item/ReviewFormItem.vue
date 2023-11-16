@@ -50,19 +50,19 @@ if (props.type === "modify") {
 
 const getReview = () => {
     getModifyReview(props.reviewIdx,
-            ({ data }) => { 
-                review.value = data;  
-                score.value = data.score;
-                console.log(score.value);
-                review.value.startDate = formattingDate(data.startDate);
-                review.value.endDate = formattingDate(data.endDate);
-                contentLength.value = data.content.length;
-                titleLength.value = data.title.length;
+        ({ data }) => { 
+            review.value = data;  
+            score.value = data.score;
+            console.log(score.value);
+            review.value.startDate = formattingDate(data.startDate);
+            review.value.endDate = formattingDate(data.endDate);
+            contentLength.value = data.content.length;
+            titleLength.value = data.title.length;
 
-                markingSelectOption();
-            },(error) => {
-                console.log(error);
-            });
+            markingSelectOption();
+        },(error) => {
+            console.log(error);
+        });
 }
 
 

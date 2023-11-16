@@ -3,9 +3,11 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailReview, deleteReview } from '../../api/review';
 import { listComment } from '../../api/comment';
+import { useUserStore } from '@/stores/user'
 
 const route = useRoute();
 const router = useRouter();
+const store = useUserStore()
 
 const { reviewIdx } = route.params;
 
@@ -68,6 +70,7 @@ function onDeleteArticle() {
 function isDelete() {
   return confirm("정말 삭제하시겠습니까?");
 }
+
 </script>
 
 <template>
@@ -82,7 +85,6 @@ function isDelete() {
         <div class="row my-2">
           <h2 class="text-bold px-2">{{ review.reviewIdx }}. {{ review.title }}</h2>
         </div>
-        <!-- 팔로우 -->
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">
@@ -92,6 +94,9 @@ function isDelete() {
               />
               <p>
                 <span class="fw-bold">{{ review.userId }}</span> <br />
+                <!-- 팔로우 -->
+                
+                <span v-if="review.userId !== store.userInfo.userId">팔로우</span>
                 <span class="text-secondary fw-light">
                   {{ review.registerDate }}
                 </span>
@@ -103,7 +108,8 @@ function isDelete() {
               </p>
             </div>
           </div>
-          <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
+          <!-- 댓글 개수 실제 댓글 개수 반영하기 -->
+          <div class="col-md-4 align-self-center text-end">댓글 : 0</div>
           <div class="divider mb-3"></div>
           <div class="text-secondary">
             {{ review.content }}
