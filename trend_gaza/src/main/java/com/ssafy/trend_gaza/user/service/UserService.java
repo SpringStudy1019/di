@@ -8,18 +8,21 @@ import com.ssafy.trend_gaza.user.dto.FindPwdRequest;
 import com.ssafy.trend_gaza.user.dto.LoginRequest;
 import com.ssafy.trend_gaza.user.dto.ModifyRequest;
 import com.ssafy.trend_gaza.user.dto.RegisterRequest;
+import com.ssafy.trend_gaza.user.entity.PlatformType;
 import com.ssafy.trend_gaza.user.entity.User;
 
 public interface UserService {
 
 	/* 회원가입 */	
 	void register(RegisterRequest registerRequest) throws Exception;
+	User register(String nickname, String email, String socialId, String platform);
 	
 	/* 회원가입 시 아이디 중복 체크 */
 	int idCheck(String userId) throws Exception;
 	
 	/* 로그인, 로그아웃은 컨트롤러에서 */
 	User login(LoginRequest loginRequest) throws Exception;
+	User login(String platform, User user);
 	User userInfo(String userId) throws Exception;
 	void saveRefreshToken(String userId, String refreshToken) throws Exception;
 	Object getRefreshToken(String userId) throws Exception;
