@@ -14,7 +14,10 @@ import com.ssafy.trend_gaza.review.entity.Review;
 public interface ReviewMapper {
 
 	/* 리뷰 등록 */ 
-	void register(ReviewRegisterRequest registerRequest) throws SQLException;
+	void register(Review registerRequest) throws SQLException;
+	
+	/* 이미지 업로드 */
+	void registerFile(Review registerRequest) throws Exception;
 	
 	/* 리뷰 전체 조회 (+검색) */
 	List<Review> list(Map<String, Object> param) throws SQLException;
