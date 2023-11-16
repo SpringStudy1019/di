@@ -1,7 +1,8 @@
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, ReactiveEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { registReview, modifyReview, detailReview, getModifyReview } from "@/api/review";
+import {uploadImage} from "@/api/image"
 import { useUserStore } from '@/stores/user'
 
 import VSelect from '../../common/VSelect.vue';
@@ -34,7 +35,8 @@ const review = ref({
     score: 0,
     title: "",
     content: "",
-    userId: store.userInfo.userId,       // 로그인했다는 가정
+    //userId: store.userInfo.userId,       // 로그인했다는 가정
+    userId: "alswjd",
     companion: "",
     registerDate: "",
     startDate: "",
@@ -213,6 +215,25 @@ const markingSelectOption = () => {
         }
     }
 }
+
+const prevImg = ref("");
+const img = ref("");
+const uploadImageFunc = (e) => {
+    let files = e.target.files;
+    const formData = new FormData();
+
+    for(let i=0; i<files.length; i++) {
+        formData.append('images', files[i]);
+    }
+    
+    uploadImage(formData,
+    ({data}) => {
+            console.log("업로드 완료");
+        },
+        (error) => {
+            console.log(error);
+    });
+}
 </script>
 
 <template>
@@ -257,7 +278,12 @@ const markingSelectOption = () => {
         </div>
         <div class="content">
             <p class="upload-label">[선택 사항] 이미지 업로드하기</p>
-            <input type='file'>
+            <form >
+                <input type='file' v-on="img" name="images" accept="image/*" @change="uploadImageFunc">
+            </form>
+        </div>
+        <div id="imagePreview" :html="prevImg">
+            <img id="img"/>
         </div>
         <div class="content">
             <button class="btn" type='submit' v-if="type === 'regist'">리뷰 제출</button>
