@@ -2,6 +2,7 @@ package com.ssafy.trend_gaza.user.repository;
 
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Optional;
 
 import org.mapstruct.Mapper;
 
@@ -28,6 +29,11 @@ public interface UserMapper {
 	void saveRefreshToken(Map<String, String> map) throws SQLException;
 	Object getRefreshToken(String userid) throws SQLException;
 	void deleteRefreshToken(Map<String, String> map) throws SQLException;
+	
+	/* 존재하는 회원인지 찾기 */
+	Optional<User> findByEmail(String email) throws SQLException;
+	Optional<User> findById(String id) throws SQLException;
+	boolean existsBySocialId(String socialId) throws SQLException;
 	
 	/* 아이디 찾기: 이름과 핸드폰번호로 아이디 찾기 */
 	String findId(FindIdRequest findIdRequest) throws SQLException;
