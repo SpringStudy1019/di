@@ -4,6 +4,12 @@
 
 <mapper namespace="com.ssafy.trend_gaza.follow.repository.FollowMapper">
 
+	<resultMap type="com.ssafy.trend_gaza.follow.entity.Follow" id="follow">
+		<result column="follow_idx" property="followIdx"/>
+		<result column="followee_id" property="followeeId"/>
+		<result column="follower_id" property="followerId"/>
+	</resultMap>
+	
 	<insert id="onFollow" parameterType="followRequest">
 		insert into follow (followee_id, follower_id)
 		values (#{followeeId}, #{followerId})
@@ -17,6 +23,11 @@
 	<select id="listFollowers" parameterType="string" resultType="string">
 		select follower_id from follow
 		where followee_id=#{followeeId}
+	</select>
+	
+	<select id="findFollow" parameterType="followRequest" resultMap="follow">
+		select * from follow
+		where followee_id=#{followeeId} and follower_id=#{followerId}
 	</select>
 	
 </mapper>

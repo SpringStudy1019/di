@@ -27,5 +27,10 @@ public class Follow {
 	public String getFollowerId() {
 		return followerId;
 	}
+
+	@Override
+	public String toString() {
+		return "Follow [followIdx=" + followIdx + ", followeeId=" + followeeId + ", followerId=" + followerId + "]";
+	}
 	
 }

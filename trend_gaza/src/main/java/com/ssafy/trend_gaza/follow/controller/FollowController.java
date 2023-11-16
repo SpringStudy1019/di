@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trend_gaza.follow.dto.FollowRequest;
 import com.ssafy.trend_gaza.follow.service.FollowService;
-import com.ssafy.trend_gaza.like.dto.LikeRequest;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,7 +51,7 @@ public class FollowController {
 		try {
 			int result = followService.offFollow(followRequest);
 			if (result == 1) {
-				return new ResponseEntity<>(HttpStatus.CREATED);				
+				return new ResponseEntity<>(HttpStatus.OK);				
 			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 			}

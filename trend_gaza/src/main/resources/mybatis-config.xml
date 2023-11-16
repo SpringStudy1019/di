@@ -22,6 +22,8 @@
 		<!-- comment -->
 		<typeAlias type="com.ssafy.trend_gaza.comment.dto.CommentRegisterRequest" alias="commentRegisterRequest" />
 		<typeAlias type="com.ssafy.trend_gaza.comment.dto.CommentModifyResponse" alias="commentModifyResponse" />
+		<!-- follow -->
+		<typeAlias type="com.ssafy.trend_gaza.follow.dto.FollowRequest" alias="followRequest" />
 	</typeAliases>
 	
 	<environments default="development">

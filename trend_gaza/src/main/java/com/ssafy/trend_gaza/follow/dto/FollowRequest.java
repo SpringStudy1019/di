@@ -5,24 +5,18 @@ import lombok.Builder;
 @Builder
 public class FollowRequest {
 
-	private Integer followIdx;
-	private String followeeId; 
-	private String followerId; 
+	private String followeeId; // star
+	private String followerId; // fan
 	
 	public FollowRequest() {}
-
-	public FollowRequest(Integer followIdx, String followeeId, String followerId) {
+	
+	public FollowRequest(String followeeId, String followerId) {
 		super();
-		this.followIdx = followIdx;
 		this.followeeId = followeeId;
 		this.followerId = followerId;
 	}
 
 	
-	public Integer getFollowIdx() {
-		return followIdx;
-	}
-
 	public String getFolloweeId() {
 		return followeeId;
 	}

@@ -14,4 +14,5 @@ public interface FollowService {
 
 	/* 팔로우 목록 */
 	List<String> listFollowers(String followeeId) throws Exception;
+
 }
