@@ -30,7 +30,9 @@ function range(start, end) {
 }
 
 function onPageChange(pg) {
-  console.log(pg + "로 이동!!!");
+  // console.log(pg + "로 이동!!!");
+   // Scroll to the top of the page
+   window.scrollTo({ top: 0, behavior: 'smooth' });
   emit("pageChange", pg);
 }
 </script>

@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import("../views/TheMainView.vue")
     },
     {
+      path: '/plan',
+      name: 'plan',
+      component: () => import("../views/ThePlanView.vue")
+    },
+    {
       path: '/category',
       name: 'category',
       component: () => import("../views/TheMainView.vue"),
