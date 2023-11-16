@@ -1,5 +1,6 @@
 package com.ssafy.trend_gaza.user.service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -13,7 +14,9 @@ import com.ssafy.trend_gaza.user.dto.FindPwdRequest;
 import com.ssafy.trend_gaza.user.dto.LoginRequest;
 import com.ssafy.trend_gaza.user.dto.ModifyRequest;
 import com.ssafy.trend_gaza.user.dto.RegisterRequest;
+import com.ssafy.trend_gaza.user.entity.PlatformType;
 import com.ssafy.trend_gaza.user.entity.User;
+import com.ssafy.trend_gaza.user.exception.AccountAlreadyExist;
 import com.ssafy.trend_gaza.user.repository.UserMapper;
 
 @Service
@@ -32,6 +35,32 @@ public class UserServiceImpl implements UserService {
 	public void register(RegisterRequest registerRequest) throws Exception {
 		userMapper.register(registerRequest);;
 	}
+	
+	@Override
+	public User register(String nickname, String email, String socialId, String platform) {
+		//User newUser = new User (nickname, email, socialId, platform);
+		RegisterRequest newUser = RegisterRequest.builder()
+				.userId(socialId)
+				.userName(nickname)
+				// platform 넣기
+				.emailId(email.split("@")[0])
+				.emailDomain(email.split("@")[1])
+				.build();
+        
+		try {
+			userMapper.register(newUser);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+        return User.builder()
+        		.userId(socialId)
+				.userName(nickname)
+				// platform 넣기
+				.emailId(email.split("@")[0])
+				.emailDomain(email.split("@")[1])
+        		.build();
+	}
 
 	@Override
 	public int idCheck(String userId) throws Exception {
@@ -41,6 +70,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User login(LoginRequest loginRequest) throws Exception {
 		return userMapper.login(loginRequest);
+	}
+	
+	public User login(String platform, User user) {
+		if (!platform.equals(user.getPlatform().getPlatform())) throw AccountAlreadyExist.EXCEPTION;
+
+        return user;
 	}
 	
 	@Override
