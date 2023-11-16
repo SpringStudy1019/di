@@ -1,8 +1,9 @@
 <script setup>
-import { ref, watchEffect } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from "vue-router";
 import { modifyUser } from "@/api/user";
+import { followList } from "@/api/follow";
 
 const store = useUserStore()
 const editMode = ref(false);
@@ -40,6 +41,23 @@ const saveChanges = () => {
 
 const resetForm = () => {
   editInfo.value = { ...store.userInfo };
+};
+
+// 팔로잉 
+const followees = ref([])
+onMounted(() => {
+    getFollowers();
+});
+
+const getFollowers = () => {
+   // API 호출
+   followList(store.userInfo.userId,
+      ({ data }) => {  
+        followees.value = data;
+    },
+    (error) => {
+        console.log(error);
+    });
 };
 </script>
 
@@ -84,6 +102,30 @@ const resetForm = () => {
           </div>
         </div>
         
+        <div class='following'>
+          <h3 class="my-3 py-3 shadow-sm bg-light text-center">
+            <mark class="orange">팔로잉</mark>
+          </h3>
+          <div class="row" >
+            <div class="col-sm-6 my-3" v-for="followee in followees" :key="followee">
+              <div class="card">
+                <div class="card-body">
+                  <img
+                    src="https://source.unsplash.com/random/250x250/?food"
+                    class="img-fluid rounded-start"
+                    alt="..."  style="height: 100px; width: 100px;"
+                  />
+                  <h5 class="card-title">{{ followee }}</h5>
+                  <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+                  <div>
+                    <a href="#" class="btn btn-warning me-3">여행갈래?</a>
+                    <button class="btn btn-dark">팔로우 취소</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
