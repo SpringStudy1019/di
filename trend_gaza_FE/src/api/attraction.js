@@ -8,6 +8,11 @@ function getAttractionDetail(attractionId, success, fail) {
     local.get(`${url}/${attractionId}`).then(success).catch(fail);
 }
 
+function searchAttraction(keyword, success, fail) {
+    local.get(`${url}/auto-search?keyword=${keyword}`).then(success).catch(fail);
+}
+
 export {
-    getAttractionDetail
+    getAttractionDetail,
+    searchAttraction
 }
