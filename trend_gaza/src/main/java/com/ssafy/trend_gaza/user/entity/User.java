@@ -1,5 +1,8 @@
 package com.ssafy.trend_gaza.user.entity;
 
+import lombok.Builder;
+
+@Builder
 public class User {
 
 	private String userId;
@@ -9,15 +12,17 @@ public class User {
 	private String emailId;
 	private String emailDomain;
 	private String gender;
-	private String authority;
+	private AuthorityType authority;
 	private String joinDate;
 	private String socialId;
+	private PlatformType platform;
 	private String refreshToken;
 	
 	public User() {}
-
+	
 	public User(String userId, String userName, String password, String mobile, String emailId, String emailDomain,
-			String gender, String authority, String joinDate, String socialId, String refreshToken) {
+			String gender, AuthorityType authority, String joinDate, String socialId, PlatformType platform,
+			String refreshToken) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -29,10 +34,15 @@ public class User {
 		this.authority = authority;
 		this.joinDate = joinDate;
 		this.socialId = socialId;
+		this.platform = platform;
 		this.refreshToken = refreshToken;
 	}
 
 	
+	public PlatformType getPlatform() {
+		return platform;
+	}
+
 	public String getUserId() {
 		return userId;
 	}
@@ -61,7 +71,7 @@ public class User {
 		return gender;
 	}
 
-	public String getAuthority() {
+	public AuthorityType getAuthority() {
 		return authority;
 	}
 

@@ -1,5 +1,8 @@
 package com.ssafy.trend_gaza.user.dto;
 
+import lombok.Builder;
+
+@Builder
 public class RegisterRequest {
 
 	private  String userId;
