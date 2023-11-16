@@ -23,4 +23,14 @@ function videoAxios() {
   return instance;
 }
 
-export { localAxios, videoAxios };
+function imageAxios() {
+  const instance = axios.create({
+    baseURL: VITE_VUE_API_URL,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return instance;
+}
+
+export { localAxios, videoAxios, imageAxios };

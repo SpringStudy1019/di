@@ -1,5 +1,10 @@
 package com.ssafy.trend_gaza.review.entity;
 
+import java.util.List;
+
+import lombok.Builder;
+
+@Builder
 public class Review {
 
 	private  Integer reviewIdx;
@@ -13,11 +18,15 @@ public class Review {
 	private  String modifyDate;
 	private  String userId;
 	private  Integer contentId;
+	private List<FileInfo> fileInfos;
 	
 	public Review() {}
 
-	public Review(Integer reviewIdx, String score, String title, String content, String companion, String startDate,
-			String endDate, String registerDate, String modifyDate, String userId, Integer contentId) {
+	public Review(Integer reviewIdx, String score, String title,
+			String content, String companion,
+			String startDate, String endDate, String registerDate,
+			String modifyDate, String userId, Integer contentId,
+			List<FileInfo> fileInfos) {
 		super();
 		this.reviewIdx = reviewIdx;
 		this.score = score;
@@ -30,6 +39,7 @@ public class Review {
 		this.modifyDate = modifyDate;
 		this.userId = userId;
 		this.contentId = contentId;
+		this.fileInfos = fileInfos;
 	}
 
 	public Integer getReviewIdx() {
@@ -75,12 +85,9 @@ public class Review {
 	public Integer getContentId() {
 		return contentId;
 	}
-
-	@Override
-	public String toString() {
-		return "Review [reviewIdx=" + reviewIdx + ", score=" + score + ", title=" + title + ", content=" + content
-				+ ", companion=" + companion + ", startDate=" + startDate + ", endDate=" + endDate + ", registerDate="
-				+ registerDate + ", modifyDate=" + modifyDate + ", userId=" + userId + ", contentId=" + contentId + "]";
-	}
 	
+	public List<FileInfo> getFileInfos() {
+		return fileInfos;
+	}
+
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.trend_gaza.review.dto.ReviewModifyResponse;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
 import com.ssafy.trend_gaza.review.dto.ReviewResponse;
+import com.ssafy.trend_gaza.review.entity.FileInfo;
 import com.ssafy.trend_gaza.review.entity.Review;
 import com.ssafy.trend_gaza.review.repository.ReviewMapper;
 
@@ -25,8 +26,22 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	@Override
 	public void register(ReviewRegisterRequest reviewRegisterRequest) throws Exception {
-		reviewMapper.register(reviewRegisterRequest);
-		
+		Review review = Review.builder()
+				.score(reviewRegisterRequest.getScore())
+				.title(reviewRegisterRequest.getTitle())
+				.content(reviewRegisterRequest.getContent())
+				.companion(reviewRegisterRequest.getCompanion())
+				.startDate(reviewRegisterRequest.getStartDate())
+				.endDate(reviewRegisterRequest.getEndDate())
+				.userId(reviewRegisterRequest.getUserId())
+				.contentId(reviewRegisterRequest.getContentId())
+				.fileInfos(reviewRegisterRequest.getFileInfos())
+				.build();
+		reviewMapper.register(review);
+		List<FileInfo> fileInfos = reviewRegisterRequest.getFileInfos();
+		if (fileInfos != null && !fileInfos.isEmpty()) {
+			reviewMapper.registerFile(review);
+		}
 	}
 
 	@Override

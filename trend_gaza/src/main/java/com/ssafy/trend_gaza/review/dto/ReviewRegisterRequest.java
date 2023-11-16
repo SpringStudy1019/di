@@ -1,5 +1,9 @@
 package com.ssafy.trend_gaza.review.dto;
 
+import java.util.List;
+
+import com.ssafy.trend_gaza.review.entity.FileInfo;
+
 import lombok.Builder;
 
 @Builder
@@ -13,11 +17,12 @@ public class ReviewRegisterRequest {
 	private  String endDate;
 	private  String userId;
 	private  Integer contentId;
+	private List<FileInfo> fileInfos;
 	
 	public ReviewRegisterRequest() {}
 
 	public ReviewRegisterRequest(String score, String title, String content, String companion, String startDate,
-			String endDate, String userId, Integer contentId) {
+			String endDate, String userId, Integer contentId, List<FileInfo> fileInfos) {
 		super();
 		this.score = score;
 		this.title = title;
@@ -27,6 +32,7 @@ public class ReviewRegisterRequest {
 		this.endDate = endDate;
 		this.userId = userId;
 		this.contentId = contentId;
+		this.fileInfos = fileInfos;
 	}
 
 	
@@ -61,16 +67,10 @@ public class ReviewRegisterRequest {
 	public Integer getContentId() {
 		return contentId;
 	}
-
 	
-	@Override
-	public String toString() {
-		return "ReviewRegisterRequest [score=" + score + ", title=" + title + ", content=" + content + ", companion="
-				+ companion + ", startDate=" + startDate + ", endDate=" + endDate + ", userId=" + userId
-				+ ", contentId=" + contentId + "]";
+	public List<FileInfo> getFileInfos() {
+		return fileInfos;
 	}
-	
-	
 
-	
+
 }
