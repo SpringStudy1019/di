@@ -82,6 +82,7 @@ function isDelete() {
         <div class="row my-2">
           <h2 class="text-bold px-2">{{ review.reviewIdx }}. {{ review.title }}</h2>
         </div>
+        <!-- 팔로우 -->
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">

@@ -11,8 +11,8 @@ function onFollow(followInfo, success, fail) {
     local.post(`${url}`, JSON.stringify(followInfo)).then(success).catch(fail);
 }
 
-function offFollow(followInfo, success, fail) {
-    local.delete(`${url}`, JSON.stringify(followInfo)).then(success).catch(fail);
+function offFollow(followeeId, followerId, success, fail) {
+    local.delete(`${url}/${followeeId}?followerId=${followerId}`).then(success).catch(fail);
 }
 
 export {

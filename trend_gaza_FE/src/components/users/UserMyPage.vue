@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from "vue-router";
 import { modifyUser } from "@/api/user";
@@ -61,17 +61,15 @@ const getFollowers = () => {
 };
 
 // 팔로우 취소
-const followInfo = ref({
-  "followeeId": store.userInfo.userId,
-  "followerId": ""
-})
-
 const deleteFollow = (followee) => {
-  followInfo.value.followerId = followee;
-  offFollow(followInfo.value,
+    offFollow(
+      store.userInfo.userId,
+      followee,
     (response) => {
       let msg = "팔로우가 취소되었습니다!"
       alert(msg);
+      getFollowers();
+      router.push({ name: "user-mypage" });
     },
     (error) => console.log(error)
   )
