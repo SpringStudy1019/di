@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from "vue-router";
 import { modifyUser } from "@/api/user";
-import { followList } from "@/api/follow";
+import { followList, offFollow } from "@/api/follow";
 
 const store = useUserStore()
 const editMode = ref(false);
@@ -43,7 +43,7 @@ const resetForm = () => {
   editInfo.value = { ...store.userInfo };
 };
 
-// 팔로잉 
+// 팔로잉 목록
 const followees = ref([])
 onMounted(() => {
     getFollowers();
@@ -58,6 +58,23 @@ const getFollowers = () => {
     (error) => {
         console.log(error);
     });
+};
+
+// 팔로우 취소
+const followInfo = ref({
+  "followeeId": store.userInfo.userId,
+  "followerId": ""
+})
+
+const deleteFollow = (followee) => {
+  followInfo.value.followerId = followee;
+  offFollow(followInfo.value,
+    (response) => {
+      let msg = "팔로우가 취소되었습니다!"
+      alert(msg);
+    },
+    (error) => console.log(error)
+  )
 };
 </script>
 
@@ -115,11 +132,10 @@ const getFollowers = () => {
                     class="img-fluid rounded-start"
                     alt="..."  style="height: 100px; width: 100px;"
                   />
-                  <h5 class="card-title">{{ followee }}</h5>
-                  <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+                  <h5 class="card-title" >{{ followee }}</h5>
                   <div>
                     <a href="#" class="btn btn-warning me-3">여행갈래?</a>
-                    <button class="btn btn-dark">팔로우 취소</button>
+                    <button class="btn btn-dark"  @click="deleteFollow(followee)" >팔로우 취소</button>
                   </div>
                 </div>
               </div>

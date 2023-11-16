@@ -1,8 +1,5 @@
 package com.ssafy.trend_gaza.follow.dto;
 
-import lombok.Builder;
-
-@Builder
 public class FollowRequest {
 
 	private String followeeId; // star
@@ -23,6 +20,14 @@ public class FollowRequest {
 
 	public String getFollowerId() {
 		return followerId;
+	}
+
+	public void setFolloweeId(String followeeId) {
+		this.followeeId = followeeId;
+	}
+
+	public void setFollowerId(String followerId) {
+		this.followerId = followerId;
 	}
 
 }

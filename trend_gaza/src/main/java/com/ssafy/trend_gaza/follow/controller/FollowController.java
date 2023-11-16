@@ -1,6 +1,8 @@
 package com.ssafy.trend_gaza.follow.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trend_gaza.follow.dto.FollowRequest;
@@ -46,10 +49,13 @@ public class FollowController {
 		}
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<?> offFollow(@RequestBody FollowRequest followRequest) {
+	@DeleteMapping(value="/{followeeId}")
+	public ResponseEntity<?> offFollow(@PathVariable String followeeId, @RequestParam String followerId) {
+		Map<String, String> param = new HashMap<>();
+		param.put("followeeId", followeeId);
+		param.put("followerId", followerId);
 		try {
-			int result = followService.offFollow(followRequest);
+			int result = followService.offFollow(param);
 			if (result == 1) {
 				return new ResponseEntity<>(HttpStatus.OK);				
 			} else {

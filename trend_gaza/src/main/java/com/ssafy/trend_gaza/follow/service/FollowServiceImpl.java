@@ -1,18 +1,12 @@
 package com.ssafy.trend_gaza.follow.service;
 
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.trend_gaza.attraction.controller.AttractionController;
-import com.ssafy.trend_gaza.follow.controller.FollowController;
 import com.ssafy.trend_gaza.follow.dto.FollowRequest;
 import com.ssafy.trend_gaza.follow.entity.Follow;
 import com.ssafy.trend_gaza.follow.repository.FollowMapper;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 public class FollowServiceImpl implements FollowService {
@@ -37,11 +31,14 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	@Override
-	public int offFollow(FollowRequest followRequest) throws Exception {
+	public int offFollow(Map<String, String> param) throws Exception {
 		int result = 0;
+		FollowRequest followRequest = new FollowRequest();
+		followRequest.setFolloweeId(param.get("followeeId"));
+		followRequest.setFollowerId(param.get("followerId"));
 		Follow follow = followMapper.findFollow(followRequest);
 		if (follow != null) {
-			result = followMapper.offFollow(followRequest);
+			result = followMapper.offFollow(param);
 		}
 		return result;
 	}

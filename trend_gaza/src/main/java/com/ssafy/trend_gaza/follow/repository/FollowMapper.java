@@ -2,6 +2,7 @@ package com.ssafy.trend_gaza.follow.repository;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,7 +16,7 @@ public interface FollowMapper {
 	int onFollow(FollowRequest followRequest) throws SQLException;
 	
 	/* 팔로우 취소 */ 
-	int offFollow(FollowRequest followRequest) throws SQLException;
+	int offFollow(Map<String, String> param) throws SQLException;
 
 	/* 내가 팔로우하고 있는 사람들 목록 */
 	List<String> listFollowers(String followeeId) throws SQLException;
