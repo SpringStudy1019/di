@@ -44,8 +44,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/review/**").hasRole("USER")
-                .antMatchers("/images/**").hasRole("USER")
-                .antMatchers("/user/**").permitAll()
+                //.antMatchers("/images/**").hasRole("USER")
+                .antMatchers("/user/**", "/images/**").permitAll()
 
                 .and()
                 .exceptionHandling()
@@ -61,7 +61,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:5573"));
+        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:5173"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("*"));
