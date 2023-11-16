@@ -4,7 +4,13 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import com.ssafy.trend_gaza.user.exception.UnAuthorizedException;
@@ -27,6 +33,12 @@ public class JWTUtil {
 
 	@Value("${jwt.refresh-token.expiretime}")
 	private long refreshTokenExpireTime;
+	
+	private final UserDetailsService userDetailsService;
+	
+	public JWTUtil(UserDetailsService userDetailsService) {
+		this.userDetailsService = userDetailsService;
+	}
 
 	public String createAccessToken(String userId) {
 		return create(userId, "access-token", accessTokenExpireTiem);
@@ -113,6 +125,14 @@ public class JWTUtil {
 		return (String) value.get("userId");
 	}
 	
+	public String resolveToken(HttpServletRequest req) {
+        return req.getHeader("AUTHORIZATION");
+    }
 	
-	
+	public Authentication getAuthentication(String token) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
+        return new UsernamePasswordAuthenticationToken(
+                userDetails, "", userDetails.getAuthorities());
+    }
+		
 }
