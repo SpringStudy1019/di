@@ -32,7 +32,7 @@ const router = useRouter();
         <TheCategory />
         
         <!-- 추천 여행지 -->
-        <h2>계절별 여행지</h2>
+        
 
 
 </template>
