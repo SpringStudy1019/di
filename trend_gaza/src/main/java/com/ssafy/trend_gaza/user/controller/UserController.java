@@ -130,20 +130,6 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	@GetMapping("/logout/{userId}")
-	public ResponseEntity<?> removeToken(@PathVariable String userId) {
-		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = HttpStatus.ACCEPTED;
-		try {
-			userService.deleteRefreshToken(userId);
-			status = HttpStatus.OK;
-		} catch (Exception e) {
-			resultMap.put("message", e.getMessage());
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, status);
-	}
-	
 	@PostMapping("/refresh")
 	public ResponseEntity<?> refreshToken(@RequestBody User user, HttpServletRequest request) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
@@ -258,10 +244,10 @@ public class UserController {
 		}
 	}
 	
-	@PutMapping("/logout/{userId}")
+	@GetMapping("/logout/{userId}")
 	public ResponseEntity<?> logout(@PathVariable String userId) throws Exception {
 		userService.logout(userId);
-		return ResponseEntity.created(URI.create("/")).build();	
+		return ResponseEntity.ok(URI.create("/"));	
 	}
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
@@ -269,6 +255,5 @@ public class UserController {
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
-	
 	
 }
