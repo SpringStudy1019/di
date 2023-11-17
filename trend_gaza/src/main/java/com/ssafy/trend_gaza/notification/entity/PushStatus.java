@@ -1,4 +1,4 @@
-package com.ssafy.trend_gaza.notification.domain;
+package com.ssafy.trend_gaza.notification.entity;
 
 public enum PushStatus {
 	COMPLETE,

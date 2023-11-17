@@ -1,4 +1,4 @@
-package com.ssafy.trend_gaza.notification.domain;
+package com.ssafy.trend_gaza.notification.entity;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +16,6 @@ public class Notification {
 	private PushStatus pushStatus;
 	private PushCase pushCase;
 	private Long pathId;
-	
 	
 	public Notification() {}
 	

@@ -28,6 +28,9 @@ const login = async () => {
     console.log("로그인 성공아닌가???");
     getUserInfo(token);
     changeMenuState();
+  } else {
+    const msg = "아이디와 비밀번호를 다시 확인해주세요!";
+    alert(msg)
   }
   router.push("/");
 };

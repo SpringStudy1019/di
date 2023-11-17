@@ -2,12 +2,18 @@
 import { ref, onMounted, computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from "vue-router";
-import { modifyUser } from "@/api/user";
+import { modifyUser, deleteUser } from "@/api/user";
 import { followList, offFollow } from "@/api/follow";
+
+// heading navbar 메뉴 
+import { useMenuStore } from "@/stores/menu";
+const menuStore = useMenuStore();
+const { changeMenuState } = menuStore;
 
 const store = useUserStore()
 const editMode = ref(false);
 const router = useRouter();
+const deleteId = ref('');
 
 const toggleEditMode = () => {
   editMode.value = !editMode.value;
@@ -74,6 +80,21 @@ const deleteFollow = (followee) => {
     (error) => console.log(error)
   )
 };
+
+// 회원탈퇴 요청
+const deleteRequest = () => {
+   // API 호출
+   deleteUser(store.userInfo.userId,
+      (response) => {  
+        let msg = "회원탈퇴가 완료되었습니다!"
+        alert(msg);
+        changeMenuState();
+        router.push({ name: "main" });
+    },
+    (error) => {
+        console.log(error);
+    });
+};
 </script>
 
 <template>
@@ -113,7 +134,8 @@ const deleteFollow = (followee) => {
           </div>
 
           <div>
-            <button type="button" class="btn btn-outline-secondary mt-1 mb-3" @click="toggleEditMode" >수정</button>
+            <button type="button" class="btn btn-outline-info mt-1 mb-3 me-2" @click="toggleEditMode" >수정</button>
+            <button @click="deleteRequest" type="button" class="btn btn-outline-secondary mt-1 mb-3">회원탈퇴</button>
           </div>
         </div>
         
@@ -195,7 +217,7 @@ const deleteFollow = (followee) => {
               </div>
             </div>
             <div class="mt-1 mb-3">
-              <button @click="saveChanges" type="button" class="btn btn-outline-primary me-2">수정 완료</button>
+              <button @click="saveChanges" type="button" class="btn btn-outline-info me-2">수정 완료</button>
               <button @click="resetForm" type="reset" class="btn btn-outline-secondary me-2">초기화</button>
               <button @click="toggleEditMode" type="button" class="btn btn-outline-danger">취소</button>
             </div>
