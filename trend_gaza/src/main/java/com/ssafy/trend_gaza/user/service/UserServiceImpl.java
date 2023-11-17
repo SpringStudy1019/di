@@ -155,5 +155,10 @@ public class UserServiceImpl implements UserService {
 		map.put("userId", userId);
 		userMapper.changePwdToTempPwd(map);
 	}
+
+	@Override
+	public void logout(String userId) throws Exception {
+		userMapper.logout(userId);
+	}
 	
 }

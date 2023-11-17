@@ -31,6 +31,7 @@ import com.ssafy.trend_gaza.user.dto.ModifyRequest;
 import com.ssafy.trend_gaza.user.dto.RegisterRequest;
 import com.ssafy.trend_gaza.user.entity.User;
 import com.ssafy.trend_gaza.user.service.UserService;
+import com.ssafy.trend_gaza.util.AuthenticationUtil;
 import com.ssafy.trend_gaza.util.JWTUtil;
 
 @RestController
@@ -257,9 +258,9 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/logout")
-	public ResponseEntity<?> logout(HttpSession session) {
-		session.invalidate();
+	@PutMapping("/logout/{userId}")
+	public ResponseEntity<?> logout(@PathVariable String userId) throws Exception {
+		userService.logout(userId);
 		return ResponseEntity.created(URI.create("/")).build();	
 	}
 	

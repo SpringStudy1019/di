@@ -110,4 +110,10 @@
 		where user_id=#{userId}
 	</update>
 	
+	<update id="logout" parameterType="String">
+	  UPDATE user
+	  SET token = NULL
+	  WHERE user_id = #{userId}
+	</update>
+	
 </mapper>

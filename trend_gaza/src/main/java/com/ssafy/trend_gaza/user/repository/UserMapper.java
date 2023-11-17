@@ -30,6 +30,9 @@ public interface UserMapper {
 	Object getRefreshToken(String userid) throws SQLException;
 	void deleteRefreshToken(Map<String, String> map) throws SQLException;
 	
+	/* 로그아웃 */
+	void logout(String userId) throws SQLException;
+	
 	/* 존재하는 회원인지 찾기 */
 	Optional<User> findByEmail(String email) throws SQLException;
 	Optional<User> findById(String id) throws SQLException;

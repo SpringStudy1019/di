@@ -19,25 +19,25 @@ export const useUserStore = defineStore("userStore", () => {
     await userConfirm(
         loginUser,
         (response) => {
-            if (response.status === httpStatusCode.CREATE) {
-                let { data } = response;
-            // console.log("data", data);
-                let accessToken = data["access-token"];  // accessToken 발급 
-                let refreshToken = data["refresh-token"];  // refreshToken 발급 
-                console.log("accessToken", accessToken);
-                console.log("refreshToken", refreshToken);
-                isLogin.value = true;
-                isLoginError.value = false;
-                isValidToken.value = true;
-                sessionStorage.setItem("accessToken", accessToken);  // 세션 스토리지에 accessToken 저장
-                sessionStorage.setItem("refreshToken", refreshToken);  // 세션 스토리지에 refreshToken 저장
-                console.log("sessiontStorage에 담았다", isLogin.value);
-            } else {
-                console.log("로그인 실패했다");
-                isLogin.value = false;
-                isLoginError.value = true;
-                isValidToken.value = false;
-            }
+        if (response.status === httpStatusCode.CREATE) {
+            let { data } = response;
+        // console.log("data", data);
+            let accessToken = data["access-token"];  // accessToken 발급 
+            let refreshToken = data["refresh-token"];  // refreshToken 발급 
+            console.log("accessToken", accessToken);
+            console.log("refreshToken", refreshToken);
+            isLogin.value = true;
+            isLoginError.value = false;
+            isValidToken.value = true;
+            sessionStorage.setItem("accessToken", accessToken);  // 세션 스토리지에 accessToken 저장
+            sessionStorage.setItem("refreshToken", refreshToken);  // 세션 스토리지에 refreshToken 저장
+            console.log("sessiontStorage에 담았다", isLogin.value);
+        } else {
+            console.log("로그인 실패했다");
+            isLogin.value = false;
+            isLoginError.value = true;
+            isValidToken.value = false;
+        }
         },
         (error) => {
             console.error(error);
@@ -117,9 +117,11 @@ export const useUserStore = defineStore("userStore", () => {
         userid,
         (response) => {
           if (response.status === httpStatusCode.OK) {
+            console.log("로그아웃 성공!");
             isLogin.value = false;
             userInfo.value = null;
             isValidToken.value = false;
+            sessionStorage.clear();
           } else {
             console.error("유저 정보 없음!!!!");
           }
