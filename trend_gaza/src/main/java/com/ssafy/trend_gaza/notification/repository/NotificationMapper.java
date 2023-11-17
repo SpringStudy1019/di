@@ -9,7 +9,7 @@ import com.ssafy.trend_gaza.notification.dto.NotificationResponse;
 import com.ssafy.trend_gaza.notification.entity.Notification;
 
 @Mapper
-public class NotificationMapper {
+public interface NotificationMapper {
 
 	/* 알림 등록 */
 	void register(NotificationResponse notificationResponse) throws SQLException;

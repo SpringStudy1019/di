@@ -21,19 +21,17 @@ public class NotificationServiceImpl implements NotificationService {
 	
 	@Override
 	public void register(NotificationResponse notificationResponse) throws Exception {
-		
+		notificationMapper.register(notificationResponse);
 	}
 
 	@Override
 	public List<Notification> list(String userIdTo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return notificationMapper.list(userIdTo);
 	}
 
 	@Override
 	public void delete(String notificationIdx) throws Exception {
-		// TODO Auto-generated method stub
-		
+		notificationMapper.delete(notificationIdx);
 	}
 
 }

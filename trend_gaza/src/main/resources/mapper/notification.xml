@@ -5,8 +5,28 @@
 <mapper namespace="com.ssafy.trend_gaza.notification.repository.NotificationMapper">
 
 	<resultMap type="com.ssafy.trend_gaza.notification.entity.Notification" id="notification">
-
+		<result column="notification_idx" property="notificationIdx"></result>
+		<result column="message" property="message"></result>
+		<result column="push_date" property="pushDate"></result>
+		<result column="push_status" property="pushStatus"></result>
+		<result column="push_case" property="pushCase"></result>
+		<result column="path_id" property="pathId"></result>
+		<result column="user_id_from" property="userIdFrom"></result>
+		<result column="user_id_to" property="userIdTo"></result>
 	</resultMap>
 	
+	<insert id="register" parameterType="notificationResponse">
+		insert into notification (message, push_date, push_status, push_case, path_id, user_id_from, user_id_to)
+		values (#{message}, now(), #{pushStatus}, #{pushCase}, #{pathId}, #{userIdFrom}, #{userIdTo})
+	</insert>
 	
+	<delete id="delete" parameterType="int">
+		delete from notification
+		where notification_idx=#{notificationIdx}
+	</delete>
+	
+	<select id="list" parameterType="String" resultMap="notification">
+		select * from notification
+		where user_id_to=#{userIdTo}
+	</select>
 </mapper>
