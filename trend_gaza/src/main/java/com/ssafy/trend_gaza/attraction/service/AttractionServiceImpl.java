@@ -17,10 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ssafy.trend_gaza.attraction.dto.AttractionAdminRequest;
 import com.ssafy.trend_gaza.attraction.dto.AttractionAutoSearchResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse;
+import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
 import com.ssafy.trend_gaza.attraction.entity.AttractionDetail;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.attraction.repository.AttractionMapper;
 import com.ssafy.trend_gaza.util.FileUtil;
+import com.ssafy.trend_gaza.util.SizeConstant;
 import com.ssafy.trend_gaza.util.TrieAlgorithmUtil;
 import com.ssafy.trend_gaza.util.TrieAlgorithmUtil.Node;
 
@@ -141,6 +143,23 @@ public class AttractionServiceImpl implements AttractionService {
 	@Override
 	public List<AttractionAutoSearchResponse> attractionNameList() {
 		return attractionMapper.attractionNameList();
+	}
+
+
+	/*
+	 * 여행 계획 세울 때 보이는 여행지 리스트
+	 */
+	@Override
+	public List<AttractionPlanResponse> getAttractionPlanResponse(Map<String, String> map) {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		int pgNo = Integer.parseInt(map.get("pgno") == null ? "1" : map.get("pgno"));
+		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
+		param.put("start", start);
+		param.put("listsize", SizeConstant.LIST_SIZE);
+		
+		return attractionMapper.attractionPlan(param);
 	}
 
 }
