@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { searchAttraction, getAttractionDetail } from '@/api/attraction';
 
 const keyword = ref("")
 const searchResults = ref([]);
+const router = useRouter();
 
 const inputKeyword = () => {
     searchAttraction(keyword.value,
@@ -18,6 +20,8 @@ const inputKeyword = () => {
 
 const selectKeyword = (keyword) => {
     //getAttractionDetail()
+    console.log(keyword.contentId);
+    router.push({name:'attraction-view', params:{attractionIdx: keyword.contentId}});
 }
 
 </script>
@@ -48,7 +52,7 @@ const selectKeyword = (keyword) => {
                         </form>
                         <!-- 검색 결과 표시 -->
                         <ul class="list-group">
-                            <li class="list-group-item" v-for='result in searchResults' :key='result.id' @click='selectKeyword(result.title)'><img src='@/assets/search.svg'>&nbsp;{{ result.title }}</li>
+                            <li class="list-group-item" v-for='result in searchResults' :key='result.id' @click='selectKeyword(result)'><img src='@/assets/search.svg'>&nbsp;{{ result.title }}</li>
                         </ul>
                     </div>
                 <div class="col-3"></div>
