@@ -3,11 +3,12 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailReview, deleteReview } from '../../api/review';
 import { listComment } from '../../api/comment';
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user';
+import ReviewCommentList from './ReviewCommentList.vue';
 
 const route = useRoute();
 const router = useRouter();
-const store = useUserStore()
+const store = useUserStore();
 
 const { reviewIdx } = route.params;
 
@@ -150,7 +151,7 @@ function toggleFollow() {
           <!-- 댓글 개수 실제 댓글 개수 반영하기 -->
           <div class="col-md-4 align-self-center text-end">댓글 : 0</div>
           <div class="divider mb-3"></div>
-          <div class="text-secondary">
+          <div class="text">
             {{ review.content }}
           </div>
           <div class="divider mt-3 mb-3"></div>
@@ -166,7 +167,7 @@ function toggleFollow() {
             </button>
           </div>
           <!-- 리뷰 댓글 -->
-          <router-view :reviewIdx="parseInt(reviewIdx)"></router-view>
+          <ReviewCommentList :reviewIdx="parseInt(reviewIdx)" />
         </div>
       </div>
     </div>

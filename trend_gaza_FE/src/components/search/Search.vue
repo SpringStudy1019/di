@@ -55,6 +55,8 @@ const selectKeyword = (keyword) => {
             </div>
         </div>
     </div>
+    <!-- result.id 가 뭔지 찍어보자. -->
+    <!-- <div>{{ result.id }}</div> -->
 </template>
 
 <style scoped>
