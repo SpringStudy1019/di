@@ -4,6 +4,7 @@ import { useUserStore } from '@/stores/user'
 import { useRouter } from "vue-router";
 import { modifyUser, deleteUser } from "@/api/user";
 import { followList, offFollow } from "@/api/follow";
+import { registNoti } from "@/api/notification";
 
 // heading navbar 메뉴 
 import { useMenuStore } from "@/stores/menu";
@@ -95,6 +96,30 @@ const deleteRequest = () => {
         console.log(error);
     });
 };
+
+// 여행 갈래 요청 (알림 발송)
+const notiInfo = ref({
+  "message": "나랑 여행 갈래?",
+  "pathId": "",
+  "pushCase": "PERSONAL",
+  "pushDate": "",
+  "pushStatus": "INCOMPLETE",
+  "userIdFrom": store.userInfo.userId,
+  "userIdTo": ""
+})
+const notificationRequest = (followee) => {
+  notiInfo.value.userIdTo = followee
+   // API 호출
+   registNoti(notiInfo.value,
+      (response) => {  
+        let msg = "알림이 발송되었습니다! 친구의 답변을 조금만 기다려주세요!"
+        alert(msg);
+    },
+    (error) => {
+        console.log(error);
+    });
+};
+
 </script>
 
 <template>
@@ -154,8 +179,8 @@ const deleteRequest = () => {
                   />
                   <h5 class="card-title" >{{ followee }}</h5>
                   <div>
-                    <a href="#" class="btn btn-warning me-3">여행갈래?</a>
-                    <button class="btn btn-dark"  @click="deleteFollow(followee)" >팔로우 취소</button>
+                    <button @click="notificationRequest(followee)" class="btn btn-warning me-3">여행갈래?</button>
+                    <button class="btn btn-dark"  @click="deleteFollow(followee)">팔로우 취소</button>
                   </div>
                 </div>
               </div>
@@ -201,7 +226,6 @@ const deleteRequest = () => {
                       <label for="editUserEmailId">이메일:</label>
                       <input id="editUserEmailId" type="text" v-model="editInfo.emailId" />
                       @
-                      <!-- <label for="editUserId">이메</label> -->
                       <input id="editUserEmailDomain" type="text" v-model="editInfo.emailDomain" />
                     </li>
                     <div class="mb-3">
