@@ -17,7 +17,7 @@ function videoAxios() {
   const instance = axios.create({
     baseURL: VITE_YOUTUBE_URL,
     headers: {
-      "Content-Type": "application/json;charset=utf-8",
+      "Content-Type": "application/json;charset=utf-8"
     },
   });
   return instance;
@@ -28,6 +28,7 @@ function imageAxios() {
     baseURL: VITE_VUE_API_URL,
     headers: {
       "Content-Type": "multipart/form-data",
+      "Authorization": sessionStorage.getItem("accessToken"),
     },
   });
   return instance;
