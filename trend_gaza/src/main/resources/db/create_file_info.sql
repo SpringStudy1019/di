@@ -1,9 +1,6 @@
-CREATE TABLE `file_info` (
-  `file_idx` INT AUTO_INCREMENT NOT NULL,
-  `save_folder` VARCHAR(45) NULL,
-  `original_file` VARCHAR(50) NULL,
-  `save_file` VARCHAR(100) NULL,
-  `review_idx` INT NOT NULL,
-  PRIMARY KEY (`file_idx`),
-  FOREIGN KEY (`review_idx`) REFERENCES `review` (`review_idx`)
+create table if not exists enjoytrip.file_info(
+	file_idx int primary key auto_increment,
+    save_file varchar(200) not null,
+    review_idx int not null,
+    foreign key (review_idx) references review(review_idx)
 );
