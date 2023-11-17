@@ -12,10 +12,10 @@ import { useUserStore } from "@/stores/user";
 const userStore = useUserStore();
 const { userLogout } = userStore;
 
-const logout = () => {
+const logout = async () => {
   console.log("로그아웃 시작!!");
-  userLogout(userStore.userInfo.userId);
-  changeMenuState();
+  await userLogout(userStore.userInfo.userId);
+  await changeMenuState();
   console.log("로그아웃 종료!!");
 };
 
@@ -58,23 +58,23 @@ const logout = () => {
           style="--bs-scroll-height: 100px"
         >
       <template v-for="menu in menuList" :key="menu.routeName">
-            <template v-if="menu.show">
-              <template v-if="menu.routeName === 'user-logout'">
-                <li class="nav-item">
-                  <router-link to="/" @click.prevent="logout" class="nav-link">{{
-                    menu.name
-                  }}</router-link>
-                </li>
-              </template>
-              <template v-else>
-                <li class="nav-item">
-                  <router-link :to="{ name: menu.routeName }" class="nav-link">{{
-                    menu.name
-                  }}</router-link>
-                </li>
-              </template>
+          <template v-if="menu.show">
+            <template v-if="menu.routeName === 'user-logout'">
+              <li class="nav-item">
+                <router-link to="/" @click.prevent="logout" class="nav-link">{{
+                  menu.name
+                }}</router-link>
+              </li>
+            </template>
+            <template v-else>
+              <li class="nav-item">
+                <router-link :to="{ name: menu.routeName }" class="nav-link">{{
+                  menu.name
+                }}</router-link>
+              </li>
             </template>
           </template>
+        </template>
         </ul>
     </div>
   </div>
