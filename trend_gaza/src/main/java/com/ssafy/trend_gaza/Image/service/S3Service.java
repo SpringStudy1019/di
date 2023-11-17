@@ -62,6 +62,6 @@ public class S3Service {
         } catch (final IOException e) {
             throw new ImageException(CustomExceptionStatus.INVALID_IMAGE);
         }
-        return imageFile.getHashedName();
+        return s3Client.getUrl(bucket, path).toString();
 	}
 }
