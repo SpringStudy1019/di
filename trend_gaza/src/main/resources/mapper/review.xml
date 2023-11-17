@@ -18,9 +18,19 @@
 		<result column="content_id" property="contentId"></result>
 	</resultMap>
 	
-	<insert id="register" parameterType="reviewRegisterRequest">
+	<resultMap type="fileInfo" id="file">
+		<result column="save_file" property="saveFile"/>
+	</resultMap>
+	
+	<insert id="register" parameterType="review">
 		insert into review (score, title, content, companion, start_date, end_date, register_date, user_id, content_id)
 		values (#{score}, #{title}, #{content}, #{companion}, now(),  now(), now(), #{userId}, #{contentId})
+		<selectKey resultType="int" keyProperty="reviewIdx" order="AFTER"> select last_insert_id() </selectKey>
+	</insert>
+	
+	<insert id="registerFile" parameterType="review">
+		insert into file_info (review_idx, save_file) values
+		<foreach collection="fileInfos" item="fileinfo" separator=" , "> (#{reviewIdx}, #{fileinfo.saveFile}) </foreach>
 	</insert>
 
 	<sql id="search">

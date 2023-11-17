@@ -1,7 +1,8 @@
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, ReactiveEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { registReview, modifyReview, detailReview, getModifyReview } from "@/api/review";
+import {uploadImage} from "@/api/image"
 import { useUserStore } from '@/stores/user'
 
 import VSelect from '../../common/VSelect.vue';
@@ -34,13 +35,16 @@ const review = ref({
     score: 0,
     title: "",
     content: "",
-    userId: store.userInfo.userId,       // 로그인했다는 가정
+    //userId: store.userInfo.userId,       // 로그인했다는 가정
+    userId: "alswjd",
     companion: "",
     registerDate: "",
     startDate: "",
     endDate: "",
     contentId: "125405",        // 임시로 넣어둠(관광지 상세가 아직 없음)
+    fileInfos: []
 });
+const uploadImgCnt = ref(0);
 
 if (props.type === "modify") {
     onMounted(() => {
@@ -213,6 +217,35 @@ const markingSelectOption = () => {
         }
     }
 }
+
+const checkImageValidate = () => {
+    if (uploadImgCnt.value > 5) {
+        alert("이미지 업로드 횟수를 5장을 초과했습니다.");
+        return true;
+    }
+    return false;
+}
+
+const prevImg = ref("");
+const uploadImageFunc = (e) => {
+    if (checkImageValidate()) {
+        return;
+    }
+    let files = e.target.files;
+    const formData = new FormData();
+
+    for(let i=0; i<files.length; i++) {
+        formData.append('images', files[i]);
+    }
+    
+    uploadImage(formData,
+    ({data}) => {
+        review.value.fileInfos.push({ saveFile: data.imageNames[0] });
+        uploadImgCnt.value++;
+    },(error) => {
+        console.log(error);
+    });
+}
 </script>
 
 <template>
@@ -257,7 +290,12 @@ const markingSelectOption = () => {
         </div>
         <div class="content">
             <p class="upload-label">[선택 사항] 이미지 업로드하기</p>
-            <input type='file'>
+            <form >
+                <input multiple type='file' v-on="img" name="images" accept="image/*" @change="uploadImageFunc">
+            </form>
+        </div>
+        <div id="imagePreview" :html="prevImg">
+            <img id="img"/>
         </div>
         <div class="content">
             <button class="btn" type='submit' v-if="type === 'regist'">리뷰 제출</button>
