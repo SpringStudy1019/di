@@ -22,6 +22,10 @@
 		<result column="save_file" property="saveFile"/>
 	</resultMap>
 	
+	<!--<resultMap type="com.ssafy.trend_gaza.Image.dto.ImagesResponse" id="imagesResponse">
+		<result column="save_file" property="imageNames"/>
+	</resultMap>-->
+	
 	<insert id="register" parameterType="review">
 		insert into review (score, title, content, companion, start_date, end_date, register_date, user_id, content_id)
 		values (#{score}, #{title}, #{content}, #{companion}, now(),  now(), now(), #{userId}, #{contentId})
@@ -64,6 +68,12 @@
 	<select id="view" resultMap="review">
 		select * from review
 		where review_idx=#{reviewIdx}
+	</select>
+	
+	<select id="getReviewImage" resultMap="file">
+		select save_file
+		from file_info
+		where review_idx = #{reviewIdx}
 	</select>
 	
 	<select id="getModify" parameterType="int" resultMap="review">
