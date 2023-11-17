@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, defineProps } from "vue";
 import { useRouter } from "vue-router";
+import { useUserStore } from '@/stores/user';
 
 import { listComment, deleteCommentRequest, registerCommentRequest } from "@/api/comment";
 
@@ -12,9 +13,11 @@ const comments = ref([]);
 const commentContent = ref('');
  
 const router = useRouter();
+const store = useUserStore();
 
 onMounted(() => {
     getCommentList();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 const getCommentList = () => {
@@ -50,6 +53,8 @@ function isDelete() {
 // register
 function registerComment() {
     if (!commentContent.value) {
+        const msg = "댓글을 입력하세요!"
+        alert(msg)    
     return;
   }
 
@@ -57,13 +62,15 @@ function registerComment() {
     content: commentContent.value,
     registerDate: "",
     reviewIdx: props.reviewIdx,
-    userId: "user01"
-
-  }
+    userId: store.userInfo.userId
+    }
+  
     registerCommentRequest(newComment,
         ({ data }) => {
             console.log(data);
-            router.push({name:"review-view"});
+            getCommentList();
+            commentContent.value = '';
+            router.push({name:"review-view"})
         },
         (error) => {
             console.log(error);
@@ -79,8 +86,8 @@ function registerComment() {
    <div class="comment-register">
     <div class="comment-regist">
     <div class="review-register-form">
-        <input v-model="commentContent" placeholder="Enter your comment" />
-        <button type="button" class="btn btn-outline-primary mb-1 ms-3" @click="registerComment">
+        <input v-model="commentContent" placeholder="댓글을 입력하세요" />
+        <button type="button" class="btn btn-outline-light mb-1 ms-3" @click="registerComment">
             등록</button>
         </div>
     </div>
@@ -110,7 +117,7 @@ function registerComment() {
         </div>
       </div>
     </div>
-   
+    <div id='bottom'></div>
 </template>
 
 <style scoped>
@@ -119,6 +126,10 @@ function registerComment() {
   margin-bottom: 30px; 
   font-size: 30px; 
   color: #ff9cbf;
+}
+
+#bottom {
+    margin-bottom: 60px; 
 }
 
 .comment-register {
