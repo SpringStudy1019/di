@@ -1,5 +1,5 @@
 <script setup>
-import ReviewFormItem from './item/ReviewFormItem.vue';
+import ReviewFormItem from '@/components/review/item/ReviewFormItem.vue';
 import {useRoute} from "vue-router";
 
 const reviewIdx = useRoute().params.reviewIdx;
