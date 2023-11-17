@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,10 +41,10 @@ public class AttractionServiceImpl implements AttractionService {
 		this.fileUtil = fileUtil;
 		this.trie = trie;
 		
-		List<String> names = attractionNameList();
+		List<AttractionAutoSearchResponse> lst = attractionNameList();
 		
-		for (String name : names) {
-			trie.insert(name.replaceAll(" ", ""));
+		for (AttractionAutoSearchResponse response : lst) {
+			trie.insert(response.getContentId(), response.getTitle().replaceAll(" ", ""));
 		}
 	}
 
@@ -112,11 +113,14 @@ public class AttractionServiceImpl implements AttractionService {
 
 	@Override
 	public List<AttractionAutoSearchResponse> autoComplete(String str, Node node) {
-		List<String> lst = trie.autoComplete(str, node);
-		Collections.sort(lst);		// 오름차순 정렬
-		List<String> result = lst.subList(0, getMaxSize(lst.size()));
+		List<AttractionAutoSearchResponse> lst = trie.autoComplete(str, node);
+		lst.sort(Comparator.comparing(AttractionAutoSearchResponse::getTitle));
+		List<AttractionAutoSearchResponse> result = lst.subList(0, getMaxSize(lst.size()));
 		return result.stream()
-				.map(AttractionAutoSearchResponse::new)
+				.map(response -> AttractionAutoSearchResponse.builder()
+						.contentId(response.getContentId())
+						.title(response.getTitle())
+						.build())
 				.collect(Collectors.toList());
 	}
 
@@ -135,7 +139,7 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 	
 	@Override
-	public List<String> attractionNameList() {
+	public List<AttractionAutoSearchResponse> attractionNameList() {
 		return attractionMapper.attractionNameList();
 	}
 

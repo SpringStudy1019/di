@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.trend_gaza.attraction.dto.AttractionAdminRequest;
+import com.ssafy.trend_gaza.attraction.dto.AttractionAutoSearchResponse;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 
 @Mapper
@@ -14,5 +15,5 @@ public interface AttractionMapper {
 	void registerAdminAttraction(AttractionAdminRequest attractionAdminRequest);
 	void registerAttractionDetail(AttractionAdminRequest attractionAdminRequest);
 	AttractionInfo getAttractionDetail(int id);
-	List<String> attractionNameList();
+	List<AttractionAutoSearchResponse> attractionNameList();
 }

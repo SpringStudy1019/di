@@ -1,23 +1,34 @@
 package com.ssafy.trend_gaza.attraction.dto;
 
-public class AttractionAutoSearchResponse {
+import lombok.Builder;
+
+@Builder
+public class AttractionAutoSearchResponse implements Comparable<AttractionAutoSearchResponse> {
 	
+	private int contentId;
 	private String title;
 	
 	public AttractionAutoSearchResponse() {}
 
-	public AttractionAutoSearchResponse(String title) {
+	public AttractionAutoSearchResponse(int contentId, String title) {
 		super();
+		this.contentId = contentId;
 		this.title = title;
 	}
 
+	public int getContentId() {
+		return contentId;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	@Override
+	public int compareTo(AttractionAutoSearchResponse o) {
+		return this.getTitle().compareTo(o.getTitle());
 	}
+
 	
 	
 }
