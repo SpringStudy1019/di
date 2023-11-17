@@ -1,48 +1,59 @@
 package com.ssafy.trend_gaza.notification.dto;
 
-import java.time.LocalDateTime;
-
 import lombok.Builder;
 
 @Builder
 public class NotificationResponse {
 	
-	private Long notificationId;
 	private String message;
-	private LocalDateTime pushTime;
-	private Long pathId;
+	private String pushDate;
+	private String pushStatus;
 	private String pushCase;
+	private String pathId;
+	private String userIdFrom;
+	private String userIdTo;
 	
 	public NotificationResponse() {}
 	
-	public NotificationResponse(Long notificationId, String message, LocalDateTime pushTime, Long pathId,
-			String pushCase) {
+	public NotificationResponse(String message, String pushDate, String pushStatus, String pushCase, String pathId,
+			String userIdFrom, String userIdTo) {
 		super();
-		this.notificationId = notificationId;
 		this.message = message;
-		this.pushTime = pushTime;
-		this.pathId = pathId;
+		this.pushDate = pushDate;
+		this.pushStatus = pushStatus;
 		this.pushCase = pushCase;
+		this.pathId = pathId;
+		this.userIdFrom = userIdFrom;
+		this.userIdTo = userIdTo;
 	}
 
-	public Long getNotificationId() {
-		return notificationId;
-	}
-
+	
 	public String getMessage() {
 		return message;
 	}
 
-	public LocalDateTime getPushTime() {
-		return pushTime;
+	public String getPushDate() {
+		return pushDate;
 	}
 
-	public Long getPathId() {
-		return pathId;
+	public String getPushStatus() {
+		return pushStatus;
 	}
 
 	public String getPushCase() {
 		return pushCase;
+	}
+
+	public String getPathId() {
+		return pathId;
+	}
+
+	public String getUserIdFrom() {
+		return userIdFrom;
+	}
+
+	public String getUserIdTo() {
+		return userIdTo;
 	}
 	
 }

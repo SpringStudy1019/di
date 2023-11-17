@@ -1,68 +1,65 @@
 package com.ssafy.trend_gaza.notification.entity;
 
-import java.time.LocalDateTime;
-
-import com.ssafy.trend_gaza.user.entity.User;
-
 import lombok.Builder;
 
 @Builder
 public class Notification {
 
-	private Long id;
-	private User user;
+	private Integer notificationIdx;
 	private String message;
-	private LocalDateTime pushTime;
-	private PushStatus pushStatus;
-	private PushCase pushCase;
-	private Long pathId;
+	private String pushDate;
+	private String pushStatus;
+	private String pushCase;
+	private String pathId;
+	private String userIdFrom;
+	private String userIdTo;
 	
 	public Notification() {}
-	
-	public Notification(Long id, User user, String message, LocalDateTime pushTime, PushStatus pushStatus,
-			PushCase pushCase, Long pathId) {
+
+	public Notification(Integer notificationIdx, String message, String pushDate, String pushStatus, String pushCase,
+			String pathId, String userIdFrom, String userIdTo) {
 		super();
-		this.id = id;
-		this.user = user;
+		this.notificationIdx = notificationIdx;
 		this.message = message;
-		this.pushTime = pushTime;
+		this.pushDate = pushDate;
 		this.pushStatus = pushStatus;
 		this.pushCase = pushCase;
 		this.pathId = pathId;
+		this.userIdFrom = userIdFrom;
+		this.userIdTo = userIdTo;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public User getUser() {
-		return user;
+	
+	public Integer getNotificationIdx() {
+		return notificationIdx;
 	}
 
 	public String getMessage() {
 		return message;
 	}
 
-	public LocalDateTime getPushTime() {
-		return pushTime;
+	public String getPushDate() {
+		return pushDate;
 	}
 
-	public PushStatus getPushStatus() {
+	public String getPushStatus() {
 		return pushStatus;
 	}
 
-	public PushCase getPushCase() {
+	public String getPushCase() {
 		return pushCase;
 	}
 
-	public Long getPathId() {
+	public String getPathId() {
 		return pathId;
 	}
-	
-	public boolean isPushable(LocalDateTime now) {
-		return pushStatus == PushStatus.IN_COMPLETE 
-				&& (pushTime.isBefore(now) || pushTime.isEqual(now));
+
+	public String getUserIdFrom() {
+		return userIdFrom;
 	}
-	
-	
+
+	public String getUserIdTo() {
+		return userIdTo;
+	}
+
 }
