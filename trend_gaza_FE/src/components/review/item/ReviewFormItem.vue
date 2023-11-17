@@ -42,7 +42,9 @@ const review = ref({
     startDate: "",
     endDate: "",
     contentId: "125405",        // 임시로 넣어둠(관광지 상세가 아직 없음)
+    fileInfos: []
 });
+const uploadImgCnt = ref(0);
 
 if (props.type === "modify") {
     onMounted(() => {
@@ -216,9 +218,19 @@ const markingSelectOption = () => {
     }
 }
 
+const checkImageValidate = () => {
+    if (uploadImgCnt.value > 5) {
+        alert("이미지 업로드 횟수를 5장을 초과했습니다.");
+        return true;
+    }
+    return false;
+}
+
 const prevImg = ref("");
-const img = ref("");
 const uploadImageFunc = (e) => {
+    if (checkImageValidate()) {
+        return;
+    }
     let files = e.target.files;
     const formData = new FormData();
 
@@ -228,10 +240,10 @@ const uploadImageFunc = (e) => {
     
     uploadImage(formData,
     ({data}) => {
-            console.log("업로드 완료");
-        },
-        (error) => {
-            console.log(error);
+        review.value.fileInfos.push({ saveFile: data.imageNames[0] });
+        uploadImgCnt.value++;
+    },(error) => {
+        console.log(error);
     });
 }
 </script>
@@ -279,7 +291,7 @@ const uploadImageFunc = (e) => {
         <div class="content">
             <p class="upload-label">[선택 사항] 이미지 업로드하기</p>
             <form >
-                <input type='file' v-on="img" name="images" accept="image/*" @change="uploadImageFunc">
+                <input multiple type='file' v-on="img" name="images" accept="image/*" @change="uploadImageFunc">
             </form>
         </div>
         <div id="imagePreview" :html="prevImg">
