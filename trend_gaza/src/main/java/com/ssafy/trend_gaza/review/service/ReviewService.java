@@ -1,10 +1,13 @@
 package com.ssafy.trend_gaza.review.service;
 
+import java.util.List;
 import java.util.Map;
 
+import com.ssafy.trend_gaza.Image.dto.ImagesResponse;
 import com.ssafy.trend_gaza.review.dto.ReviewModifyResponse;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
 import com.ssafy.trend_gaza.review.dto.ReviewResponse;
+import com.ssafy.trend_gaza.review.entity.FileInfo;
 import com.ssafy.trend_gaza.review.entity.Review;
 
 public interface ReviewService {
@@ -17,6 +20,9 @@ public interface ReviewService {
 	
 	/* 리뷰 상세 조회 */
 	Review view(int reviewIdx) throws Exception;
+	
+	/* 리뷰에 등록된 이미지 조회 */
+	List<FileInfo> getReviewImg(int reviewIdx);
 	
 	/* 리뷰 수정 */
 	Review getModify(int reviewIdx) throws Exception;
