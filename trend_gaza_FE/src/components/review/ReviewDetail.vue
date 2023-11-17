@@ -24,6 +24,7 @@ const getReview = () => {
   detailReview(reviewIdx,
     ({ data }) => { // success callback
       review.value = data; // Store the data in the 'review' ref
+      followingInfo.value.followerId = data.userId;
     },
     (error) => {
       console.log(error);
@@ -71,24 +72,51 @@ function isDelete() {
   return confirm("정말 삭제하시겠습니까?");
 }
 
+// 팔로잉 등록, 취소
+import { onFollow, offFollow } from '../../api/follow';
+const followingInfo = ref({
+  followeeId: store.userInfo.userId, 
+  followerId: ""
+})
+
 // 팔로잉 button 효과
 function toggleFollow() {
+  console.log(followingInfo.value);
   const followButton = document.getElementById('follow-button');
 
   if (followButton.textContent === '+ Follow') {
     // State Change: To Following
     followButton.textContent = 'Following';
-    followButton.style.width = '75px'; // Adjust the width as needed
-    followButton.style.backgroundColor = '#2EB82E';
-    followButton.style.borderColor = '#2EB82E';
+    followButton.style.width = '95px';
+    followButton.style.backgroundColor = '#3399FF';
+    followButton.style.color = '#ffffff';
+    followButton.style.borderColor = '#3399FF';
+    // API Call
+    onFollow(followingInfo.value,
+    (response) => {
+      router.push({ name: "review-view" });
+    }, (error) => {
+      console.log(error);
+    })
   } else {
     // State Change: Unfollow
     followButton.textContent = '+ Follow';
-    followButton.style.width = '85px'; // Adjust the width as needed
+    followButton.style.width = '85px';
     followButton.style.backgroundColor = '#ffffff';
+    followButton.style.color = '#3399FF';
     followButton.style.borderColor = '#3399FF';
+    // API Call
+    offFollow(
+      followingInfo.value.followeeId,
+      followingInfo.value.followerId,
+    (response) => {
+      router.push({ name: "review-view" });
+    }, (error) => {
+      console.log(error);
+    })
   }
 }
+
 </script>
 
 <template>
@@ -159,7 +187,8 @@ function toggleFollow() {
   height: 30px;
   top: 50px;
   left: 50px;	
-  margin-left: 10px;
+  margin-left: 20px;
   cursor: pointer;		
+  transition: all 0.3s ease;
 }
 </style>
