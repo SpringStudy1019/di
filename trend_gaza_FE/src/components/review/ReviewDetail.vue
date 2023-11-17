@@ -4,6 +4,7 @@ import { useRoute, useRouter } from "vue-router";
 import { detailReview, deleteReview } from '../../api/review';
 import { listComment } from '../../api/comment';
 import { useUserStore } from '@/stores/user'
+import ReviewImage from './item/ReviewImage.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -153,6 +154,9 @@ function toggleFollow() {
           <div class="text-secondary">
             {{ review.content }}
           </div>
+          <div >
+            <review-image />
+          </div>
           <div class="divider mt-3 mb-3"></div>
           <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
@@ -190,5 +194,14 @@ function toggleFollow() {
   margin-left: 20px;
   cursor: pointer;		
   transition: all 0.3s ease;
+}
+
+.img-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border: black solid 1px;
+    width: 10vh;
+    margin: 20px;
 }
 </style>

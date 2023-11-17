@@ -78,6 +78,12 @@ public class ReviewController {
 		}
 	}
 	
+	@GetMapping("/{reviewIdx}/images")
+	public ResponseEntity<?> getReviewImages(@PathVariable int reviewIdx) {
+		return ResponseEntity.ok(reviewService.getReviewImg(reviewIdx));
+	}
+	
+	
 	@GetMapping("/modify/{reviewIdx}")
 	public ResponseEntity<?> getModify(@PathVariable int reviewIdx) {
 		try {

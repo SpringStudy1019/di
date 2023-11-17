@@ -6,8 +6,10 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.trend_gaza.Image.dto.ImagesResponse;
 import com.ssafy.trend_gaza.review.dto.ReviewModifyResponse;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
+import com.ssafy.trend_gaza.review.entity.FileInfo;
 import com.ssafy.trend_gaza.review.entity.Review;
 
 @Mapper
@@ -27,6 +29,9 @@ public interface ReviewMapper {
 
 	/* 리뷰 상세 조회 */
 	Review view(int reviewIdx) throws SQLException;
+	
+	/* 리뷰 이미지 조회 */
+	List<FileInfo> getReviewImage(int reviewIdx);
 	
 	/* 리뷰 수정 */
 	Review getModify(int reviewIdx) throws SQLException;
