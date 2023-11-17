@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 import { jwtDecode } from "jwt-decode";
 
-import { userConfirm, findById, tokenRegeneration, logout } from "@/api/user"; // 잠깐 대기
+import { userConfirm, findById, tokenRegeneration, logout } from "@/api/user";
 // api/user.js 수정 필요 (우리 컨트롤러에 맞게)
 import { httpStatusCode } from "@/util/http-status"; 
 
