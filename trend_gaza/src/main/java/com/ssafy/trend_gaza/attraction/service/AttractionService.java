@@ -20,5 +20,5 @@ public interface AttractionService {
 	List<AttractionAutoSearchResponse> autoComplete(String str, Node node);
 	void dfs(Node node, String str);
 	int getMaxSize(int size);
-	List<String> attractionNameList();
+	List<AttractionAutoSearchResponse> attractionNameList();
 }
