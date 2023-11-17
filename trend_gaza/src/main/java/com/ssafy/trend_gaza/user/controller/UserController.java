@@ -31,6 +31,7 @@ import com.ssafy.trend_gaza.user.dto.ModifyRequest;
 import com.ssafy.trend_gaza.user.dto.RegisterRequest;
 import com.ssafy.trend_gaza.user.entity.User;
 import com.ssafy.trend_gaza.user.service.UserService;
+import com.ssafy.trend_gaza.util.AuthenticationUtil;
 import com.ssafy.trend_gaza.util.JWTUtil;
 
 @RestController
@@ -125,20 +126,6 @@ public class UserController {
 			}
 		} else {
 			status = HttpStatus.UNAUTHORIZED;
-		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, status);
-	}
-	
-	@GetMapping("/logout/{userId}")
-	public ResponseEntity<?> removeToken(@PathVariable String userId) {
-		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = HttpStatus.ACCEPTED;
-		try {
-			userService.deleteRefreshToken(userId);
-			status = HttpStatus.OK;
-		} catch (Exception e) {
-			resultMap.put("message", e.getMessage());
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
@@ -257,10 +244,10 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/logout")
-	public ResponseEntity<?> logout(HttpSession session) {
-		session.invalidate();
-		return ResponseEntity.created(URI.create("/")).build();	
+	@GetMapping("/logout/{userId}")
+	public ResponseEntity<?> logout(@PathVariable String userId) throws Exception {
+		userService.logout(userId);
+		return ResponseEntity.ok(URI.create("/"));	
 	}
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
@@ -268,6 +255,5 @@ public class UserController {
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
-	
 	
 }

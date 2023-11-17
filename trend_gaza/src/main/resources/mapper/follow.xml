@@ -15,7 +15,7 @@
 		values (#{followeeId}, #{followerId})
 	</insert>
 	
-	<delete id="offFollow" parameterType="followRequest">
+	<delete id="offFollow" parameterType="map">
 		delete from follow
 		where followee_id=#{followeeId} and follower_id=#{followerId}
 	</delete>

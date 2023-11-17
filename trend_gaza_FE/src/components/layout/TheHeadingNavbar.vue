@@ -2,14 +2,21 @@
 import { useMenuStore } from "@/stores/menu";
 import { storeToRefs } from "pinia";
 
+// heading navbar 메뉴 
 const menuStore = useMenuStore();
-
 const { menuList } = storeToRefs(menuStore);
 const { changeMenuState } = menuStore;
 
+// user 정보
+import { useUserStore } from "@/stores/user";
+const userStore = useUserStore();
+const { userLogout } = userStore;
+
 const logout = () => {
-  console.log("로그아웃!!!!");
+  console.log("로그아웃 시작!!");
+  userLogout(userStore.userInfo.userId);
   changeMenuState();
+  console.log("로그아웃 종료!!");
 };
 
 </script>

@@ -20,7 +20,7 @@
 
 	<insert id="register" parameterType="registerRequest">
 		insert into user (user_id, user_name, password, mobile, email_id, email_domain, gender, authority, join_date)
-		values (#{userId}, #{userName}, #{password}, #{mobile}, #{emailId}, #{emailDomain}, #{gender}, 'USER', now())
+		values (#{userId}, #{userName}, #{password}, #{mobile}, #{emailId}, #{emailDomain}, #{gender}, 'ROLE_USER', now())
 	</insert>
 
 	<select id="idCheck" parameterType="String" resultType="int">
@@ -108,6 +108,12 @@
 		update user
 		set password=#{tmpPassword}
 		where user_id=#{userId}
+	</update>
+	
+	<update id="logout" parameterType="String">
+	  UPDATE user
+	  SET token = NULL
+	  WHERE user_id = #{userId}
 	</update>
 	
 </mapper>
