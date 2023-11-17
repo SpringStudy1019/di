@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.trend_gaza.comment.dto.CommentRegisterRequest;
+import com.ssafy.trend_gaza.notification.dto.NotificationResponse;
 import com.ssafy.trend_gaza.notification.service.NotificationService;
 
 @RestController
