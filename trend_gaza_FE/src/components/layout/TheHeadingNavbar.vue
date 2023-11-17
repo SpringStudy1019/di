@@ -45,18 +45,12 @@ const logout = async () => {
         </li>
       </ul>
       <!-- 오른쪽 부분 -->
-      <!--
-      <li class="d-flex mx-1">
-        <img src="src/components/img/bell.png" width="20" height="20" class="d-inline-block align-top" alt="">
-      </li>
-      <li class="d-flex mx-3">
-        <img src="src/components/img/bell2.png" width="20" height="20" class="d-inline-block align-top" alt="">
-      </li>
-      -->
+      
       <ul
           class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll"
           style="--bs-scroll-height: 100px"
         >
+        <!-- v-for 안에 v-if를 쓰고 싶으면, template을 2번 쓰면 된다! -->
       <template v-for="menu in menuList" :key="menu.routeName">
           <template v-if="menu.show">
             <template v-if="menu.routeName === 'user-logout'">
@@ -67,11 +61,26 @@ const logout = async () => {
               </li>
             </template>
             <template v-else>
-              <li class="nav-item">
+              <template v-if="menu.isImage">
+                <li class="nav-item">
+                <router-link :to="{ name: menu.routeName }" class="nav-link">
+                  <img 
+                  v-if="menu.isImage" 
+                  src="@/assets/icon/bell.png" 
+                  alt="알림"
+                  style="height: 25px; width: 25px;"
+                  />
+                </router-link>
+              </li>
+            </template>
+              <template v-else>
+                <li class="nav-item">
                 <router-link :to="{ name: menu.routeName }" class="nav-link">{{
                   menu.name
                 }}</router-link>
               </li>
+              </template>
+             
             </template>
           </template>
         </template>
