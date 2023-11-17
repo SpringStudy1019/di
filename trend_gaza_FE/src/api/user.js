@@ -19,8 +19,8 @@ local.defaults.headers["refreshToken"] = sessionStorage.getItem("refreshToken");
 await local.post(`/user/refresh`, user).then(success).catch(fail);
 }
 
-async function logout(userId, success, fail) {
-await local.get(`${url}/logout`).then(success).catch(fail);
+function logout(userId, success, fail) {
+    local.put(`${url}/logout/${userId}`).then(success).catch(fail);
 }
 
 function registUser(user, success, fail) {
