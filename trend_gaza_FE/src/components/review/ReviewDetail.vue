@@ -78,14 +78,16 @@ function toggleFollow() {
   if (followButton.textContent === '+ Follow') {
     // State Change: To Following
     followButton.textContent = 'Following';
-    followButton.style.width = '75px'; // Adjust the width as needed
-    followButton.style.backgroundColor = '#2EB82E';
-    followButton.style.borderColor = '#2EB82E';
+    followButton.style.width = '95px'; // Adjust the width as needed
+    followButton.style.backgroundColor = '#3399FF';
+    followButton.style.color = '#ffffff'; // Change text color to white
+    followButton.style.borderColor = '#3399FF';
   } else {
     // State Change: Unfollow
     followButton.textContent = '+ Follow';
     followButton.style.width = '85px'; // Adjust the width as needed
     followButton.style.backgroundColor = '#ffffff';
+    followButton.style.color = '#3399FF'; // Change text color to the original color
     followButton.style.borderColor = '#3399FF';
   }
 }
@@ -159,7 +161,8 @@ function toggleFollow() {
   height: 30px;
   top: 50px;
   left: 50px;	
-  margin-left: 10px;
+  margin-left: 20px;
   cursor: pointer;		
+  transition: all 0.3s ease;
 }
 </style>
