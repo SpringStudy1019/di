@@ -26,6 +26,8 @@
 		<typeAlias type="com.ssafy.trend_gaza.follow.dto.FollowRequest" alias="followRequest" />
 		<!-- notification -->
 		<typeAlias type="com.ssafy.trend_gaza.notification.dto.NotificationResponse" alias="notificationResponse"/>
+		<!-- bookmark -->
+		<typeAlias type="com.ssafy.trend_gaza.bookmark.dto.BookmarkRequest" alias="bookmarkRequest"/>
 	</typeAliases>
 	
 	<environments default="development">

@@ -96,7 +96,7 @@
 	    <result column="content_id" property="contentId"></result>
 	    <result column="title" property="title"></result>
 	    <result column="first_image" property="firstImage"></result>
-  </resultMap>
+  	</resultMap>
 	
 	<select id="mostReviews" resultMap="attractionInfo">
 	    SELECT ai.*
