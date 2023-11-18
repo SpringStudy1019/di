@@ -1,6 +1,9 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import { useMenuStore } from "@/stores/menu";
 import { storeToRefs } from "pinia";
+import { useUserStore } from "@/stores/user";
+import { listNoti } from "@/api/notification";
 
 // heading navbar 메뉴 
 const menuStore = useMenuStore();
@@ -8,7 +11,6 @@ const { menuList } = storeToRefs(menuStore);
 const { changeMenuState } = menuStore;
 
 // user 정보
-import { useUserStore } from "@/stores/user";
 const userStore = useUserStore();
 const { userLogout } = userStore;
 
@@ -41,7 +43,6 @@ const logout = async () => {
         </li>
       </ul>
       <!-- 오른쪽 부분 -->
-      
       <ul
           class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll"
           style="--bs-scroll-height: 100px"
@@ -65,8 +66,10 @@ const logout = async () => {
                   src="@/assets/icon/bell.png" 
                   alt="알림"
                   style="height: 25px; width: 25px;"
+                  @click = "toggleModal"
                   />
                 </router-link>
+
               </li>
             </template>
               <template v-else>
@@ -92,4 +95,5 @@ const logout = async () => {
   font-weight: bold;
   font-family: 'Roboto', sans-serif; 
 }
+
 </style>

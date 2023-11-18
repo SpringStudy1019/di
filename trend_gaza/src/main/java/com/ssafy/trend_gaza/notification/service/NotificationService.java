@@ -1,6 +1,7 @@
 package com.ssafy.trend_gaza.notification.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ssafy.trend_gaza.notification.dto.NotificationResponse;
 import com.ssafy.trend_gaza.notification.entity.Notification;
@@ -14,5 +15,5 @@ public interface NotificationService {
 	List<Notification> list(String userIdTo) throws Exception;
 	
 	/* 알림 삭제 */
-	void delete(String notificationIdx) throws Exception;
+	void delete(Map<String, String> param) throws Exception;
 }

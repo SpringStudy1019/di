@@ -89,7 +89,12 @@ const router = createRouter({
       path: "/category/:contentTypeId",
       name: "category-view",
       component: () => import("@/components/category/TheCategoryDetail.vue"),
-    }
+    },
+    {
+      path: '/notification',
+      name: 'notification',
+      component: () => import("@/components/users/UserNotification.vue"),
+    },
     
   ]
 })

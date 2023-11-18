@@ -3,6 +3,8 @@ import { useRouter } from 'vue-router';
 import TheCategory from '../components/category/TheCategory.vue';
 import Search from '@/components/search/Search.vue';
 import AttractionRecommend from '../components/attraction/AttractionRecommend.vue';
+import { ref } from 'vue'
+import { useUserStore } from '@/stores/user';
 
 const router = useRouter();
 

@@ -20,9 +20,9 @@
 		values (#{message}, now(), #{pushStatus}, #{pushCase}, #{pathId}, #{userIdFrom}, #{userIdTo})
 	</insert>
 	
-	<delete id="delete" parameterType="int">
+	<delete id="delete" parameterType="map">
 		delete from notification
-		where notification_idx=#{notificationIdx}
+		where user_id_from=#{userIdFrom} and user_id_to=#{userIdTo}
 	</delete>
 	
 	<select id="list" parameterType="String" resultMap="notification">
