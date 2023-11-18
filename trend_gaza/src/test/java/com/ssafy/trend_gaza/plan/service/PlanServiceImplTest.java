@@ -75,5 +75,35 @@ public class PlanServiceImplTest {
 		// then
 		assertEquals(1, result);
 	}
+	
+	@Test
+	@Transactional
+	@DisplayName("여행 계획 삭제 - 리더 탈퇴")
+	void testDeletePlan1() {
+		// given
+		int planIdx = 8;
+		String userId = "alswjd";
+		
+		// when
+		int result = planService.deletePlan(1, userId);
+		
+		// then
+		assertEquals(1, result);
+	}
+	
+	@Test
+	@Transactional
+	@DisplayName("여행 계획 삭제 - 참가자 탈퇴")
+	void testDeletePlan2() {
+		// given
+		int planIdx = 8;
+		String userId = "ssafy";
+		
+		// when
+		int result = planService.deletePlan(1, userId);
+		
+		// then
+		assertEquals(1, result);
+	}
 
 }
