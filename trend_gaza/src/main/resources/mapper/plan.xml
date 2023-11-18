@@ -14,6 +14,14 @@
 		SELECT * FROM attraction_plan
 	</select>
 	
+	<resultMap id="planResponse" type="planResponse">
+		<result property="planIdx" column="plan_idx"/>
+		<result property="title" column="title"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="userCount" column="user_count"/>
+	</resultMap>
+	
 	<insert id="registerPlan" parameterType="map">
 		insert into attraction_plan(attraction, plan_idx)
 		values(#{attraction}, #{planIdx})
@@ -24,4 +32,12 @@
 		set attraction = #{attraction}
 		where attraction_plan_id = #{attractionPlanId}
 	</update>
+	
+	<select id="getMyPlans" parameterType="string" resultMap="planResponse">
+		select p.plan_idx, title, start_date, end_date, COUNT(up.user_id) AS user_count
+		from plan p join user_plan up 
+		on p.plan_idx = up.plan_idx
+		where p.user_id = #{userId} or up.user_id=#{userId}
+		GROUP BY p.plan_idx
+	</select>
 </mapper>

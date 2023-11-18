@@ -1,33 +1,34 @@
-package com.ssafy.trend_gaza.plan.entity;
+package com.ssafy.trend_gaza.plan.dto;
 
 import java.time.LocalDateTime;
 
-public class Plan {
-	
+import lombok.Builder;
+
+@Builder
+public class PlanResponse {
+
 	private Integer planIdx;
 	private String title;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
-	private String userId;
+	private Integer userCount;
 	
-	
-	public Plan() {}
+	public PlanResponse() {}
 
-	public Plan(Integer planIdx, String title, LocalDateTime startDate,
-			LocalDateTime endDate, String userId) {
+	public PlanResponse(Integer planIdx, String title, LocalDateTime startDate,
+			LocalDateTime endDate, Integer userCount) {
 		super();
 		this.planIdx = planIdx;
 		this.title = title;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.userId = userId;
+		this.userCount = userCount;
 	}
 
-	
 	public Integer getPlanIdx() {
 		return planIdx;
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -40,8 +41,8 @@ public class Plan {
 		return endDate;
 	}
 
-	public String getUserId() {
-		return userId;
+	public Integer getUserCount() {
+		return userCount;
 	}
 	
 }

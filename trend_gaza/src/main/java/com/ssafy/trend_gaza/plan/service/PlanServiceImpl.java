@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
+import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.repository.PlanMapper;
 
 @Service
@@ -50,6 +51,11 @@ public class PlanServiceImpl implements PlanService {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@Override
+	public List<PlanResponse> getMyPlans(String userId) {
+		return planMapper.getMyPlans(userId);
 	}
 
 }

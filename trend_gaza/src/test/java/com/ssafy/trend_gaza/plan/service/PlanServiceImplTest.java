@@ -14,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
+import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -74,6 +75,20 @@ public class PlanServiceImplTest {
 		
 		// then
 		assertEquals(1, result);
+	}
+	
+	@Test
+	@Transactional
+	@DisplayName("내가 참여한 여행 계획 목록 조회하기")
+	void testGetMyPlans() {
+		// given
+		String userId = "alswjd";
+		
+		// when
+		List<PlanResponse> result = planService.getMyPlans(userId);
+		
+		// then
+		assertEquals(1, result.size());
 	}
 
 }
