@@ -22,10 +22,8 @@ public class Review {
 	
 	public Review() {}
 
-	public Review(Integer reviewIdx, String score, String title,
-			String content, String companion,
-			String startDate, String endDate, String registerDate,
-			String modifyDate, String userId, Integer contentId,
+	public Review(Integer reviewIdx, String score, String title, String content, String companion, String startDate,
+			String endDate, String registerDate, String modifyDate, String userId, Integer contentId,
 			List<FileInfo> fileInfos) {
 		super();
 		this.reviewIdx = reviewIdx;
@@ -85,7 +83,7 @@ public class Review {
 	public Integer getContentId() {
 		return contentId;
 	}
-	
+
 	public List<FileInfo> getFileInfos() {
 		return fileInfos;
 	}
