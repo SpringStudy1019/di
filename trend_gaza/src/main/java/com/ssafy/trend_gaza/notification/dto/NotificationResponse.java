@@ -1,8 +1,6 @@
 package com.ssafy.trend_gaza.notification.dto;
 
-import lombok.Builder;
 
-@Builder
 public class NotificationResponse {
 	
 	private String message;
@@ -54,6 +52,34 @@ public class NotificationResponse {
 
 	public String getUserIdTo() {
 		return userIdTo;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public void setPushDate(String pushDate) {
+		this.pushDate = pushDate;
+	}
+
+	public void setPushStatus(String pushStatus) {
+		this.pushStatus = pushStatus;
+	}
+
+	public void setPushCase(String pushCase) {
+		this.pushCase = pushCase;
+	}
+
+	public void setPathId(String pathId) {
+		this.pathId = pathId;
+	}
+
+	public void setUserIdFrom(String userIdFrom) {
+		this.userIdFrom = userIdFrom;
+	}
+
+	public void setUserIdTo(String userIdTo) {
+		this.userIdTo = userIdTo;
 	}
 	
 }

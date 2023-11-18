@@ -1,6 +1,8 @@
 package com.ssafy.trend_gaza.notification.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,10 +43,13 @@ public class NotificationController {
 		
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<?> delete(@RequestParam String notificationIdx) {
+	@DeleteMapping(value = "/{userIdTo}")
+	public ResponseEntity<?> delete(@PathVariable String userIdTo, @RequestParam String userIdFrom) {
 		try {
-			notificationService.delete(notificationIdx);
+			Map<String, String> param = new HashMap<>();
+			param.put("userIdTo", userIdTo);
+			param.put("userIdFrom", userIdFrom);
+			notificationService.delete(param);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);

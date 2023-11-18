@@ -2,6 +2,7 @@ package com.ssafy.trend_gaza.notification.repository;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,5 +19,5 @@ public interface NotificationMapper {
 	List<Notification> list(String userIdTo) throws SQLException;
 	
 	/* 알림 삭제 */
-	void delete(String notificationIdx) throws SQLException;
+	void delete(Map<String, String> param) throws SQLException;
 }
