@@ -1,5 +1,6 @@
 create table if not exists enjoytrip.plan(
 	plan_idx int primary key auto_increment,
+    title varchar(20) not null,
     start_date timestamp not null,
     end_date timestamp not null,
     user_id varchar(20) not null,
