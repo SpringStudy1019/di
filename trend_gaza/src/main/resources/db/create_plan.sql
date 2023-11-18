@@ -12,12 +12,12 @@ create table if not exists enjoytrip.user_plan(
     user_id varchar(20) not null,
     plan_idx int not null,
     foreign key(user_id) references user(user_id),
-    foreign key(plan_idx) references plan(plan_idx)
+    foreign key(plan_idx) references plan(plan_idx) on delete cascade
 );
 
 create table if not exists enjoytrip.attraction_plan(
 	attraction_plan_id int primary key auto_increment,
     attraction json,
     plan_idx int not null,
-    foreign key(plan_idx) references plan(plan_idx)
+    foreign key(plan_idx) references plan(plan_idx) on delete cascade
 );
