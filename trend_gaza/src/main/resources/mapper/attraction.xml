@@ -52,6 +52,7 @@
 		from attraction_info
 		where sido_code = #{sido}
 		<include refid="search"></include>	
+		limit #{start}, #{listsize}
 	</select>
 	
 	<select id="getLastContentId" resultType="int">
