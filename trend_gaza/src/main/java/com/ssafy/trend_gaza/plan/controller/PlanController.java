@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.service.PlanService;
+import com.ssafy.trend_gaza.util.AuthenticationUtil;
 
 @Controller
 @RequestMapping("/plans")
@@ -23,11 +24,6 @@ public class PlanController {
 	
 	public PlanController(PlanService planService) {
 		this.planService = planService;
-	}
-	
-	@GetMapping
-	public ResponseEntity<?> getAttractions() {
-		return ResponseEntity.ok("");
 	}
 	
 	@PostMapping("/{planIdx}")
@@ -42,6 +38,12 @@ public class PlanController {
 			@RequestBody List<PlanRequest> planRequest) {
 		planService.modifyPlan(planRequest, attractionPlanId);
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping
+	public ResponseEntity<?> getMyPlans() {
+		final String userId = AuthenticationUtil.getCurrentUserSocialId();
+		return ResponseEntity.ok().body(planService.getMyPlans(userId));
 	}
 
 }
