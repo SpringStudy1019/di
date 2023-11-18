@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.trend_gaza.plan.entity.Plan;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 
 
@@ -12,5 +13,8 @@ import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 public interface PlanMapper {
 	int registerPlan(Map<String, Object> param);
 	int modifyPlan(Map<String, Object> param);
+	Plan IsPlanOwner(Map<String, Object> param);
+	int deletePlan(Map<String, Object> param);
+	int deleteMyPlan(Map<String, Object> param);
 	List<PlanResponse> getMyPlans(String userId);
 }
