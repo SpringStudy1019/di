@@ -92,11 +92,32 @@
 		where review_idx=#{reviewIdx}
 	</delete>
 	
-	<select id="mostReviews" resultType="int">
-	    SELECT content_id
-	    FROM review
-	    GROUP BY content_id
-	    ORDER BY COUNT(review_idx) DESC
+	
+	<resultMap type="com.ssafy.trend_gaza.review.entity.Review" id="review">
+		<result column="review_idx" property="reviewIdx"></result>
+		<result column="score" property="score"></result>
+		<result column="title" property="title"></result>
+		<result column="content" property="content"></result>
+		<result column="companion" property="companion"></result>
+		<result column="start_date" property="startDate"></result>
+		<result column="end_date" property="endDate"></result>
+		<result column="register_date" property="registerDate"></result>
+		<result column="modify_date" property="modifyDate"></result>
+		<result column="user_id" property="userId"></result>
+		<result column="content_id" property="contentId"></result>
+	</resultMap>
+	
+	<resultMap type="com.ssafy.trend_gaza.attraction.entity.AttractionInfo" id="attractionInfo">
+	    <result column="content_id" property="contentId"></result>
+	    <result column="title" property="title"></result>
+  </resultMap>
+	
+	<select id="mostReviews" resultMap="attractionInfo">
+	    SELECT ai.*
+	    FROM attraction_info ai
+	    JOIN review r ON ai.content_id = r.content_id
+	    GROUP BY r.content_id
+	    ORDER BY COUNT(r.review_idx) DESC
 	    LIMIT 5;
   </select>
 </mapper>

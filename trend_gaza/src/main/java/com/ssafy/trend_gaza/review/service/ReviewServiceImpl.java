@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.ssafy.trend_gaza.Image.dto.ImagesResponse;
+import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.review.dto.ReviewModifyResponse;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
 import com.ssafy.trend_gaza.review.dto.ReviewResponse;
@@ -100,7 +100,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 
 	@Override
-	public List<Integer> mostReviews() throws Exception {
+	public List<AttractionInfo> mostReviews() throws Exception {
 		return reviewMapper.mostReviews();
 	}
 

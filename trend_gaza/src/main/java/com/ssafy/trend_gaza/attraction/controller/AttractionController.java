@@ -6,11 +6,13 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +24,9 @@ import com.ssafy.trend_gaza.attraction.dto.AttractionResponse;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.attraction.service.AttractionService;
 import com.ssafy.trend_gaza.common.CommonResponse;
+import com.ssafy.trend_gaza.common.CustomExceptionStatus;
 import com.ssafy.trend_gaza.common.ResponseService;
+import com.ssafy.trend_gaza.util.AuthenticationUtil;
 import com.ssafy.trend_gaza.util.TrieAlgorithmUtil.Node;
 
 @Controller()
@@ -84,6 +88,17 @@ public class AttractionController {
 		return ResponseEntity.ok(responseService.getDataResponse(result));
 	}
 	
+	@PostMapping("/{attractionId}/bookmark")
+	public ResponseEntity<?> onBookmark(@PathVariable int attractionId) throws Exception {
+		String userId = AuthenticationUtil.getCurrentUserSocialId();
+		int result = attractionService.onBookmark(attractionId, userId);
+		if (result == 0) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(responseService.getExceptionResponse(CustomExceptionStatus.REGISTER_BOOKMARK_FAILED));
+		}
+		return ResponseEntity.ok().body(responseService.getSuccessResponse());
+	}
+
 	@GetMapping("/searchByCategory")
 	public ResponseEntity<List<AttractionInfo>> searchByCategory(@RequestParam Map<String, String> map) {
 		logger.debug("searchAttractions call!");

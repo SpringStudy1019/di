@@ -20,12 +20,12 @@ public class ResponseService {
         response.setMessage("요청에 성공하였습니다.");
         return response;
     }
-
-	/*
-	 * public CommonResponse getExceptionResponse(CustomExceptionStatus status){
-	 * CommonResponse response = new CommonResponse();
-	 * response.setIsSuccess(status.isSuccess());
-	 * response.setCode(status.getCode()); response.setMessage(status.getMessage());
-	 * return response; }
-	 */
+    
+    public CommonResponse getExceptionResponse(CustomExceptionStatus status){
+    	CommonResponse response = new CommonResponse();
+    	response.setIsSuccess(status.isSuccess());
+    	response.setCode(status.getCode()); response.setMessage(status.getMessage());
+    	return response; 
+    }
+	 
 }
