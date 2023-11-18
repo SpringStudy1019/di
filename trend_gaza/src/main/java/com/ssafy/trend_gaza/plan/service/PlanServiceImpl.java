@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,6 +51,21 @@ public class PlanServiceImpl implements PlanService {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	/*
+	 * 여행 계획을 세운 사람이 탈퇴하면 관련된 데이터들을 모두 지운다.
+	 */
+	@Override
+	@Transactional
+	public int deletePlan(int planIdx, String userId) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("planIdx", planIdx);
+		param.put("userId", userId);
+		if(planMapper.IsPlanOwner(param) != null) {
+			return planMapper.deletePlan(param);
+		}
+		return planMapper.deleteMyPlan(param);
 	}
 
 }
