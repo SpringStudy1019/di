@@ -3,6 +3,7 @@ package com.ssafy.trend_gaza.attraction.service;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -21,6 +22,8 @@ import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
 import com.ssafy.trend_gaza.attraction.entity.AttractionDetail;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.attraction.repository.AttractionMapper;
+import com.ssafy.trend_gaza.bookmark.dto.BookmarkRequest;
+import com.ssafy.trend_gaza.bookmark.entity.Bookmark;
 import com.ssafy.trend_gaza.util.FileUtil;
 import com.ssafy.trend_gaza.util.SizeConstant;
 import com.ssafy.trend_gaza.util.TrieAlgorithmUtil;
@@ -178,6 +181,24 @@ public class AttractionServiceImpl implements AttractionService {
 		param.put("listsize", SizeConstant.LIST_SIZE);
 		
 		return attractionMapper.attractionPlan(param);
+	}
+
+
+	@Override
+	public int onBookmark(int attractionId, String userId) throws SQLException {
+		int result = 0;
+		BookmarkRequest bookmarkRequest = BookmarkRequest.builder()
+				.userId(userId)
+				.attractionId(attractionId)
+				.build();
+		
+		Bookmark bookmark = attractionMapper.findBookmark(bookmarkRequest);
+		
+		if(bookmark == null) {
+			result = attractionMapper.onBookmark(bookmarkRequest);
+		}
+		
+		return result;
 	}
 
 }

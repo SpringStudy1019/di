@@ -26,7 +26,9 @@ public enum CustomExceptionStatus {
 	FILE_CONVERT_FAIL(false, 2104, "변환할 수 없는 파일입니다."),
 
 	SCORE_NOT_FOUND(false, 3001, "리뷰 점수가 올바른 타입이 아닙니다."),
-	COMPANION_NOT_FOUND(false, 3002, "여행 동행자 타입이 존재하지 않습니다.");
+	COMPANION_NOT_FOUND(false, 3002, "여행 동행자 타입이 존재하지 않습니다."),
+	
+	REGISTER_BOOKMARK_FAILED(false, 4001, "북마크 추가에 실패했습니다.");
 
 	
 	private final boolean isSuccess;

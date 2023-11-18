@@ -2,6 +2,7 @@ package com.ssafy.trend_gaza.attraction.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,6 +107,23 @@ class AttractionServiceImplTest {
 		
 		// then
 		assertEquals(20, result.size());
+		
+	}
+	
+	@Test
+	@DisplayName("관광지 북마크하기")
+	@Transactional
+	void testOnBookmark() throws SQLException {
+
+		// given
+		String userId = "alswjd";
+		Integer contentId = 125266; 
+		
+		// when
+		int result = attractionService.onBookmark(contentId, userId);
+		
+		// then
+		assertEquals(1, result);
 		
 	}
 
