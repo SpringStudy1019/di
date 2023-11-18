@@ -2,6 +2,7 @@ package com.ssafy.trend_gaza.attraction.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,7 +18,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trend_gaza.attraction.service.AttractionService;
@@ -114,6 +117,25 @@ class AttractionControllerTest {
 		//log.debug("관광지 조회 테스트 종료");
 		
 	}
+	
+// customUserDetails에 사용자 정보를 넣어줘야하는데 이 부분이 잘 안 됨	
+//	@Test
+//	@Transactional
+//	@DisplayName("북마크 추가하기")
+//	@WithMockUser(username="alswjd")
+//	void testonBookmark() throws Exception {
+//		//log.debug("관광지 조회 테스트 시작");
+//		
+//		Integer attractionId = 125266;
+//		
+//		mockMvc.perform(post("/attractions/" + attractionId + "/bookmark"))
+//		.andExpect(status().isOk())
+//		//.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//		.andDo(print());
+//		
+//		//log.debug("관광지 조회 테스트 종료");
+//		
+//	}
 	
 
 }
