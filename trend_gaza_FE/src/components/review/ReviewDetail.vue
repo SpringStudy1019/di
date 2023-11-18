@@ -140,6 +140,15 @@ function toggleFollow() {
         <div class="row my-2">
           <h2 class="text-bold px-2">{{ review.title }}</h2>
         </div>
+        <div class="row my-2">
+          <h3 id="attractionId">{{ review.contentId }}에 대한 후기입니다 </h3>
+        </div>
+        <router-link 
+            v-if="review.contentId && Number.isInteger(review.contentId)"
+            :to="{ name: 'attraction-view', params: { attractionIdx: review.contentId } }" 
+            class="btn btn-info">
+                여행지 자세히 보기
+        </router-link>
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">
@@ -211,4 +220,5 @@ function toggleFollow() {
     width: 10vh;
     margin: 20px;
 }
+
 </style>

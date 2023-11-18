@@ -62,7 +62,7 @@ const router = createRouter({
           component: () => import("@/components/review/ReviewDetail.vue"),
         },
         {
-          path: "write",
+          path: "write/:contentId",
           name: "review-write",
           component: () => import("@/components/review/ReviewWrite.vue"),
         },

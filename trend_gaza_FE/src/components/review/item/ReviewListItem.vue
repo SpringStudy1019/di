@@ -13,7 +13,7 @@ defineProps({ review: Object });
         <h5 class="card-title">{{ review.title }}</h5>
         <p class="card-text">{{ review.content }}</p>
         
-        <p class="card-text"><small class="text-muted">Score: {{ review.score }}</small></p>
+        <p class="card-text"><small class="text-muted">평점: {{ review.score }}</small></p>
         </div>
         <div class="card-footer text-muted text-center">
         <router-link
