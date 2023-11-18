@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.trend_gaza.attraction.dto.AttractionAutoSearchResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse;
+import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionResponse;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.attraction.service.AttractionService;
@@ -45,9 +46,20 @@ public class AttractionController {
 		return ResponseEntity.ok(attractionService.findAttraction(id));
 	}
 	
+	/*
+	 * 검색 결과로 보여주는 여행지 리스트
+	 */
 	@GetMapping
 	public ResponseEntity<List<AttractionResponse>> findAttractions(@RequestParam Map<String, String> map) {
 		return ResponseEntity.ok(new ArrayList<AttractionResponse>());
+	}
+	
+	/*
+	 * 여행 계획을 세울 때 보이는 여행지 리스트
+	 */
+	@GetMapping("/plans")
+	public ResponseEntity<List<AttractionPlanResponse>> getAttractionPlans(@RequestParam Map<String, String> map) {
+		return ResponseEntity.ok(attractionService.getAttractionPlanResponse(map));
 	}
 	
 	@GetMapping("/trend")

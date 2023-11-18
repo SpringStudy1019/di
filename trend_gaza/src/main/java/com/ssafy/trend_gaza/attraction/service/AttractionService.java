@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ssafy.trend_gaza.attraction.dto.AttractionAdminRequest;
 import com.ssafy.trend_gaza.attraction.dto.AttractionAutoSearchResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse;
+import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.util.TrieAlgorithmUtil.Node;
 
@@ -21,4 +22,6 @@ public interface AttractionService {
 	void dfs(Node node, String str);
 	int getMaxSize(int size);
 	List<AttractionAutoSearchResponse> attractionNameList();
+	/* 여행 계획 세울 때 보이는 여행지 리스트 */
+	List<AttractionPlanResponse> getAttractionPlanResponse(Map<String, String> param);
 }

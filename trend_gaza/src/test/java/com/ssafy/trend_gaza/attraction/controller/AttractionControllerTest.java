@@ -100,5 +100,20 @@ class AttractionControllerTest {
 		//log.debug("관광지 조회 테스트 종료");
 		
 	}
+	
+	@Test
+	@DisplayName("여행 계획 세우기에서 관광지 목록 조회 테스트 ")
+	void testGetAttractionPlans() throws Exception {
+		//log.debug("관광지 조회 테스트 시작");
+		
+		mockMvc.perform(get("/attractions/plans?pgno=2"))
+		.andExpect(status().isOk())
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+		.andDo(print());
+		
+		//log.debug("관광지 조회 테스트 종료");
+		
+	}
+	
 
 }
