@@ -4,17 +4,23 @@ import { useUserStore } from '@/stores/user'
 import { useRouter } from "vue-router";
 import { modifyUser, deleteUser } from "@/api/user";
 import { followList, offFollow } from "@/api/follow";
+import { listBookmark, deleteBookmark } from "@/api/bookmark";
 import { registNoti } from "@/api/notification";
+import { useMenuStore } from "@/stores/menu";
+
+// 마운팅 되자마자 팔로워와 찜목록 불러오기
+onMounted(() => {
+    getFollowers();
+    getBookmarks();
+});
 
 // heading navbar 메뉴 
-import { useMenuStore } from "@/stores/menu";
 const menuStore = useMenuStore();
 const { changeMenuState } = menuStore;
 
 const store = useUserStore()
 const editMode = ref(false);
 const router = useRouter();
-const deleteId = ref('');
 
 const toggleEditMode = () => {
   editMode.value = !editMode.value;
@@ -52,10 +58,6 @@ const resetForm = () => {
 
 // 팔로잉 목록
 const followees = ref([])
-onMounted(() => {
-    getFollowers();
-});
-
 const getFollowers = () => {
    // API 호출
    followList(store.userInfo.userId,
@@ -84,7 +86,13 @@ const deleteFollow = (followee) => {
 
 // 회원탈퇴 요청
 const deleteRequest = () => {
-   // API 호출
+    // confirm
+    const confirmed = window.confirm("정말로 회원탈퇴를 진행하시겠습니까?");
+    
+    if (!confirmed) {
+        return;
+    }
+    // API 호출
    deleteUser(store.userInfo.userId,
       (response) => {  
         let msg = "회원탈퇴가 완료되었습니다!"
@@ -109,6 +117,8 @@ const notiInfo = ref({
 })
 const notificationRequest = (followee) => {
   notiInfo.value.userIdTo = followee
+   // 이미 보낸 알림인지 체크 
+
    // API 호출
    registNoti(notiInfo.value,
       (response) => {  
@@ -120,6 +130,34 @@ const notificationRequest = (followee) => {
     });
 };
 
+// 찜한 여행지 목록 조회
+const bookmarks = ref([]);
+const getBookmarks = () => {
+  console.log("북마크 찍어보자!")
+  console.log(store.userInfo.userId)
+   // API 호출
+   listBookmark(store.userInfo.userId,
+      (response) => {  
+        bookmarks.value = response.data;
+    },
+    (error) => {
+        console.log(error);
+    });
+};
+
+// 찜하기 취소 
+const deleteMark = (contentId) => {
+  deleteBookmark(
+    store.userInfo.userId,
+    contentId,
+    (response) => {  
+      alert("찜하기가 취소되었습니다!")
+      getBookmarks()
+    },
+    (error) => {
+        console.log(error);
+    });
+}
 </script>
 
 <template>
@@ -164,6 +202,7 @@ const notificationRequest = (followee) => {
           </div>
         </div>
         
+        <!-- 내가 팔로우 하고 있는 사용자 조회 -->
         <div class='following'>
           <h3 class="my-3 py-3 shadow-sm bg-light text-center">
             <mark class="orange">팔로잉</mark>
@@ -187,9 +226,35 @@ const notificationRequest = (followee) => {
             </div>
           </div>
         </div>
+
+         <!-- 찜한 여행지 목록 조회. 찜하기 삭제 가능. -->
+    <div class='bookmarks'>
+          <h3 class="my-3 py-3 shadow-sm bg-light text-center">
+            <mark class="orange">찜한 여행지 목록</mark>
+          </h3>
+          <div class="row" >
+            <div class="col-sm-6 my-3" v-for="bookmark in bookmarks" :key="bookmark.contentId">
+              <div class="card">
+                <div class="card-body">
+                  <img
+                  :src="bookmark.firstImage"
+                    class="img-fluid rounded-start"
+                    alt="..."  style="height: 100px; width: 100px;"
+                  />
+                  <h5 class="card-title" >{{ bookmark.title }}</h5>
+                  <div>
+                    <button class="btn btn-dark"  @click="deleteMark(bookmark.contentId)">찜하기 취소</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
+    <!-- 정보 수정 mode -->
     <div class="row justify-content-center" v-if="editMode">
     <div class="col-lg-10">
         <h2 class="my-3 py-3 shadow-sm bg-light text-center">
@@ -198,7 +263,7 @@ const notificationRequest = (followee) => {
       </div>
     <div>
       <!-- -->
- <div  class="card mt-3 m-auto" style="max-width: 700px">
+    <div class="card mt-3 m-auto" style="max-width: 700px">
           <div class="row g-0">
             <div class="col-md-4">
               <img
