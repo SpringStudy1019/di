@@ -31,7 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/review")
 @CrossOrigin("*")
-@Slf4j
 public class ReviewController {
 
 	private final ReviewService reviewService;

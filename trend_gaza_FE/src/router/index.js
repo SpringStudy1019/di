@@ -17,14 +17,6 @@ const router = createRouter({
       path: '/category',
       name: 'category',
       component: () => import("../views/TheMainView.vue"),
-      redirect: { name: "main" },
-      children: [
-        {
-          path: "culture",
-          name: "category-culture",
-          component: () => import("@/components/category/TheCulture.vue"),
-        },
-      ]
     },
     {
       path: '/attraction',
@@ -92,6 +84,11 @@ const router = createRouter({
           component: () => import("@/components/attraction/AttractionDetail.vue"),
         }
       ]
+    },
+    {
+      path: "/category/:contentTypeId",
+      name: "category-view",
+      component: () => import("@/components/category/TheCategoryDetail.vue"),
     }
     
   ]

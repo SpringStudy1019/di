@@ -97,6 +97,11 @@ public class AttractionController {
 					.body(responseService.getExceptionResponse(CustomExceptionStatus.REGISTER_BOOKMARK_FAILED));
 		}
 		return ResponseEntity.ok().body(responseService.getSuccessResponse());
+
+	@GetMapping("/searchByCategory")
+	public ResponseEntity<List<AttractionInfo>> searchByCategory(@RequestParam Map<String, String> map) {
+		logger.debug("searchAttractions call!");
+		return ResponseEntity.ok(attractionService.searchByCategory(map));	
 	}
 	
 }

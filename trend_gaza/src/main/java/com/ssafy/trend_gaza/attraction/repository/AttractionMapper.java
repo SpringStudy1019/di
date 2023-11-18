@@ -20,6 +20,7 @@ public interface AttractionMapper {
 	void registerAttractionDetail(AttractionAdminRequest attractionAdminRequest);
 	AttractionInfo getAttractionDetail(int id);
 	List<AttractionAutoSearchResponse> attractionNameList();
+	List<AttractionInfo> searchByCategory(Map<String, Object> param);
 	List<AttractionPlanResponse> attractionPlan(Map<String, Object> param);
 	
 	/* 북마크 */

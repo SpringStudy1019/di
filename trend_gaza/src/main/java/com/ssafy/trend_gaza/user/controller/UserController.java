@@ -233,8 +233,8 @@ public class UserController {
 		
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<?> userDelete(String userId) {
+	@DeleteMapping(value = "/{userId}")
+	public ResponseEntity<?> userDelete(@PathVariable String userId) {
 		logger.debug("userDelete userid : {}", userId);
 		try {
 			userService.delete(userId);

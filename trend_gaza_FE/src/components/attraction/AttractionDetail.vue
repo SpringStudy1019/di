@@ -28,6 +28,9 @@ const getAttraction = () => {
 </script>
 
 <template>
+    <h1>{{ attraction.title }}</h1>
+    <div>{{ attraction.tel }}</div>
+    <img :src="attraction.defaultImg">
     <div v-if='attraction.latitude && attraction.longitude'>
         <AttractionMap :longitude="attraction.longitude" :latitude="attraction.latitude"/>
     </div>
