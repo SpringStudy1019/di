@@ -186,20 +186,27 @@ public class AttractionServiceImpl implements AttractionService {
 
 	@Override
 	public int onBookmark(int attractionId, String userId) throws SQLException {
-		int result = 0;
-		BookmarkRequest bookmarkRequest = BookmarkRequest.builder()
-				.userId(userId)
-				.attractionId(attractionId)
-				.build();
-		
-		Bookmark bookmark = attractionMapper.findBookmark(bookmarkRequest);
-		
-		if(bookmark == null) {
-			result = attractionMapper.onBookmark(bookmarkRequest);
-		}
-		
-		return result;
+		// TODO Auto-generated method stub
+		return 0;
 	}
+
+
+//	@Override
+//	public int onBookmark(int contentId, String userId) throws SQLException {
+//		int result = 0;
+//		BookmarkRequest bookmarkRequest = BookmarkRequest.builder()
+//				.userId(userId)
+//				.contentId(contentId)
+//				.build();
+//		
+//		Bookmark bookmark = attractionMapper.findBookmark(bookmarkRequest);
+//		
+//		if(bookmark == null) {
+//			result = attractionMapper.onBookmark(bookmarkRequest);
+//		}
+//		
+//		return result;
+//	}
 
 }
 

@@ -95,7 +95,8 @@
 	<resultMap type="com.ssafy.trend_gaza.attraction.entity.AttractionInfo" id="attractionInfo">
 	    <result column="content_id" property="contentId"></result>
 	    <result column="title" property="title"></result>
-  </resultMap>
+	    <result column="first_image" property="firstImage"></result>
+  	</resultMap>
 	
 	<select id="mostReviews" resultMap="attractionInfo">
 	    SELECT ai.*

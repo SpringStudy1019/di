@@ -18,7 +18,8 @@ const getAttraction = () => {
     getAttractionDetail(attractionIdx,
     ({data}) => {
         attraction.value = data;
-        console.log(data);
+        // console.log(data);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     },
     (error) => {
         console.log(error);

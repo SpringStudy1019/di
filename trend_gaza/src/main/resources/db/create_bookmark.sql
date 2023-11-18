@@ -1,7 +1,8 @@
-create table bookmark(
-	bookmark_idx int primary key auto_increment,
-    user_id varchar(20),
-    content_id int,
-    foreign key (user_id ) references user(user_id),
-    foreign key (content_id) references attraction_info(content_id)
+CREATE TABLE bookmark (
+    bookmark_idx INT PRIMARY KEY AUTO_INCREMENT,
+    user_id VARCHAR(20) NOT NULL,
+    content_id INT NOT NULL,
+    register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (content_id) REFERENCES attraction_info(content_id)
 );
