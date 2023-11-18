@@ -33,10 +33,6 @@ const logout = async () => {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- 왼쪽 부분 -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      
-        <li class="nav-item">
-          <router-link :to="{name: 'attraction'}" class="nav-link">관광지 살펴보기</router-link>
-        </li>
         <li class="nav-item">
           <router-link :to="{name: 'review'}" class="nav-link">여행후기</router-link>
         </li>

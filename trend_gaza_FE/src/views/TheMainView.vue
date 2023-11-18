@@ -2,6 +2,7 @@
 import { useRouter } from 'vue-router';
 import TheCategory from '../components/category/TheCategory.vue';
 import Search from '@/components/search/Search.vue';
+import AttractionRecommend from '../components/attraction/AttractionRecommend.vue';
 
 const router = useRouter();
 
@@ -16,6 +17,7 @@ const router = useRouter();
         <TheCategory />
         
         <!-- 추천 여행지 -->
+        <AttractionRecommend />
         
 
 

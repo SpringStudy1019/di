@@ -119,6 +119,11 @@ public class ReviewController {
 		}
 	}
 	
+	@GetMapping("/hotplace")
+	public ResponseEntity<?> mostReviews() throws Exception {
+		return ResponseEntity.ok(reviewService.mostReviews());
+	}
+	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
