@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { detailReview, deleteReview } from '../../api/review';
-import { listComment } from '../../api/comment';
+import { detailReview, deleteReview } from '@//api/review';
+import { listComment } from '@//api/comment';
 
 import { useUserStore } from '@/stores/user';
 import ReviewCommentList from './ReviewCommentList.vue';
@@ -16,6 +16,7 @@ const { reviewIdx } = route.params;
 
 const review = ref({});
 const comments = ref([]);
+const commentNumber = ref(0);
 
 onMounted(() => {
   getReview();
@@ -41,6 +42,10 @@ const getComments = () => {
   listComment(reviewIdx,
     ({ data }) => { 
       comments.value = data;
+     // number of comments
+     commentNumber.value = comments.value.length;
+     console.log("댓글 개수 업데이트 되나요? ")
+     console.log("댓글 개수: ",commentNumber.value)
     },
     (error) => {
       console.log(error);
@@ -120,6 +125,7 @@ function toggleFollow() {
   }
 }
 
+
 </script>
 
 <template>
@@ -138,7 +144,7 @@ function toggleFollow() {
           <div class="col-md-8">
             <div class="clearfix align-content-center">
               <span class="fw-bold">{{ review.userId }}</span>
-              <button id="follow-button" @click="toggleFollow">+ Follow</button>	
+              <button id="follow-button" @click="toggleFollow" v-if="store.userInfo.userId !== review.userId">+ Follow</button>	
               <div class="text-secondary fw-light">
                 {{ review.registerDate }}
               </div>
@@ -150,8 +156,7 @@ function toggleFollow() {
               </p>
             </div>
           </div>
-          <!-- 댓글 개수 실제 댓글 개수 반영하기 -->
-          <div class="col-md-4 align-self-center text-end">댓글 : 0</div>
+          <div class="col-md-4 align-self-center text-end">댓글 : {{commentNumber}}</div>
           <div class="divider mb-3"></div>
           <div class="text">
             {{ review.content }}

@@ -23,7 +23,8 @@ onMounted(() => {
 const getCommentList = () => {
     listComment(props.reviewIdx,
     (response) => {
-      console.log("Success:", response.status, response.data);
+      // console.log("Success:", response.status, response.data);
+      
       comments.value = response.data;
     },
     (error) => {
@@ -40,7 +41,7 @@ function deleteComment(commentIdx) {
   deleteCommentRequest(commentIdx,
     ({data}) => {
         getCommentList();
-      router.push({ name: "review-view" });
+        router.push({ name: "review-view" });
     }, (error) => {
       console.log(error);
     })
@@ -70,7 +71,7 @@ function registerComment() {
             console.log(data);
             getCommentList();
             commentContent.value = '';
-            router.push({name:"review-view"})
+            router.push({name:"review-view"});
         },
         (error) => {
             console.log(error);
@@ -85,7 +86,7 @@ function registerComment() {
    <h2 id="comment-title">이 리뷰에 대한 댓글</h2>
    <div class="comment-register">
     <div class="comment-regist">
-    <div class="review-register-form">
+    <div class="comment-register-form">
         <input v-model="commentContent" placeholder="댓글을 입력하세요" />
         <button type="button" class="btn btn-outline-light mb-1 ms-3" @click="registerComment">
             등록</button>
@@ -94,14 +95,8 @@ function registerComment() {
     </div>  
 
     <div class="comment-list">
-      <div v-for="comment in comments" :key="comment.commentIdx" class="comment">
+      <div v-for="comment in comments" :key="comment.commentIdx" class="comment" >
         <div class="comment-content">{{ comment.content }}</div>
-        <!-- <div class="comment-content" v-if="comment.commentIdx !== modifyingComment.commentIdx">
-             {{ comment.content }}
-         </div>
-         <div class="comment-content" v-else>
-             <input v-model="modifyingContent" />
-         </div> -->
         <div class="comment-meta">
           <span class="comment-date">{{ comment.registerDate }}</span>
           <span class="comment-author">{{ comment.userId }}</span>
@@ -138,6 +133,7 @@ function registerComment() {
   gap: 10px;
   max-width: 500px;
   margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 .comment-list {
@@ -153,6 +149,15 @@ function registerComment() {
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-register-form input {
+  flex: 1;
+  width: 80%;
+  padding: 8px;
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 10px; /* Make it round */
+  outline: none; /* Remove the default input outline */
 }
 
 .comment {
