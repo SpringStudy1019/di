@@ -68,13 +68,6 @@ const router = createRouter({
           path: "view/:reviewIdx",
           name: "review-view",
           component: () => import("@/components/review/ReviewDetail.vue"),
-          children: [
-            {
-              path: "",
-              name: "comment",
-              component: () => import("@/components/comment/CommentList.vue"),
-            }
-          ]
         },
         {
           path: "write",
