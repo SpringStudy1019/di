@@ -11,17 +11,18 @@ public class PlanResponse {
 	private String title;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
-	private String userId;
+	private Integer userCount;
 	
 	public PlanResponse() {}
 
-	public PlanResponse(Integer planIdx, String title, LocalDateTime startDate, LocalDateTime endDate, String userId) {
+	public PlanResponse(Integer planIdx, String title, LocalDateTime startDate,
+			LocalDateTime endDate, Integer userCount) {
 		super();
 		this.planIdx = planIdx;
 		this.title = title;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.userId = userId;
+		this.userCount = userCount;
 	}
 
 	public Integer getPlanIdx() {
@@ -40,8 +41,8 @@ public class PlanResponse {
 		return endDate;
 	}
 
-	public String getUserId() {
-		return userId;
+	public Integer getUserCount() {
+		return userCount;
 	}
 	
 }
