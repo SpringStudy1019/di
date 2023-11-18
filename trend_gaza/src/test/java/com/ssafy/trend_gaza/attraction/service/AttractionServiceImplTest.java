@@ -42,7 +42,7 @@ class AttractionServiceImplTest {
 		map.put("keyword", "");
 		
 		List<AttractionInfo> attractionInfo = attractionService.searchAttractions(map);
-		assertEquals(4411, attractionInfo.size());
+		assertEquals(20, attractionInfo.size());
 		
 		// log.debug("관광지 조회 테스트 종료");
 	}
@@ -58,7 +58,7 @@ class AttractionServiceImplTest {
 		map.put("keyword", "");
 		
 		List<AttractionInfo> attractionInfo = attractionService.searchAttractions(map);
-		assertEquals(1356, attractionInfo.size());
+		assertEquals(20, attractionInfo.size());
 		
 		// log.debug("관광지 조회 테스트 종료");
 	}

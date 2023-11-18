@@ -62,6 +62,11 @@ public class AttractionServiceImpl implements AttractionService {
 		map.put("contentTypeId", contentTypeId == null ? "" : contentTypeId);
 		map.put("keyword", keyword == null ? "" : keyword);
 		
+		int pgNo = Integer.parseInt(param.get("pgno") == null ? "1" : param.get("pgno"));
+		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
+		map.put("start", start);
+		map.put("listsize", SizeConstant.LIST_SIZE);
+		
 		return attractionMapper.searchAttractions(map);
 		//return result.stream().map(AttractionResponse::of).toList();
 	}
