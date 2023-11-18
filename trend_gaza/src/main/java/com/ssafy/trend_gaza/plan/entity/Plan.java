@@ -1,4 +1,4 @@
-package com.ssafy.trend_gaza.plan;
+package com.ssafy.trend_gaza.plan.entity;
 
 import java.time.LocalDateTime;
 
