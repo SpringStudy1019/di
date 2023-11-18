@@ -162,7 +162,8 @@ public class AttractionServiceImpl implements AttractionService {
 		map.put("keyword", keyword == null ? "" : keyword);
 		
 		return attractionMapper.searchByCategory(map);
-
+	}
+	
 	/*
 	 * 여행 계획 세울 때 보이는 여행지 리스트
 	 */
