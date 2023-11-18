@@ -99,4 +99,10 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 
+	@Override
+	public List<Integer> mostReviews() throws Exception {
+		return reviewMapper.mostReviews();
+	}
+
+
 }

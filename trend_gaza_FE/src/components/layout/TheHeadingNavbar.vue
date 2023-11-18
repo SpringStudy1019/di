@@ -12,10 +12,10 @@ import { useUserStore } from "@/stores/user";
 const userStore = useUserStore();
 const { userLogout } = userStore;
 
-const logout = () => {
+const logout = async () => {
   console.log("로그아웃 시작!!");
-  userLogout(userStore.userInfo.userId);
-  changeMenuState();
+  await userLogout(userStore.userInfo.userId);
+  await changeMenuState();
   console.log("로그아웃 종료!!");
 };
 
@@ -33,10 +33,6 @@ const logout = () => {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- 왼쪽 부분 -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      
-        <li class="nav-item">
-          <router-link :to="{name: 'attraction'}" class="nav-link">관광지 살펴보기</router-link>
-        </li>
         <li class="nav-item">
           <router-link :to="{name: 'review'}" class="nav-link">여행후기</router-link>
         </li>
@@ -45,36 +41,45 @@ const logout = () => {
         </li>
       </ul>
       <!-- 오른쪽 부분 -->
-      <!--
-      <li class="d-flex mx-1">
-        <img src="src/components/img/bell.png" width="20" height="20" class="d-inline-block align-top" alt="">
-      </li>
-      <li class="d-flex mx-3">
-        <img src="src/components/img/bell2.png" width="20" height="20" class="d-inline-block align-top" alt="">
-      </li>
-      -->
+      
       <ul
           class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll"
           style="--bs-scroll-height: 100px"
         >
+        <!-- v-for 안에 v-if를 쓰고 싶으면, template을 2번 쓰면 된다! -->
       <template v-for="menu in menuList" :key="menu.routeName">
-            <template v-if="menu.show">
-              <template v-if="menu.routeName === 'user-logout'">
+          <template v-if="menu.show">
+            <template v-if="menu.routeName === 'user-logout'">
+              <li class="nav-item">
+                <router-link to="/" @click.prevent="logout" class="nav-link">{{
+                  menu.name
+                }}</router-link>
+              </li>
+            </template>
+            <template v-else>
+              <template v-if="menu.isImage">
                 <li class="nav-item">
-                  <router-link to="/" @click.prevent="logout" class="nav-link">{{
-                    menu.name
-                  }}</router-link>
-                </li>
-              </template>
+                <router-link :to="{ name: menu.routeName }" class="nav-link">
+                  <img 
+                  v-if="menu.isImage" 
+                  src="@/assets/icon/bell.png" 
+                  alt="알림"
+                  style="height: 25px; width: 25px;"
+                  />
+                </router-link>
+              </li>
+            </template>
               <template v-else>
                 <li class="nav-item">
-                  <router-link :to="{ name: menu.routeName }" class="nav-link">{{
-                    menu.name
-                  }}</router-link>
-                </li>
+                <router-link :to="{ name: menu.routeName }" class="nav-link">{{
+                  menu.name
+                }}</router-link>
+              </li>
               </template>
+             
             </template>
           </template>
+        </template>
         </ul>
     </div>
   </div>

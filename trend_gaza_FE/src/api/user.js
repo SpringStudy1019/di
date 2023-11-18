@@ -35,9 +35,11 @@ function idCheck(userId, success, fail) {
     local.get(`${url}/idCheck/${userId}`).then(success).catch(fail);
 }
 
-
+function deleteUser(userId, success, fail) {
+    local.delete(`${url}/${userId}`).then(success).catch(fail);
+}
 
 export {
     userConfirm, findById, tokenRegeneration, logout,
-    registUser, modifyUser, idCheck, 
+    registUser, modifyUser, idCheck, deleteUser
 };

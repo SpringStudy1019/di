@@ -31,7 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/review")
 @CrossOrigin("*")
-@Slf4j
 public class ReviewController {
 
 	private final ReviewService reviewService;
@@ -118,6 +117,11 @@ public class ReviewController {
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
+	}
+	
+	@GetMapping("/hotplace")
+	public ResponseEntity<?> mostReviews() throws Exception {
+		return ResponseEntity.ok(reviewService.mostReviews());
 	}
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {

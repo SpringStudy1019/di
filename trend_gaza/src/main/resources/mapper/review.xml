@@ -86,11 +86,17 @@
 		set modify_date=now(), score=#{score}, title=#{title}, content=#{content} 
 		where review_idx=#{reviewIdx}
 	</update>
-	
-	
+
 	<delete id="delete" parameterType="String">
 		delete from review
 		where review_idx=#{reviewIdx}
 	</delete>
 	
+	<select id="mostReviews" resultType="int">
+	    SELECT content_id
+	    FROM review
+	    GROUP BY content_id
+	    ORDER BY COUNT(review_idx) DESC
+	    LIMIT 5;
+  </select>
 </mapper>

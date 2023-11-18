@@ -1,5 +1,6 @@
 package com.ssafy.trend_gaza.review.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -30,5 +31,8 @@ public interface ReviewService {
 	
 	/* 리뷰 삭제 */ 
 	void delete(String reviewIdx) throws Exception;
+	
+	/* 사용자들이 가장 많이 리뷰를 남긴 여행지 조회 */ 
+	List<Integer> mostReviews() throws Exception;
 	
 }
