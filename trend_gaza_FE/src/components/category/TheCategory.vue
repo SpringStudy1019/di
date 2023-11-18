@@ -10,7 +10,7 @@
     <div class="category">
     <div class="category-card">
         <img src="https://instagramimages16.s3.ap-northeast-2.amazonaws.com/IMAGE/admin/museum.png" width="40" height="40" alt="">
-        <router-link to="/category/culture">문화시설</router-link>
+        <router-link :to="{ name: 'category-view', params: { contentTypeId: '14' } }">문화시설</router-link>
         <!-- <option value="14" @click="moveToCulture">문화시설</option> -->
     </div>
     <div class="category-card">
