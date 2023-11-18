@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted} from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import {useRoute} from "vue-router";
 // import AttractionMap from './item/AttractionMap.vue';
 import {searchByCategory} from '@/api/attraction';
@@ -11,7 +11,7 @@ const word = ref("");
 
 const attractions = ref([]);
 
-
+// 카테고리별 관광지 가져오기 
 onMounted(() => {
     getAttraction();
 });
@@ -30,11 +30,25 @@ const getAttraction = () => {
     }
     );
 };
+
+// 관광지 이름 설정 (computed)
+const categoryName = computed(() => {
+    switch (contentTypeId) {
+        case '14':
+            return '문화시설';
+        case '15':
+            return '축제공연행사';
+        // Add more cases for other contentTypeId values
+        default:
+            return '';
+    }
+});
+
 </script>
 
 <template>
     <div>
-    <h2>List of Attractions</h2>
+    <h2>{{ categoryName }} 목록</h2>
     <ul>
       <li v-for="attraction in attractions" :key="attraction.contentId">
         <h3>{{ attraction.title }}</h3>
