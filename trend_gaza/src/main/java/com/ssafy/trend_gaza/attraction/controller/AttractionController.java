@@ -72,4 +72,10 @@ public class AttractionController {
 		return ResponseEntity.ok(responseService.getDataResponse(result));
 	}
 	
+	@GetMapping("/searchByCategory")
+	public ResponseEntity<List<AttractionInfo>> searchByCategory(@RequestParam Map<String, String> map) {
+		logger.debug("searchAttractions call!");
+		return ResponseEntity.ok(attractionService.searchByCategory(map));	
+	}
+	
 }

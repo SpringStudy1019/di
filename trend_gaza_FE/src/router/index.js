@@ -68,13 +68,6 @@ const router = createRouter({
           path: "view/:reviewIdx",
           name: "review-view",
           component: () => import("@/components/review/ReviewDetail.vue"),
-          children: [
-            {
-              path: "",
-              name: "comment",
-              component: () => import("@/components/comment/CommentList.vue"),
-            }
-          ]
         },
         {
           path: "write",
@@ -97,6 +90,18 @@ const router = createRouter({
           path: "view/:attractionIdx",
           name: "attraction-view",
           component: () => import("@/components/attraction/AttractionDetail.vue"),
+        }
+      ]
+    },
+    {
+      path: "/category",
+      name: "category",
+      component: () => import("../views/TheMainView.vue"),
+      children: [
+        {
+          path: "view/:contentIdx",
+          name: "category-view",
+          component: () => import("@/components/category/TheCategoryDetail.vue"),
         }
       ]
     }

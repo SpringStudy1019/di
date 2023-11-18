@@ -21,4 +21,5 @@ public interface AttractionService {
 	void dfs(Node node, String str);
 	int getMaxSize(int size);
 	List<AttractionAutoSearchResponse> attractionNameList();
+	List<AttractionInfo> searchByCategory(Map<String, String> param);
 }
