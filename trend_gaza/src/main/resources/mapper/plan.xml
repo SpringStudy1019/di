@@ -3,4 +3,13 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.trend_gaza.plan.repository.PlanMapper">
+
+	<select id="getAttractionPlan" resultMap="attractionPlan">
+		SELECT * FROM attraction_plan
+	</select>
+	
+	<insert id="registerPlan" parameterType="map">
+		insert into attraction_plan(attraction, plan_idx)
+		values(#{attraction}, #{planIdx})
+	</insert>
 </mapper>
