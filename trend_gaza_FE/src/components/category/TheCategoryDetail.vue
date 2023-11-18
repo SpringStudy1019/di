@@ -38,7 +38,14 @@ const categoryName = computed(() => {
             return '문화시설';
         case '15':
             return '축제공연행사';
-        // Add more cases for other contentTypeId values
+        case '28':
+            return '레포츠';
+        case '32':
+            return '숙박';
+        case '38':
+            return '쇼핑';
+        case '39':
+            return '음식점';
         default:
             return '';
     }
@@ -49,6 +56,11 @@ const categoryName = computed(() => {
 <template>
     <div>
     <h2>{{ categoryName }} 목록</h2>
+    <!-- Kakao Map -->
+    <!-- When user clicked the title of attraction, 
+        then it is marked in the map. 
+        Plus, we'll provide road view. 
+    -->
     <ul>
       <li v-for="attraction in attractions" :key="attraction.contentId">
         <h3>{{ attraction.title }}</h3>
@@ -57,6 +69,20 @@ const categoryName = computed(() => {
       </li>
     </ul>
   </div>
+  <tr class="text-center">
+    <th scope="row">{{ article.articleNo }}</th>
+    <td class="text-start">
+      <router-link
+        :to="{ name: 'attraction-view', params: { articleno: article.articleNo } }"
+        class="article-title link-dark"
+      >
+        {{ attraction.title }}
+      </router-link>
+    </td>
+    <td>{{ attraction.addr1 }}</td>
+    <td>{{ article.hit }}</td>
+    <td>{{ article.registerTime }}</td>
+  </tr>
 </template>
 
 <style scoped>

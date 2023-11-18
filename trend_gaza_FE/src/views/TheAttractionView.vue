@@ -5,7 +5,7 @@ import AttractionDetail from '../components/attraction/AttractionDetail.vue';
 
 <template>
 
-    <AttractionDetail />
+    <!-- <AttractionDetail /> -->
     <router-view></router-view>
  
 </template>
