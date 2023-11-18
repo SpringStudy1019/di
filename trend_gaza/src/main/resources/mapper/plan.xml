@@ -9,6 +9,13 @@
 		<result property="planIdx" column="plan_idx" />
 		<result property="attractions" column="attraction" typeHandler="com.ssafy.trend_gaza.plan.repository.JSONTypeHandler" />
 	</resultMap>
+	
+	<resultMap id="plan" type="plan">
+		<result property="planIdx" column="plan_idx" />
+		<result property="startDate" column="start_date" />
+		<result property="endDate" column="end_date" />
+		<result property="userId" column="user_id" />
+	</resultMap>
 
 	<select id="getAttractionPlan" resultMap="attractionPlan">
 		SELECT * FROM attraction_plan
@@ -24,4 +31,24 @@
 		set attraction = #{attraction}
 		where attraction_plan_id = #{attractionPlanId}
 	</update>
+	
+	<delete id="deleteMyPlan" parameterType="map">
+		delete
+		from user_plan
+		where plan_idx = #{planIdx} and user_id = #{userId}
+	</delete>
+	
+	<!-- 여행 계획 세우기 방을 만든 사람인가 -->
+	<select id="IsPlanOwner" parameterType="map" resultMap="plan">
+		select *
+		from plan
+		where plan_idx = #{planIdx} and user_id = #{userId}
+	</select>
+	
+	<!-- 방장이 탈퇴 -->
+	<delete id="deletePlan" parameterType="map">
+		DELETE 
+		FROM plan
+		WHERE user_id = #{userId} and plan_idx = #{planIdx}
+	</delete>
 </mapper>
