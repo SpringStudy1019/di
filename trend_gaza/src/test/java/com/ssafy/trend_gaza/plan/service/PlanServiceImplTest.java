@@ -51,5 +51,29 @@ public class PlanServiceImplTest {
 		// then
 		assertEquals(1, result);
 	}
+	
+	@Test
+	@Transactional
+	@DisplayName("여행 계획 수정하기")
+	void testModifyPlan() {
+		// given
+		List<PlanRequest> planRequests = new ArrayList<PlanRequest>();
+		planRequests.add(PlanRequest.builder()
+				.attractionId(125266)
+				.orderDate(1)
+				.order(1)
+				.build());
+		planRequests.add(PlanRequest.builder()
+				.attractionId(126481)
+				.orderDate(1)
+				.order(2)
+				.build());
+		
+		// when
+		int result = planService.modifyPlan(planRequests, 8);
+		
+		// then
+		assertEquals(1, result);
+	}
 
 }

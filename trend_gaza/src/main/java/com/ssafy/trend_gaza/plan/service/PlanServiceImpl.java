@@ -36,4 +36,20 @@ public class PlanServiceImpl implements PlanService {
 		return result;
 	}
 
+	@Override
+	public int modifyPlan(List<PlanRequest> planRequest, int attractionPlanId) {
+		int result = 0;
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			String json = objectMapper.writeValueAsString(planRequest);
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("attraction", json);
+			param.put("attractionPlanId", attractionPlanId);
+			result = planMapper.modifyPlan(param);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

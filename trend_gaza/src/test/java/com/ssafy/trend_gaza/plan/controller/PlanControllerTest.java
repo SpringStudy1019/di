@@ -2,6 +2,7 @@ package com.ssafy.trend_gaza.plan.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -65,6 +66,32 @@ public class PlanControllerTest {
 		mockMvc.perform(post("/plans/1")
 				.content(content).contentType(MediaType.APPLICATION_JSON))
 		.andExpect(status().isCreated())
+		.andDo(print());
+	}
+	
+	@Test
+	@Transactional
+	@DisplayName("여행 계획 수정")
+	void testModifyPlan() throws Exception {
+		// given
+		List<PlanRequest> planRequest = new ArrayList<PlanRequest>();
+		planRequest.add(PlanRequest.builder()
+				.attractionId(2856807)
+				.order(1)
+				.orderDate(1)
+				.build());
+		planRequest.add(PlanRequest.builder()
+				.attractionId(126479)
+				.order(1)
+				.orderDate(2)
+				.build());
+		ObjectMapper objectMapper = new ObjectMapper();
+		String content = objectMapper.writeValueAsString(planRequest); 
+		
+		// when, then
+		mockMvc.perform(put("/plans/8")
+				.content(content).contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk())
 		.andDo(print());
 	}
 }
