@@ -150,6 +150,18 @@ public class AttractionServiceImpl implements AttractionService {
 		return attractionMapper.attractionNameList();
 	}
 
+	@Override
+	public List<AttractionInfo> searchByCategory(Map<String, String> param) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String sido = param.get("sido");
+		String contentTypeId = param.get("contentTypeId");
+		String keyword = param.get("keyword");
+		
+		map.put("sido", sido == null ? "" : sido);
+		map.put("contentTypeId", contentTypeId == null ? "" : contentTypeId);
+		map.put("keyword", keyword == null ? "" : keyword);
+		
+		return attractionMapper.searchByCategory(map);
 
 	/*
 	 * 여행 계획 세울 때 보이는 여행지 리스트

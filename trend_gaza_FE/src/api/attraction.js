@@ -12,7 +12,14 @@ function searchAttraction(keyword, success, fail) {
     local.get(`${url}/auto-search?keyword=${keyword}`).then(success).catch(fail);
 }
 
+function searchByCategory(contentTypeId, sido, word, success, fail) {
+    local.get(`${url}/searchByCategory?contentTypeId=${contentTypeId}&sido=${sido}&word=${word}`)
+    .then(success)
+    .catch(fail);
+}
+
 export {
     getAttractionDetail,
-    searchAttraction
+    searchAttraction,
+    searchByCategory,
 }

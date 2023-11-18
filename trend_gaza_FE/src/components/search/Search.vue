@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { searchAttraction, getAttractionDetail } from '@/api/attraction';
 
@@ -23,6 +23,19 @@ const selectKeyword = (keyword) => {
     console.log(keyword.contentId);
     router.push({name:'attraction-view', params:{attractionIdx: keyword.contentId}});
 }
+
+// 다른 곳  클릭하면, 검색 리스트 사라지게 하기
+// Close search results when clicking outside the search input or result list
+const closeResults = (event) => {
+  if (!event.target.closest(".search-container")) {
+    searchResults.value = [];
+  }
+};
+
+onMounted(() => {
+  // Add click event listener to the document body
+  document.body.addEventListener("click", closeResults);
+});
 
 </script>
 

@@ -22,6 +22,7 @@ public interface AttractionService {
 	void dfs(Node node, String str);
 	int getMaxSize(int size);
 	List<AttractionAutoSearchResponse> attractionNameList();
+	List<AttractionInfo> searchByCategory(Map<String, String> param);
 	/* 여행 계획 세울 때 보이는 여행지 리스트 */
 	List<AttractionPlanResponse> getAttractionPlanResponse(Map<String, String> param);
 }

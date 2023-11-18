@@ -92,6 +92,11 @@ const router = createRouter({
           component: () => import("@/components/attraction/AttractionDetail.vue"),
         }
       ]
+    },
+    {
+      path: "/category/:contentTypeId",
+      name: "category-view",
+      component: () => import("@/components/category/TheCategoryDetail.vue"),
     }
     
   ]
