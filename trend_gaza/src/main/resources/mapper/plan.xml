@@ -18,4 +18,10 @@
 		insert into attraction_plan(attraction, plan_idx)
 		values(#{attraction}, #{planIdx})
 	</insert>
+	
+	<update id="modifyPlan" parameterType="map">
+		update attraction_plan
+		set attraction = #{attraction}
+		where attraction_plan_id = #{attractionPlanId}
+	</update>
 </mapper>
