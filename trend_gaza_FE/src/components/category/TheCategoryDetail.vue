@@ -61,30 +61,74 @@ const categoryName = computed(() => {
         then it is marked in the map. 
         Plus, we'll provide road view. 
     -->
-    <ul>
-      <li v-for="attraction in attractions" :key="attraction.contentId">
-        <h3>{{ attraction.title }}</h3>
-        <!-- <p>{{ attraction.description }}</p> -->
-        <!-- <img :src="attraction.imageUrl" alt="Attraction Image" /> -->
-      </li>
-    </ul>
   </div>
-  <tr class="text-center">
-    <th scope="row">{{ article.articleNo }}</th>
-    <td class="text-start">
+  
+  <thead>
+    <tr class="text-center">
+        <th scope="col">여행지</th>
+        <th scope="col">주소</th>
+    </tr>
+    </thead>
+    <tbody>
+  <tr class="text-center" v-for="attraction in attractions" :key="attraction.contentId">
+    <td class="text-start" >
       <router-link
-        :to="{ name: 'attraction-view', params: { articleno: article.articleNo } }"
+        :to="{ name: 'attraction-view', params: { attractionIdx: attraction.contentId } }"
         class="article-title link-dark"
       >
         {{ attraction.title }}
       </router-link>
     </td>
     <td>{{ attraction.addr1 }}</td>
-    <td>{{ article.hit }}</td>
-    <td>{{ article.registerTime }}</td>
   </tr>
+</tbody>
 </template>
 
 <style scoped>
+ /* Container styling */
+ div {
+    margin: 20px auto; /* Center the container */
+    max-width: 800px; /* Adjust the maximum width as needed */
+  }
 
+  /* Heading styling */
+  h2 {
+    font-family: 'Your-Preferred-Font', sans-serif;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center; /* Center the heading */
+  }
+
+  /* Table styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  /* Table header styling */
+  th {
+    padding: 10px;
+    background-color: #FF8080;
+    color: #fff;
+  }
+
+  /* Table cell styling */
+  td {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+
+  /* Link styling */
+  .article-title {
+    text-decoration: none;
+    color: #0066cc; /* Your preferred link color */
+    font-weight: bold;
+  }
+
+  /* Link hover effect */
+  .article-title:hover {
+    text-decoration: underline;
+  }
 </style>
