@@ -37,6 +37,12 @@
 		<result column="longitude" property="longitude" />
 	</resultMap>
 	
+	<resultMap type="com.ssafy.trend_gaza.bookmark.entity.Bookmark" id="bookmark">
+		<result column="bookmark_idx" property="bookmarkIdx"/>
+		<result column="user_id" property="userId"/>
+		<result column="content_id" property="contentId"/>
+	</resultMap>
+	
 	<sql id="search">
 		<if test="contentTypeId != null and contentTypeId != ''">
 			and content_type_id = #{contentTypeId}
@@ -94,5 +100,16 @@
 		from attraction_info
 		limit #{start}, #{listsize}
 	</select>
+	
+	<!-- 북마크 -->
+	<select id="findBookmark" parameterType="bookmarkRequest" resultMap="bookmark">
+		select * from bookmark
+		where user_id=#{userId} and content_id=#{attractionId}
+	</select>
+	
+	<insert id="onBookmark" parameterType="bookmarkRequest">
+		insert into bookmark (user_id, content_id)
+		values (#{userId}, #{attractionId})
+	</insert>
 
 </mapper>
