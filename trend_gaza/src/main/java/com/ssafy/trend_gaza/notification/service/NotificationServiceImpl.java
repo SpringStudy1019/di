@@ -1,6 +1,7 @@
 package com.ssafy.trend_gaza.notification.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -30,8 +31,11 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public void delete(String notificationIdx) throws Exception {
-		notificationMapper.delete(notificationIdx);
+	public void delete(Map<String, String> param) throws Exception {
+//		NotificationResponse notificationResponse = new NotificationResponse();
+//		notificationResponse.setUserIdFrom(param.get("userIdFrom"));
+//		notificationResponse.setUserIdTo(param.get("userIdTo"));
+		notificationMapper.delete(param);
 	}
 
 }

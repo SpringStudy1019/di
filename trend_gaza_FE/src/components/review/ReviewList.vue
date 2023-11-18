@@ -72,9 +72,9 @@ const moveWrite = () => {
       <div class="col-lg-10">
         <div class="row align-self-center mb-2">
           <div class="col-md-2 text-start">
-            <button type="button" class="btn btn-outline-primary btn-sm" @click="moveWrite">
+            <!-- <button type="button" class="btn btn-outline-primary btn-sm" @click="moveWrite">
               리뷰 쓰기
-            </button>
+            </button> -->
           </div>
           <div class="col-md-5 offset-5">
             <form class="d-flex" @submit.prevent="getReviewList">

@@ -62,7 +62,7 @@ const router = createRouter({
           component: () => import("@/components/review/ReviewDetail.vue"),
         },
         {
-          path: "write",
+          path: "write/:contentId",
           name: "review-write",
           component: () => import("@/components/review/ReviewWrite.vue"),
         },
@@ -89,7 +89,12 @@ const router = createRouter({
       path: "/category/:contentTypeId",
       name: "category-view",
       component: () => import("@/components/category/TheCategoryDetail.vue"),
-    }
+    },
+    {
+      path: '/notification',
+      name: 'notification',
+      component: () => import("@/components/users/UserNotification.vue"),
+    },
     
   ]
 })

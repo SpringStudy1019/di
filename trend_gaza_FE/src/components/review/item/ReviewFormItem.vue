@@ -14,7 +14,11 @@ const store = useUserStore()
 
 const {VITE_VUE_API_URL} = import.meta.env;
 
-const props = defineProps({ type: String, reviewIdx: String });
+const props = defineProps(
+    {   type: String, 
+        reviewIdx: String,
+        contentId: Number,
+     });
 
 const contentLength = ref(0);
 const titleLength = ref(0);
@@ -35,13 +39,12 @@ const review = ref({
     score: 0,
     title: "",
     content: "",
-    //userId: store.userInfo.userId,       // 로그인했다는 가정
-    userId: "alswjd",
+    userId: store.userInfo.userId,    
     companion: "",
     registerDate: "",
     startDate: "",
     endDate: "",
-    contentId: "125405",        // 임시로 넣어둠(관광지 상세가 아직 없음)
+    contentId: props.contentId,   
     fileInfos: []
 });
 const uploadImgCnt = ref(0);

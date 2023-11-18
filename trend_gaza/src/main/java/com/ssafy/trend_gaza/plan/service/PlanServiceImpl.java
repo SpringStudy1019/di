@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
+import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.repository.PlanMapper;
 
 @Service
@@ -52,7 +53,7 @@ public class PlanServiceImpl implements PlanService {
 		}
 		return result;
 	}
-
+  
 	/*
 	 * 여행 계획을 세운 사람이 탈퇴하면 관련된 데이터들을 모두 지운다.
 	 */
@@ -66,6 +67,11 @@ public class PlanServiceImpl implements PlanService {
 			return planMapper.deletePlan(param);
 		}
 		return planMapper.deleteMyPlan(param);
+  }
+  
+	@Override
+	public List<PlanResponse> getMyPlans(String userId) {
+		return planMapper.getMyPlans(userId);
 	}
 
 }

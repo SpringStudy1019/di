@@ -243,6 +243,11 @@ const deleteMark = (contentId) => {
                   />
                   <h5 class="card-title" >{{ bookmark.title }}</h5>
                   <div>
+                    <router-link 
+                        :to="{ name: 'attraction-view', params: { attractionIdx: bookmark.contentId } }" 
+                        class="btn btn-primary me-2">
+                            자세히 보기
+                        </router-link>
                     <button class="btn btn-dark"  @click="deleteMark(bookmark.contentId)">찜하기 취소</button>
                   </div>
                 </div>

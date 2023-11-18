@@ -27,11 +27,6 @@ public class PlanController {
 		this.planService = planService;
 	}
 	
-	@GetMapping
-	public ResponseEntity<?> getAttractions() {
-		return ResponseEntity.ok("");
-	}
-	
 	@PostMapping("/{planIdx}")
 	public ResponseEntity<?> registerPlan(@PathVariable int planIdx,
 			@RequestBody List<PlanRequest> planRequest) {
@@ -54,6 +49,11 @@ public class PlanController {
 			return ResponseEntity.internalServerError().build();
 		}
 		return ResponseEntity.ok().build();
+
+	@GetMapping
+	public ResponseEntity<?> getMyPlans() {
+		final String userId = AuthenticationUtil.getCurrentUserSocialId();
+		return ResponseEntity.ok().body(planService.getMyPlans(userId));
 	}
 
 }
