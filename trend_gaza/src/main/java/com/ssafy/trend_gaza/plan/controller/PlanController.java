@@ -49,6 +49,7 @@ public class PlanController {
 			return ResponseEntity.internalServerError().build();
 		}
 		return ResponseEntity.ok().build();
+	}	
 
 	@GetMapping
 	public ResponseEntity<?> getMyPlans() {
