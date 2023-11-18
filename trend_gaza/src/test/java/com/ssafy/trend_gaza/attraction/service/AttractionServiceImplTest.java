@@ -16,6 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.trend_gaza.attraction.dto.AttractionAdminRequest;
+import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ class AttractionServiceImplTest {
 		map.put("keyword", "");
 		
 		List<AttractionInfo> attractionInfo = attractionService.searchAttractions(map);
-		assertEquals(4411, attractionInfo.size());
+		assertEquals(20, attractionInfo.size());
 		
 		// log.debug("관광지 조회 테스트 종료");
 	}
@@ -57,7 +58,7 @@ class AttractionServiceImplTest {
 		map.put("keyword", "");
 		
 		List<AttractionInfo> attractionInfo = attractionService.searchAttractions(map);
-		assertEquals(1356, attractionInfo.size());
+		assertEquals(20, attractionInfo.size());
 		
 		// log.debug("관광지 조회 테스트 종료");
 	}
@@ -90,6 +91,22 @@ class AttractionServiceImplTest {
 		
 		// when
 		attractionService.registerAdminAttraction(attractionAdminRequest);
+	}
+	
+	@Test
+	@DisplayName("여행 계획 세우기에서 관광지 목록 조회 테스트")
+	void testGetAttractionPlanResponse() {
+
+		// given
+		Map<String, String> map = new HashMap<String, String>(); 
+		map.put("pgno", "2");
+		
+		// when
+		List<AttractionPlanResponse> result = attractionService.getAttractionPlanResponse(map);
+		
+		// then
+		assertEquals(20, result.size());
+		
 	}
 
 }
