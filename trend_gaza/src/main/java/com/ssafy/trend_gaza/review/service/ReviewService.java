@@ -3,7 +3,7 @@ package com.ssafy.trend_gaza.review.service;
 import java.util.List;
 import java.util.Map;
 
-import com.ssafy.trend_gaza.Image.dto.ImagesResponse;
+import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.review.dto.ReviewModifyResponse;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
 import com.ssafy.trend_gaza.review.dto.ReviewResponse;
@@ -30,5 +30,8 @@ public interface ReviewService {
 	
 	/* 리뷰 삭제 */ 
 	void delete(String reviewIdx) throws Exception;
+	
+	/* 사용자들이 가장 많이 리뷰를 남긴 여행지 조회 */ 
+	List<AttractionInfo> mostReviews() throws Exception;
 	
 }

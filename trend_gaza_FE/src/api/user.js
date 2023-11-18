@@ -40,6 +40,12 @@ function deleteUser(userId, success, fail) {
 }
 
 export {
-    userConfirm, findById, tokenRegeneration, logout,
-    registUser, modifyUser, idCheck, deleteUser
+    userConfirm, 
+    findById, 
+    tokenRegeneration, 
+    logout,
+    registUser, 
+    modifyUser, 
+    idCheck, 
+    deleteUser
 };

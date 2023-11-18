@@ -86,11 +86,23 @@
 		set modify_date=now(), score=#{score}, title=#{title}, content=#{content} 
 		where review_idx=#{reviewIdx}
 	</update>
-	
-	
+
 	<delete id="delete" parameterType="String">
 		delete from review
 		where review_idx=#{reviewIdx}
 	</delete>
 	
+	<resultMap type="com.ssafy.trend_gaza.attraction.entity.AttractionInfo" id="attractionInfo">
+	    <result column="content_id" property="contentId"></result>
+	    <result column="title" property="title"></result>
+  </resultMap>
+	
+	<select id="mostReviews" resultMap="attractionInfo">
+	    SELECT ai.*
+	    FROM attraction_info ai
+	    JOIN review r ON ai.content_id = r.content_id
+	    GROUP BY r.content_id
+	    ORDER BY COUNT(r.review_idx) DESC
+	    LIMIT 5;
+  </select>
 </mapper>
