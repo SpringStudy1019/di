@@ -4,6 +4,12 @@
 
 <mapper namespace="com.ssafy.trend_gaza.plan.repository.PlanMapper">
 
+	<resultMap id="attractionPlan" type="com.ssafy.trend_gaza.plan.entity.AttractionPlan">
+		<result property="attractionPlanId" column="attraction_plan_id" />
+		<result property="planIdx" column="plan_idx" />
+		<result property="attractions" column="attraction" typeHandler="com.ssafy.trend_gaza.plan.repository.JSONTypeHandler" />
+	</resultMap>
+
 	<select id="getAttractionPlan" resultMap="attractionPlan">
 		SELECT * FROM attraction_plan
 	</select>
