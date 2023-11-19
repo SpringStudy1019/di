@@ -8,11 +8,13 @@ const props = defineProps({
 const emit = defineEmits(["selectAttractionData"]);
 
 const selectArr = ref([]);
+const showAddBtn = ref(true);       // 추가 버튼 활성화
 
 const selectAttractionFunc = () => {
     console.log("부모에게 전달할 데이터" + props.attraction);
     selectArr.value.push(props.attraction);
     console.log("배열 찍어보기" + selectArr.value);
+    showAddBtn.value = false;        // 추가 버튼 비활성화
     emit("selectAttractionData", selectArr.value);
 };
 </script>
@@ -24,7 +26,7 @@ const selectAttractionFunc = () => {
             <img class="img" :src="attraction.firstImage"/>
         </div>
         <span>{{ attraction.addr1 }} </span>
-        <div class="add-btn">
+        <div class="add-btn" v-if="showAddBtn">
             <button @click="selectAttractionFunc">추가</button>
         </div>
     </div>
