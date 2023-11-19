@@ -12,8 +12,8 @@ function searchAttraction(keyword, success, fail) {
     local.get(`${url}/auto-search?keyword=${keyword}`).then(success).catch(fail);
 }
 
-function searchByCategory(contentTypeId, sido, word, success, fail) {
-    local.get(`${url}/searchByCategory?contentTypeId=${contentTypeId}&sido=${sido}&word=${word}`)
+function listByCategory(param, success, fail) {
+    local.get(`${url}/listByCategory`, { params: param })
     .then(success)
     .catch(fail);
 }
@@ -21,5 +21,5 @@ function searchByCategory(contentTypeId, sido, word, success, fail) {
 export {
     getAttractionDetail,
     searchAttraction,
-    searchByCategory,
+    listByCategory,
 }

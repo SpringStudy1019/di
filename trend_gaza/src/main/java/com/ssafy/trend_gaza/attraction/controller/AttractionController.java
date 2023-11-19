@@ -1,12 +1,15 @@
 package com.ssafy.trend_gaza.attraction.controller;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -109,8 +112,10 @@ public class AttractionController {
 	
 	@GetMapping("/listByCategory")
 	public ResponseEntity<?> listByCategory(@RequestParam Map<String, String> map) {
-		AttractionCategoryResponse list = attractionService.listByCategory(map);
-		return ResponseEntity.ok(list);	
+		AttractionCategoryResponse response = attractionService.listByCategory(map);
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+		return ResponseEntity.ok().headers(header).body(response);
 	}
 	
 }

@@ -81,6 +81,8 @@
 		<select id="listByCategory" parameterType="map" resultMap="attraction">
 		select content_id, content_type_id, title, addr1, tel, first_image, latitude, longitude
 		from attraction_info
+		where content_type_id = #{contentTypeId}
+		<include refid="searchCategory"></include>	
 		limit #{start}, #{listsize};
 	</select>
 	
@@ -150,10 +152,9 @@
 	
 	<select id="getTotalAttractionCount" parameterType="map" resultType="int">
 		select count(content_id)
-		from attracion_info
-		<where>
-			<include refid="search"></include>
-		</where>
+		from attraction_info
+		where content_type_id = #{contentTypeId}
+		<include refid="searchCategory"></include>	
 	</select>
 
 </mapper>

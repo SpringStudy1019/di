@@ -2,12 +2,12 @@
 import { ref, onMounted, computed } from 'vue';
 import {useRoute} from "vue-router";
 // import AttractionMap from './item/AttractionMap.vue';
-import {searchByCategory} from '@/api/attraction';
+import {listByCategory} from '@/api/attraction';
+import PageNavigation from "@/components/common/PageNavigation.vue";
+import TheCategoryListItem from '@/components/category/TheCategoryListItem.vue';
 
 const route = useRoute();
 const {contentTypeId} = route.params;
-const sido = ref("");
-const word = ref("");
 
 const attractions = ref([]);
 
@@ -16,19 +16,41 @@ onMounted(() => {
     getAttraction();
 });
 
+const currentPage = ref(1);
+const totalPage = ref(0);
+const { VITE_ATTRACTION_LIST_SIZE } = import.meta.env;
+
+const param = ref({
+  contentTypeId: contentTypeId,
+  pgno: currentPage.value,
+  spp: VITE_ATTRACTION_LIST_SIZE,
+  sido: "",
+  word: "",
+});
+
 const getAttraction = () => {
-    searchByCategory(
-        contentTypeId,
-        sido.value,
-        word.value,
+  console.log("contenttypeid", contentTypeId)
+  console.log("oh yeah!!")
+  listByCategory(
+    param.value,
     ({data}) => {
-        attractions.value = data;
+      console.log("oooooooh yeah!!!!!!")
+        attractions.value = data
+        currentPage.value = data.currentPage;
+        totalPage.value = data.totalPageCount;
         console.log(data);
     },
     (error) => {
         console.log(error);
     }
     );
+};
+
+const onPageChange = (val) => {
+  // console.log(val + "번 페이지로 이동 준비 끝!!!");
+  currentPage.value = val;
+  param.value.pgno = val;
+  getAttraction();
 };
 
 // 관광지 이름 설정 (computed)
@@ -63,26 +85,19 @@ const categoryName = computed(() => {
     -->
   </div>
   
-  <thead>
-    <tr class="text-center">
-        <th scope="col">여행지</th>
-        <th scope="col">주소</th>
-    </tr>
-    </thead>
-    <tbody>
-  <tr class="text-center" v-for="attraction in attractions" :key="attraction.contentId">
-    <td class="text-start" >
-      <router-link
-        :to="{ name: 'attraction-view', params: { attractionIdx: attraction.contentId } }"
-        class="article-title link-dark"
-      >
-        {{ attraction.title }}
-      </router-link>
-    </td>
-    <td>{{ attraction.addr1 }}</td>
-  </tr>
-</tbody>
-</template>
+  <TheCategoryListItem
+    v-for="attraction in attractions"
+    :key="attraction.contentId"
+    :attraction="attraction"
+  ></TheCategoryListItem>
+
+  <PageNavigation
+    :current-page="currentPage"
+    :total-page="totalPage"
+    @pageChange="onPageChange"
+  ></PageNavigation>
+
+  </template>
 
 <style scoped>
  /* Container styling */
