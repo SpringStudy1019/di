@@ -106,11 +106,16 @@ const searchYoutube =  () => {
     <div class="col-1"></div>
     <div class="col-3">
         <div class="list-group" id="list-tab" role="tablist">
-            <a class="list-group-item list-group-item-action active" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="messages">
-              여행지 소개 ✋   
+          <a class="list-group-item list-group-item-action active" id="list-home-list" 
+            data-bs-toggle="list" href="#list-home" role="tab" aria-controls="home">
+            여행지 소개 ✋  </a>
+            <a class="list-group-item list-group-item-action" id="list-messages-list" 
+            data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="messages">
+               주소
             </a>
-            <a class="list-group-item list-group-item-action" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="home">주소</a>
-            <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="profile">전화번호</a>
+            <a class="list-group-item list-group-item-action" id="list-profile-list" 
+            data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="profile">
+              전화번호</a>
           <button class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" 
           @click="moveWrite(attraction.contentId)" role="tab" aria-controls="settings">
             리뷰쓰러가자</button>
@@ -119,17 +124,16 @@ const searchYoutube =  () => {
     <div class="col-7">
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-                {{ attraction.address }}
+              {{ attraction.overview }}
             </div>
             <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
               {{ attraction.tel }}
             </div>
             <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
-                3
+              {{ attraction.address }}
             </div>
-            <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
-      
-            </div>
+            <!-- <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+            </div> -->
         </div>
     </div>
     <div class="col-1"></div>
