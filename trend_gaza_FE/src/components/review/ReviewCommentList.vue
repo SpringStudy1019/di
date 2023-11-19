@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, defineProps } from "vue";
+import { ref, onMounted, defineProps, defineEmits, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from '@/stores/user';
 
@@ -11,6 +11,8 @@ const props = defineProps({
 
 const comments = ref([]);
 const commentContent = ref('');
+const commentLength = ref(0);
+const emits = defineEmits(['commentChanged']);
  
 const router = useRouter();
 const store = useUserStore();
@@ -23,9 +25,10 @@ onMounted(() => {
 const getCommentList = () => {
     listComment(props.reviewIdx,
     (response) => {
-      // console.log("Success:", response.status, response.data);
-      
+      // console.log("Success:", response.status, response.data);      
       comments.value = response.data;
+      commentLength.value = comments.value.length;
+      console.log("ReviewCommentList.vue에서 댓글의 개수는 과연!!!", commentLength.value)
     },
     (error) => {
         console.log(error);
@@ -41,6 +44,7 @@ function deleteComment(commentIdx) {
   deleteCommentRequest(commentIdx,
     ({data}) => {
         getCommentList();
+        // emits('commentChanged', commentLength);
         router.push({ name: "review-view" });
     }, (error) => {
       console.log(error);
@@ -68,15 +72,21 @@ function registerComment() {
   
     registerCommentRequest(newComment,
         ({ data }) => {
-            console.log(data);
+            // console.log(data);
             getCommentList();
             commentContent.value = '';
+            // emits('commentChanged', commentLength);
             router.push({name:"review-view"});
         },
         (error) => {
             console.log(error);
         });
 }
+
+// 댓글 개수 변화 감시 
+watch([comments, () => commentLength.value], () => {
+    emits('commentChanged', commentLength);
+});
 
 // modify
 

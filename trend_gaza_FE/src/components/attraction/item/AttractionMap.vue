@@ -2,6 +2,7 @@
 import { ref, watch, onMounted } from "vue";
 
 var map;
+
 const markers = ref([]);
 const props = defineProps({latitude: Number, longitude: Number});
 
@@ -31,8 +32,10 @@ const initMap = () => {
     level: 3,
   };
   map = new kakao.maps.Map(container, options);
-
+  map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);   
+  
   loadMarkers();
+
 };
 
 const loadMarkers = () => {
@@ -43,11 +46,9 @@ const loadMarkers = () => {
     title: "마커",
     clickable: true,
   });
-
   markers.value.push(marker);
 };
 
-// 로드뷰 띄우기
 
 </script>
 
@@ -61,4 +62,9 @@ const loadMarkers = () => {
         height: 500px;
         margin: auto;
     }
+
+    #roadview {
+  width: 30%;
+  height: 30%;
+}
 </style>

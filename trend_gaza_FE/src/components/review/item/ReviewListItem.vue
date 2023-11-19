@@ -1,12 +1,26 @@
 <script setup>
-import { computed } from 'vue';
-defineProps({ review: Object });
+import { ref, onMounted } from 'vue';
+import {getReviewImage} from "@/api/review"
 
+const props = defineProps({ review: Object });
+
+const images = ref([]);
+
+onMounted(() => {
+    getReviewImage(props.review.reviewIdx,
+        ({ data }) => {
+            images.value = data;
+        }, (error) => {
+            console.log(error);
+        });
+});
+
+console.log(images.value)
 </script>
 
 <template>
     <div class="card mb-3">
-        <img class="card-img-top" src="https://picsum.photos/100/100" alt="Card image cap">
+        <img class="card-img-top" :src="images.value" alt="Card image cap">
         <div class="card-header text-center">
         여행후기 #{{ review.reviewIdx }}
         </div>

@@ -96,7 +96,7 @@ const moveWrite = () => {
         <div class="card-columns">
           <ReviewListItem
             v-for="review in reviews"
-            :key="review.idx"
+            :key="review.reviewIdx"
             :review="review"
           ></ReviewListItem>
         </div>
