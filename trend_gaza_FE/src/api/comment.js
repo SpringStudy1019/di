@@ -20,8 +20,8 @@ function getComment(commentIdx, success, fail) {
     local.get(`${url}/getModify/${commentIdx}`).then(success).catch(fail);
 }
 
-function modifyComment(comment, success, fail) {
-    local.get(`${url}`, JSON.stringify(comment)).then(success).catch(fail);
+function modifyCommentRequest(comment, success, fail) {
+    local.put(`${url}`, JSON.stringify(comment)).then(success).catch(fail);
 }
     
 export {
@@ -29,5 +29,5 @@ export {
     registerCommentRequest,
     deleteCommentRequest,
     getComment,
-    modifyComment
+    modifyCommentRequest
 }

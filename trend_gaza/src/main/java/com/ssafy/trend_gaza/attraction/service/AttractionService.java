@@ -18,6 +18,7 @@ public interface AttractionService {
 	void registerAdminAttraction(AttractionAdminRequest attractionAdminRequest);
 	String uploadAttractionImage(MultipartFile multipartFile, String realPath) throws Exception;
 	AttractionDetailResponse findAttraction(int id);
+	AttractionDetailResponse getAttractionDetail(int id);
 	Node search(String str);
 	List<AttractionAutoSearchResponse> autoComplete(String str, Node node);
 	void dfs(Node node, String str);

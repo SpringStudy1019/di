@@ -15,15 +15,13 @@ const {attractionIdx} = route.params;
 onMounted(() => {
     getAttraction();
     getScoresInfo();
-    // searchYoutube();
 });
 
 const getAttraction = () => {
     getAttractionDetail(attractionIdx,
     ({data}) => {
         attraction.value = data;
-        // console.log(data);
-        searchYoutube();
+        // searchYoutube();    // 과도한 api 사용을 막기 위해 잠시 주석처리. 
         window.scrollTo({ top: 0, behavior: 'smooth' });
     },
     (error) => {
@@ -71,7 +69,6 @@ const total = computed(() => {
 const { VITE_YOUTUBE_SERVICE_KEY, VITE_YOUTUBE_URL } = import.meta.env;
 const videos = ref([]);
 const searchYoutube =  () => {
-  console.log("키워드 입력했다!")
   const params = {
     part: 'snippet',
     maxResults: 3,
@@ -102,15 +99,49 @@ const searchYoutube =  () => {
 </script>
 
 <template>
-    <h1>{{ attraction.title }}</h1>
-    <div class="col-md-2 text-start">
-        <button type="button" class="btn btn-outline-primary btn-sm" 
-        @click="moveWrite(attraction.contentId)">
-            리뷰 쓰기
-        </button>
+   <div class="margin"></div>
+    <h1 class="title">{{ attraction.title }}</h1>
+    <div class="margin"></div>
+    <div class="row">
+    <div class="col-1"></div>
+    <div class="col-3">
+        <div class="list-group" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action active" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="messages">
+              여행지 소개 ✋   
+            </a>
+            <a class="list-group-item list-group-item-action" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="home">주소</a>
+            <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="profile">전화번호</a>
+          <button class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" 
+          @click="moveWrite(attraction.contentId)" role="tab" aria-controls="settings">
+            리뷰쓰러가자</button>
+        </div>
     </div>
-    <div>{{ attraction.tel }}</div>
+    <div class="col-7">
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                {{ attraction.address }}
+            </div>
+            <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+              {{ attraction.tel }}
+            </div>
+            <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+                3
+            </div>
+            <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+      
+            </div>
+        </div>
+    </div>
+    <div class="col-1"></div>
+</div>
+  <div class="margin"></div>
+
+    <!-- 이미지 -->
     <img :src="attraction.defaultImg">
+    <div class="margin"></div>
+
+    <h3 class="title2">지도에서 보기</h3>
+    <!-- 지도 -->
     <div v-if='attraction.latitude && attraction.longitude'>
         <AttractionMap :longitude="attraction.longitude" :latitude="attraction.latitude"/>
     </div>
@@ -172,6 +203,24 @@ const searchYoutube =  () => {
 </template>
 
 <style scoped>
+img {
+    display: block;
+    margin: 0 auto; 
+    height: 500px;
+    width: 500px; 
+}
+.title {
+    margin-top: 20px; /* Adjust the top margin as needed */
+    text-align: center;
+    font-size: 35px;
+}
+
+.title2 {
+  text-align: center;
+}
+.margin {
+  margin-bottom: 50px;
+}
 .number {
   margin-left: 10px;
   margin-top: -2px;

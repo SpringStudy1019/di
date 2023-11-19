@@ -101,17 +101,8 @@ public class AttractionServiceImpl implements AttractionService {
 
 	@Override
 	public AttractionDetailResponse findAttraction(int id) {
-		AttractionInfo attractionInfo = attractionMapper.getAttractionDetail(id);
-		return AttractionDetailResponse.builder()
-				.contentId(attractionInfo.getContentId())
-				.contentTypeId(attractionInfo.getContentTypeId())
-				.title(attractionInfo.getTitle())
-				.address(attractionInfo.getAddr1())
-				.tel(attractionInfo.getTel())
-				.defaultImg(attractionInfo.getFirstImage())
-				.latitude(attractionInfo.getLatitude())
-				.longitude(attractionInfo.getLongitude())
-				.build();
+		AttractionDetailResponse attractionDetailResponse = attractionMapper.getAttractionDetail(id);
+		return attractionDetailResponse;
 	}
 
 
@@ -188,6 +179,13 @@ public class AttractionServiceImpl implements AttractionService {
 	public int onBookmark(int attractionId, String userId) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+	@Override
+	public AttractionDetailResponse getAttractionDetail(int id) {
+		AttractionDetailResponse attractionDetailResponse = attractionMapper.getAttractionDetail(id);
+		return attractionDetailResponse;
 	}
 
 

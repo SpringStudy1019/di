@@ -2,8 +2,10 @@
 import { ref, onMounted, defineProps, defineEmits, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from '@/stores/user';
-
-import { listComment, deleteCommentRequest, registerCommentRequest } from "@/api/comment";
+import { listComment, 
+        deleteCommentRequest, 
+        registerCommentRequest,
+        modifyCommentRequest } from "@/api/comment";
 
 const props = defineProps({
   reviewIdx: Number, // Define the prop to accept reviewIdx as a Number
@@ -26,7 +28,8 @@ const getCommentList = () => {
     listComment(props.reviewIdx,
     (response) => {
       // console.log("Success:", response.status, response.data);      
-      comments.value = response.data;
+      // comments.value = response.data
+      comments.value = response.data.map(comment => ({ ...comment, editMode: false }));
       commentLength.value = comments.value.length;
       console.log("ReviewCommentList.vue에서 댓글의 개수는 과연!!!", commentLength.value)
     },
@@ -89,7 +92,37 @@ watch([comments, () => commentLength.value], () => {
 });
 
 // modify
+const editMode = ref(false);
+const commentModifyInfo = ref({
+  "commentIdx": "",
+  "content": "",
+  "registerDate": "",
+  "modifyDate": "",
+  "userId": "",
+  "reviewIdx": ""
+})
+const toggleModify = (comment) => {
+  comment.editMode = !comment.editMode;
+};
 
+const commentModified = ref('');
+
+const modifyComment = (comment) => {
+  commentModifyInfo.value.commentIdx = comment.commentIdx;
+  commentModifyInfo.value.content = commentModified.value;
+  commentModifyInfo.value.registerDate = comment.registerDate;
+  commentModifyInfo.value.modifyDate = "";
+  commentModifyInfo.value.userId = comment.userId;
+  commentModifyInfo.value.reviewIdx = comment.reviewIdx;
+  modifyCommentRequest(
+    commentModifyInfo.value,
+    (response) => {
+      toggleModify(comment)
+      getCommentList()
+    },
+    (error) => console.log(error)
+  )
+}
 </script>
 
 <template>
@@ -105,23 +138,38 @@ watch([comments, () => commentLength.value], () => {
     </div>  
 
     <div class="comment-list">
-      <div v-for="comment in comments" :key="comment.commentIdx" class="comment" >
-        <div class="comment-content">{{ comment.content }}</div>
+      <template v-for="comment in comments" :key="comment.commentIdx" class="comment" >
+        <template v-if="comment.editMode">
+          <input v-model="commentModified" />
+        </template>
+        <template v-else>
+          <div class="comment-content">{{ comment.content }}</div>
+        </template>
+        <!-- <div class="comment-content">{{ comment.content }}</div> -->
         <div class="comment-meta">
           <span class="comment-date">{{ comment.registerDate }}</span>
           <span class="comment-author">{{ comment.userId }}</span>
           <span class="comment-edit-date">{{ comment.modifyDate }}</span>
         </div>
+
         <div>
-        <button type="button" class="btn btn-outline-primary mb-1 ms-3" @click="moveModify">
+        <button v-if="!comment.editMode" 
+        type="button" 
+        class="btn btn-outline-primary mb-1 ms-3" 
+        @click="toggleModify(comment)">
               수정
+        </button>
+        <button v-else type="button" class="btn btn-outline-primary mb-1 ms-3" @click="modifyComment(comment)">
+              수정완료
         </button>
         <button type="button" class="btn btn-outline-danger mb-1 ms-1" @click="() => deleteComment(comment.commentIdx)">
               삭제
         </button>
         </div>
-      </div>
+
+      </template>
     </div>
+
     <div id='bottom'></div>
 </template>
 
