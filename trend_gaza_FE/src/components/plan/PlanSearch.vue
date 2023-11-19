@@ -1,10 +1,13 @@
 <script setup>
-import {ref} from "vue";
+import {ref, onMounted} from "vue";
 import {searchAttractionsByCondition} from '@/api/attraction.js'
 
 const sido = ref("0");
 const contentTypeId = ref("0");
 const keyword = ref("");
+const markers = ref([]);
+
+const emit = defineEmits(["getAttractionData"]);
 
 const param = ref({
     sido: "",
@@ -12,13 +15,19 @@ const param = ref({
     keyword: ""
 });
 
+onMounted(() => {
+    callAPI();
+});
+
 let areaUrl = `https://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey= 
 ${import.meta.env.VITE_OPEN_API_SERVICE_KEY}&numOfRows=20&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`;
 
-      // fetch(areaUrl, { method: "GET" }).then(function (response) { return response.json() }).then(function (data) { makeOption(data); });
-      fetch(areaUrl, { method: "GET" })
-        .then((response) => response.json())
-        .then((data) => makeOption(data));
+function callAPI() {
+    // fetch(areaUrl, { method: "GET" }).then(function (response) { return response.json() }).then(function (data) { makeOption(data); });
+    fetch(areaUrl, { method: "GET" })
+      .then((response) => response.json())
+      .then((data) => makeOption(data));
+}
 
 function makeOption(data) {
     let areas = data.response.body.items.item;
@@ -40,13 +49,14 @@ const searchAttractions = () => {
         param.value,
         ({data}) => {
             console.log(data);
+            emit("getAttractionData", data);
+            //loadMarkers(data);
         },
         (error) => {
             console.log(error);
         }
     )
 }
-
 </script>
 
 <template>

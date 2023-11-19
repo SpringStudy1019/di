@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
-
+import PlanSearch from '@/components/plan/PlanSearch.vue'
 
 var map;
 const markers = ref([]);
@@ -47,23 +47,33 @@ const initMap = () => {
   // 지도의 우측에 확대 축소 컨트롤을 추가한다
   map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-  //loadMarkers();
+//  loadMarkers();
 };
 
-const loadMarkers = () => {
+const loadMarkers = (data) => {
+  console.log("마커 찍기 함수 호출");
+  console.log(data);
   markers.value = [];
-  const marker = new kakao.maps.Marker({
-    map: map,       // 마커를 표시할 지도
-    position: new kakao.maps.LatLng(position.latitude, position.longitude),
-    title: "마커",
-    clickable: true,
-  });
+  for(let i=0; i< data.length; i++) {
+    const latitude = data[i].latitude; 
+    const longitude = data[i].longitude;
 
-  markers.value.push(marker);
+    if (latitude !== null && longitude !== null) {
+        const marker = new kakao.maps.Marker({
+            map: map,       // 마커를 표시할 지도
+            position: new kakao.maps.LatLng(latitude, longitude),
+            title: "마커",
+            clickable: true,
+        });
+        
+        markers.value.push(marker);
+    }
+  }
 };
 </script>
 
 <template>
+    <PlanSearch @getAttractionData="loadMarkers" />
     <div id="map"></div>
 </template>
 
