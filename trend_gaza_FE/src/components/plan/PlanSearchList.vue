@@ -1,9 +1,20 @@
 <script setup>
-import {defineProps} from "vue";
+import {defineProps, ref} from "vue";
 
 const props = defineProps({
    attraction: Object
 });
+
+const emit = defineEmits(["selectAttractionData"]);
+
+const selectArr = ref([]);
+
+const selectAttractionFunc = () => {
+    console.log("부모에게 전달할 데이터" + props.attraction);
+    selectArr.value.push(props.attraction);
+    console.log("배열 찍어보기" + selectArr.value);
+    emit("selectAttractionData", selectArr.value);
+};
 </script>
 
 <template>
@@ -14,7 +25,7 @@ const props = defineProps({
         </div>
         <span>{{ attraction.addr1 }} </span>
         <div class="add-btn">
-            <button>추가</button>
+            <button @click="selectAttractionFunc">추가</button>
         </div>
     </div>
 </template>

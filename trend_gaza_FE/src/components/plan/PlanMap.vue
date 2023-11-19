@@ -2,10 +2,12 @@
 import { ref, watch, onMounted } from "vue";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
 import PlanSearchList from '@/components/plan/PlanSearchList.vue'
+import PlanSelectList from "./PlanSelectList.vue";
 
 var map;
 const markers = ref([]);
 const attractionList = ref([]);
+const selectList = ref([]);
 //const props = defineProps({latitude: Number, longitude: Number});
 
 const position = {
@@ -158,6 +160,11 @@ const updateData = () => {
 
 }
 
+const selectFunc = (data) => {
+  console.log("자식한테 데이터 받음" + data[0].title);
+  selectList.value = data;
+}
+
 </script>
 
 <template>
@@ -173,7 +180,8 @@ const updateData = () => {
   </div>
   <div class="offcanvas-body">
     <PlanSearch @getAttractionData="loadAttractionList" />
-    <PlanSearchList v-for="attraction in attractionList" :attraction="attraction" :key="attraction.contentId"/>
+    <PlanSearchList v-for="attraction in attractionList" :attraction="attraction" 
+    :key="attraction.contentId" @selectAttractionData="selectFunc"/>
   </div>  
 </div>
 
@@ -183,7 +191,7 @@ const updateData = () => {
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    ...
+    <PlanSelectList v-for="selectItem in selectList" :selectAttraction="selectItem" :key="selectItem.contentId"/>
   </div>
 </div>
 
