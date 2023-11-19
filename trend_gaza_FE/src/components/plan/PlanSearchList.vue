@@ -30,6 +30,8 @@ const props = defineProps({
 
 .img {
     width: 250px;
+    height: 200px;
+    display: block;
 }
 
 .img-content {
