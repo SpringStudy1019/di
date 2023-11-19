@@ -7,15 +7,14 @@ const props = defineProps({
 
 const emit = defineEmits(["selectAttractionData"]);
 
-const selectArr = ref([]);
+//const selectArr = ref([]);
 const showAddBtn = ref(true);       // 추가 버튼 활성화
 
 const selectAttractionFunc = () => {
     console.log("부모에게 전달할 데이터" + props.attraction);
-    selectArr.value.push(props.attraction);
-    console.log("배열 찍어보기" + selectArr.value.length);
+    //selectArr.value.push(props.attraction);
     showAddBtn.value = false;        // 추가 버튼 비활성화
-    emit("selectAttractionData", selectArr.value);
+    emit("selectAttractionData", props.attraction);
 };
 </script>
 

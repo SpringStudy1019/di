@@ -161,8 +161,8 @@ const updateData = () => {
 }
 
 const selectFunc = (data) => {
-  console.log("자식한테 데이터 받음" + data.length);
-  selectList.value = data;
+  selectList.value.push(data);
+  console.log("선택 후 총 배열 길이" + selectList.value.length);
 }
 
 </script>
