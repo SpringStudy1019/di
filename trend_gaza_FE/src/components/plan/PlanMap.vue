@@ -61,35 +61,62 @@ const loadMarkers = (data) => {
       const marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         position: new kakao.maps.LatLng(latitude, longitude),
-        title: "마커",
+        title: data[i].title,
         clickable: true,
       });
 
       markers.value.push(marker);
 
-      // Use a function to create a closure for each iteration
-      const createClickHandler = (marker, title) => {
-        return function () {
-          var iwContent = `<div style="padding:5px;">${title} <br><a href="https://map.kakao.com/link/map/${title},${latitude},${longitude}" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/${title},${latitude},${longitude}" style="color:blue" target="_blank">길찾기</a></div>`;
-          var iwPosition = new kakao.maps.LatLng(latitude, longitude);
+      // Create content for the custom overlay
+      const content = `<div class="wrap">
+                        <div class="info">
+                          <div class="title">
+                            ${data[i].title}
+                            <div class="close" onclick="closeOverlay()" title="닫기"></div>
+                          </div>
+                          <div class="body">
+                            <div class="img">
+                              <img src="${data[i].firstImage}" width="73" height="70">
+                            </div>
+                            <div class="desc">
+                              <div class="ellipsis">${data[i].addr1}</div>
+                              <div><a href="https://map.kakao.com/link/to/${data[i].title},${data[i].latitude},${data[i].longitude}" target="_blank" class="link">길찾기</a></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>`;
 
-          var infowindow = new kakao.maps.InfoWindow({
-            position: iwPosition,
-            content: iwContent,
-          });
+      // Create custom overlay
+      const overlay = new kakao.maps.CustomOverlay({
+        content: content,
+        map: null, // Do not set the map initially
+        position: marker.getPosition(),
+      });
 
-          infowindow.open(map, marker);
-        };
-      };
-
-      // Attach click event to marker using the function
-      kakao.maps.event.addListener(marker, "click", createClickHandler(marker, data[i].title));
+      // Attach click event to marker to toggle the custom overlay
+      kakao.maps.event.addListener(marker, 'click', function () {
+        if (overlay.getMap()) {
+          overlay.setMap(null);
+        } else {
+          overlay.setMap(map);
+        }
+      });
     }
 
-    // 지도 중심을 이동 시킵니다
+    // Set the map center to the last marker's position
     map.setCenter(new kakao.maps.LatLng(latitude, longitude));
   }
 };
+
+// Close the overlay when the close button is clicked
+function closeOverlay() {
+  if (overlay) {
+    overlay.setMap(null);
+  }
+}
+
+
+
 
 // 마커 삭제
 function hideMarkers() {
@@ -98,7 +125,6 @@ function hideMarkers() {
   }
   markers.value = [];
 }
-
 
 </script>
 
