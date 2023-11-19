@@ -26,7 +26,7 @@ const getNotifications = () => {
 // 수락 버튼 누르면 여행 계획 페이지로 이동 (추후 수정/보완)
 const accept = () => {
     alert("이제 여행 계획을 짜러 가볼까요?")
-    router.push("plan")
+    router.push("/plan/list")
 }
 
 
