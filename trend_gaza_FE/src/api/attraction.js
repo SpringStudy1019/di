@@ -18,8 +18,13 @@ function searchByCategory(contentTypeId, sido, word, success, fail) {
     .catch(fail);
 }
 
+function searchAttractionsByCondition(param, success, fail) {
+    local.get(`${url}/search`, {params:param}).then(success).catch(fail);
+}
+
 export {
     getAttractionDetail,
     searchAttraction,
     searchByCategory,
+    searchAttractionsByCondition
 }
