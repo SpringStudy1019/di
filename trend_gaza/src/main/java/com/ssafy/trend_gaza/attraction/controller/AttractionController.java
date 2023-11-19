@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.trend_gaza.attraction.dto.AttractionAutoSearchResponse;
+import com.ssafy.trend_gaza.attraction.dto.AttractionCategoryResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionResponse;
@@ -98,11 +99,18 @@ public class AttractionController {
 		}
 		return ResponseEntity.ok().body(responseService.getSuccessResponse());
 	}
-
+	
 	@GetMapping("/searchByCategory")
-	public ResponseEntity<List<AttractionInfo>> searchByCategory(@RequestParam Map<String, String> map) {
+	public ResponseEntity<?> searchByCategory(@RequestParam Map<String, String> map) {
 		logger.debug("searchAttractions call!");
-		return ResponseEntity.ok(attractionService.searchByCategory(map));	
+		List<AttractionInfo> list = attractionService.searchByCategory(map);
+		return ResponseEntity.ok(list);	
+	}
+	
+	@GetMapping("/listByCategory")
+	public ResponseEntity<?> listByCategory(@RequestParam Map<String, String> map) {
+		AttractionCategoryResponse list = attractionService.listByCategory(map);
+		return ResponseEntity.ok(list);	
 	}
 	
 }
