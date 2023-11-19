@@ -165,6 +165,13 @@ const selectFunc = (data) => {
   console.log("선택 후 총 배열 길이" + selectList.value.length);
 }
 
+const deleteItem = (data) => {
+  console.log("삭제 완료");
+  let idx = selectList.value.findIndex(item => item.contentId == data.contentId);
+ selectList.value.splice(idx, 1);
+ 
+}
+
 </script>
 
 <template>
@@ -193,7 +200,8 @@ const selectFunc = (data) => {
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    <PlanSelectList v-for="selectItem in selectList" :selectAttraction="selectItem" :key="selectItem.contentId"/>
+    <PlanSelectList v-for="selectItem in selectList" :selectAttraction="selectItem" :key="selectItem.contentId"
+    @deleteSelected="deleteItem"/>
   </div>
 </div>
 

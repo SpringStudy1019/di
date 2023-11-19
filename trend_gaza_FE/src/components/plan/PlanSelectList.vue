@@ -4,6 +4,13 @@ import {defineProps} from "vue";
 const props = defineProps({
    selectAttraction: Object
 });
+
+const emit = defineEmits(["deleteSelected"]);
+
+const deleteAttractionFunc = () => {
+    emit("deleteSelected", props.selectAttraction);
+    console.log("삭제 요청");
+}
 </script>
 
 <template>
@@ -14,7 +21,7 @@ const props = defineProps({
         </div>
         <span>{{ selectAttraction.addr1 }} </span>
         <div class="delete-btn">
-            <button>삭제</button>
+            <button @click="deleteAttractionFunc">삭제</button>
         </div>
     </div>
 </template>
