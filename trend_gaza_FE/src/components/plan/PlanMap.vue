@@ -161,7 +161,7 @@ const updateData = () => {
 }
 
 const selectFunc = (data) => {
-  console.log("자식한테 데이터 받음" + data[0].title);
+  console.log("자식한테 데이터 받음" + data.length);
   selectList.value = data;
 }
 
@@ -171,7 +171,9 @@ const selectFunc = (data) => {
   
   <div class="wrapper">
     <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">🔍</button>
-    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
+    <button class="btn float-end" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+      <img src="@/assets/hamburgerBtn.svg"/>
+    </button>
 
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header">
