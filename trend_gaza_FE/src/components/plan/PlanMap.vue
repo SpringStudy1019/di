@@ -11,8 +11,8 @@ const selectList = ref([]);
 //const props = defineProps({latitude: Number, longitude: Number});
 
 const position = {
-    latitude: 37.52251412000000000,
-    longitude: 128.29191150000000000
+    latitude: 37.57889445000000000,
+    longitude: 126.97703190000000000
 }
 
 
