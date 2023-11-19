@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 
-
 var map;
 const markers = ref([]);
 const props = defineProps({latitude: Number, longitude: Number});
@@ -10,7 +9,6 @@ const position = {
     latitude: props.latitude,
     longitude: props.longitude
 }
-
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -48,6 +46,9 @@ const loadMarkers = () => {
 
   markers.value.push(marker);
 };
+
+// 로드뷰 띄우기
+
 </script>
 
 <template>
@@ -56,7 +57,8 @@ const loadMarkers = () => {
 
 <style scoped>
     #map {
-        width: 40%;
-        height: 300px;
+        width: 1000px;
+        height: 500px;
+        margin: auto;
     }
 </style>
