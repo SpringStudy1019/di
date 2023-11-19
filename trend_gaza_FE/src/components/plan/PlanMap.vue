@@ -2,15 +2,17 @@
 import { ref, watch, onMounted } from "vue";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
 import PlanSearchList from '@/components/plan/PlanSearchList.vue'
+import PlanSelectList from "./PlanSelectList.vue";
 
 var map;
 const markers = ref([]);
 const attractionList = ref([]);
+const selectList = ref([]);
 //const props = defineProps({latitude: Number, longitude: Number});
 
 const position = {
-    latitude: 37.52251412000000000,
-    longitude: 128.29191150000000000
+    latitude: 37.57889445000000000,
+    longitude: 126.97703190000000000
 }
 
 
@@ -158,12 +160,20 @@ const updateData = () => {
 
 }
 
+const selectFunc = (data) => {
+  selectList.value.push(data);
+  console.log("선택 후 총 배열 길이" + selectList.value.length);
+}
+
 </script>
 
 <template>
   
   <div class="wrapper">
     <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">🔍</button>
+    <button class="btn float-end" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+      <img src="@/assets/hamburgerBtn.svg"/>
+    </button>
 
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header">
@@ -172,7 +182,18 @@ const updateData = () => {
   </div>
   <div class="offcanvas-body">
     <PlanSearch @getAttractionData="loadAttractionList" />
-    <PlanSearchList v-for="attraction in attractionList" :attraction="attraction" :key="attraction.contentId"/>
+    <PlanSearchList v-for="attraction in attractionList" :attraction="attraction" 
+    :key="attraction.contentId" @selectAttractionData="selectFunc"/>
+  </div>  
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasRightLabel">🎒현재 코스 리스트</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <PlanSelectList v-for="selectItem in selectList" :selectAttraction="selectItem" :key="selectItem.contentId"/>
   </div>
 </div>
 
