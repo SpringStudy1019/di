@@ -1,10 +1,7 @@
 package com.ssafy.trend_gaza.attraction.service;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -12,18 +9,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.trend_gaza.attraction.dto.AttractionAdminRequest;
 import com.ssafy.trend_gaza.attraction.dto.AttractionAutoSearchResponse;
+import com.ssafy.trend_gaza.attraction.dto.AttractionCategoryResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
-import com.ssafy.trend_gaza.attraction.entity.AttractionDetail;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.attraction.repository.AttractionMapper;
-import com.ssafy.trend_gaza.bookmark.dto.BookmarkRequest;
-import com.ssafy.trend_gaza.bookmark.entity.Bookmark;
+import com.ssafy.trend_gaza.review.dto.ReviewResponse;
+import com.ssafy.trend_gaza.review.entity.Review;
 import com.ssafy.trend_gaza.util.FileUtil;
 import com.ssafy.trend_gaza.util.SizeConstant;
 import com.ssafy.trend_gaza.util.TrieAlgorithmUtil;
@@ -101,17 +97,8 @@ public class AttractionServiceImpl implements AttractionService {
 
 	@Override
 	public AttractionDetailResponse findAttraction(int id) {
-		AttractionInfo attractionInfo = attractionMapper.getAttractionDetail(id);
-		return AttractionDetailResponse.builder()
-				.contentId(attractionInfo.getContentId())
-				.contentTypeId(attractionInfo.getContentTypeId())
-				.title(attractionInfo.getTitle())
-				.address(attractionInfo.getAddr1())
-				.tel(attractionInfo.getTel())
-				.defaultImg(attractionInfo.getFirstImage())
-				.latitude(attractionInfo.getLatitude())
-				.longitude(attractionInfo.getLongitude())
-				.build();
+		AttractionDetailResponse attractionDetailResponse = attractionMapper.getAttractionDetail(id);
+		return attractionDetailResponse;
 	}
 
 
@@ -152,19 +139,61 @@ public class AttractionServiceImpl implements AttractionService {
 	public List<AttractionAutoSearchResponse> attractionNameList() {
 		return attractionMapper.attractionNameList();
 	}
-
+	
+	/**
+	 * 카테고리별 리스트 조회
+	 * @param map
+	 * @return
+	 */
 	@Override
-	public List<AttractionInfo> searchByCategory(Map<String, String> param) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		String sido = param.get("sido");
-		String contentTypeId = param.get("contentTypeId");
-		String keyword = param.get("keyword");
+	public List<AttractionInfo> searchByCategory(Map<String, String> map) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		String sido = map.get("sido");
+		String contentTypeId = map.get("contentTypeId");
+		String word = map.get("word");
 		
-		map.put("sido", sido == null ? "" : sido);
-		map.put("contentTypeId", contentTypeId == null ? "" : contentTypeId);
-		map.put("keyword", keyword == null ? "" : keyword);
+		param.put("sido", sido == null ? "" : sido);
+		param.put("contentTypeId", contentTypeId == null ? "" : contentTypeId);
+		param.put("word", word == null ? "" : word);
+
+		List<AttractionInfo> list = attractionMapper.searchByCategory(param);
+
+		return list;
+	}
+
+	/**
+	 * 카테고리별 리스트 조회(searchByCategory)를 이용한 페이지네이션 추가
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public AttractionCategoryResponse listByCategory(Map<String, String> map) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		String sido = map.get("sido");
+		String contentTypeId = map.get("contentTypeId");
+		String word = map.get("word");
 		
-		return attractionMapper.searchByCategory(map);
+		param.put("sido", sido == null ? "" : sido);
+		param.put("contentTypeId", contentTypeId == null ? "" : contentTypeId);
+		param.put("word", word == null ? "" : word);
+
+		List<AttractionInfo> list = attractionMapper.searchByCategory(param);
+	
+		int currentPage = Integer.parseInt(map.get("pgno") == null ? "1" : map.get("pgno"));
+		int sizePerPage = Integer.parseInt(map.get("spp") == null ? "20" : map.get("spp"));
+		int start = currentPage * sizePerPage - sizePerPage;
+		param.put("start", start);
+		param.put("listsize", sizePerPage);
+		
+		int totalArticleCount = attractionMapper.getTotalAttractionCount(param);
+		int totalPageCount = (totalArticleCount - 1) / sizePerPage + 1;
+		
+		AttractionCategoryResponse response = new AttractionCategoryResponse();
+		response.setAttractions(list);
+		response.setCurrentPage(currentPage);
+		response.setTotalPageCount(totalPageCount);
+
+		return response;
 	}
 	
 	/*
@@ -188,6 +217,13 @@ public class AttractionServiceImpl implements AttractionService {
 	public int onBookmark(int attractionId, String userId) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+	@Override
+	public AttractionDetailResponse getAttractionDetail(int id) {
+		AttractionDetailResponse attractionDetailResponse = attractionMapper.getAttractionDetail(id);
+		return attractionDetailResponse;
 	}
 
 

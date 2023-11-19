@@ -35,7 +35,7 @@ const getReviewList = () => {
     // console.log("서버에서 글목록 얻어오자!");
    // API 호출
     list(param.value,
-      ({ data }) => {    // data.DTO필드명
+      ({ data }) => {   
         reviews.value = data.reviews;
         currentPage.value = data.currentPage;
         totalPage.value = data.totalPageCount;
@@ -55,10 +55,6 @@ const onPageChange = (val) => {
   currentPage.value = val;
   param.value.pgno = val;
   getReviewList();
-};
-
-const moveWrite = () => {
-    router.push({ name: "review-write" });
 };
 
 </script>
@@ -96,7 +92,7 @@ const moveWrite = () => {
         <div class="card-columns">
           <ReviewListItem
             v-for="review in reviews"
-            :key="review.idx"
+            :key="review.reviewIdx"
             :review="review"
           ></ReviewListItem>
         </div>

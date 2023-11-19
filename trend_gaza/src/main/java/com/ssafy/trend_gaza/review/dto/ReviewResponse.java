@@ -9,8 +9,8 @@ import lombok.Builder;
 public class ReviewResponse {
 
 	private List<Review> reviews;
-	private int currentPage;
-	private int totalPageCount;
+	private Integer currentPage;
+	private Integer totalPageCount;
 	
 	public ReviewResponse() {}
 	

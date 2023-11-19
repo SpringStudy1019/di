@@ -52,15 +52,6 @@
 			and title like concat(#{keyword}, '%')
 		</if>
 	</sql>
-	
-	<sql id="searchCategory">
-		<if test="sido != null and sido != ''">
-			and sido_code = #{sido} 
-		</if>
-		<if test="keyword != null and keyword != ''">
-			and title like concat(#{keyword}, '%')
-		</if>
-	</sql>
 
 	<select id="searchAttractions" parameterType="map" resultMap="attraction">
 		select content_id, content_type_id, title, addr1, tel, first_image, latitude, longitude
@@ -70,11 +61,29 @@
 		limit #{start}, #{listsize}
 	</select>
 	
+	
+	<sql id="searchCategory">
+		<if test="sido != null and sido != ''">
+			and sido_code = #{sido} 
+		</if>
+		<if test="keyword != null and keyword != ''">
+			and title like concat(#{keyword}, '%')
+		</if>
+	</sql>
+	
 	<select id="searchByCategory" parameterType="map" resultMap="attraction">
 		select content_id, content_type_id, title, addr1, tel, first_image, latitude, longitude
 		from attraction_info
 		where content_type_id = #{contentTypeId}
 		<include refid="searchCategory"></include>	
+	</select>
+	
+		<select id="listByCategory" parameterType="map" resultMap="attraction">
+		select content_id, content_type_id, title, addr1, tel, first_image, latitude, longitude
+		from attraction_info
+		where content_type_id = #{contentTypeId}
+		<include refid="searchCategory"></include>	
+		limit #{start}, #{listsize};
 	</select>
 	
 	<select id="getLastContentId" resultType="int">
@@ -97,13 +106,26 @@
 	
 	<select id="searchAdminAttractions" parameterType="map" resultMap="adminAttractions">
 	
-	
+
 	</select>
 	
-	<select id="getAttractionDetail" parameterType="int" resultMap="attraction">
-		select content_id, content_type_id, title, addr1, tel, first_image, latitude, longitude
-		from attraction_info
-		where content_id = #{id}
+	<resultMap type="com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse" id="attractionDescription">
+	      <result column="content_id" property="contentId"/>
+		    <result column="content_type_id" property="contentTypeId"/>
+		    <result column="title" property="title"/>
+		    <result column="addr1" property="address"/>
+		    <result column="first_image" property="defaultImg"/>        
+		    <result column="tel" property="tel"/>
+		    <result column="latitude" property="latitude"/>
+		    <result column="longitude" property="longitude"/>
+	   	 <result column="overview" property="overview"/>
+	</resultMap>
+	
+	<select id="getAttractionDetail" parameterType="int" resultMap="attractionDescription">
+		SELECT ai.content_id, ai.content_type_id, ai.title, ai.addr1, ai.tel, ai.first_image, ai.latitude, ai.longitude, ad.overview
+	    FROM attraction_info ai
+	    LEFT JOIN attraction_description ad ON ai.content_id = ad.content_id
+	    WHERE ai.content_id = #{id}
 	</select>
 	
 	<select id="attractionNameList" resultMap="attractionAutoSearchResponse">
@@ -127,5 +149,12 @@
 		insert into bookmark (user_id, content_id)
 		values (#{userId}, #{attractionId})
 	</insert>
+	
+	<select id="getTotalAttractionCount" parameterType="map" resultType="int">
+		select count(content_id)
+		from attraction_info
+		where content_type_id = #{contentTypeId}
+		<include refid="searchCategory"></include>	
+	</select>
 
 </mapper>

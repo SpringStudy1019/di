@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { detailReview, deleteReview } from '@//api/review';
-import { listComment } from '@//api/comment';
-
+import { detailReview, deleteReview } from '@/api/review';
+import { listComment } from '@/api/comment';
+import { onFollow, offFollow } from '@/api/follow';
 import { useUserStore } from '@/stores/user';
 import ReviewCommentList from './ReviewCommentList.vue';
 import ReviewImage from './item/ReviewImage.vue';
@@ -44,13 +44,18 @@ const getComments = () => {
       comments.value = data;
      // number of comments
      commentNumber.value = comments.value.length;
-     console.log("댓글 개수 업데이트 되나요? ")
-     console.log("댓글 개수: ",commentNumber.value)
     },
     (error) => {
       console.log(error);
     }
   );
+};
+
+// 댓글 개수
+const handleCommentChanged = (commentLength) => {
+    // Update the commentNumber or any other logic based on the commentData
+    console.log("Comment changed:", commentLength.value);
+    commentNumber.value = commentLength
 };
 
 function moveList() {
@@ -81,7 +86,6 @@ function isDelete() {
 }
 
 // 팔로잉 등록, 취소
-import { onFollow, offFollow } from '../../api/follow';
 const followingInfo = ref({
   followeeId: store.userInfo.userId, 
   followerId: ""
@@ -186,7 +190,7 @@ function toggleFollow() {
             </button>
           </div>
           <!-- 리뷰 댓글 -->
-          <ReviewCommentList :reviewIdx="parseInt(reviewIdx)" />
+          <ReviewCommentList :reviewIdx="parseInt(reviewIdx)" @commentChanged="handleCommentChanged" />
         </div>
       </div>
     </div>

@@ -1,12 +1,15 @@
 package com.ssafy.trend_gaza.attraction.controller;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.trend_gaza.attraction.dto.AttractionAutoSearchResponse;
+import com.ssafy.trend_gaza.attraction.dto.AttractionCategoryResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionResponse;
@@ -98,11 +102,20 @@ public class AttractionController {
 		}
 		return ResponseEntity.ok().body(responseService.getSuccessResponse());
 	}
-
+	
 	@GetMapping("/searchByCategory")
-	public ResponseEntity<List<AttractionInfo>> searchByCategory(@RequestParam Map<String, String> map) {
+	public ResponseEntity<?> searchByCategory(@RequestParam Map<String, String> map) {
 		logger.debug("searchAttractions call!");
-		return ResponseEntity.ok(attractionService.searchByCategory(map));	
+		List<AttractionInfo> list = attractionService.searchByCategory(map);
+		return ResponseEntity.ok(list);	
+	}
+	
+	@GetMapping("/listByCategory")
+	public ResponseEntity<?> listByCategory(@RequestParam Map<String, String> map) {
+		AttractionCategoryResponse response = attractionService.listByCategory(map);
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+		return ResponseEntity.ok().headers(header).body(response);
 	}
 	
 }
