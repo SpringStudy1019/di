@@ -67,19 +67,23 @@ const loadMarkers = (data) => {
 
       markers.value.push(marker);
 
-      var iwContent = `<div style="padding:5px;">${data[i].title} <br><a href="https://map.kakao.com/link/map/${data[i].title},${latitude},${longitude}" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/${data[i].title},${latitude},${longitude}" style="color:blue" target="_blank">길찾기</a></div>`;
-      var iwPosition = new kakao.maps.LatLng(latitude, longitude);
+      // Use a function to create a closure for each iteration
+      const createClickHandler = (marker, title) => {
+        return function () {
+          var iwContent = `<div style="padding:5px;">${title} <br><a href="https://map.kakao.com/link/map/${title},${latitude},${longitude}" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/${title},${latitude},${longitude}" style="color:blue" target="_blank">길찾기</a></div>`;
+          var iwPosition = new kakao.maps.LatLng(latitude, longitude);
 
-      // Create an infowindow for each marker
-      var infowindow = new kakao.maps.InfoWindow({
-        position: iwPosition,
-        content: iwContent,
-      });
+          var infowindow = new kakao.maps.InfoWindow({
+            position: iwPosition,
+            content: iwContent,
+          });
 
-      // Attach click event to marker to open the infowindow
-      kakao.maps.event.addListener(marker, "click", function () {
-        infowindow.open(map, marker);
-      });
+          infowindow.open(map, marker);
+        };
+      };
+
+      // Attach click event to marker using the function
+      kakao.maps.event.addListener(marker, "click", createClickHandler(marker, data[i].title));
     }
 
     // 지도 중심을 이동 시킵니다
