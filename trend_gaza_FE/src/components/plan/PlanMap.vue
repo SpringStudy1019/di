@@ -51,11 +51,7 @@ const initMap = () => {
 };
 
 const loadMarkers = (data) => {
-  console.log("마커 찍기 함수 호출");
-  console.log(data);
-  markers.value = [];
-  //markers.value.push([]);
-  hideMarkers();
+  hideMarkers();    // 기존 마커 삭제
 
   for(let i=0; i< data.length; i++) {
     const latitude = data[i].latitude; 
@@ -77,15 +73,11 @@ const loadMarkers = (data) => {
   }
 };
 
-// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
-function setMarkers(map) {
-  for (var i = 0; i < markers.length; i++) {
-    markers.value[i].setMap(map);
-  }
-}
-
+// 마커 삭제
 function hideMarkers() {
-  setMarkers(null);
+  for(let i=0; i<markers.value.length; i++) {
+    markers.value[i].setMap(null);
+  }
   markers.value = [];
 }
 
