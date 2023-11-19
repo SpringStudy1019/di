@@ -124,11 +124,6 @@ public class ReviewController {
 		return ResponseEntity.ok(reviewService.mostReviews());
 	}
 	
-	@GetMapping("/score/{contentId}")
-	public ResponseEntity<?> countScores(@PathVariable int contentId) throws Exception {
-		return ResponseEntity.ok(reviewService.countScores(contentId));
-	}
-	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

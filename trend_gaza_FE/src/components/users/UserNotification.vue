@@ -52,13 +52,7 @@ const deleteRequest = (userIdFrom) => {
 </script>
 
 <template>
-    <div class="container"></div>
-    <div class="container text-center"> 
-    <div class="row">
-        <div class="col"></div>
-        <div class="col">
-
-        <div>
+    <div>
         <h1 id="header">알림이 왔어요!</h1>
         <img 
             src="@/assets/icon/bell.png" 
@@ -86,13 +80,6 @@ const deleteRequest = (userIdFrom) => {
             </div>
         </ul>
     </div>
-
-        </div>
-        <div class="col"></div>
-    </div>
-    </div>
-
-    
 </template>
 
 <style scoped>

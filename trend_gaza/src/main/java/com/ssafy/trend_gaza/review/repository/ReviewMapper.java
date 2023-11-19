@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.review.dto.ReviewModifyResponse;
-import com.ssafy.trend_gaza.review.dto.ScoreCountResponse;
 import com.ssafy.trend_gaza.review.entity.FileInfo;
 import com.ssafy.trend_gaza.review.entity.Review;
 
@@ -42,8 +41,5 @@ public interface ReviewMapper {
 	
 	/* 사용자들이 가장 많이 리뷰를 남긴 여행지 조회 */ 
 	List<AttractionInfo> mostReviews() throws SQLException;
-	
-	/* 여행지별 점수 카운트 */
-	ScoreCountResponse countScores(int contentId);
 	
 }

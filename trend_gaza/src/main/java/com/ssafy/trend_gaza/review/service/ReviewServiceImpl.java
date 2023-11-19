@@ -10,7 +10,6 @@ import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.review.dto.ReviewModifyResponse;
 import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
 import com.ssafy.trend_gaza.review.dto.ReviewResponse;
-import com.ssafy.trend_gaza.review.dto.ScoreCountResponse;
 import com.ssafy.trend_gaza.review.entity.FileInfo;
 import com.ssafy.trend_gaza.review.entity.Review;
 import com.ssafy.trend_gaza.review.repository.ReviewMapper;
@@ -103,12 +102,6 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public List<AttractionInfo> mostReviews() throws Exception {
 		return reviewMapper.mostReviews();
-	}
-
-
-	@Override
-	public ScoreCountResponse countScores(int contentId) throws Exception {
-		return reviewMapper.countScores(contentId);
 	}
 
 
