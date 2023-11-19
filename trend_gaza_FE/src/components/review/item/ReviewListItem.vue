@@ -6,6 +6,7 @@ defineProps({ review: Object });
 
 <template>
     <div class="card mb-3">
+        <img src="https://picsum.photos/50/50" class="card-img-top" alt="...">
         <div class="card-header text-center">
         여행후기 #{{ review.reviewIdx }}
         </div>

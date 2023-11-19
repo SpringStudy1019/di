@@ -105,5 +105,18 @@
 	    GROUP BY r.content_id
 	    ORDER BY COUNT(r.review_idx) DESC
 	    LIMIT 5;
-  </select>
+  	</select>
+  
+  	<select id="countScores" parameterType="int" resultType="com.ssafy.trend_gaza.review.dto.ScoreCountResponse">
+        SELECT content_id AS contentId,
+	        SUM(CASE WHEN score = 1 THEN 1 ELSE 0 END) AS scoreOneCount,
+	        SUM(CASE WHEN score = 2 THEN 1 ELSE 0 END) AS scoreTwoCount,
+	        SUM(CASE WHEN score = 3 THEN 1 ELSE 0 END) AS scoreThreeCount,
+	        SUM(CASE WHEN score = 4 THEN 1 ELSE 0 END) AS scoreFourCount,
+	        SUM(CASE WHEN score = 5 THEN 1 ELSE 0 END) AS scoreFiveCount
+	    FROM review
+	    WHERE content_id = #{contentId}
+	    GROUP BY content_id;
+    </select>
+  	
 </mapper>
