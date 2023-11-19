@@ -9,4 +9,8 @@ import PlanMap from '@/components/plan/PlanMap.vue';
 </template>
 
 <style scoped>
+* {
+    margin: 0;
+    padding: 0;
+}
 </style>
