@@ -1,9 +1,11 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
+import PlanSearchList from '@/components/plan/PlanSearchList.vue'
 
 var map;
 const markers = ref([]);
+const attractionList = ref([]);
 //const props = defineProps({latitude: Number, longitude: Number});
 
 const position = {
@@ -133,6 +135,12 @@ const loadMarkers = (data) => {
   }
 };
 
+const loadAttractionList = (data) => {
+  console.log("데이터 로드" + data);
+  attractionList.value = data;
+  loadMarkers(data);
+};
+
 // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
 function closeOverlay() {
     overlay.setMap(null);     
@@ -146,11 +154,35 @@ function hideMarkers() {
   markers.value = [];
 }
 
+const updateData = () => {
+
+}
+
 </script>
 
 <template>
-    <PlanSearch @getAttractionData="loadMarkers" />
-    <div id="map"></div>
+  
+  <div class="wrapper">
+    <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">🔍</button>
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">🧳 관광지 검색</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <PlanSearch @getAttractionData="loadAttractionList" />
+    <PlanSearchList v-for="attraction in attractionList" :attraction="attraction" :key="attraction.contentId"/>
+  </div>
+</div>
+
+    <!-- <div calss="left-section">
+      <PlanSearchList v-for="attraction in attractionList" :attraction="attraction" :key="attraction.contentId"/>
+    </div> -->
+    <div class="right-section">
+      <div id="map"></div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -158,4 +190,18 @@ function hideMarkers() {
         width: 100%;
         height: 800px;
     }
+
+    .left-section {
+  flex: 1; /* Takes up all available space in the flex container */
+  padding: 20px; /* Adjust padding as needed */
+  width: 30%;
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-section {
+  flex: 2; /* Takes up twice the space of the left section */
+  padding: 20px; /* Adjust padding as needed */
+}
 </style>
