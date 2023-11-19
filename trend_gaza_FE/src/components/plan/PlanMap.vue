@@ -54,6 +54,9 @@ const loadMarkers = (data) => {
   console.log("마커 찍기 함수 호출");
   console.log(data);
   markers.value = [];
+  //markers.value.push([]);
+  hideMarkers();
+
   for(let i=0; i< data.length; i++) {
     const latitude = data[i].latitude; 
     const longitude = data[i].longitude;
@@ -68,8 +71,24 @@ const loadMarkers = (data) => {
         
         markers.value.push(marker);
     }
+
+    // 지도 중심을 이동 시킵니다
+    map.setCenter(new kakao.maps.LatLng(latitude, longitude));
   }
 };
+
+// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+function setMarkers(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers.value[i].setMap(map);
+  }
+}
+
+function hideMarkers() {
+  setMarkers(null);
+  markers.value = [];
+}
+
 </script>
 
 <template>
