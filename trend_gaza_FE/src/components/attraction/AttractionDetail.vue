@@ -82,7 +82,7 @@ console.log(scoresInfo.value.one)
     <div v-if='attraction.latitude && attraction.longitude'>
         <AttractionMap :longitude="attraction.longitude" :latitude="attraction.latitude"/>
     </div>
-
+    <hr>
     <!-- 리뷰 점수별 통계 내기: 1~5 몇 명인지 카운트 -->
     <div class="review-score">
       <h3 id="review-header">리뷰</h3>
@@ -118,8 +118,9 @@ console.log(scoresInfo.value.one)
       </div>
     </div>
     </div>
-    
-    <VYoutube />
+    <hr>
+    <!-- 유튜브 영상 -->
+    <VYoutube :attractionTitle="attraction.title" />
 
 </template>
 
