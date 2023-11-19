@@ -51,21 +51,35 @@ const initMap = () => {
 };
 
 const loadMarkers = (data) => {
-  hideMarkers();    // 기존 마커 삭제
+  hideMarkers(); // Clear existing markers
 
-  for(let i=0; i< data.length; i++) {
-    const latitude = data[i].latitude; 
+  for (let i = 0; i < data.length; i++) {
+    const latitude = data[i].latitude;
     const longitude = data[i].longitude;
 
     if (latitude !== null && longitude !== null) {
-        const marker = new kakao.maps.Marker({
-            map: map,       // 마커를 표시할 지도
-            position: new kakao.maps.LatLng(latitude, longitude),
-            title: "마커",
-            clickable: true,
-        });
-        
-        markers.value.push(marker);
+      const marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: new kakao.maps.LatLng(latitude, longitude),
+        title: "마커",
+        clickable: true,
+      });
+
+      markers.value.push(marker);
+
+      var iwContent = `<div style="padding:5px;">${data[i].title} <br><a href="https://map.kakao.com/link/map/${data[i].title},${latitude},${longitude}" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/${data[i].title},${latitude},${longitude}" style="color:blue" target="_blank">길찾기</a></div>`;
+      var iwPosition = new kakao.maps.LatLng(latitude, longitude);
+
+      // Create an infowindow for each marker
+      var infowindow = new kakao.maps.InfoWindow({
+        position: iwPosition,
+        content: iwContent,
+      });
+
+      // Attach click event to marker to open the infowindow
+      kakao.maps.event.addListener(marker, "click", function () {
+        infowindow.open(map, marker);
+      });
     }
 
     // 지도 중심을 이동 시킵니다
@@ -80,6 +94,7 @@ function hideMarkers() {
   }
   markers.value = [];
 }
+
 
 </script>
 
