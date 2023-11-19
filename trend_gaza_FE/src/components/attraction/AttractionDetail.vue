@@ -3,6 +3,7 @@ import {ref, onMounted} from 'vue';
 import {useRoute, useRouter} from "vue-router";
 import AttractionMap from './item/AttractionMap.vue';
 import {getAttractionDetail} from '@/api/attraction';
+import {getScores} from '@/api/review';
 import VYoutube from '@/components/detail/VYoutube.vue';
 
 const route = useRoute();
@@ -13,6 +14,7 @@ const {attractionIdx} = route.params;
 
 onMounted(() => {
     getAttraction();
+    getScoresInfo();
 });
 
 const getAttraction = () => {
@@ -32,6 +34,32 @@ const getAttraction = () => {
 const moveWrite = (contentId) => {
   router.push({ name: 'review-write', params: { contentId: contentId } });
 };
+
+// 리뷰 점수별로 카운트
+const scoresInfo = ref({
+  "one": "",
+  "two": "",
+  "three":"",
+  "four":"",
+  "five":""
+})
+
+const getScoresInfo = () => {
+  // console.log(attractionIdx)
+  getScores(
+    attractionIdx,
+    ({data}) => {
+      // console.log(data)
+      scoresInfo.value.one = data.scoreOneCount;
+      scoresInfo.value.two = data.scoreTwoCount;
+      scoresInfo.value.three = data.scoreThreeCount;
+      scoresInfo.value.four = data.scoreFourCount;
+      scoresInfo.value.five = data.scoreFiveCount;
+      // console.log(scoresInfo.value)
+    },
+    (error) => console.log(error)
+  )
+}
 </script>
 
 <template>

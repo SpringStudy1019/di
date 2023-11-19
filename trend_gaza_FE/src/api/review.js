@@ -35,6 +35,10 @@ function deleteReview(reviewIdx, success, fail) {
 function getHotplace(success, fail) {
     local.get(`${url}/hotplace`).then(success).catch(fail);
 }
+
+function getScores(contentId, success, fail) {
+    local.get(`${url}/score/${contentId}`).then(success).catch(fail);
+}
     
 export {
     list,
@@ -44,5 +48,6 @@ export {
     deleteReview,
     getModifyReview,
     getReviewImage,
-    getHotplace
+    getHotplace,
+    getScores
 }
