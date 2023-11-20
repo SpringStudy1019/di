@@ -39,6 +39,10 @@ function deleteUser(userId, success, fail) {
     local.delete(`${url}/${userId}`).then(success).catch(fail);
 }
 
+function getUser(userId, success, fail) {
+    local.get(`${url}/view/${userId}`).then(success).catch(fail);
+}
+
 export {
     userConfirm, 
     findById, 
@@ -47,5 +51,6 @@ export {
     registUser, 
     modifyUser, 
     idCheck, 
-    deleteUser
+    deleteUser,
+    getUser
 };

@@ -48,6 +48,11 @@ const router = createRouter({
           name: "user-mypage",
           component: () => import("@/components/users/UserMyPage.vue"),
         },
+        {
+          path: "yourpage/:userId",
+          name: "user-yourpage",
+          component: () => import("@/components/users/UserYourPage.vue"),
+        },
       ],
     },
     {

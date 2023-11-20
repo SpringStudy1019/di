@@ -12,6 +12,7 @@
 	
 	<resultMap id="plan" type="plan">
 		<result property="planIdx" column="plan_idx" />
+		<result property="title" column="title" />
 		<result property="startDate" column="start_date" />
 		<result property="endDate" column="end_date" />
 		<result property="userId" column="user_id" />
@@ -61,10 +62,44 @@
 	</delete>
 
 	<select id="getMyPlans" parameterType="string" resultMap="planResponse">
-		select p.plan_idx, title, start_date, end_date, COUNT(up.user_id) AS user_count
-		from plan p join user_plan up 
-		on p.plan_idx = up.plan_idx
-		where p.user_id = #{userId} or up.user_id=#{userId}
-		GROUP BY p.plan_idx
+		SELECT p.plan_idx, title, start_date, end_date, COUNT(up.user_id) AS user_count
+		  FROM plan p
+		  LEFT JOIN user_plan up ON p.plan_idx = up.plan_idx AND up.user_id = #{userId}
+		  WHERE p.user_id = #{userId} OR up.user_id IS NOT NULL
+		  GROUP BY p.plan_idx
+	</select>
+	
+	<!-- 여행에 참여하기 -->
+	<insert id="joinPlan" parameterType="map">
+		insert into user_plan(user_id, plan_idx)
+		values(#{userId}, #{planIdx})
+	</insert>
+	
+	<!-- 여행 계획표 (방) 만들기 -->
+	<insert id="setPlan" parameterType="setPlanRequest">
+		insert into plan(title, start_date, end_date, user_id)
+		values(#{title}, #{startDate}, #{endDate}, #{userId})
+	</insert>
+	
+	<!-- 초대 수락할 여행 1개 조회하기 -->
+	<select id="getInvitedPlan" parameterType="acceptInvitationRequest" resultType="int">
+		select plan_idx from plan
+		where title=#{title} and user_id=#{creatorId}
+	</select>
+	
+	<!-- 내가 초대된 여행 다 가져오기 -->
+	<select id="getInvitedPlans" parameterType="String" resultMap="plan">
+		SELECT p.*
+		  FROM plan p
+		  JOIN user_plan up ON p.plan_idx = up.plan_idx
+		  WHERE up.user_id = #{userId}
+	</select>
+	
+	<!-- 내가 만든 여행 조회하기 -->
+	<select id="getCreatedPlans" parameterType="String" resultMap="planResponse">
+		SELECT p.plan_idx, p.title, p.start_date, p.end_date, COUNT(up.user_id) AS user_count
+			FROM plan p LEFT JOIN user_plan up ON p.plan_idx = up.plan_idx
+			WHERE p.user_id = 'user05'
+			GROUP BY p.plan_idx, p.title, p.start_date, p.end_date;
 	</select>
 </mapper>

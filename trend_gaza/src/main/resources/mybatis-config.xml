@@ -28,6 +28,9 @@
 		<typeAlias type="com.ssafy.trend_gaza.notification.dto.NotificationResponse" alias="notificationResponse"/>
 		<!-- bookmark -->
 		<typeAlias type="com.ssafy.trend_gaza.bookmark.dto.BookmarkRequest" alias="bookmarkRequest"/>
+		<!-- plan -->
+		<typeAlias type="com.ssafy.trend_gaza.plan.dto.SetPlanRequest" alias="setPlanRequest"/>
+		<typeAlias type="com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest" alias="acceptInvitationRequest"/>
 	</typeAliases>
 	
 	<environments default="development">

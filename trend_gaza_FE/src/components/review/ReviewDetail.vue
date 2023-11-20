@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailReview, deleteReview } from '@/api/review';
+import { getAttractionDetail } from '@/api/attraction';
 import { listComment } from '@/api/comment';
 import { onFollow, offFollow } from '@/api/follow';
 import { useUserStore } from '@/stores/user';
@@ -24,11 +25,25 @@ onMounted(() => {
 });
 
 // 리뷰 번호로 리뷰 얻어오기
+const attractionName = ref('')
 const getReview = () => {
+  console.log("여기 들어노아?2222");
   detailReview(reviewIdx,
-    ({ data }) => { // success callback
-      review.value = data; // Store the data in the 'review' ref
+    ({ data }) => {
+      review.value = data; 
       followingInfo.value.followerId = data.userId;
+      // 여행지 제목 review.contentId
+      console.log("여기 들어노아?");
+      getAttractionDetail(
+        review.value.contentId,
+        ({ data }) => { 
+          attractionName.value = data.title;
+          console.log(attractionName.value);
+          },
+          (error) => {
+            console.log(error);
+          }
+  );
     },
     (error) => {
       console.log(error);
@@ -145,7 +160,7 @@ function toggleFollow() {
           <h2 class="text-bold px-2">{{ review.title }}</h2>
         </div>
         <div class="row my-2">
-          <h3 id="attractionId">{{ review.contentId }}에 대한 후기입니다 </h3>
+          <h3 id="attractionId">[{{ attractionName }}]에 대한 후기입니다 </h3>
         </div>
         <router-link 
             v-if="review.contentId && Number.isInteger(review.contentId)"
@@ -156,7 +171,12 @@ function toggleFollow() {
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">
-              <span class="fw-bold">{{ review.userId }}</span>
+              <!-- 사용자 조회 router-link-->
+              <router-link 
+                :to="{ name: 'user-yourpage', params: { userId: review.userId } }" 
+                class="btn btn-warning">
+                {{ review.userId }}
+            </router-link>
               <button id="follow-button" @click="toggleFollow" v-if="store.userInfo.userId !== review.userId">+ Follow</button>	
               <div class="text-secondary fw-light">
                 {{ review.registerDate }}

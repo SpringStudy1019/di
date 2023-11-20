@@ -2,26 +2,24 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 import { jwtDecode } from "jwt-decode";
-
 import { userConfirm, findById, tokenRegeneration, logout } from "@/api/user";
-// api/user.js 수정 필요 (우리 컨트롤러에 맞게)
 import { httpStatusCode } from "@/util/http-status"; 
 
-export const useUserStore = defineStore("userStore", () => {
+export const useUserStore = defineStore("userStore",
+  () => {
     const router = useRouter();
-
     const isLogin = ref(false);
     const isLoginError = ref(false);
     const userInfo = ref(null);
     const isValidToken = ref(false);
 
     const userLogin = async (loginUser) => {
-    await userConfirm(
+      await userConfirm(
         loginUser,
         (response) => {
-        if (response.status === httpStatusCode.CREATE) {
+          if (response.status === httpStatusCode.CREATE) {
             let { data } = response;
-        // console.log("data", data);
+            // console.log("data", data);
             let accessToken = data["access-token"];  // accessToken 발급 
             let refreshToken = data["refresh-token"];  // refreshToken 발급 
             console.log("accessToken", accessToken);
@@ -32,16 +30,16 @@ export const useUserStore = defineStore("userStore", () => {
             sessionStorage.setItem("accessToken", accessToken);  // 세션 스토리지에 accessToken 저장
             sessionStorage.setItem("refreshToken", refreshToken);  // 세션 스토리지에 refreshToken 저장
             console.log("sessiontStorage에 담았다", isLogin.value);
-        } else {
+          } else {
             console.log("로그인 실패했다");
             isLogin.value = false;
             isLoginError.value = true;
             isValidToken.value = false;
-        }
+          }
         },
         (error) => {
-            console.error(error);
-        }
+          console.error(error);
+        },
       );
     };
   
@@ -142,5 +140,11 @@ export const useUserStore = defineStore("userStore", () => {
       tokenRegenerate,
       userLogout,
     };
-  });
+  },
+  {
+    persist: {
+      storage: sessionStorage,
+    }
+  }
+);
   
