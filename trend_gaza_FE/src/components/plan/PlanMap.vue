@@ -179,7 +179,7 @@ const updateData = () => {
 }
 
 const selectFunc = (data) => {
-  selectList.value.push(data);
+  //selectList.value.push(data);
   
   // if (allSelect.value.length <= curDay.value) {
   //   allSelect.value.push([]);
@@ -193,8 +193,8 @@ const selectFunc = (data) => {
 }
 
 const deleteItem = (data) => {
-  let idx = selectList.value.findIndex(item => item.contentId == data.contentId);
-  selectList.value.splice(idx, 1);
+  let idx = allSelect.value[curDay.value].findIndex(item => item.contentId == data.contentId);
+  allSelect.value[curDay.value].splice(idx, 1);
 }
 
 const onSelectListUpdate = (updatedList) => {
