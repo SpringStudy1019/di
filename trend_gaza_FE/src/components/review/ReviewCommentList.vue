@@ -31,7 +31,6 @@ const getCommentList = () => {
       // comments.value = response.data
       comments.value = response.data.map(comment => ({ ...comment, editMode: false }));
       commentLength.value = comments.value.length;
-      console.log("ReviewCommentList.vue에서 댓글의 개수는 과연!!!", commentLength.value)
     },
     (error) => {
         console.log(error);

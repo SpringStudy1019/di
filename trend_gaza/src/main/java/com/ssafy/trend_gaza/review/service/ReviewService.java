@@ -30,7 +30,7 @@ public interface ReviewService {
 	void modify(ReviewModifyResponse modifyResponse) throws Exception;
 	
 	/* 리뷰 삭제 */ 
-	void delete(String reviewIdx) throws Exception;
+	void delete(int reviewIdx) throws Exception;
 	
 	/* 사용자들이 가장 많이 리뷰를 남긴 여행지 조회 */ 
 	List<AttractionInfo> mostReviews() throws Exception;
@@ -38,4 +38,6 @@ public interface ReviewService {
 	/* 여행지별 점수 카운트 */
 	ScoreCountResponse countScores(int contentId) throws Exception;
 	
+	/* contentId별 리뷰들 */
+	List<Review> getReviewsByContentId(int contentId) throws Exception;
 }

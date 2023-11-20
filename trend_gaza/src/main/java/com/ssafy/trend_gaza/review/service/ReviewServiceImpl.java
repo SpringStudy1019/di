@@ -89,7 +89,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public void delete(String reviewIdx) throws Exception {
+	public void delete(int reviewIdx) throws Exception {
 		reviewMapper.delete(reviewIdx);
 	}
 
@@ -109,6 +109,12 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public ScoreCountResponse countScores(int contentId) throws Exception {
 		return reviewMapper.countScores(contentId);
+	}
+
+
+	@Override
+	public List<Review> getReviewsByContentId(int contentId) throws Exception {
+		return reviewMapper.getReviewsByContentId(contentId);
 	}
 
 

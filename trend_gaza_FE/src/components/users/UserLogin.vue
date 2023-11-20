@@ -19,13 +19,9 @@ const loginUser = ref({
 });
 
 const login = async () => {
-  console.log("login 중입니다!!!");
   await userLogin(loginUser.value);
   let token = sessionStorage.getItem("accessToken");
-  console.log("111. ", token);
-  console.log("isLogin: ", isLogin);
   if (isLogin) {
-    console.log("로그인 성공아닌가???");
     getUserInfo(token);
     changeMenuState();
   } else {

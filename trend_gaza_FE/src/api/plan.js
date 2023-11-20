@@ -17,8 +17,8 @@ function getInvitedPlan(userId, success, fail) {
     local.get(`${url}/invite/${userId}`).then(success).catch(fail);
 }
 
-function getCreatedPlan(success, fail) {
-    local.get(`${url}/created`).then(success).catch(fail);
+function getCreatedPlan(userId, success, fail) {
+    local.get(`${url}/created/${userId}`).then(success).catch(fail);
 }
 
 function registerPlan(planIdx, planRequest, success, fail) {

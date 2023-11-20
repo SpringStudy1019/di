@@ -1,6 +1,7 @@
 package com.ssafy.trend_gaza.review.controller;
 
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -110,7 +111,7 @@ public class ReviewController {
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<?> delete(String reviewIdx) {
+	public ResponseEntity<?> delete(int reviewIdx) {
 		try {
 			reviewService.delete(reviewIdx);
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -128,6 +129,16 @@ public class ReviewController {
 	public ResponseEntity<?> countScores(@PathVariable int contentId) throws Exception {
 		return ResponseEntity.ok(reviewService.countScores(contentId));
 	}
+	
+	/*
+	 * contentId가 주어지면, 그에 따른 리뷰 싹 다 가져오기
+	 */
+	@GetMapping("/content/{contentId}")
+	public ResponseEntity<?> getReviewsByContentId(@PathVariable int contentId) throws Exception {
+		List<Review> list = reviewService.getReviewsByContentId(contentId);
+		return ResponseEntity.ok(list);
+	}
+	
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
 		e.printStackTrace();

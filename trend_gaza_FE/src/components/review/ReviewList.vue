@@ -97,27 +97,6 @@ const onPageChange = (val) => {
           ></ReviewListItem>
         </div>
 
-        <!-- <table class="table table-hover">
-          <thead>
-            <tr class="text-center">
-              <th scope="col">리뷰 번호</th>
-              <th scope="col">관광지번호</th>
-              <th scope="col">제목</th>
-              <th scope="col">점수</th>
-              <th scope="col">내용</th>
-              <th scope="col">작성일</th>
-              <th scope="col">작성자</th>
-            </tr>
-          </thead>
-          <tbody>
-            <ReviewListItem
-            v-for="review in reviews"
-            :key="review.idx"
-            :review="review"
-          ></ReviewListItem>
-          </tbody>
-        </table> -->
-
       </div>
 
       <PageNavigation
