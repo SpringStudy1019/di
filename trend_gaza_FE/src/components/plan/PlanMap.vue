@@ -8,6 +8,8 @@ var map;
 const markers = ref([]);
 const attractionList = ref([]);
 const selectList = ref([]);
+const allSelect = ref([]);
+const curDay = ref(0);
 //const props = defineProps({latitude: Number, longitude: Number});
 
 const position = {
@@ -143,7 +145,6 @@ const loadMarkers = (data) => {
 };
 
 const loadAttractionList = (data) => {
-  console.log("데이터 로드" + data);
   attractionList.value = data;
   loadMarkers(data);
 };
@@ -167,6 +168,7 @@ const updateData = () => {
 
 const selectFunc = (data) => {
   selectList.value.push(data);
+  allSelect.value[0] = selectList.value;
 }
 
 const deleteItem = (data) => {
@@ -224,6 +226,13 @@ const savePlans = () => {
       console.log(error);
     })
 };
+
+/* 버튼을 클릭하면 해당 일자에 작성한 계획으로 전환됨 */
+const moveNDay = (value) => {
+  console.log(value);
+  console.log(allSelect.value[value]);
+  curDay.value = value;
+}
 </script>
 
 <template>
@@ -267,9 +276,9 @@ const savePlans = () => {
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" @click='moveNDay(0)'>1</a></li>
+          <li class="page-item"><a class="page-link" @click='moveNDay(1)'>2</a></li>
+          <li class="page-item"><a class="page-link" @click='moveNDay(2)'>3</a></li>
           <li class="page-item">
             <a class="page-link" href="#" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
@@ -281,7 +290,8 @@ const savePlans = () => {
 
   <div class="offcanvas-body">
     <!-- PlanSelectList -->
-      <div class="container" v-for="(selectItem, idx) in selectList" :key="selectItem.contentId">
+    <!--<div class="container" v-for="(allSelectItem, idx) in allSelect" :key="idx">-->
+      <div v-for="(selectItem, idx) in allSelect[curDay]" :key="selectItem.contentId">
         <div class="col" @drop.prevent="onDrop($event, idx)" @dragover.prevent>
             <div @dragstart="startDrag($event, selectItem)" draggable="true">
                 <span class="title">{{selectItem.title}}</span>
@@ -294,6 +304,7 @@ const savePlans = () => {
                 </div>
             </div>
       </div>
+    <!--</div>-->
       </div>
   </div>
 
