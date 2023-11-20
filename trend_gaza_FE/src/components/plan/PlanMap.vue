@@ -164,6 +164,11 @@ const selectFunc = (data) => {
   selectList.value.push(data);
 }
 
+const deleteItem = (data) => {
+  let idx = selectList.value.findIndex(item => item.contentId == data.contentId);
+  selectList.value.splice(idx, 1);
+}
+
 </script>
 
 <template>
@@ -211,7 +216,7 @@ const selectFunc = (data) => {
         </div>
         <span>{{ selectItem.addr1 }} </span>
         <div class="delete-btn">
-            <button>삭제</button>
+            <button @click='deleteItem(selectItem)'>삭제</button>
         </div>
     </div>
   </div>
