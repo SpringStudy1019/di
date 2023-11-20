@@ -38,4 +38,6 @@ public interface ReviewService {
 	/* 여행지별 점수 카운트 */
 	ScoreCountResponse countScores(int contentId) throws Exception;
 	
+	/* contentId별 리뷰들 */
+	List<Review> getReviewsByContentId(int contentId) throws Exception;
 }

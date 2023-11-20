@@ -119,4 +119,9 @@
 	    GROUP BY content_id;
 	</select>
 	
+	<select id="getReviewsByContentId" parameterType="int" resultMap="review">
+		select * from review
+		where content_id = #{contentId}
+	</select>
+	
 </mapper>

@@ -3,7 +3,7 @@ import {ref, onMounted, computed} from 'vue';
 import {useRoute, useRouter} from "vue-router";
 import AttractionMap from './item/AttractionMap.vue';
 import {getAttractionDetail} from '@/api/attraction';
-import {getScores} from '@/api/review';
+import { getScores, getReviews} from '@/api/review';
 import { searchVideos } from "@/api/youtube";
 
 const route = useRoute();
@@ -15,6 +15,7 @@ const {attractionIdx} = route.params;
 onMounted(() => {
     getAttraction();
     getScoresInfo();
+    getReviewsInfo();
 });
 
 const getAttraction = () => {
@@ -96,6 +97,20 @@ const searchYoutube =  () => {
     console.error('Error searching YouTube:', error);
   });
 };
+
+// contentId 가 주어지면, 리뷰 싹 다 가져오기 
+const reviews = ref([])
+const getReviewsInfo = () => {
+  getReviews(
+    attractionIdx,
+    ({data}) => {
+      reviews.value = data;
+    },
+    (error) => {
+        console.log(error);
+    }
+    );
+};
 </script>
 
 <template>
@@ -154,34 +169,51 @@ const searchYoutube =  () => {
     <div class="review-score">
       <h3 id="review-header">리뷰</h3>
       <div class="bar"> 
-      <div>최악</div>
-      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ scoresInfo.one }}" aria-valuemin="0" aria-valuemax="{{ total }}">
-        <div class="progress-bar" :style="{ width: Math.round(scoresInfo.one / total * 100) + '%' }"></div>
-        <div class="number">{{ scoresInfo.one }}</div>
+
+      <div class="standard">아주좋음</div>
+      <div class="bar-space" ></div>
+      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ scoresInfo.five }}" aria-valuemin="0" aria-valuemax="{{ total }}">
+        <div class="progress-bar" :style="{ width: Math.round(scoresInfo.five / total * 100) + '%' }"></div>
+        <div class="number">{{ scoresInfo.five }}</div>
       </div>
-      <div>별로</div>
-      <div class="bar-space"></div>
-      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ scoresInfo.two }}" aria-valuemin="0" aria-valuemax="{{ total }}">
-        <div class="progress-bar" :style="{ width: Math.round(scoresInfo.two / total * 100) + '%' }"></div>
-        <div class="number">{{ scoresInfo.two }}</div>
-      </div>
-      <div>보통</div>
-      <div class="bar-space"></div>
-      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ scoresInfo.three }}" aria-valuemin="0" aria-valuemax="{{ total }}">
-        <div class="progress-bar" :style="{ width: Math.round(scoresInfo.three / total * 100) + '%' }"></div>
-        <div class="number">{{ scoresInfo.three }}</div>
-      </div>
-      <div>좋음</div>
+      <div class="margin-small"></div>
+      <div class="standard">좋음</div>
       <div class="bar-space"></div>
       <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ scoresInfo.four }}" aria-valuemin="0" aria-valuemax="{{ total }}">
         <div class="progress-bar" :style="{ width: Math.round(scoresInfo.four / total * 100) + '%' }"></div>
         <div class="number">{{ scoresInfo.four }}</div>
       </div>
-      <div>아주좋음</div>
-      <div class="bar-space" ></div>
-      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ scoresInfo.five }}" aria-valuemin="0" aria-valuemax="{{ total }}">
-        <div class="progress-bar" :style="{ width: Math.round(scoresInfo.five / total * 100) + '%' }"></div>
-        <div class="number">{{ scoresInfo.five }}</div>
+      <div class="margin-small"></div>
+      <div class="standard">보통</div>
+      <div class="bar-space"></div>
+      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ scoresInfo.three }}" aria-valuemin="0" aria-valuemax="{{ total }}">
+        <div class="progress-bar" :style="{ width: Math.round(scoresInfo.three / total * 100) + '%' }"></div>
+        <div class="number">{{ scoresInfo.three }}</div>
+      </div>
+      <div class="margin-small"></div>
+      <div class="standard">별로</div>
+      <div class="bar-space"></div>
+      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ scoresInfo.two }}" aria-valuemin="0" aria-valuemax="{{ total }}">
+        <div class="progress-bar" :style="{ width: Math.round(scoresInfo.two / total * 100) + '%' }"></div>
+        <div class="number">{{ scoresInfo.two }}</div>
+      </div>
+      <div class="margin-small"></div>
+      <div class="standard">최악</div>
+      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ scoresInfo.one }}" aria-valuemin="0" aria-valuemax="{{ total }}">
+        <div class="progress-bar" :style="{ width: Math.round(scoresInfo.one / total * 100) + '%' }"></div>
+        <div class="number">{{ scoresInfo.one }}</div>
+      </div>
+    </div>
+    <div class="margin-big"></div>
+    <!-- 사용자들의 리뷰 내용 -->
+    <div v-for="review in reviews" :key="review.reviewIdx">
+      <div class="review">
+        <router-link 
+          :to="{ name: 'review-view', params: { reviewIdx: review.reviewIdx } }" 
+          class="btn btn-outline-primary me-2">
+              자세히 보기
+              {{ review.content }}
+          </router-link>
       </div>
     </div>
     </div>
@@ -207,6 +239,27 @@ const searchYoutube =  () => {
 </template>
 
 <style scoped>
+
+  .review {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin-left: 20px;
+  }
+
+.margin-small {
+  margin-bottom: 10px;
+}
+.margin-big {
+  margin-bottom: 30px;
+}
+.standard {
+  font-weight: 700;
+}
+
 img {
     display: block;
     margin: 0 auto; 

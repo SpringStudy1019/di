@@ -112,4 +112,10 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 
+	@Override
+	public List<Review> getReviewsByContentId(int contentId) throws Exception {
+		return reviewMapper.getReviewsByContentId(contentId);
+	}
+
+
 }
