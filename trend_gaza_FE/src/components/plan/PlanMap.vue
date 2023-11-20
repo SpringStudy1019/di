@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
+import {registerPlan} from "@/api/plan"
 
 var map;
 const markers = ref([]);
@@ -13,6 +14,11 @@ const position = {
     longitude: 126.97703190000000000
 }
 
+// const planRequest = {
+//   attractionId: 0,
+//   order: 1,
+//   orderDate: 1
+// }
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -195,6 +201,28 @@ const onDrop = (event, colNum) => {
   selectList.value[colNum] = selectList.value[targetIdx];
   selectList.value[targetIdx] = temp;
 };
+
+const trasformRequestDTO = () => {
+  const requestList = [];
+  for (let i = 0; i < selectList.value.length; i++) {
+    let planRequest = {
+      "attractionId": selectList.value[i].contentId,
+      "order": i,
+      "orderDate": 1
+    }
+    requestList.push(planRequest);
+  }
+  return requestList;
+}
+
+const savePlans = () => {
+  registerPlan(1, trasformRequestDTO(),
+    ({ data }) => {
+      console.log(data);
+    }, (error) => {
+      console.log(error);
+    })
+};
 </script>
 
 <template>
@@ -249,6 +277,10 @@ const onDrop = (event, colNum) => {
             </div>
       </div>
       </div>
+  </div>
+
+  <div class='offcanvas-footer'>
+    <button @click='savePlans'>저장</button>
   </div>
 </div>
 
