@@ -35,7 +35,14 @@ onMounted(() => {
     script.onload = () => kakao.maps.load(() => initMap());
     document.head.appendChild(script);
   }
+
+  initArray();
+
 });
+
+const initArray = () => {
+  allSelect.value = new Array(3);
+}
 
 const initMap = () => {
   const container = document.getElementById("map");
@@ -168,7 +175,14 @@ const updateData = () => {
 
 const selectFunc = (data) => {
   selectList.value.push(data);
-  allSelect.value[0] = selectList.value;
+  
+  if (allSelect.value.length <= curDay.value) {
+    allSelect.value.push([]);
+  }
+  console.log(allSelect.value[curDay.value]);
+  console.log("값을 넣으려는 인덱스" + curDay.value);
+  allSelect.value[curDay.value] = selectList.value;
+  
 }
 
 const deleteItem = (data) => {
@@ -232,6 +246,8 @@ const moveNDay = (value) => {
   console.log(value);
   console.log(allSelect.value[value]);
   curDay.value = value;
+  console.log("일자가 변경되었습니다." + curDay.value);
+  console.log(allSelect.value[curDay.value]);
 }
 </script>
 
