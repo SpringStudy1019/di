@@ -60,7 +60,7 @@ const searchAttractions = () => {
 </script>
 
 <template>
-    <div class="container">
+    <div class="search-container">
         <form class="d-flex my-3" onsubmit="return false;" role="search">
             <div class="form-group me-2 d-block">
                 <select id="search-area" class="form-select me-2" v-model="sido">
@@ -108,7 +108,7 @@ const searchAttractions = () => {
 </template>
 
 <style scoped>
-.container {
+.search-container {
     border: 1px black;
 }
 </style>
