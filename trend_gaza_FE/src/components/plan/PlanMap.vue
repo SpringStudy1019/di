@@ -1,11 +1,15 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
+import PageNavigation from '@/components/common/PageNavigation.vue'
+import { registerPlan } from "@/api/plan"
 
 var map;
 const markers = ref([]);
 const attractionList = ref([]);
 const selectList = ref([]);
+const allSelect = ref([]);
+const curDay = ref(0);
 //const props = defineProps({latitude: Number, longitude: Number});
 
 const position = {
@@ -13,6 +17,11 @@ const position = {
     longitude: 126.97703190000000000
 }
 
+// const planRequest = {
+//   attractionId: 0,
+//   order: 1,
+//   orderDate: 1
+// }
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -26,7 +35,14 @@ onMounted(() => {
     script.onload = () => kakao.maps.load(() => initMap());
     document.head.appendChild(script);
   }
+
+  initArray();
+
 });
+
+const initArray = () => {
+  allSelect.value = new Array(3);
+}
 
 const initMap = () => {
   const container = document.getElementById("map");
@@ -136,7 +152,6 @@ const loadMarkers = (data) => {
 };
 
 const loadAttractionList = (data) => {
-  console.log("데이터 로드" + data);
   attractionList.value = data;
   loadMarkers(data);
 };
@@ -160,6 +175,14 @@ const updateData = () => {
 
 const selectFunc = (data) => {
   selectList.value.push(data);
+  
+  if (allSelect.value.length <= curDay.value) {
+    allSelect.value.push([]);
+  }
+  console.log(allSelect.value[curDay.value]);
+  console.log("값을 넣으려는 인덱스" + curDay.value);
+  allSelect.value[curDay.value] = selectList.value;
+  
 }
 
 const deleteItem = (data) => {
@@ -195,6 +218,37 @@ const onDrop = (event, colNum) => {
   selectList.value[colNum] = selectList.value[targetIdx];
   selectList.value[targetIdx] = temp;
 };
+
+const trasformRequestDTO = () => {
+  const requestList = [];
+  for (let i = 0; i < selectList.value.length; i++) {
+    let planRequest = {
+      "attractionId": selectList.value[i].contentId,
+      "order": i,
+      "orderDate": 1
+    }
+    requestList.push(planRequest);
+  }
+  return requestList;
+}
+
+const savePlans = () => {
+  registerPlan(1, trasformRequestDTO(),
+    ({ data }) => {
+      console.log(data);
+    }, (error) => {
+      console.log(error);
+    })
+};
+
+/* 버튼을 클릭하면 해당 일자에 작성한 계획으로 전환됨 */
+const moveNDay = (value) => {
+  console.log(value);
+  console.log(allSelect.value[value]);
+  curDay.value = value;
+  console.log("일자가 변경되었습니다." + curDay.value);
+  console.log(allSelect.value[curDay.value]);
+}
 </script>
 
 <template>
@@ -230,12 +284,30 @@ const onDrop = (event, colNum) => {
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasRightLabel">🎒현재 코스 리스트</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <nav class="page-nav" aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" @click='moveNDay(0)'>1</a></li>
+          <li class="page-item"><a class="page-link" @click='moveNDay(1)'>2</a></li>
+          <li class="page-item"><a class="page-link" @click='moveNDay(2)'>3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
   </div>
 
   <div class="offcanvas-body">
     <!-- PlanSelectList -->
-      <div class="container" v-for="(selectItem, idx) in selectList" :key="selectItem.contentId">
+    <!--<div class="container" v-for="(allSelectItem, idx) in allSelect" :key="idx">-->
+      <div v-for="(selectItem, idx) in allSelect[curDay]" :key="selectItem.contentId">
         <div class="col" @drop.prevent="onDrop($event, idx)" @dragover.prevent>
             <div @dragstart="startDrag($event, selectItem)" draggable="true">
                 <span class="title">{{selectItem.title}}</span>
@@ -248,7 +320,12 @@ const onDrop = (event, colNum) => {
                 </div>
             </div>
       </div>
+    <!--</div>-->
       </div>
+  </div>
+
+  <div class='offcanvas-footer'>
+    <button @click='savePlans'>저장</button>
   </div>
 </div>
 
@@ -310,5 +387,11 @@ const onDrop = (event, colNum) => {
 .add-btn {
     text-align: right;
     display: inline;
+}
+
+.page-nav {
+  position: fixed;
+  top: 50px;
+  right: 110px;
 }
 </style>

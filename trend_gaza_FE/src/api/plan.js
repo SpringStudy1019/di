@@ -21,9 +21,15 @@ function getCreatedPlan(success, fail) {
     local.get(`${url}/created`).then(success).catch(fail);
 }
 
+function registerPlan(planIdx, planRequest, success, fail) {
+    console.log(planRequest);
+    local.post(`${url}/${planIdx}`, JSON.stringify(planRequest)).then(success).catch(fail);
+}
+
 export {
     joinPlan,
     getPlans,
     getInvitedPlan,
     getCreatedPlan,
+    registerPlan
 };
