@@ -1,7 +1,8 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
-import {registerPlan} from "@/api/plan"
+import PageNavigation from '@/components/common/PageNavigation.vue'
+import { registerPlan } from "@/api/plan"
 
 var map;
 const markers = ref([]);
@@ -258,7 +259,24 @@ const savePlans = () => {
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasRightLabel">🎒현재 코스 리스트</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <nav class="page-nav" aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
   </div>
 
   <div class="offcanvas-body">
@@ -342,5 +360,11 @@ const savePlans = () => {
 .add-btn {
     text-align: right;
     display: inline;
+}
+
+.page-nav {
+  position: fixed;
+  top: 50px;
+  right: 110px;
 }
 </style>
