@@ -171,7 +171,12 @@ function toggleFollow() {
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">
-              <span class="fw-bold">{{ review.userId }}</span>
+              <!-- 사용자 조회 router-link-->
+              <router-link 
+                :to="{ name: 'user-yourpage', params: { userId: review.userId } }" 
+                class="btn btn-warning">
+                {{ review.userId }}
+            </router-link>
               <button id="follow-button" @click="toggleFollow" v-if="store.userInfo.userId !== review.userId">+ Follow</button>	
               <div class="text-secondary fw-light">
                 {{ review.registerDate }}
