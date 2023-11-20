@@ -303,7 +303,7 @@ const moveNDay = (value) => {
     <!-- PlanSelectList -->
     <!--<div class="container" v-for="(allSelectItem, idx) in allSelect" :key="idx">-->
       <div v-for="(selectItem, idx) in allSelect[curDay]" :key="selectItem.contentId">
-        <div class="col" @drop.prevent="onDrop($event, idx)" @dragover.prevent>
+        <div class="container" @drop.prevent="onDrop($event, idx)" @dragover.prevent>
             <div @dragstart="startDrag($event, selectItem)" draggable="true">
                 <span class="title">{{selectItem.title}}</span>
                 <div class="img-content">
