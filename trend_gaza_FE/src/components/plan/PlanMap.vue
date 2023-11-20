@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
-import Draggable from "vue3-draggable";
 
 var map;
 const markers = ref([]);
