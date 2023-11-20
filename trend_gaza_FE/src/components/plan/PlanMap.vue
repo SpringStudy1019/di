@@ -173,22 +173,15 @@ function hideMarkers() {
   markers.value = [];
 }
 
-const updateData = () => {
-
-}
-
+// 선택한 관광지를 해당 N일차에 추가하기
 const selectFunc = (data) => {
-  //selectList.value.push(data);
-  
-  // if (allSelect.value.length <= curDay.value) {
-  //   allSelect.value.push([]);
-  // }
-
   if(allSelect.value[curDay.value] == null) {
     allSelect.value[curDay.value] = [];
+  } else if (allSelect.value[curDay.value].length >= 10) {    // 각 N일차는 최대 10개만 등록 가능
+    window.alert("하루에 최대 10개만 등록 가능합니다.");
+    return;
   }
   allSelect.value[curDay.value].push(data);
-  
 }
 
 const deleteItem = (data) => {
@@ -249,11 +242,7 @@ const savePlans = () => {
 
 /* 버튼을 클릭하면 해당 일자에 작성한 계획으로 전환됨 */
 const moveNDay = (value) => {
-  console.log(value);
-  console.log(allSelect.value[value]);
   curDay.value = value;
-  console.log("일자가 변경되었습니다." + curDay.value);
-  console.log(allSelect.value[curDay.value]);
 }
 </script>
 
