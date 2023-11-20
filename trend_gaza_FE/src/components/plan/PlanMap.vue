@@ -40,8 +40,13 @@ onMounted(() => {
 
 });
 
+// 2차원 배열 초기화
 const initArray = () => {
   allSelect.value = new Array(3);
+  for(let i=0; i<3; i++) {
+    allSelect[i] = new Array();
+  }
+  console.log("초기값" + allSelect.value);
 }
 
 const initMap = () => {
@@ -176,12 +181,14 @@ const updateData = () => {
 const selectFunc = (data) => {
   selectList.value.push(data);
   
-  if (allSelect.value.length <= curDay.value) {
-    allSelect.value.push([]);
-  }
+  // if (allSelect.value.length <= curDay.value) {
+  //   allSelect.value.push([]);
+  // }
   console.log(allSelect.value[curDay.value]);
   console.log("값을 넣으려는 인덱스" + curDay.value);
-  allSelect.value[curDay.value] = selectList.value;
+  //allSelect.value[curDay.value] = selectList.value;
+  console.log("값이 안 들어가서 찍어봄" + allSelect.value[curDay.value]);
+  allSelect.value[curDay.value] = [data];
   
 }
 
