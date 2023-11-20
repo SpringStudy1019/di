@@ -1,8 +1,7 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
-import PlanSearchList from '@/components/plan/PlanSearchList.vue'
-import PlanSelectList from "@/components/plan/PlanSelectList.vue";
+import Draggable from "vue3-draggable";
 
 var map;
 const markers = ref([]);
@@ -169,6 +168,34 @@ const deleteItem = (data) => {
   selectList.value.splice(idx, 1);
 }
 
+const onSelectListUpdate = (updatedList) => {
+  // Handle the updated selectList in the parent component
+  selectList.value = updatedList;
+};
+
+const startDrag = (event, item) => {
+    event.dataTransfer.dropEffect = "move"
+    event.dataTransfer.effectAllowed = "move"
+    event.dataTransfer.setData("selectedItem", item.contentId)
+};
+
+const onDrop = (event, colNum) => {
+  const selectedItem = Number(event.dataTransfer.getData("selectedItem"));
+  // 리스트에서 선택된 아이템과 같은 content 값을 가진 요소를 찾아 index를 반환한다.
+  let targetIdx;
+  let targetItem;
+  selectList.value.forEach((obj, index) => {
+    if (obj.contentId === selectedItem) {
+        targetIdx = index;
+        targetItem = obj;
+      }
+    })
+
+  // 스위치 연산
+  const temp = selectList.value[colNum];
+  selectList.value[colNum] = selectList.value[targetIdx];
+  selectList.value[targetIdx] = temp;
+};
 </script>
 
 <template>
@@ -209,16 +236,20 @@ const deleteItem = (data) => {
 
   <div class="offcanvas-body">
     <!-- PlanSelectList -->
-    <div class="container" v-for="selectItem in selectList" :key="selectItem.contentId">
-        <span class="title">{{selectItem.title}}</span>
-        <div class="img-content">
-            <img class="img" :src="selectItem.firstImage"/>
-        </div>
-        <span>{{ selectItem.addr1 }} </span>
-        <div class="delete-btn">
-            <button @click='deleteItem(selectItem)'>삭제</button>
-        </div>
-    </div>
+      <div class="container" v-for="(selectItem, idx) in selectList" :key="selectItem.contentId">
+        <div class="col" @drop.prevent="onDrop($event, idx)" @dragover.prevent>
+            <div @dragstart="startDrag($event, selectItem)" draggable="true">
+                <span class="title">{{selectItem.title}}</span>
+                <div class="img-content">
+                    <img class="img" :src="selectItem.firstImage"/>
+                </div>
+                <span>{{ selectItem.addr1 }} </span>
+                <div class="delete-btn">
+                    <button @click='deleteItem(selectItem)'>삭제</button>
+                </div>
+            </div>
+      </div>
+      </div>
   </div>
 </div>
 
