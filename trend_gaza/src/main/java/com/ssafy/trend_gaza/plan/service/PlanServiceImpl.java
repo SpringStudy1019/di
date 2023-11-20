@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
@@ -90,9 +91,18 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public List<Plan> getInvitedPlans(String creatorId, String title) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Plan> getInvitedPlans(String userId) {
+		return planMapper.getInvitedPlans(userId);
+	}
+
+	@Override
+	public int getInvitedPlan(AcceptInvitationRequest acceptInvitationRequest) {
+		return planMapper.getInvitedPlan(acceptInvitationRequest);
+	}
+
+	@Override
+	public List<PlanResponse> getCreatedPlans(String userId) {
+		return planMapper.getCreatedPlans(userId);
 	}
 	
 	

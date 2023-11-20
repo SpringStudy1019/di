@@ -4,15 +4,26 @@ const local = localAxios();
 
 const url = "/plans";
 
-function joinPlan(param, success, fail) {
-    local.post(`${url}`, { params: param }).then(success).catch(fail);
+// 초대된 여행 계획에 참여하기
+function joinPlan(joinInfo, success, fail) {
+    local.post(`${url}/join`, JSON.stringify(joinInfo)).then(success).catch(fail);
 }
 
 function getPlans(success, fail) {
     local.get(`${url}`).then(success).catch(fail);
 }
 
+function getInvitedPlan(userId, success, fail) {
+    local.get(`${url}/invite/${userId}`).then(success).catch(fail);
+}
+
+function getCreatedPlan(success, fail) {
+    local.get(`${url}/created`).then(success).catch(fail);
+}
+
 export {
     joinPlan,
     getPlans,
+    getInvitedPlan,
+    getCreatedPlan,
 };

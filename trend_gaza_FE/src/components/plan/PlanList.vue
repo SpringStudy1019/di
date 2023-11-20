@@ -3,16 +3,15 @@ import { ref, onMounted } from 'vue';
 import { followList } from "@/api/follow";
 import { getPlans } from "@/api/plan";
 import { registNoti } from "@/api/notification";
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user';
+import { getInvitedPlan, getCreatedPlan } from "@/api/plan";
 
 onMounted(() => {
     getPlanRequest();
+    getInvitedPlans();
 });
 
 const store = useUserStore()
-
-
-// 여행 계획이 있는 사용자인지 체크
 
 // 친구 보였다가, 안 보였다하는 상태
 const showFriend = ref(false);
@@ -29,7 +28,6 @@ const requestFriends = () => {
    followList(store.userInfo.userId,
       ({ data }) => {  
           friends.value = data;
-        console.log("friends 데이터 넘어왔다!", friends.value)
     },
     (error) => {
         console.log(error);
@@ -38,10 +36,9 @@ const requestFriends = () => {
 
 // 내가 계획한 여행 가져오기
 const myPlans = ref([])
-
 const getPlanRequest = () => {
-    console.log("여기에 들어왔다!")
-    getPlans(
+    console.log("지금 로그인한 사용자!", store.userInfo.userId)
+    getCreatedPlan(
     ({ data }) => {  
             myPlans.value = data;
             console.log(myPlans.value)
@@ -92,6 +89,21 @@ const notificationRequest = (friend, title) => {
         console.log(error);
     });
 };
+
+// 내가 초대된 여행 조회하기
+const invitations = ref([])
+const getInvitedPlans = () => {
+    console.log("여기여기 봐줘!");
+   // API 호출
+    getInvitedPlan(
+        store.userInfo.userId,
+      ({ data }) => {  
+        invitations.value = data;
+    },
+    (error) => {
+        console.log(error);
+    });
+};
 </script>
 
 <template>
@@ -100,28 +112,39 @@ const notificationRequest = (friend, title) => {
     <div class="col-8">
         <div class="col-2"></div>
         <div class='margin'></div>
+
         <h1>내가 초대된 여행 계획</h1>
+        <div class="col-sm-6">
+            <div class="card text-center">
+                <div class="card-body">
+            <div v-if='invitations.length > 0'>
+            <div v-for='invitation in invitations' :key='invitation.planIdx'>
+                <h5 class="card-title">{{invitation.title}}</h5>
+                <p class="card-text">{{invitation.userId}}와 함께하는 여행이에요. <br>
+                    {{ formatDate(invitation.startDate) }}부터 {{ formatDate(invitation.endDate) }}까지 
+                    ({{calculateDays(invitation.startDate, invitation.endDate)}}일)</p>
+                <router-link 
+                    :to="{ name: 'plan'}" 
+                    class="btn btn-primary me-2">
+                    여행계획짜기
+                </router-link>
+                <button class="btn btn-warning">여행일정</button>
+            </div>
+        </div>
+        <div v-else>
+            아직 초대된 여행 계획이 없어요!
+        </div>
+    </div>
+        </div>
+    </div>
+
+        <div class='margin-big'></div>
+    
+        <h1>내가 계획한 여행</h1>
         <div class="col-sm-6">
         <div class="card text-center">
         <div class="card-body">
-            <h5 class="card-title">plan.title</h5>
-            <p class="card-text">user_id와 함께하는 여행이에요. <br>
-                startDate부터 endDate까지 (00일)</p>
-            <router-link 
-                :to="{ name: 'plan'}" 
-                class="btn btn-primary me-2">
-                여행계획짜기
-            </router-link>
-   
-            <!-- 여행계획 상세보기 -->
-           
-           
-        </div>
-        </div>
-        <div class='margin'></div>
-        <h1>내가 계획한 여행</h1>
-        <div class="card text-center">
-        <div class="card-body">
+            <div v-if='myPlans.length > 0'>
             <div v-for='myPlan in myPlans' :key='myPlan.planIdx'>
                 <h5 class="card-title">{{myPlan.title}}</h5>
                 <p class="card-text">
@@ -139,18 +162,26 @@ const notificationRequest = (friend, title) => {
                         <button @click="notificationRequest(friend, myPlan.title)" class="btn btn-warning">여행갈래?</button>
                     </li>
                 </ul>
+                </div>
+            </div>
+            </div>
+            <div v-else>
+                아직 여행 계획이 없어요!
             </div>
         </div>
         </div>
-        </div>
+    </div>
     </div>
     </div>
     <div class="col-2"></div>
-</div>
+
 </template>
 
 <style scoped>
 .margin {
     margin-bottom: 30px;
+}
+.margin-big {
+    margin-bottom: 50px;
 }
 </style>
