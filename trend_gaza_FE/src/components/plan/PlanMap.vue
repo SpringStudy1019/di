@@ -162,7 +162,6 @@ const updateData = () => {
 
 const selectFunc = (data) => {
   selectList.value.push(data);
-  console.log("선택 후 총 배열 길이" + selectList.value.length);
 }
 
 </script>
@@ -182,8 +181,18 @@ const selectFunc = (data) => {
   </div>
   <div class="offcanvas-body">
     <PlanSearch @getAttractionData="loadAttractionList" />
-    <PlanSearchList v-for="attraction in attractionList" :attraction="attraction" 
-    :key="attraction.contentId" @selectAttractionData="selectFunc"/>
+
+    <!-- planSearchList -->
+    <div class="container" v-for="attraction in attractionList" :key="attraction.contentId">
+        <span class="title">{{attraction.title}}</span>
+        <div class="img-content">
+            <img class="img" :src="attraction.firstImage"/>
+        </div>
+        <span>{{ attraction.addr1 }} </span>
+        <div class="add-btn" >
+            <button @click="selectFunc(attraction)">추가</button>
+        </div>
+      </div>
   </div>  
 </div>
 
@@ -194,7 +203,17 @@ const selectFunc = (data) => {
   </div>
 
   <div class="offcanvas-body">
-    <PlanSelectList v-for="selectItem in selectList" :selectAttraction="selectItem" :key="selectItem.contentId"/>
+    <!-- PlanSelectList -->
+    <div class="container" v-for="selectItem in selectList" :key="selectItem.contentId">
+        <span class="title">{{selectItem.title}}</span>
+        <div class="img-content">
+            <img class="img" :src="selectItem.firstImage"/>
+        </div>
+        <span>{{ selectItem.addr1 }} </span>
+        <div class="delete-btn">
+            <button>삭제</button>
+        </div>
+    </div>
   </div>
 </div>
 
@@ -225,5 +244,36 @@ const selectFunc = (data) => {
 .right-section {
   flex: 2; /* Takes up twice the space of the left section */
   padding: 20px; /* Adjust padding as needed */
+}
+
+/* PlanSearchList */
+.container {
+    border: 1px solid black;
+    margin: 10px;
+    width: 300px;
+    height: 300px;
+    border-radius: 8px;
+}
+
+.img {
+    width: 250px;
+    height: 200px;
+    display: block;
+}
+
+.img-content {
+    margin: 5px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 20px;
+}
+
+.add-btn {
+    text-align: right;
+    display: inline;
 }
 </style>
