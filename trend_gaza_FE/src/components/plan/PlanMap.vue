@@ -2,7 +2,7 @@
 import { ref, watch, onMounted } from "vue";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
 import PlanSearchList from '@/components/plan/PlanSearchList.vue'
-import PlanSelectList from "./PlanSelectList.vue";
+import PlanSelectList from "@/components/plan/PlanSelectList.vue";
 
 var map;
 const markers = ref([]);
@@ -192,6 +192,7 @@ const selectFunc = (data) => {
     <h5 class="offcanvas-title" id="offcanvasRightLabel">🎒현재 코스 리스트</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
+
   <div class="offcanvas-body">
     <PlanSelectList v-for="selectItem in selectList" :selectAttraction="selectItem" :key="selectItem.contentId"/>
   </div>

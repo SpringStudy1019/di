@@ -26,6 +26,6 @@ export {
     getAttractionDetail,
     searchAttraction,
     listByCategory,
-    searchByCategory,
+    //searchByCategory,
     searchAttractionsByCondition
 }
