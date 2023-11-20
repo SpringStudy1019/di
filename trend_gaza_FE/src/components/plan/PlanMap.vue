@@ -220,13 +220,15 @@ const onDrop = (event, colNum) => {
 
 const trasformRequestDTO = () => {
   const requestList = [];
-  for (let i = 0; i < selectList.value.length; i++) {
-    let planRequest = {
-      "attractionId": selectList.value[i].contentId,
-      "order": i,
-      "orderDate": 1
+  for (let i = 0; i < allSelect.value.length; i++) {
+    for (let j=0; j < allSelect.value[i].length; j++) {
+      let planRequest = {
+        "attractionId": allSelect.value[i][j].contentId,
+        "order": j+1,
+        "orderDate": i+1
+      }
+      requestList.push(planRequest);
     }
-    requestList.push(planRequest);
   }
   return requestList;
 }
