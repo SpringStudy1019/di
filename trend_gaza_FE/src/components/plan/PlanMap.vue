@@ -1,8 +1,7 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
-import PlanSearchList from '@/components/plan/PlanSearchList.vue'
-import PlanSelectList from "./PlanSelectList.vue";
+import Draggable from "vue3-draggable";
 
 var map;
 const markers = ref([]);
@@ -162,9 +161,41 @@ const updateData = () => {
 
 const selectFunc = (data) => {
   selectList.value.push(data);
-  console.log("선택 후 총 배열 길이" + selectList.value.length);
 }
 
+const deleteItem = (data) => {
+  let idx = selectList.value.findIndex(item => item.contentId == data.contentId);
+  selectList.value.splice(idx, 1);
+}
+
+const onSelectListUpdate = (updatedList) => {
+  // Handle the updated selectList in the parent component
+  selectList.value = updatedList;
+};
+
+const startDrag = (event, item) => {
+    event.dataTransfer.dropEffect = "move"
+    event.dataTransfer.effectAllowed = "move"
+    event.dataTransfer.setData("selectedItem", item.contentId)
+};
+
+const onDrop = (event, colNum) => {
+  const selectedItem = Number(event.dataTransfer.getData("selectedItem"));
+  // 리스트에서 선택된 아이템과 같은 content 값을 가진 요소를 찾아 index를 반환한다.
+  let targetIdx;
+  let targetItem;
+  selectList.value.forEach((obj, index) => {
+    if (obj.contentId === selectedItem) {
+        targetIdx = index;
+        targetItem = obj;
+      }
+    })
+
+  // 스위치 연산
+  const temp = selectList.value[colNum];
+  selectList.value[colNum] = selectList.value[targetIdx];
+  selectList.value[targetIdx] = temp;
+};
 </script>
 
 <template>
@@ -182,8 +213,18 @@ const selectFunc = (data) => {
   </div>
   <div class="offcanvas-body">
     <PlanSearch @getAttractionData="loadAttractionList" />
-    <PlanSearchList v-for="attraction in attractionList" :attraction="attraction" 
-    :key="attraction.contentId" @selectAttractionData="selectFunc"/>
+
+    <!-- planSearchList -->
+    <div class="container" v-for="attraction in attractionList" :key="attraction.contentId">
+        <span class="title">{{attraction.title}}</span>
+        <div class="img-content">
+            <img class="img" :src="attraction.firstImage"/>
+        </div>
+        <span>{{ attraction.addr1 }} </span>
+        <div class="add-btn" >
+            <button @click="selectFunc(attraction)">추가</button>
+        </div>
+      </div>
   </div>  
 </div>
 
@@ -192,8 +233,23 @@ const selectFunc = (data) => {
     <h5 class="offcanvas-title" id="offcanvasRightLabel">🎒현재 코스 리스트</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
+
   <div class="offcanvas-body">
-    <PlanSelectList v-for="selectItem in selectList" :selectAttraction="selectItem" :key="selectItem.contentId"/>
+    <!-- PlanSelectList -->
+      <div class="container" v-for="(selectItem, idx) in selectList" :key="selectItem.contentId">
+        <div class="col" @drop.prevent="onDrop($event, idx)" @dragover.prevent>
+            <div @dragstart="startDrag($event, selectItem)" draggable="true">
+                <span class="title">{{selectItem.title}}</span>
+                <div class="img-content">
+                    <img class="img" :src="selectItem.firstImage"/>
+                </div>
+                <span>{{ selectItem.addr1 }} </span>
+                <div class="delete-btn">
+                    <button @click='deleteItem(selectItem)'>삭제</button>
+                </div>
+            </div>
+      </div>
+      </div>
   </div>
 </div>
 
@@ -224,5 +280,36 @@ const selectFunc = (data) => {
 .right-section {
   flex: 2; /* Takes up twice the space of the left section */
   padding: 20px; /* Adjust padding as needed */
+}
+
+/* PlanSearchList */
+.container {
+    border: 1px solid black;
+    margin: 10px;
+    width: 300px;
+    height: 300px;
+    border-radius: 8px;
+}
+
+.img {
+    width: 250px;
+    height: 200px;
+    display: block;
+}
+
+.img-content {
+    margin: 5px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 20px;
+}
+
+.add-btn {
+    text-align: right;
+    display: inline;
 }
 </style>
