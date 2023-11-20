@@ -8,6 +8,7 @@ function localAxios() {
     baseURL: VITE_VUE_API_URL,
     headers: {
       "Content-Type": "application/json;charset=utf-8",
+      "Authorization": sessionStorage.getItem("accessToken"),
     },
   });
   return instance;

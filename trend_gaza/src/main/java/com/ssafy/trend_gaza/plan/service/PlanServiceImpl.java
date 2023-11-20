@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
+import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
 import com.ssafy.trend_gaza.plan.repository.PlanMapper;
 
 @Service
@@ -73,5 +74,20 @@ public class PlanServiceImpl implements PlanService {
 	public List<PlanResponse> getMyPlans(String userId) {
 		return planMapper.getMyPlans(userId);
 	}
+
+	@Override
+	public int joinPlan(int planIdx, String userId) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("planIdx", planIdx);
+		param.put("userId", userId);
+		return planMapper.joinPlan(param);
+	}
+
+	@Override
+	public int setPlan(SetPlanRequest setPlanRequest) {
+		return planMapper.setPlan(setPlanRequest);
+	}
+	
+	
 
 }

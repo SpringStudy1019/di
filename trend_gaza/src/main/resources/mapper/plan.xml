@@ -61,10 +61,22 @@
 	</delete>
 
 	<select id="getMyPlans" parameterType="string" resultMap="planResponse">
-		select p.plan_idx, title, start_date, end_date, COUNT(up.user_id) AS user_count
-		from plan p join user_plan up 
-		on p.plan_idx = up.plan_idx
-		where p.user_id = #{userId} or up.user_id=#{userId}
-		GROUP BY p.plan_idx
+		SELECT p.plan_idx, title, start_date, end_date, COUNT(up.user_id) AS user_count
+		  FROM plan p
+		  LEFT JOIN user_plan up ON p.plan_idx = up.plan_idx AND up.user_id = #{userId}
+		  WHERE p.user_id = #{userId} OR up.user_id IS NOT NULL
+		  GROUP BY p.plan_idx
 	</select>
+	
+	<!-- 여행에 참여하기 -->
+	<insert id="joinPlan" parameterType="map">
+		insert into user_plan(user_id, plan_idx)
+		values(#{userId}, #{planIdx})
+	</insert>
+	
+	<!-- 여행 계획표 (방) 만들기 -->
+	<insert id="setPlan" parameterType="setPlanRequest">
+		insert into plan(title, start_date, end_date, user_id)
+		values(#{title}, #{startDate}, #{endDate}, #{userId})
+	</insert>
 </mapper>

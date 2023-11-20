@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { listNoti, deleteNoti } from "@/api/notification";
+import { joinPlan } from "@/api/plan";
 import router from '../../router';
 
 // 사용자 정보 필요 
@@ -23,10 +24,22 @@ const getNotifications = () => {
         console.log(error);
     });
 };
-// 수락 버튼 누르면 여행 계획 페이지로 이동 (추후 수정/보완)
+// 수락 버튼 누르면 여행 계획 참여
+const joinInfo = ref({
+    "planIdx": "",
+    "userId": store.userInfo.userId,
+})
 const accept = () => {
-    alert("이제 여행 계획을 짜러 가볼까요?")
-    router.push("/plan/list")
+    alert("여행 계획에 조인합니다!")
+    // api 호출
+    joinPlan(
+        joinInfo.value,
+        (response) => {  
+            router.push("/plan/list")
+    },
+    (error) => {
+        console.log(error);
+    });
 }
 
 

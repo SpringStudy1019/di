@@ -3,6 +3,7 @@ package com.ssafy.trend_gaza.plan.controller;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
+import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
 import com.ssafy.trend_gaza.plan.service.PlanService;
 import com.ssafy.trend_gaza.util.AuthenticationUtil;
 
@@ -55,6 +58,24 @@ public class PlanController {
 	public ResponseEntity<?> getMyPlans() {
 		final String userId = AuthenticationUtil.getCurrentUserSocialId();
 		return ResponseEntity.ok().body(planService.getMyPlans(userId));
+	}
+	
+	/*
+	 * 초대된 여행 계획에 참여하기
+	 */
+	@PostMapping("/join/{planIdx}")
+	public ResponseEntity<?> joinPlan(@PathVariable int planIdx, @RequestParam String userId) {
+		planService.joinPlan(planIdx, userId);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	/*
+	 * 여행 계획표 (방) 만들기
+	 */
+	@PostMapping
+	public ResponseEntity<?> setPlan(@RequestBody SetPlanRequest setPlanRequest) {
+		planService.setPlan(setPlanRequest);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 }
