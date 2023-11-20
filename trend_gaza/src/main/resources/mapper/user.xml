@@ -16,6 +16,7 @@
 		<result column="join_date" property="joinDate"/>
 		<result column="social_id" property="socialId"/>
 		<result column="token" property="refreshToken"/>
+		<result column="img_url" property="imgUrl"/>
 	</resultMap>
 
 	<insert id="register" parameterType="registerRequest">
@@ -34,7 +35,7 @@
 	</select>
 	
 	<select id="userInfo" parameterType="string" resultMap="user">
-		select user_name, user_id, mobile, email_id, email_domain, gender, join_date
+		select user_name, user_id, mobile, email_id, email_domain, gender, join_date, img_url
 		from user
 		where user_id = #{userId}
 	</select>
@@ -114,6 +115,12 @@
 	  UPDATE user
 	  SET token = NULL
 	  WHERE user_id = #{userId}
+	</update>
+	
+	<update id="modifyProfileImage" parameterType="map">
+		update user
+		set img_url = #{imgUrl}
+		where user_id = #{userId}
 	</update>
 	
 </mapper>

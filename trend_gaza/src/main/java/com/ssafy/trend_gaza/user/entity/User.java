@@ -17,12 +17,13 @@ public class User {
 	private String socialId;
 	private PlatformType platform;
 	private String refreshToken;
+	private String imgUrl;
 	
 	public User() {}
 	
 	public User(String userId, String userName, String password, String mobile, String emailId, String emailDomain,
 			String gender, AuthorityType authority, String joinDate, String socialId, PlatformType platform,
-			String refreshToken) {
+			String refreshToken, String imgUrl) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -36,6 +37,7 @@ public class User {
 		this.socialId = socialId;
 		this.platform = platform;
 		this.refreshToken = refreshToken;
+		this.imgUrl = imgUrl;
 	}
 
 	
@@ -85,6 +87,10 @@ public class User {
 
 	public String getRefreshToken() {
 		return refreshToken;
+	}
+	
+	public String getImgUrl() {
+		return imgUrl;
 	}
 	
 }

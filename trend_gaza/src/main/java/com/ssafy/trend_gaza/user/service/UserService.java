@@ -1,9 +1,11 @@
 package com.ssafy.trend_gaza.user.service;
 
+
 import com.ssafy.trend_gaza.user.dto.ChangePwdRequest;
 import com.ssafy.trend_gaza.user.dto.FindIdRequest;
 import com.ssafy.trend_gaza.user.dto.FindPwdRequest;
 import com.ssafy.trend_gaza.user.dto.LoginRequest;
+import com.ssafy.trend_gaza.user.dto.ModifyProfileImageRequest;
 import com.ssafy.trend_gaza.user.dto.ModifyRequest;
 import com.ssafy.trend_gaza.user.dto.RegisterRequest;
 import com.ssafy.trend_gaza.user.entity.User;
@@ -39,6 +41,9 @@ public interface UserService {
 	
 	/* 내 정보 수정 */
 	void modify(ModifyRequest modifyRequest) throws Exception;
+	
+	/* 내 프로필 이미지 수정 */
+	int modifyProfileImage(String userId, ModifyProfileImageRequest modifyProfileImageRequest) throws Exception;
 	
 	/* 비밀번호 변경: 현재 비밀번호와 새로운 비밀번호 받기  */
 	int changePwd(ChangePwdRequest changePwdRequest) throws Exception;

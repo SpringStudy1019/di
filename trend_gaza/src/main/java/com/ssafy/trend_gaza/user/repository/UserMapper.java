@@ -50,6 +50,9 @@ public interface UserMapper {
 	/* 내 정보 수정 */
 	void modify(ModifyRequest modifyRequest) throws SQLException;
 	
+	/* 내 프로필 이미지 수정 */
+	int modifyProfileImage(Map<String, String> params) throws SQLException;
+	
 	/* 비밀번호 변경: 현재 비밀번호와 새로운 비밀번호 받기  */
 	int changePwd(ChangePwdRequest changePwdRequest) throws SQLException;
 	

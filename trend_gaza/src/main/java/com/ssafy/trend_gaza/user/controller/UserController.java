@@ -27,6 +27,7 @@ import com.ssafy.trend_gaza.user.dto.ChangePwdRequest;
 import com.ssafy.trend_gaza.user.dto.FindIdRequest;
 import com.ssafy.trend_gaza.user.dto.FindPwdRequest;
 import com.ssafy.trend_gaza.user.dto.LoginRequest;
+import com.ssafy.trend_gaza.user.dto.ModifyProfileImageRequest;
 import com.ssafy.trend_gaza.user.dto.ModifyRequest;
 import com.ssafy.trend_gaza.user.dto.RegisterRequest;
 import com.ssafy.trend_gaza.user.entity.User;
@@ -248,6 +249,13 @@ public class UserController {
 	public ResponseEntity<?> logout(@PathVariable String userId) throws Exception {
 		userService.logout(userId);
 		return ResponseEntity.ok(URI.create("/"));	
+	}
+	
+	@PutMapping("/image")
+	public ResponseEntity<?> modifyProfileImage(@RequestBody ModifyProfileImageRequest modifyProfileImageRequest) throws Exception {
+		String userId = AuthenticationUtil.getCurrentUserSocialId();
+		userService.modifyProfileImage(userId, modifyProfileImageRequest);
+		return ResponseEntity.ok(URI.create("/"));
 	}
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
