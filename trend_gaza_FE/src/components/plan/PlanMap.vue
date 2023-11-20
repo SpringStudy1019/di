@@ -184,11 +184,11 @@ const selectFunc = (data) => {
   // if (allSelect.value.length <= curDay.value) {
   //   allSelect.value.push([]);
   // }
-  console.log(allSelect.value[curDay.value]);
-  console.log("값을 넣으려는 인덱스" + curDay.value);
-  //allSelect.value[curDay.value] = selectList.value;
-  console.log("값이 안 들어가서 찍어봄" + allSelect.value[curDay.value]);
-  allSelect.value[curDay.value] = [data];
+
+  if(allSelect.value[curDay.value] == null) {
+    allSelect.value[curDay.value] = [];
+  }
+  allSelect.value[curDay.value].push(data);
   
 }
 
