@@ -110,9 +110,9 @@ export const useUserStore = defineStore("userStore",
       );
     };
   
-    const userLogout = async (userid) => {
+    const userLogout = async (userId) => {
       await logout(
-        userid,
+        userId,
         (response) => {
           if (response.status === httpStatusCode.OK) {
             console.log("로그아웃 성공!");

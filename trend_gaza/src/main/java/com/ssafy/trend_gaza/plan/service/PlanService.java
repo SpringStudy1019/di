@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
+import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
@@ -30,4 +31,7 @@ public interface PlanService {
 	
 	/* 내가 만든 여행 조회하기 */
 	List<PlanResponse> getCreatedPlans(String userId);
+	
+	/* 여행 일정 상세보기 */
+	PlanDetailResponse getPlanDetail(int planIdx);
 }

@@ -38,7 +38,7 @@ public interface ReviewMapper {
 	void modify(ReviewModifyResponse modifyResponse) throws SQLException;
 	
 	/* 리뷰 삭제 */ 
-	void delete(String reviewIdx) throws SQLException;
+	void delete(int reviewIdx) throws SQLException;
 	
 	/* 사용자들이 가장 많이 리뷰를 남긴 여행지 조회 */ 
 	List<AttractionInfo> mostReviews() throws SQLException;

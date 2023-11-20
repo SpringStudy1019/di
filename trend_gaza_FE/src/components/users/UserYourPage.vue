@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { getUser } from '@/api/user';
 
 onMounted(() => {
@@ -8,7 +8,6 @@ onMounted(() => {
 });
 
 const route = useRoute();
-const router = useRouter();
 const { userId } = route.params;
 
 const userInfo = ref({})
@@ -21,9 +20,9 @@ const getUserInfo = () => {
         ({ data }) => { 
             userInfo.value = data;
             },
-    (error) => {
-      console.log(error);
-    }
+        (error) => {
+          console.log(error);
+        }
     )
 }
 

@@ -67,9 +67,9 @@ public class PlanController {
 	@PostMapping("/join")
 	public ResponseEntity<?> joinPlan(@RequestBody AcceptInvitationRequest acceptInvitationRequest) {
 		// creatorId와 title을 가지고, unique 여행 계획을 찾는다
-		System.out.println(acceptInvitationRequest.getCreatorId());
-		System.out.println(acceptInvitationRequest.getJoinUserId());
-		System.out.println(acceptInvitationRequest.getTitle());
+//		System.out.println(acceptInvitationRequest.getCreatorId());
+//		System.out.println(acceptInvitationRequest.getJoinUserId());
+//		System.out.println(acceptInvitationRequest.getTitle());
 		int planIdx = planService.getInvitedPlan(acceptInvitationRequest);
 		String joinUserId = acceptInvitationRequest.getJoinUserId();
 		planService.joinPlan(planIdx, joinUserId);
@@ -99,9 +99,32 @@ public class PlanController {
 	/*
 	 * 내가 만든 여행 가져오기
 	 */
-	@GetMapping("/created")
-	public ResponseEntity<?> getCreatedPlans() {
-		final String userId = AuthenticationUtil.getCurrentUserSocialId();
+	@GetMapping("/created/{userId}")
+	public ResponseEntity<?> getCreatedPlans(@PathVariable String userId) {
 		return ResponseEntity.ok().body(planService.getCreatedPlans(userId));
 	}
+	
+	/*
+	 * creator가 여행 상세정보 가져오기 
+	 * 여행에 참여하는 모든 사람들이 자세한 여행 일정을 볼 수 있으며
+	 * 여행 테이블의 PK, 여행 계획 제목, 방문 일자와 방문 순서가 정해진 여행지, 여행 시작과 끝 일자, 모든 참여자 정보를 반환 받는다. 
+	 * return PlanDetailResponse 
+	 */
+	@GetMapping("/detail")
+	public ResponseEntity<?> getPlanDetail(@RequestBody AcceptInvitationRequest acceptInvitationRequest) {
+		int planIdx = planService.getInvitedPlan(acceptInvitationRequest);
+		return ResponseEntity.ok().body(planService.getPlanDetail(planIdx));
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+

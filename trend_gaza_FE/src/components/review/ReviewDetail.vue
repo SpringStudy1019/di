@@ -144,7 +144,12 @@ function toggleFollow() {
   }
 }
 
-
+// 다른 사용자 페이지 가기
+const goYourPage = (userId) => {
+  if (store.userInfo.userId != userId) {
+    router.push(`/user/${userId}`);
+  }
+}
 </script>
 
 <template>
@@ -172,11 +177,11 @@ function toggleFollow() {
           <div class="col-md-8">
             <div class="clearfix align-content-center">
               <!-- 사용자 조회 router-link-->
-              <router-link 
+              <!-- <router-link 
                 :to="{ name: 'user-yourpage', params: { userId: review.userId } }" 
                 class="btn btn-warning">
-                {{ review.userId }}
-            </router-link>
+              </router-link> -->
+              <button class="btn btn-light" @click="goYourPage(review.userId)"> {{ review.userId }}</button>
               <button id="follow-button" @click="toggleFollow" v-if="store.userInfo.userId !== review.userId">+ Follow</button>	
               <div class="text-secondary fw-light">
                 {{ review.registerDate }}
@@ -195,6 +200,7 @@ function toggleFollow() {
             {{ review.content }}
           </div>
           <div >
+            <!-- 이미지 불러오기 -->
             <review-image />
           </div>
           <div class="divider mt-3 mb-3"></div>

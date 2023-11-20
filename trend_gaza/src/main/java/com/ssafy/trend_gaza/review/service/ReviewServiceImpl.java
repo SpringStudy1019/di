@@ -89,7 +89,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public void delete(String reviewIdx) throws Exception {
+	public void delete(int reviewIdx) throws Exception {
 		reviewMapper.delete(reviewIdx);
 	}
 

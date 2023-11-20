@@ -9,18 +9,23 @@ const images = ref([]);
 onMounted(() => {
     getReviewImage(props.review.reviewIdx,
         ({ data }) => {
+            console.log("이미지 불러와지나요?!!!! ")
             images.value = data;
+            console.log(images.value)
         }, (error) => {
             console.log(error);
         });
 });
 
-console.log(images.value)
+// console.log(images.value)
 </script>
 
 <template>
     <div class="card mb-3">
-        <img class="card-img-top" :src="images.value" alt="Card image cap">
+        <div v-for='image in images' :key='image.saveFile'>
+            <img class="card-img-top" :src='image.saveFile'/>
+        </div>
+        <!-- <img class="card-img-top" :src="images.saveFile" alt="Card image cap"> -->
         <div class="card-header text-center">
         여행후기 #{{ review.reviewIdx }}
         </div>

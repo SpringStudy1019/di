@@ -110,7 +110,7 @@ public class ReviewController {
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<?> delete(String reviewIdx) {
+	public ResponseEntity<?> delete(int reviewIdx) {
 		try {
 			reviewService.delete(reviewIdx);
 			return new ResponseEntity<>(HttpStatus.OK);

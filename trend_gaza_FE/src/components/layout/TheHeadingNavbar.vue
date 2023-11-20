@@ -50,7 +50,7 @@ const logout = async () => {
         <!-- v-for 안에 v-if를 쓰고 싶으면, template을 2번 쓰면 된다! -->
       <template v-for="menu in menuList" :key="menu.routeName">
           <template v-if="menu.show">
-            <template v-if="menu.routeName === 'user-logout'">
+            <template v-if="userStore.userInfo && userStore.userInfo.userId === ''">
               <li class="nav-item">
                 <router-link to="/" @click.prevent="logout" class="nav-link">{{
                   menu.name
@@ -58,28 +58,19 @@ const logout = async () => {
               </li>
             </template>
             <template v-else>
-              <template v-if="menu.isImage">
                 <li class="nav-item">
-                <router-link :to="{ name: menu.routeName }" class="nav-link">
-                  <img 
-                  v-if="menu.isImage" 
-                  src="@/assets/icon/bell.png" 
-                  alt="알림"
-                  style="height: 25px; width: 25px;"
-                  @click = "toggleModal"
-                  />
-                </router-link>
-
-              </li>
-            </template>
-              <template v-else>
-                <li class="nav-item">
-                <router-link :to="{ name: menu.routeName }" class="nav-link">{{
-                  menu.name
-                }}</router-link>
-              </li>
-              </template>
-             
+                  <template v-if="menu.name === '로그아웃'">
+                    <router-link :to="{ name: menu.routeName }" class="nav-link" @click="logout">{{
+                      menu.name
+                    }}</router-link>
+                  </template>
+                  <template v-else>
+                    <router-link :to="{ name: menu.routeName }" class="nav-link">{{
+                      menu.name
+                    }}</router-link>
+                  </template>
+                </li>
+      
             </template>
           </template>
         </template>

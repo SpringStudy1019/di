@@ -87,9 +87,8 @@
 		where review_idx=#{reviewIdx}
 	</update>
 
-	<delete id="delete" parameterType="String">
-		delete from review
-		where review_idx=#{reviewIdx}
+	<delete id="delete" parameterType="int">
+	    delete from review where review_idx=#{reviewIdx}
 	</delete>
 	
 	<resultMap type="com.ssafy.trend_gaza.attraction.entity.AttractionInfo" id="attractionInfo">
