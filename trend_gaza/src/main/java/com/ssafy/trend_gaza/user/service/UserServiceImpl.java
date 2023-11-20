@@ -12,6 +12,7 @@ import com.ssafy.trend_gaza.user.dto.ChangePwdRequest;
 import com.ssafy.trend_gaza.user.dto.FindIdRequest;
 import com.ssafy.trend_gaza.user.dto.FindPwdRequest;
 import com.ssafy.trend_gaza.user.dto.LoginRequest;
+import com.ssafy.trend_gaza.user.dto.ModifyProfileImageRequest;
 import com.ssafy.trend_gaza.user.dto.ModifyRequest;
 import com.ssafy.trend_gaza.user.dto.RegisterRequest;
 import com.ssafy.trend_gaza.user.entity.PlatformType;
@@ -159,6 +160,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void logout(String userId) throws Exception {
 		userMapper.logout(userId);
+	}
+
+	@Override
+	public int modifyProfileImage(String userId, ModifyProfileImageRequest modifyProfileImageRequest) throws Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("userId", userId);
+		params.put("imgUrl", modifyProfileImageRequest.getImgUrl());
+		return userMapper.modifyProfileImage(params);
 	}
 	
 }
