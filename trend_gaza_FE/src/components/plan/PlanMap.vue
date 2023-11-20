@@ -46,7 +46,6 @@ const initArray = () => {
   for(let i=0; i<3; i++) {
     allSelect[i] = new Array();
   }
-  console.log("초기값" + allSelect.value);
 }
 
 const initMap = () => {
@@ -213,7 +212,7 @@ const onDrop = (event, colNum) => {
   // 리스트에서 선택된 아이템과 같은 content 값을 가진 요소를 찾아 index를 반환한다.
   let targetIdx;
   let targetItem;
-  selectList.value.forEach((obj, index) => {
+  allSelect.value[curDay.value].forEach((obj, index) => {
     if (obj.contentId === selectedItem) {
         targetIdx = index;
         targetItem = obj;
@@ -221,9 +220,9 @@ const onDrop = (event, colNum) => {
     })
 
   // 스위치 연산
-  const temp = selectList.value[colNum];
-  selectList.value[colNum] = selectList.value[targetIdx];
-  selectList.value[targetIdx] = temp;
+  const temp = allSelect.value[curDay.value][colNum];
+  allSelect.value[curDay.value][colNum] = allSelect.value[curDay.value][targetIdx];
+  allSelect.value[curDay.value][targetIdx] = temp;
 };
 
 const trasformRequestDTO = () => {
