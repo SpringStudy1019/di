@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { followList } from "@/api/follow";
 import { getPlans } from "@/api/plan";
+import { registNoti } from "@/api/notification";
 import { useUserStore } from '@/stores/user'
 
 onMounted(() => {
@@ -65,6 +66,32 @@ const formatDate = (dateStr) => {
     const date = new Date(dateStr);
   return date.toLocaleDateString();
 };
+
+// 여행 갈래 요청 (알림 발송)
+const notiInfo = ref({
+  "message": "",
+  "pathId": "",
+  "pushCase": "PERSONAL",
+  "pushDate": "",
+  "pushStatus": "INCOMPLETE",
+  "userIdFrom": store.userInfo.userId,
+  "userIdTo": ""
+})
+const notificationRequest = (friend, title) => {
+    notiInfo.value.userIdTo = friend
+    // message에 여행 title set
+    notiInfo.value.message = title
+   // API 호출
+    registNoti(
+        notiInfo.value,
+      (response) => {  
+        let msg = "알림이 발송되었습니다! 친구의 답변을 조금만 기다려주세요!"
+        alert(msg);
+    },
+    (error) => {
+        console.log(error);
+    });
+};
 </script>
 
 <template>
@@ -108,7 +135,9 @@ const formatDate = (dateStr) => {
                 <div v-if='showFriend'>
                 <ul>
                     <li v-for="friend in friends" :key="friend">
-                        {{ friend }}</li>
+                        {{ friend }}
+                        <button @click="notificationRequest(friend, myPlan.title)" class="btn btn-warning">여행갈래?</button>
+                    </li>
                 </ul>
             </div>
         </div>

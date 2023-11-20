@@ -1,13 +1,13 @@
 package com.ssafy.trend_gaza.plan.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
+import com.ssafy.trend_gaza.plan.entity.Plan;
 
 public interface PlanService {
 	int registerPlan(List<PlanRequest> planRequest, int planIdx);
@@ -20,4 +20,7 @@ public interface PlanService {
 	
 	/* 여행 계획표 (방) 만들기 */
 	int setPlan(@RequestBody SetPlanRequest setPlanRequest);
+	
+	/* 초대된 여행 조회하기 */
+	List<Plan> getInvitedPlans(String creatorId, String title);
 }

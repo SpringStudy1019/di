@@ -26,4 +26,7 @@ public interface PlanMapper {
 	
 	/* 여행 계획표 (방) 만들기 */
 	int setPlan(@RequestBody SetPlanRequest setPlanRequest);
+	
+	/* 초대된 여행 조회하기 */
+	List<Plan> getInvitedPlans(Map<String, String> param);
 }

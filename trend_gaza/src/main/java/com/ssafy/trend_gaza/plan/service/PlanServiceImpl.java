@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
+import com.ssafy.trend_gaza.plan.entity.Plan;
 import com.ssafy.trend_gaza.plan.repository.PlanMapper;
 
 @Service
@@ -86,6 +87,12 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public int setPlan(SetPlanRequest setPlanRequest) {
 		return planMapper.setPlan(setPlanRequest);
+	}
+
+	@Override
+	public List<Plan> getInvitedPlans(String creatorId, String title) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
