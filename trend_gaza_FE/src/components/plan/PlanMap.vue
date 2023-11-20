@@ -1,11 +1,15 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
+import PageNavigation from '@/components/common/PageNavigation.vue'
+import { registerPlan } from "@/api/plan"
 
 var map;
 const markers = ref([]);
 const attractionList = ref([]);
 const selectList = ref([]);
+const allSelect = ref([]);
+const curDay = ref(0);
 //const props = defineProps({latitude: Number, longitude: Number});
 
 const position = {
@@ -13,6 +17,11 @@ const position = {
     longitude: 126.97703190000000000
 }
 
+// const planRequest = {
+//   attractionId: 0,
+//   order: 1,
+//   orderDate: 1
+// }
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -26,7 +35,18 @@ onMounted(() => {
     script.onload = () => kakao.maps.load(() => initMap());
     document.head.appendChild(script);
   }
+
+  initArray();
+
 });
+
+// 2차원 배열 초기화
+const initArray = () => {
+  allSelect.value = new Array(3);
+  for(let i=0; i<3; i++) {
+    allSelect[i] = new Array();
+  }
+}
 
 const initMap = () => {
   const container = document.getElementById("map");
@@ -136,7 +156,6 @@ const loadMarkers = (data) => {
 };
 
 const loadAttractionList = (data) => {
-  console.log("데이터 로드" + data);
   attractionList.value = data;
   loadMarkers(data);
 };
@@ -154,17 +173,20 @@ function hideMarkers() {
   markers.value = [];
 }
 
-const updateData = () => {
-
-}
-
+// 선택한 관광지를 해당 N일차에 추가하기
 const selectFunc = (data) => {
-  selectList.value.push(data);
+  if(allSelect.value[curDay.value] == null) {
+    allSelect.value[curDay.value] = [];
+  } else if (allSelect.value[curDay.value].length >= 10) {    // 각 N일차는 최대 10개만 등록 가능
+    window.alert("하루에 최대 10개만 등록 가능합니다.");
+    return;
+  }
+  allSelect.value[curDay.value].push(data);
 }
 
 const deleteItem = (data) => {
-  let idx = selectList.value.findIndex(item => item.contentId == data.contentId);
-  selectList.value.splice(idx, 1);
+  let idx = allSelect.value[curDay.value].findIndex(item => item.contentId == data.contentId);
+  allSelect.value[curDay.value].splice(idx, 1);
 }
 
 const onSelectListUpdate = (updatedList) => {
@@ -183,7 +205,7 @@ const onDrop = (event, colNum) => {
   // 리스트에서 선택된 아이템과 같은 content 값을 가진 요소를 찾아 index를 반환한다.
   let targetIdx;
   let targetItem;
-  selectList.value.forEach((obj, index) => {
+  allSelect.value[curDay.value].forEach((obj, index) => {
     if (obj.contentId === selectedItem) {
         targetIdx = index;
         targetItem = obj;
@@ -191,10 +213,39 @@ const onDrop = (event, colNum) => {
     })
 
   // 스위치 연산
-  const temp = selectList.value[colNum];
-  selectList.value[colNum] = selectList.value[targetIdx];
-  selectList.value[targetIdx] = temp;
+  const temp = allSelect.value[curDay.value][colNum];
+  allSelect.value[curDay.value][colNum] = allSelect.value[curDay.value][targetIdx];
+  allSelect.value[curDay.value][targetIdx] = temp;
 };
+
+const trasformRequestDTO = () => {
+  const requestList = [];
+  for (let i = 0; i < allSelect.value.length; i++) {
+    for (let j=0; j < allSelect.value[i].length; j++) {
+      let planRequest = {
+        "attractionId": allSelect.value[i][j].contentId,
+        "order": j+1,
+        "orderDate": i+1
+      }
+      requestList.push(planRequest);
+    }
+  }
+  return requestList;
+}
+
+const savePlans = () => {
+  registerPlan(1, trasformRequestDTO(),
+    ({ data }) => {
+      console.log(data);
+    }, (error) => {
+      console.log(error);
+    })
+};
+
+/* 버튼을 클릭하면 해당 일자에 작성한 계획으로 전환됨 */
+const moveNDay = (value) => {
+  curDay.value = value;
+}
 </script>
 
 <template>
@@ -230,13 +281,31 @@ const onDrop = (event, colNum) => {
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasRightLabel">🎒현재 코스 리스트</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <nav class="page-nav" aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" @click='moveNDay(0)'>1</a></li>
+          <li class="page-item"><a class="page-link" @click='moveNDay(1)'>2</a></li>
+          <li class="page-item"><a class="page-link" @click='moveNDay(2)'>3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
   </div>
 
   <div class="offcanvas-body">
     <!-- PlanSelectList -->
-      <div class="container" v-for="(selectItem, idx) in selectList" :key="selectItem.contentId">
-        <div class="col" @drop.prevent="onDrop($event, idx)" @dragover.prevent>
+    <!--<div class="container" v-for="(allSelectItem, idx) in allSelect" :key="idx">-->
+      <div v-for="(selectItem, idx) in allSelect[curDay]" :key="selectItem.contentId">
+        <div class="container" @drop.prevent="onDrop($event, idx)" @dragover.prevent>
             <div @dragstart="startDrag($event, selectItem)" draggable="true">
                 <span class="title">{{selectItem.title}}</span>
                 <div class="img-content">
@@ -248,7 +317,12 @@ const onDrop = (event, colNum) => {
                 </div>
             </div>
       </div>
+    <!--</div>-->
       </div>
+  </div>
+
+  <div class='offcanvas-footer'>
+    <button @click='savePlans'>저장</button>
   </div>
 </div>
 
@@ -310,5 +384,11 @@ const onDrop = (event, colNum) => {
 .add-btn {
     text-align: right;
     display: inline;
+}
+
+.page-nav {
+  position: fixed;
+  top: 50px;
+  right: 110px;
 }
 </style>

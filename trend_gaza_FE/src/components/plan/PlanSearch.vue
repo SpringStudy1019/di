@@ -48,7 +48,6 @@ const searchAttractions = () => {
     searchAttractionsByCondition(
         param.value,
         ({data}) => {
-            console.log(data);
             emit("getAttractionData", data);
             //loadMarkers(data);
         },
