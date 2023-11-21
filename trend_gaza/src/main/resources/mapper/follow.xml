@@ -30,4 +30,21 @@
 		where followee_id=#{followeeId} and follower_id=#{followerId}
 	</select>
 	
+	<select id="followCount" parameterType="String" resultType="int">
+		select count(followee_id) from follow
+		where follower_id=#{followerId}
+	</select>
+	
+	<resultMap type="com.ssafy.trend_gaza.user.entity.User" id="user">
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+	</resultMap>
+	
+	<select id="listRelated" parameterType="String" resultMap="user">
+		SELECT u.user_id, u.user_name
+		FROM USER u
+		JOIN follow f ON u.user_id = f.followee_id
+		where follower_id =#{followerId} and not followee_id=#{followeeId};
+	</select>
+	
 </mapper>

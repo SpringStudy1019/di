@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.trend_gaza.follow.dto.FollowRequest;
 import com.ssafy.trend_gaza.follow.entity.Follow;
+import com.ssafy.trend_gaza.user.entity.User;
 
 @Mapper
 public interface FollowMapper {
@@ -23,4 +24,10 @@ public interface FollowMapper {
 	
 	/* 팔로잉 여부 체크 */
 	Follow findFollow(FollowRequest followRequest) throws SQLException;
+	
+	/* 팔로워 숫자 */
+	int followCount(String followerId) throws SQLException;
+	
+	/* 연관 친구들 불러오기 */
+	List<User> listRelated(FollowRequest followRequest) throws SQLException;
 }

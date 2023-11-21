@@ -27,13 +27,11 @@ onMounted(() => {
 // 리뷰 번호로 리뷰 얻어오기
 const attractionName = ref('')
 const getReview = () => {
-  console.log("여기 들어노아?2222");
   detailReview(reviewIdx,
     ({ data }) => {
       review.value = data; 
       followingInfo.value.followerId = data.userId;
       // 여행지 제목 review.contentId
-      console.log("여기 들어노아?");
       getAttractionDetail(
         review.value.contentId,
         ({ data }) => { 
@@ -177,16 +175,14 @@ const goYourPage = (userId) => {
           <div class="col-md-8">
             <div class="clearfix align-content-center">
               <!-- 사용자 조회 router-link-->
-              <!-- <router-link 
-                :to="{ name: 'user-yourpage', params: { userId: review.userId } }" 
-                class="btn btn-warning">
-              </router-link> -->
-              <button class="btn btn-light" @click="goYourPage(review.userId)"> {{ review.userId }}</button>
-              <button id="follow-button" @click="toggleFollow" v-if="store.userInfo.userId !== review.userId">+ Follow</button>	
+              <div class='margin-small'></div>
+              <button class="btn btn-light" @click="goYourPage(review.userId)" id='user-button'> {{ review.userId }}</button>
+              <!-- <button id="follow-button" @click="toggleFollow" v-if="store.userInfo.userId !== review.userId">+ Follow</button>	 -->
+              <div class='margin-small'></div>
               <div class="text-secondary fw-light">
                 {{ review.registerDate }}
               </div>
-            
+              <div class='margin-small'></div>
               <p>
                 <span class="text fw">
                   점수 : {{ review.score }}
@@ -195,6 +191,7 @@ const goYourPage = (userId) => {
             </div>
           </div>
           <div class="col-md-4 align-self-center text-end">댓글 : {{commentNumber}}</div>
+          <div class='margin-small'></div>
           <div class="divider mb-3"></div>
           <div class="text">
             {{ review.content }}
@@ -251,4 +248,14 @@ const goYourPage = (userId) => {
     margin: 20px;
 }
 
+.margin-small {
+  margin-bottom: 20px;
+}
+
+#user-button:hover{
+  color: white;
+  background-color: black;
+  border: none; 
+  font-weight: bold;
+}
 </style>

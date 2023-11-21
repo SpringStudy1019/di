@@ -16,7 +16,12 @@
 		<result column="modify_date" property="modifyDate"></result>
 		<result column="user_id" property="userId"></result>
 		<result column="content_id" property="contentId"></result>
-	</resultMap>
+		<!-- result map for fileInfos -->
+		<collection property="fileInfos" ofType="com.ssafy.trend_gaza.review.entity.FileInfo">
+	        <id column="file_idx" property="fileIdx"/>
+	        <result column="save_file" property="saveFile"/>
+    	</collection>
+	</resultMap> 
 	
 	<resultMap type="fileInfo" id="file">
 		<result column="save_file" property="saveFile"/>
@@ -122,6 +127,14 @@
 	<select id="getReviewsByContentId" parameterType="int" resultMap="review">
 		select * from review
 		where content_id = #{contentId}
+	</select>
+	
+	<select id="getReviewsByUserId" parameterType="String" resultMap="review">
+		SELECT r.*, f.file_idx, f.save_file
+		FROM review r
+		JOIN file_info f ON r.review_idx = f.review_idx
+		WHERE r.user_id = #{userId}
+		ORDER BY r.review_idx DESC;
 	</select>
 	
 </mapper>

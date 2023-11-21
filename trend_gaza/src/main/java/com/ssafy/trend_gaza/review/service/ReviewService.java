@@ -40,4 +40,7 @@ public interface ReviewService {
 	
 	/* contentId별 리뷰들 */
 	List<Review> getReviewsByContentId(int contentId) throws Exception;
+
+	/* userId별 리뷰들 */
+	List<Review> getReviewsByUserId(String userId) throws Exception;
 }

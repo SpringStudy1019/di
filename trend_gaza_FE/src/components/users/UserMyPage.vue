@@ -2,7 +2,8 @@
 import { ref, onMounted, computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from "vue-router";
-import { modifyUser, deleteUser } from "@/api/user";
+import { uploadImage } from "@/api/image"
+import { modifyUser, deleteUser, modifyImage } from "@/api/user";
 import { followList, offFollow } from "@/api/follow";
 import { listBookmark, deleteBookmark } from "@/api/bookmark";
 import { registNoti } from "@/api/notification";
@@ -133,8 +134,8 @@ const notificationRequest = (followee) => {
 // 찜한 여행지 목록 조회
 const bookmarks = ref([]);
 const getBookmarks = () => {
-  console.log("북마크 찍어보자!")
-  console.log(store.userInfo.userId)
+  // console.log("북마크 찍어보자!")
+  // console.log(store.userInfo.userId)
    // API 호출
    listBookmark(store.userInfo.userId,
       (response) => {  
@@ -158,6 +159,40 @@ const deleteMark = (contentId) => {
         console.log(error);
     });
 }
+
+// 사진 업로드
+const uploadShow = ref(false);
+const uploadToggle = () => {
+  uploadShow.value = !uploadShow.value
+}
+// const imageInfo = ref("")
+const modifyProfileImageInfo = ref({
+  imgUrl: ""
+});
+const uploadRequest = (e) => {
+  let files = e.target.files;
+  const formData = new FormData();
+  formData.append('images', files[0]);
+  console.log(files[0]);
+  uploadImage(
+    formData,
+    ({data}) => {  
+      modifyProfileImageInfo.value.imgUrl = data[0]
+      console.log(modifyProfileImageInfo.value.imgUrl) // 잘 나옴.
+      modifyImage(
+        modifyProfileImageInfo.value,
+          (response) => {  
+              alert("프로필 사진이 등록되었습니다!")
+            },
+            (error) => {
+                console.log(error);
+            });
+      uploadToggle()
+    },
+    (error) => {
+        console.log(error);
+    });
+}
 </script>
 
 <template>
@@ -175,10 +210,14 @@ const deleteMark = (contentId) => {
 
             <div class="col-md-4">
               <img
-                src="https://source.unsplash.com/random/250x250/?food"
+                :src="store.userInfo.imgUrl"
                 class="img-fluid rounded-start"
                 alt="..."
               />
+              <button class="upload-button" @click='uploadToggle'>사진 업로드</button>
+              <form v-if='uploadShow'>
+                <input multiple type='file' v-on="img" name="images" accept="image/*" @change="uploadRequest">
+              </form>
             </div>
 
             <div class="col-md-8">
@@ -197,8 +236,18 @@ const deleteMark = (contentId) => {
           </div>
 
           <div>
+            <div id='button-margin'>
+              <router-link 
+                  :to="{ name: 'user-yourpage', params: { userId: store.userInfo.userId } }" 
+                  class="btn btn-outline-warning mt-1 mb-3 me-2"
+                  >
+                  소셜페이지
+                </router-link>
+            <!-- <button type="button" class="btn btn-outline-warning mt-1 mb-3 me-2">
+              소셜페이지</button> -->
             <button type="button" class="btn btn-outline-info mt-1 mb-3 me-2" @click="toggleEditMode" >수정</button>
             <button @click="deleteRequest" type="button" class="btn btn-outline-secondary mt-1 mb-3">회원탈퇴</button>
+            </div>
           </div>
         </div>
         
@@ -212,13 +261,19 @@ const deleteMark = (contentId) => {
               <div class="card">
                 <div class="card-body">
                   <img
-                    src="https://source.unsplash.com/random/250x250/?food"
+                  :src="store.userInfo.imgUrl"
                     class="img-fluid rounded-start"
                     alt="..."  style="height: 100px; width: 100px;"
                   />
-                  <h5 class="card-title" >{{ followee }}</h5>
+                  <!-- 팔로워 정보 자세히 보기 -->
+                  <router-link 
+                  :to="{ name: 'user-yourpage', params: { userId: followee } }" 
+                  class="user-link"  
+                  >
+                    <h5 class="user-id">{{ followee }}</h5>
+                </router-link>
+                  <!-- <h5 class="card-title" >{{ followee }}</h5> -->
                   <div>
-                    <button @click="notificationRequest(followee)" class="btn btn-warning me-3">여행갈래?</button>
                     <button class="btn btn-dark"  @click="deleteFollow(followee)">팔로우 취소</button>
                   </div>
                 </div>
@@ -325,5 +380,31 @@ const deleteMark = (contentId) => {
 </template>
 
 <style scoped>
+.upload-button {
+  background-color: #9196a5; 
+  color: #fff; 
+  margin-top: 15px;
+  margin-left: 2px;
+  padding: 4px 11px; 
+  border: none; 
+  cursor: pointer;
+  border-radius: 5%;
+}
+.user-link {
+  text-decoration: none; 
+  color: #333; 
+  transition: color 0.3s ease; 
+}
+.user-link:hover {
+  color: #83A2FF; 
+}
+.user-id {
+  font-size: 23px; 
+  font-weight: bold; 
+  margin-top: 10px; 
+}
 
+#button-margin{
+  margin-left: 180px;
+}
 </style>

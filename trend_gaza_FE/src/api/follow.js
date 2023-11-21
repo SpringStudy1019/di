@@ -15,8 +15,23 @@ function offFollow(followeeId, followerId, success, fail) {
     local.delete(`${url}/${followeeId}?followerId=${followerId}`).then(success).catch(fail);
 }
 
+function countFollowers(followerId, success, fail) {
+    local.get(`${url}/count/${followerId}`).then(success).catch(fail);
+}
+
+function listRelated(followInfo, success, fail) {
+    local.get(`${url}/related`, JSON.stringify(followInfo)).then(success).catch(fail);
+}
+
+function checkFollow(followerId, followeeId, success, fail) {
+    local.get(`${url}/check/${followerId}/${followeeId}`).then(success).catch(fail);
+}
+
 export {
     followList,
     onFollow,
-    offFollow
+    offFollow,
+    countFollowers,
+    listRelated,
+    checkFollow
 }

@@ -71,7 +71,7 @@ export const useUserStore = defineStore("userStore",
     const tokenRegenerate = async () => {
       console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("accessToken"));
       await tokenRegeneration(
-        JSON.stringify(userInfo.value),
+        userInfo,
         (response) => {
           if (response.status === httpStatusCode.CREATE) {
             let accessToken = response.data["access-token"];

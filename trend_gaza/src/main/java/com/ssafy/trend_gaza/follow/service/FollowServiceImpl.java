@@ -1,12 +1,15 @@
 package com.ssafy.trend_gaza.follow.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import com.ssafy.trend_gaza.follow.dto.FollowRequest;
 import com.ssafy.trend_gaza.follow.entity.Follow;
 import com.ssafy.trend_gaza.follow.repository.FollowMapper;
+import com.ssafy.trend_gaza.user.entity.User;
 
 @Service
 public class FollowServiceImpl implements FollowService {
@@ -46,6 +49,24 @@ public class FollowServiceImpl implements FollowService {
 	@Override
 	public List<String> listFollowers(String followeeId) throws Exception {
 		return followMapper.listFollowers(followeeId);
+	}
+
+
+	@Override
+	public int followCount(String followerId) throws Exception {
+		return followMapper.followCount(followerId);
+	}
+
+
+	@Override
+	public List<User> listRelated(FollowRequest followRequest) throws Exception {
+		return followMapper.listRelated(followRequest);
+	}
+
+
+	@Override
+	public Follow findFollow(FollowRequest followRequest) throws SQLException {
+		return followMapper.findFollow(followRequest);
 	}
 
 	

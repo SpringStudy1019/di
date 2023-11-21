@@ -49,4 +49,6 @@ public interface ReviewMapper {
 	/* contentId별 리뷰들 */
 	List<Review> getReviewsByContentId(int contentId) throws SQLException;
 	
+	/* 사용자의 아이디로 리뷰 가져오기  */
+	List<Review> getReviewsByUserId(String userId) throws SQLException;
 }

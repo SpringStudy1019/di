@@ -139,6 +139,15 @@ public class ReviewController {
 		return ResponseEntity.ok(list);
 	}
 	
+	/*
+	 * userId가 주어지면, 그에 따른 리뷰 싹 다 가져오기
+	 */
+	@GetMapping("/{userId}")
+	public ResponseEntity<?> getReviewsByUserId(@PathVariable String userId) throws Exception {
+		List<Review> list = reviewService.getReviewsByUserId(userId);
+		return ResponseEntity.ok(list);
+	}
+	
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
 		e.printStackTrace();
