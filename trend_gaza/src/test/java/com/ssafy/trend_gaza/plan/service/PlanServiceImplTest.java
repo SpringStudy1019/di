@@ -1,6 +1,7 @@
 package com.ssafy.trend_gaza.plan.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
+import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 
@@ -151,6 +153,19 @@ public class PlanServiceImplTest {
 		
 		// then
 		assertEquals(1, result);
+	}
+	
+	@Test
+	@DisplayName("수정 페이지 로딩 전에 여행 계획 방 조회")
+	void testGetModifyPlan() {
+		// given
+		int planIdx = 1;
+		
+		// when
+		PlanGetModifyResponse result = planService.getModifyPlan(planIdx);
+		
+		// then
+		assertNotNull(result);
 	}
 
 }
