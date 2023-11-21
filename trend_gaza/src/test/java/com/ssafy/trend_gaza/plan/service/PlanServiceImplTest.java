@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 
@@ -117,6 +118,19 @@ public class PlanServiceImplTest {
 		
 		// then
 		assertEquals(1, result.size());
+	}
+	
+	@Test
+	@DisplayName("여행 계획 조회")
+	void testGetAttractionPlan() {
+		// given
+		int attractionPlanId = 1;
+		
+		// when
+		List<SelectAttractionPlanResponse> result = planService.getSelectAttractionPlan(attractionPlanId);
+		
+		// then
+		assertEquals(2, result.size());
 	}
 
 }
