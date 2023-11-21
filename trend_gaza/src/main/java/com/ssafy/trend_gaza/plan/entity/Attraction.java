@@ -1,5 +1,8 @@
 package com.ssafy.trend_gaza.plan.entity;
 
+/*
+ * 사용자가 세운 여행 계획
+ */
 public class Attraction {
 	
 	private Integer attractionId;
