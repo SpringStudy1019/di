@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.trend_gaza.plan.entity.Plan;
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
+import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
@@ -40,4 +41,7 @@ public interface PlanMapper {
 	
 	/* 여행 일정 상세보기 */
 	PlanDetailResponse getPlanDetail(int planIdx);
+	
+	/* 여행 계획 조회 */
+	List<SelectAttractionPlanResponse> getSelectAttractionPlan(int attractionPlanId);
 }

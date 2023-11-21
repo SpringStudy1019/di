@@ -30,6 +30,15 @@
 		<result property="userCount" column="user_count"/>
 	</resultMap>
 	
+	<resultMap id="selectAttractionPlanResponse" type="selectAttractionPlanResponse">
+		<result property="title" column="title" />
+		<result property="imgUrl" column="first_image" />
+		<result property="address" column="addr1" />
+		<result property="contentId" column="content_id" />
+		<result property="order" column="orderNum" />
+		<result property="orderDate" column="orderDate" />
+	</resultMap>
+	
 	<insert id="registerPlan" parameterType="map">
 		insert into attraction_plan(attraction, plan_idx)
 		values(#{attraction}, #{planIdx})
@@ -114,4 +123,18 @@
 	<select id="getPlanDetail" parameterType="int" resultMap="planDetailResponse">
 		<!-- in progress -->
 	</select>
+	
+	<!-- 여행 계획 조회 -->
+	<select id="getSelectAttractionPlan" parameterType="int" resultMap="selectAttractionPlanResponse">
+		select attractionId, at.title, at.first_image, at.addr1, at.content_id, orderNum, orderDate
+		from enjoytrip.attraction_plan ap,
+		json_table(ap.attraction, '$[*]' columns (
+		attractionId int path '$.attractionId',
+		orderNum int path '$.order',
+		orderDate int path '$.orderDate'
+		)) as jt
+		join attraction_info at on jt.attractionId = at.content_id
+		where attraction_plan_id = #{attractionPlanId}
+	</select>
+
 </mapper>
