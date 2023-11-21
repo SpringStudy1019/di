@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
+import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
@@ -109,6 +110,11 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public PlanDetailResponse getPlanDetail(int planIdx) {
 		return planMapper.getPlanDetail(planIdx);
+	}
+
+	@Override
+	public List<SelectAttractionPlanResponse> getSelectAttractionPlan(int attractionPlanId) {
+		return planMapper.getSelectAttractionPlan(attractionPlanId);
 	}
 	
 	
