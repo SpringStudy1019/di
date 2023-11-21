@@ -9,7 +9,6 @@ public class ModifyProfileImageRequest {
 	
 	public ModifyProfileImageRequest() {}
 	
-	
 	public ModifyProfileImageRequest(String imgUrl) {
 		super();
 		this.imgUrl = imgUrl;

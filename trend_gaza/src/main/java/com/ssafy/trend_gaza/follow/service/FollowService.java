@@ -1,9 +1,11 @@
 package com.ssafy.trend_gaza.follow.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import com.ssafy.trend_gaza.follow.dto.FollowRequest;
+import com.ssafy.trend_gaza.follow.entity.Follow;
 import com.ssafy.trend_gaza.user.entity.User;
 
 public interface FollowService {
@@ -22,5 +24,8 @@ public interface FollowService {
 	
 	/* 연관 친구들 불러오기 */
 	List<User> listRelated(FollowRequest followRequest) throws Exception;
+	
+	/* 팔로잉 여부 체크 */
+	Follow findFollow(FollowRequest followRequest) throws SQLException;
 
 }

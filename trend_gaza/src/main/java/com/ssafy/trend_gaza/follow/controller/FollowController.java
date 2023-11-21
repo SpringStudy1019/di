@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trend_gaza.follow.dto.FollowRequest;
+import com.ssafy.trend_gaza.follow.entity.Follow;
 import com.ssafy.trend_gaza.follow.service.FollowService;
 import com.ssafy.trend_gaza.user.entity.User;
 
@@ -91,6 +92,17 @@ public class FollowController {
 	public ResponseEntity<?> listRelated(@RequestBody FollowRequest followRequest) throws Exception {
 		List<User> relatedPeople = followService.listRelated(followRequest);
 		return new ResponseEntity<List<User>>(relatedPeople, HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/check/{followerId}/{followeeId}")
+	public ResponseEntity<?> findFollow(@PathVariable String followerId, @PathVariable String followeeId) throws Exception {
+		FollowRequest followRequest = new FollowRequest();
+		followRequest.setFollowerId(followerId);
+		followRequest.setFolloweeId(followeeId);
+		Follow follow = followService.findFollow(followRequest);
+		int result = 0; 
+		if (follow != null) result = 1; // 팔로잉 중 
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {

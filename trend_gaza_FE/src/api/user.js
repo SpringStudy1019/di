@@ -43,6 +43,10 @@ function getUser(userId, success, fail) {
     local.get(`${url}/view/${userId}`).then(success).catch(fail);
 }
 
+function modifyImage(imageInfo, success, fail) {
+    local.put(`${url}/image`, JSON.stringify(imageInfo)).then(success).catch(fail);
+}
+
 export {
     userConfirm, 
     findById, 
@@ -52,5 +56,6 @@ export {
     modifyUser, 
     idCheck, 
     deleteUser,
-    getUser
+    getUser,
+    modifyImage
 };

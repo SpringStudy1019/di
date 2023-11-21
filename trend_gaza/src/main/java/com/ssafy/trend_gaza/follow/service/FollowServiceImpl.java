@@ -1,5 +1,6 @@
 package com.ssafy.trend_gaza.follow.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,12 @@ public class FollowServiceImpl implements FollowService {
 	@Override
 	public List<User> listRelated(FollowRequest followRequest) throws Exception {
 		return followMapper.listRelated(followRequest);
+	}
+
+
+	@Override
+	public Follow findFollow(FollowRequest followRequest) throws SQLException {
+		return followMapper.findFollow(followRequest);
 	}
 
 	

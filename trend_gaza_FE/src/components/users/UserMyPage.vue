@@ -2,7 +2,8 @@
 import { ref, onMounted, computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from "vue-router";
-import { modifyUser, deleteUser } from "@/api/user";
+import { uploadImage } from "@/api/image"
+import { modifyUser, deleteUser, modifyImage } from "@/api/user";
 import { followList, offFollow } from "@/api/follow";
 import { listBookmark, deleteBookmark } from "@/api/bookmark";
 import { registNoti } from "@/api/notification";
@@ -133,8 +134,8 @@ const notificationRequest = (followee) => {
 // 찜한 여행지 목록 조회
 const bookmarks = ref([]);
 const getBookmarks = () => {
-  console.log("북마크 찍어보자!")
-  console.log(store.userInfo.userId)
+  // console.log("북마크 찍어보자!")
+  // console.log(store.userInfo.userId)
    // API 호출
    listBookmark(store.userInfo.userId,
       (response) => {  
@@ -153,6 +154,40 @@ const deleteMark = (contentId) => {
     (response) => {  
       alert("찜하기가 취소되었습니다!")
       getBookmarks()
+    },
+    (error) => {
+        console.log(error);
+    });
+}
+
+// 사진 업로드
+const uploadShow = ref(false);
+const uploadToggle = () => {
+  uploadShow.value = !uploadShow.value
+}
+// const imageInfo = ref("")
+const modifyProfileImageInfo = ref({
+  imgUrl: ""
+});
+const uploadRequest = (e) => {
+  let files = e.target.files;
+  const formData = new FormData();
+  formData.append('images', files[0]);
+  console.log(files[0]);
+  uploadImage(
+    formData,
+    ({data}) => {  
+      modifyProfileImageInfo.value.imgUrl = data[0]
+      console.log(modifyProfileImageInfo.value.imgUrl) // 잘 나옴.
+      modifyImage(
+        modifyProfileImageInfo.value,
+          (response) => {  
+              alert("프로필 사진이 등록되었습니다!")
+            },
+            (error) => {
+                console.log(error);
+            });
+      uploadToggle()
     },
     (error) => {
         console.log(error);
@@ -179,7 +214,10 @@ const deleteMark = (contentId) => {
                 class="img-fluid rounded-start"
                 alt="..."
               />
-              <button class="upload-button"> <i class="fas fa-camera"></i> 사진 업로드</button>
+              <button class="upload-button" @click='uploadToggle'>사진 업로드</button>
+              <form v-if='uploadShow'>
+                <input multiple type='file' v-on="img" name="images" accept="image/*" @change="uploadRequest">
+              </form>
             </div>
 
             <div class="col-md-8">
@@ -198,8 +236,18 @@ const deleteMark = (contentId) => {
           </div>
 
           <div>
+            <div id='button-margin'>
+              <router-link 
+                  :to="{ name: 'user-yourpage', params: { userId: store.userInfo.userId } }" 
+                  class="btn btn-outline-warning mt-1 mb-3 me-2"
+                  >
+                  소셜페이지
+                </router-link>
+            <!-- <button type="button" class="btn btn-outline-warning mt-1 mb-3 me-2">
+              소셜페이지</button> -->
             <button type="button" class="btn btn-outline-info mt-1 mb-3 me-2" @click="toggleEditMode" >수정</button>
             <button @click="deleteRequest" type="button" class="btn btn-outline-secondary mt-1 mb-3">회원탈퇴</button>
+            </div>
           </div>
         </div>
         
@@ -354,5 +402,9 @@ const deleteMark = (contentId) => {
   font-size: 23px; 
   font-weight: bold; 
   margin-top: 10px; 
+}
+
+#button-margin{
+  margin-left: 180px;
 }
 </style>

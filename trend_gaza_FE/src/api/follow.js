@@ -23,10 +23,15 @@ function listRelated(followInfo, success, fail) {
     local.get(`${url}/related`, JSON.stringify(followInfo)).then(success).catch(fail);
 }
 
+function checkFollow(followerId, followeeId, success, fail) {
+    local.get(`${url}/check/${followerId}/${followeeId}`).then(success).catch(fail);
+}
+
 export {
     followList,
     onFollow,
     offFollow,
     countFollowers,
-    listRelated
+    listRelated,
+    checkFollow
 }
