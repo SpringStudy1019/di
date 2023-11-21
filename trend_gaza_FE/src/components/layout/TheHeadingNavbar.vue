@@ -39,7 +39,7 @@ const logout = () => {
           <router-link :to="{name: 'review'}" class="nav-link">여행후기</router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{name: 'plan'}" class="nav-link">플랜생성</router-link>
+          <router-link :to="{name: 'plan-write'}" class="nav-link">플랜생성</router-link>
         </li>
       </ul>
       <!-- 오른쪽 부분 -->

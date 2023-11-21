@@ -11,6 +11,7 @@ import com.ssafy.trend_gaza.plan.entity.Plan;
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
 import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
 
@@ -18,7 +19,7 @@ import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
 @Mapper
 public interface PlanMapper {
 	int registerPlan(Map<String, Object> param);
-	int modifyPlan(Map<String, Object> param);
+	int modifySelectPlan(Map<String, Object> param);
 	Plan IsPlanOwner(Map<String, Object> param);
 	int deletePlan(Map<String, Object> param);
 	int deleteMyPlan(Map<String, Object> param);
@@ -44,4 +45,8 @@ public interface PlanMapper {
 	
 	/* 여행 계획 조회 */
 	List<SelectAttractionPlanResponse> getSelectAttractionPlan(int attractionPlanId);
+	
+	PlanGetModifyResponse getModifyPlan(int planIdx);
+	
+	int modifyPlan(Map<String, Object> map);
 }

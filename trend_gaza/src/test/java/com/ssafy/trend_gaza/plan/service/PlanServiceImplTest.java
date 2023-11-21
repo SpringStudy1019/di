@@ -1,9 +1,12 @@
 package com.ssafy.trend_gaza.plan.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +17,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
+import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
+import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 
@@ -57,7 +63,7 @@ public class PlanServiceImplTest {
 	@Test
 	@Transactional
 	@DisplayName("여행 계획 수정하기")
-	void testModifyPlan() {
+	void testModifySelectPlan() {
 		// given
 		List<PlanRequest> planRequests = new ArrayList<PlanRequest>();
 		planRequests.add(PlanRequest.builder()
@@ -72,7 +78,7 @@ public class PlanServiceImplTest {
 				.build());
 		
 		// when
-		int result = planService.modifyPlan(planRequests, 8);
+		int result = planService.modifySelectPlan(planRequests, 1);
 		
 		// then
 		assertEquals(1, result);
@@ -132,5 +138,56 @@ public class PlanServiceImplTest {
 		// then
 		assertEquals(2, result.size());
 	}
+	
+	@Test
+	@Transactional
+	@DisplayName("여행 계획 세우기 방 등록")
+	void testSetPlan() {
+		// given
+		SetPlanRequest setPlanRequest = new SetPlanRequest();
+		setPlanRequest.setTitle("부산 여행 가자");
+		setPlanRequest.setStartDate(LocalDate.now().toString());
+		setPlanRequest.setEndDate(LocalDate.now().plusDays(1).toString());
+		setPlanRequest.setUserId("alswjd");
+		
+		// when
+		int result = planService.setPlan(setPlanRequest);
+		
+		// then
+		assertEquals(1, result);
+	}
+	
+	@Test
+	@DisplayName("수정 페이지 로딩 전에 여행 계획 방 조회")
+	void testGetModifyPlan() {
+		// given
+		int planIdx = 1;
+		
+		// when
+		PlanGetModifyResponse result = planService.getModifyPlan(planIdx);
+		
+		// then
+		assertNotNull(result);
+	}
+	
+	@Test
+	@Transactional
+	@DisplayName("플랜 수정하기")
+	void testModifyPlan() {
+		// given
+		int planIdx = 1;
+		PlanModifyRequest planModifyRequest= PlanModifyRequest.builder()
+				.title("부산 가자")
+				.startDate(LocalDate.now())
+				.endDate(LocalDate.now())
+				.build();
+		
+		// when
+		int result = planService.modifyPlan(planIdx, planModifyRequest);
+		
+		// then
+		assertEquals(1, result);
+	}
+	
 
 }

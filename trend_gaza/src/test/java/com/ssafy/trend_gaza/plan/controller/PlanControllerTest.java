@@ -107,4 +107,17 @@ public class PlanControllerTest {
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 		.andDo(print());
 	}
+	
+	@Test
+	@DisplayName("수정 페이지 로딩용 플랜 조회")
+	void testGetModifyPlan() throws Exception {
+		// given
+		int planIdx = 1;
+				
+		// when, then
+		mockMvc.perform(get("/plans/modify/" + planIdx))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andDo(print());
+	}
 }

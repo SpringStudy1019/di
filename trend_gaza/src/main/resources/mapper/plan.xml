@@ -39,12 +39,18 @@
 		<result property="orderDate" column="orderDate" />
 	</resultMap>
 	
+	<resultMap id="planGetModifyResponse" type="planGetModifyResponse">
+		<result property="title" column="title" />
+		<result property="startDate" column="start_date" />
+		<result property="endDate" column="end_date" />
+	</resultMap>
+	
 	<insert id="registerPlan" parameterType="map">
 		insert into attraction_plan(attraction, plan_idx)
 		values(#{attraction}, #{planIdx})
 	</insert>
 	
-	<update id="modifyPlan" parameterType="map">
+	<update id="modifySelectPlan" parameterType="map">
 		update attraction_plan
 		set attraction = #{attraction}
 		where attraction_plan_id = #{attractionPlanId}
@@ -136,5 +142,17 @@
 		join attraction_info at on jt.attractionId = at.content_id
 		where attraction_plan_id = #{attractionPlanId}
 	</select>
+	
+	<select id="getModifyPlan" parameterType="int" resultMap="planGetModifyResponse">
+		select title, start_date, end_date
+		from plan
+		where plan_idx = #{planIdx}
+	</select>
+	
+	<update id="modifyPlan" parameterType="map">
+		update plan
+		set title = #{title}, start_date = #{startDate}, end_date = #{endDate}
+		where plan_idx = #{planIdx}
+	</update>
 
 </mapper>
