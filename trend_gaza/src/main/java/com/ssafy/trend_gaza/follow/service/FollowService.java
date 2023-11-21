@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.trend_gaza.follow.dto.FollowRequest;
-import com.ssafy.trend_gaza.follow.entity.Follow;
+import com.ssafy.trend_gaza.user.entity.User;
 
 public interface FollowService {
 
@@ -21,6 +21,6 @@ public interface FollowService {
 	int followCount(String followerId) throws Exception;
 	
 	/* 연관 친구들 불러오기 */
-	List<Follow> listRelated(FollowRequest followRequest) throws Exception;
+	List<User> listRelated(FollowRequest followRequest) throws Exception;
 
 }

@@ -179,6 +179,7 @@ const deleteMark = (contentId) => {
                 class="img-fluid rounded-start"
                 alt="..."
               />
+              <button class="upload-button"> <i class="fas fa-camera"></i> 사진 업로드</button>
             </div>
 
             <div class="col-md-8">
@@ -331,6 +332,16 @@ const deleteMark = (contentId) => {
 </template>
 
 <style scoped>
+.upload-button {
+  background-color: #9196a5; 
+  color: #fff; 
+  margin-top: 15px;
+  margin-left: 2px;
+  padding: 4px 11px; 
+  border: none; 
+  cursor: pointer;
+  border-radius: 5%;
+}
 .user-link {
   text-decoration: none; 
   color: #333; 
