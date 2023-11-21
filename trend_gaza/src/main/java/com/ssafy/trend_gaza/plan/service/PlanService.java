@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
 import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
@@ -14,7 +16,7 @@ import com.ssafy.trend_gaza.plan.entity.Plan;
 
 public interface PlanService {
 	int registerPlan(List<PlanRequest> planRequest, int planIdx);
-	int modifyPlan(List<PlanRequest> planRequest, int attractionPlanId);
+	int modifySelectPlan(List<PlanRequest> planRequest, int attractionPlanId);
 	int deletePlan(int planIdx, String userId);
 	List<PlanResponse> getMyPlans(String userId);
 	
@@ -38,4 +40,8 @@ public interface PlanService {
 	
 	/* 유저가 세운 여행 계획 조회 */ 
 	List<SelectAttractionPlanResponse> getSelectAttractionPlan(int attractionPlanId);
+	
+	PlanGetModifyResponse getModifyPlan(int planIdx);
+	
+	int modifyPlan(int planIdx, PlanModifyRequest planModifyRequest);
 }

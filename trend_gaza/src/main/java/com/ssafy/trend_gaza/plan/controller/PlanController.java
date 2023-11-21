@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
@@ -38,10 +39,13 @@ public class PlanController {
 		return ResponseEntity.created(URI.create("")).build();		// URI 경로 지정 필요함
 	}
 	
+	/*
+	 * 선택했던 여행지 수정
+	 */
 	@PutMapping("/{attractionPlanId}")
-	public ResponseEntity<?> modifyPlan(@PathVariable int attractionPlanId,
+	public ResponseEntity<?> modifySelectPlan(@PathVariable int attractionPlanId,
 			@RequestBody List<PlanRequest> planRequest) {
-		planService.modifyPlan(planRequest, attractionPlanId);
+		planService.modifySelectPlan(planRequest, attractionPlanId);
 		return ResponseEntity.ok().build();
 	}
 	
@@ -81,6 +85,7 @@ public class PlanController {
 	 */
 	@PostMapping
 	public ResponseEntity<?> setPlan(@RequestBody SetPlanRequest setPlanRequest) {
+		setPlanRequest.setUserId(AuthenticationUtil.getCurrentUserSocialId());
 		planService.setPlan(setPlanRequest);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
@@ -123,5 +128,18 @@ public class PlanController {
 	public ResponseEntity<?> getSelectAttractionPlan(@PathVariable int attractionPlanId) {
 		return ResponseEntity.ok().body(planService.getSelectAttractionPlan(attractionPlanId));
 	}
+	
+	/*
+	 * 수정 페이지 로딩에 필요한 계획 조회
+	 */
+	@GetMapping("/modify/{planIdx}")
+	public ResponseEntity<?> getModifyPlan(@PathVariable int planIdx) {
+		return ResponseEntity.ok().body(planService.getModifyPlan(planIdx));
+	}
+	
+//	@PutMapping("/modify/{planIdx}")
+//	public ResponseEntity<?> modifyPlan(@PathVariable int planIdx) {
+//		return ResponseEntity.ok().body(planService.modifyPlan(planIdx));
+//	}
 
 }

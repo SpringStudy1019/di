@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
 import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
@@ -44,7 +46,7 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public int modifyPlan(List<PlanRequest> planRequest, int attractionPlanId) {
+	public int modifySelectPlan(List<PlanRequest> planRequest, int attractionPlanId) {
 		int result = 0;
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
@@ -52,7 +54,7 @@ public class PlanServiceImpl implements PlanService {
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("attraction", json);
 			param.put("attractionPlanId", attractionPlanId);
-			result = planMapper.modifyPlan(param);
+			result = planMapper.modifySelectPlan(param);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -115,6 +117,22 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public List<SelectAttractionPlanResponse> getSelectAttractionPlan(int attractionPlanId) {
 		return planMapper.getSelectAttractionPlan(attractionPlanId);
+	}
+
+	@Override
+	public PlanGetModifyResponse getModifyPlan(int planIdx) {
+		return planMapper.getModifyPlan(planIdx);
+	}
+
+	@Override
+	public int modifyPlan(int planIdx, PlanModifyRequest planModifyRequest) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("title", planModifyRequest.getTitle());
+		map.put("startDate", planModifyRequest.getStartDate());
+		map.put("endDate", planModifyRequest.getEndDate());
+		map.put("planIdx", planIdx);
+		
+		return planMapper.modifyPlan(map);
 	}
 	
 	

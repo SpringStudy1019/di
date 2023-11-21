@@ -44,7 +44,7 @@
 		values(#{attraction}, #{planIdx})
 	</insert>
 	
-	<update id="modifyPlan" parameterType="map">
+	<update id="modifySelectPlan" parameterType="map">
 		update attraction_plan
 		set attraction = #{attraction}
 		where attraction_plan_id = #{attractionPlanId}
@@ -136,5 +136,17 @@
 		join attraction_info at on jt.attractionId = at.content_id
 		where attraction_plan_id = #{attractionPlanId}
 	</select>
+	
+	<select id="getModifyPlan" parameterType="int" resultType="planGetModifyResponse">
+		select title, start_date, end_date
+		from plan
+		where plan_idx = #{planIdx}
+	</select>
+	
+	<update id="modifyPlan" parameterType="map">
+		update plan
+		set title=#{title} and start_date=#{startDate} and end_date=#{endDate}
+		where plan_idx = #{planIdx}
+	</update>
 
 </mapper>
