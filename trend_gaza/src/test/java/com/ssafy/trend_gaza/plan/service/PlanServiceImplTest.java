@@ -3,10 +3,11 @@ package com.ssafy.trend_gaza.plan.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDate;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,16 +177,16 @@ public class PlanServiceImplTest {
 		// given
 		int planIdx = 1;
 		PlanModifyRequest planModifyRequest= PlanModifyRequest.builder()
-				.title("부산")
+				.title("부산 가자")
 				.startDate(LocalDate.now())
 				.endDate(LocalDate.now())
 				.build();
 		
 		// when
-		PlanGetModifyResponse result = planService.getModifyPlan(planIdx, );
+		int result = planService.modifyPlan(planIdx, planModifyRequest);
 		
 		// then
-		assertNotNull(result);
+		assertEquals(1, result);
 	}
 	
 

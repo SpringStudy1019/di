@@ -145,7 +145,7 @@
 	
 	<update id="modifyPlan" parameterType="map">
 		update plan
-		set title=#{title} and start_date=#{startDate} and end_date=#{endDate}
+		set title = #{title}, start_date = #{startDate}, end_date = #{endDate}
 		where plan_idx = #{planIdx}
 	</update>
 
