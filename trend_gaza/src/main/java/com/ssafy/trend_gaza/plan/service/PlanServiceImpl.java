@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
 import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
@@ -115,6 +116,11 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public List<SelectAttractionPlanResponse> getSelectAttractionPlan(int attractionPlanId) {
 		return planMapper.getSelectAttractionPlan(attractionPlanId);
+	}
+
+	@Override
+	public PlanGetModifyResponse getModifyPlan(int planIdx) {
+		return planMapper.getModifyPlan(planIdx);
 	}
 	
 	
