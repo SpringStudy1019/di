@@ -39,10 +39,13 @@ public class PlanController {
 		return ResponseEntity.created(URI.create("")).build();		// URI 경로 지정 필요함
 	}
 	
+	/*
+	 * 선택했던 여행지 수정
+	 */
 	@PutMapping("/{attractionPlanId}")
-	public ResponseEntity<?> modifyPlan(@PathVariable int attractionPlanId,
+	public ResponseEntity<?> modifySelectPlan(@PathVariable int attractionPlanId,
 			@RequestBody List<PlanRequest> planRequest) {
-		planService.modifyPlan(planRequest, attractionPlanId);
+		planService.modifySelectPlan(planRequest, attractionPlanId);
 		return ResponseEntity.ok().build();
 	}
 	

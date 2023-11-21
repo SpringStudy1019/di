@@ -45,7 +45,7 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public int modifyPlan(List<PlanRequest> planRequest, int attractionPlanId) {
+	public int modifySelectPlan(List<PlanRequest> planRequest, int attractionPlanId) {
 		int result = 0;
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
@@ -53,7 +53,7 @@ public class PlanServiceImpl implements PlanService {
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("attraction", json);
 			param.put("attractionPlanId", attractionPlanId);
-			result = planMapper.modifyPlan(param);
+			result = planMapper.modifySelectPlan(param);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}

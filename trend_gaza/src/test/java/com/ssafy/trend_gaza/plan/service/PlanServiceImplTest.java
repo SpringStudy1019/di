@@ -61,7 +61,7 @@ public class PlanServiceImplTest {
 	@Test
 	@Transactional
 	@DisplayName("여행 계획 수정하기")
-	void testModifyPlan() {
+	void testModifySelectPlan() {
 		// given
 		List<PlanRequest> planRequests = new ArrayList<PlanRequest>();
 		planRequests.add(PlanRequest.builder()
@@ -76,7 +76,7 @@ public class PlanServiceImplTest {
 				.build());
 		
 		// when
-		int result = planService.modifyPlan(planRequests, 8);
+		int result = planService.modifySelectPlan(planRequests, 1);
 		
 		// then
 		assertEquals(1, result);

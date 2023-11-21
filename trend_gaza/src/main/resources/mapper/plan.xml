@@ -44,7 +44,7 @@
 		values(#{attraction}, #{planIdx})
 	</insert>
 	
-	<update id="modifyPlan" parameterType="map">
+	<update id="modifySelectPlan" parameterType="map">
 		update attraction_plan
 		set attraction = #{attraction}
 		where attraction_plan_id = #{attractionPlanId}
