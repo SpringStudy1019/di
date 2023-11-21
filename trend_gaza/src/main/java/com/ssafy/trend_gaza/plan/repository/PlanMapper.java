@@ -47,4 +47,6 @@ public interface PlanMapper {
 	List<SelectAttractionPlanResponse> getSelectAttractionPlan(int attractionPlanId);
 	
 	PlanGetModifyResponse getModifyPlan(int planIdx);
+	
+	int modifyPlan(Map<String, Object> map);
 }

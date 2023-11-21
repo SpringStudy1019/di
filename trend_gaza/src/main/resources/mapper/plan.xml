@@ -142,5 +142,11 @@
 		from plan
 		where plan_idx = #{planIdx}
 	</select>
+	
+	<update id="modifyPlan" parameterType="map">
+		update plan
+		set title=#{title} and start_date=#{startDate} and end_date=#{endDate}
+		where plan_idx = #{planIdx}
+	</update>
 
 </mapper>
