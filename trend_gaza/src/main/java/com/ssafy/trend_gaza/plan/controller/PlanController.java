@@ -116,15 +116,12 @@ public class PlanController {
 		return ResponseEntity.ok().body(planService.getPlanDetail(planIdx));
 	}
 	
-	
+	/*
+	 * 저장된 여행 계획 경로를 가져오기
+	 */
+	@GetMapping("/{attractionPlanId}")
+	public ResponseEntity<?> getSelectAttractionPlan(@PathVariable int attractionPlanId) {
+		return ResponseEntity.ok().body(planService.getSelectAttractionPlan(attractionPlanId));
+	}
+
 }
-
-
-
-
-
-
-
-
-
-

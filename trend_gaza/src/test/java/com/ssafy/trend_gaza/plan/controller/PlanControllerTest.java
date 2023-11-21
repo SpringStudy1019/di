@@ -94,4 +94,17 @@ public class PlanControllerTest {
 		.andExpect(status().isOk())
 		.andDo(print());
 	}
+	
+	@Test
+	@DisplayName("선택한 여행 계획 조회")
+	void testGetSelectAttractionPlan() throws Exception {
+		// given
+		int attractionPlanId = 1;
+		
+		// when, then
+		mockMvc.perform(get("/plans/" + attractionPlanId))
+		.andExpect(status().isOk())
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+		.andDo(print());
+	}
 }
