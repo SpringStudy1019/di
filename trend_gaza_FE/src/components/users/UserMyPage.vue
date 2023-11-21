@@ -177,11 +177,12 @@ const uploadRequest = (e) => {
   uploadImage(
     formData,
     ({data}) => {  
-      modifyProfileImageInfo.value.imgUrl = data[0]
-      console.log(modifyProfileImageInfo.value.imgUrl) // 잘 나옴.
+      console.log(data);
+      modifyProfileImageInfo.value.imgUrl = data.imageNames[0]
       modifyImage(
         modifyProfileImageInfo.value,
           (response) => {  
+              store.userInfo.imgUrl = modifyProfileImageInfo.value.imgUrl;
               alert("프로필 사진이 등록되었습니다!")
             },
             (error) => {
