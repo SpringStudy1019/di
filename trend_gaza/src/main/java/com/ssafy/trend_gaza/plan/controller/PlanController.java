@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
+import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
 import com.ssafy.trend_gaza.plan.entity.Plan;
@@ -137,9 +138,9 @@ public class PlanController {
 		return ResponseEntity.ok().body(planService.getModifyPlan(planIdx));
 	}
 	
-//	@PutMapping("/modify/{planIdx}")
-//	public ResponseEntity<?> modifyPlan(@PathVariable int planIdx) {
-//		return ResponseEntity.ok().body(planService.modifyPlan(planIdx));
-//	}
+	@PutMapping("/modify/{planIdx}")
+	public ResponseEntity<?> modifyPlan(@PathVariable int planIdx, @RequestBody PlanModifyRequest planModifyRequest) {
+		return ResponseEntity.ok().body(planService.modifyPlan(planIdx, planModifyRequest));
+	}
 
 }
