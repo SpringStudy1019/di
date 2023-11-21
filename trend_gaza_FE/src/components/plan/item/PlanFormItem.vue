@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import {getModifyPlan, registerPlan, getPlans} from "@/api/plan";
+import {getModifyPlan, registerPlan, getPlans, updatePlan} from "@/api/plan";
 
 const router = useRouter();
 
@@ -15,6 +15,8 @@ const plan = ref({
     startDate: "",
     title: "",
 });
+
+const today = ref(formattingDate(new Date()));
 
 if (props.type === "modify") {
     onMounted(() => {
@@ -37,19 +39,34 @@ const getModifyPlanFunc = () => {
 
 function formattingDate(date) {
     const dateObject = new Date(date);
+    dateObject.setDate(dateObject.getDate() + 1);
     return dateObject.toISOString().split('T')[0];
 }
 
 const onSubmit = () => {
-    props.type === "regist" ? writePlan() : updatePlan();
+    props.type === "regist" ? writePlanFunc() : updatePlanFunc();
 }
 
-const writePlan = () => {
+const writePlanFunc = () => {
     registerPlan(plan.value,
-        router.push({ name: "plan-list" }),
-        (error) => {
-            console.log(error);
-        });
+    ({data}) => {
+        window.alert("플랜이 등록되었습니다.")
+        router.push({ name: "plan-list" });
+    },
+    (error) => {
+        console.log(error);
+    });
+}
+
+const updatePlanFunc = () => {
+    updatePlan(props.planIdx, plan.value,
+    ({data}) => {
+        window.alert("플랜이 수정 완료되었습니다.");
+        router.push({name: "plan-list"});
+    },
+    (error) => {
+        console.log(error);
+    });
 }
 </script>
 
@@ -69,12 +86,12 @@ const writePlan = () => {
         
                     <div class='form-group'>
                         <label for='start-date'>출발일자</label>
-                        <input type="date" id='start-date' v-model='plan.startDate' name='start-date'/>
+                        <input type="date" id='start-date' v-model='plan.startDate' name='start-date' :min="today"/>
                     </div>
         
                     <div class='form-group'>
                         <label for='end-date'>도착일자</label>
-                        <input type="date" id='end-date' v-model='plan.endDate' name='end-date'/>
+                        <input type="date" id='end-date' v-model='plan.endDate' name='end-date' :min="today"/>
                     </div>
         
                     <button class='write-btn' type='submit' v-if="type === 'regist'">등록</button>

@@ -23,7 +23,6 @@ function getCreatedPlan(userId, success, fail) {
 
 // 여행 계획 등록
 function registerAttractionPlan(planIdx, planRequest, success, fail) {
-    console.log(planRequest);
     local.post(`${url}/${planIdx}`, JSON.stringify(planRequest)).then(success).catch(fail);
 }
 
@@ -40,6 +39,10 @@ function registerPlan(setPlanRequest, success, fail) {
     local.post(`${url}`, JSON.stringify(setPlanRequest)).then(success).catch(fail);
 }
 
+function updatePlan(planIdx, planModifyRequest, success, fail) {
+    local.put(`${url}/modify/${planIdx}`, JSON.stringify(planModifyRequest)).then(success).catch(fail);
+}
+
 export {
     joinPlan,
     getPlans,
@@ -48,5 +51,6 @@ export {
     registerAttractionPlan,
     modifyPlan,
     getModifyPlan,
-    registerPlan
+    registerPlan,
+    updatePlan
 };
