@@ -39,6 +39,11 @@ const router = createRouter({
           component: () => import("@/components/users/UserLogin.vue"),
         },
         {
+          path: "search/:word",
+          name: "search-result",
+          component: () => import("@/components/search/SearchList.vue"),
+        },
+        {
           path: "join",
           name: "user-join",
           component: () => import("@/components/users/UserRegister.vue"),

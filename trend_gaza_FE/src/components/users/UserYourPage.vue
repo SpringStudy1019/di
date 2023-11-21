@@ -17,8 +17,7 @@ onMounted(() => {
 
 const route = useRoute();
 const userId  = ref(route.params.userId);
-// var {userId}  = route.params;
-console.log("userId:::::::::::",userId.value);
+
 const store = useUserStore()
 const router = useRouter();
 

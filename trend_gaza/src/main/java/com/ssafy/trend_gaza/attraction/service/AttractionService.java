@@ -16,6 +16,7 @@ import com.ssafy.trend_gaza.util.TrieAlgorithmUtil.Node;
 
 public interface AttractionService {
 	List<AttractionInfo> searchAttractions(Map<String, String> param);
+	List<AttractionInfo> searchByword(String keyword);
 	void registerAdminAttraction(AttractionAdminRequest attractionAdminRequest);
 	String uploadAttractionImage(MultipartFile multipartFile, String realPath) throws Exception;
 	AttractionDetailResponse findAttraction(int id);

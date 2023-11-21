@@ -61,6 +61,12 @@
 		limit #{start}, #{listsize}
 	</select>
 	
+	<select id="searchByword" parameterType="map" resultMap="attraction">
+		select content_id, content_type_id, title, addr1, tel, first_image, latitude, longitude
+		from attraction_info
+		where title like concat(#{keyword}, '%')
+	</select>
+	
 	
 	<sql id="searchCategory">
 		<if test="sido != null and sido != ''">

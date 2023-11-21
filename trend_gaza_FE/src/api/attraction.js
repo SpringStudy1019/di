@@ -19,7 +19,11 @@ function listByCategory(param, success, fail) {
 }
 
 function searchAttractionsByCondition(param, success, fail) {
-    local.get(`${url}/search`, {params:param}).then(success).catch(fail);
+    local.get(`${url}/search`, {params: param}).then(success).catch(fail);
+}
+
+function searchByWord(keyword, success, fail) {
+    local.get(`${url}/searchByWord?keyword=${keyword}`).then(success).catch(fail);
 }
 
 export {
@@ -27,5 +31,6 @@ export {
     searchAttraction,
     listByCategory,
     //searchByCategory,
-    searchAttractionsByCondition
+    searchAttractionsByCondition,
+    searchByWord
 }
