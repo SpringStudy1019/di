@@ -86,13 +86,14 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
-			User user = userService.login(loginRequest);
-			if(user != null) {
-				String accessToken = jwtUtil.createAccessToken(user.getUserId());
-				String refreshToken = jwtUtil.createRefreshToken(user.getUserId());
+	
+			User loginUser = userService.login(loginRequest);
+			if(loginUser != null) {
+				String accessToken = jwtUtil.createAccessToken(loginUser.getUserId());
+				String refreshToken = jwtUtil.createRefreshToken(loginUser.getUserId());
 				
 //				발급받은 refresh token을 DB에 저장.
-				userService.saveRefreshToken(user.getUserId(), refreshToken);
+				userService.saveRefreshToken(loginUser.getUserId(), refreshToken);
 				
 //				JSON으로 token 전달.
 				resultMap.put("access-token", accessToken);
@@ -112,9 +113,11 @@ public class UserController {
 	}
 	
 	@GetMapping("/info/{userId}")
-	public ResponseEntity<Map<String, Object>> getInfo(@PathVariable String userId, HttpServletRequest request) {
+	public ResponseEntity<Map<String, Object>> getInfo(
+			@PathVariable String userId, HttpServletRequest request) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
+		
 		if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
 			try {
 //				로그인 사용자 정보.
@@ -136,9 +139,10 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String token = request.getHeader("refreshToken");
+	
 		if (jwtUtil.checkToken(token)) {
-			if (token.equals(userService.getRefreshToken(user.getUserId()))) {
-				String accessToken = jwtUtil.createAccessToken(user.getUserId());
+			if (token.equals(userService.getRefreshToken(AuthenticationUtil.getCurrentUserSocialId()))) {
+				String accessToken = jwtUtil.createAccessToken(AuthenticationUtil.getCurrentUserSocialId());
 				resultMap.put("access-token", accessToken);
 				status = HttpStatus.CREATED;
 			}
@@ -246,9 +250,20 @@ public class UserController {
 	}
 	
 	@GetMapping("/logout/{userId}")
-	public ResponseEntity<?> logout(@PathVariable String userId) throws Exception {
-		userService.logout(userId);
-		return ResponseEntity.ok(URI.create("/"));	
+	public ResponseEntity<?> removeToken(@PathVariable String userId) throws Exception {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			userService.deleteRefreshToken(userId);
+			status = HttpStatus.OK;
+		} catch (Exception e) {
+			logger.error("로그아웃 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+//		userService.logout(userId);
+//		return ResponseEntity.ok(URI.create("/"));	
 	}
 	
 	@PutMapping("/image")

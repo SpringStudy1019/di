@@ -16,7 +16,7 @@ await local.get(`/user/info/${userId}`).then(success).catch(fail);
 
 async function tokenRegeneration(user, success, fail) {
 local.defaults.headers["refreshToken"] = sessionStorage.getItem("refreshToken"); //axios header에 refresh-token 셋팅
-await local.post(`/user/refresh`, user).then(success).catch(fail);
+await local.post(`${url}/refresh`, JSON.stringify(user)).then(success).catch(fail);
 }
 
 async function logout(userId, success, fail) {

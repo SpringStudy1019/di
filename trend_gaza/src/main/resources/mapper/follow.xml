@@ -30,4 +30,14 @@
 		where followee_id=#{followeeId} and follower_id=#{followerId}
 	</select>
 	
+	<select id="followCount" parameterType="String" resultType="int">
+		select count(followee_id) from follow
+		where follower_id=#{followerId}
+	</select>
+	
+	<select id="listRelated" parameterType="String" resultType="int">
+		select * from follow
+		where follower_id =#{followerId} and not followee_id =#{followeeId};
+	</select>
+	
 </mapper>

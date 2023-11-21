@@ -175,7 +175,7 @@ const deleteMark = (contentId) => {
 
             <div class="col-md-4">
               <img
-                src="https://source.unsplash.com/random/250x250/?food"
+                :src="store.userInfo.imgUrl"
                 class="img-fluid rounded-start"
                 alt="..."
               />
@@ -212,13 +212,19 @@ const deleteMark = (contentId) => {
               <div class="card">
                 <div class="card-body">
                   <img
-                    src="https://source.unsplash.com/random/250x250/?food"
+                  :src="store.userInfo.imgUrl"
                     class="img-fluid rounded-start"
                     alt="..."  style="height: 100px; width: 100px;"
                   />
-                  <h5 class="card-title" >{{ followee }}</h5>
+                  <!-- 팔로워 정보 자세히 보기 -->
+                  <router-link 
+                  :to="{ name: 'user-yourpage', params: { userId: followee } }" 
+                  class="user-link"  
+                  >
+                    <h5 class="user-id">{{ followee }}</h5>
+                </router-link>
+                  <!-- <h5 class="card-title" >{{ followee }}</h5> -->
                   <div>
-                    <button @click="notificationRequest(followee)" class="btn btn-warning me-3">여행갈래?</button>
                     <button class="btn btn-dark"  @click="deleteFollow(followee)">팔로우 취소</button>
                   </div>
                 </div>
@@ -325,5 +331,17 @@ const deleteMark = (contentId) => {
 </template>
 
 <style scoped>
-
+.user-link {
+  text-decoration: none; 
+  color: #333; 
+  transition: color 0.3s ease; 
+}
+.user-link:hover {
+  color: #83A2FF; 
+}
+.user-id {
+  font-size: 23px; 
+  font-weight: bold; 
+  margin-top: 10px; 
+}
 </style>

@@ -23,4 +23,10 @@ public interface FollowMapper {
 	
 	/* 팔로잉 여부 체크 */
 	Follow findFollow(FollowRequest followRequest) throws SQLException;
+	
+	/* 팔로워 숫자 */
+	int followCount(String followerId) throws SQLException;
+	
+	/* 연관 친구들 불러오기 */
+	List<Follow> listRelated(FollowRequest followRequest) throws SQLException;
 }

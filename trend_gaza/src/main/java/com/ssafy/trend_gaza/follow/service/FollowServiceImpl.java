@@ -48,5 +48,17 @@ public class FollowServiceImpl implements FollowService {
 		return followMapper.listFollowers(followeeId);
 	}
 
+
+	@Override
+	public int followCount(String followerId) throws Exception {
+		return followMapper.followCount(followerId);
+	}
+
+
+	@Override
+	public List<Follow> listRelated(FollowRequest followRequest) throws Exception {
+		return followMapper.listRelated(followRequest);
+	}
+
 	
 }

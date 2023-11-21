@@ -27,13 +27,11 @@ onMounted(() => {
 // 리뷰 번호로 리뷰 얻어오기
 const attractionName = ref('')
 const getReview = () => {
-  console.log("여기 들어노아?2222");
   detailReview(reviewIdx,
     ({ data }) => {
       review.value = data; 
       followingInfo.value.followerId = data.userId;
       // 여행지 제목 review.contentId
-      console.log("여기 들어노아?");
       getAttractionDetail(
         review.value.contentId,
         ({ data }) => { 

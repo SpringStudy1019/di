@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.trend_gaza.comment.entity.Comment;
 import com.ssafy.trend_gaza.follow.dto.FollowRequest;
 import com.ssafy.trend_gaza.follow.service.FollowService;
 
@@ -79,6 +80,18 @@ public class FollowController {
 			return exceptionHandling(e);
 		}
 	}
+	
+	@GetMapping(value="/count/{followerId}")
+	public ResponseEntity<?> followCount(@PathVariable String followerId) throws Exception {
+		int count = followService.followCount(followerId);
+		return new ResponseEntity<Integer>(count, HttpStatus.OK);
+	}
+	
+//	@GetMapping(value="/count/{followerId}")
+//	public ResponseEntity<?> listRelated(@RequestBody FollowRequest followRequest) throws Exception {
+//		int count = followService.listRelated(followerId);
+//		return new ResponseEntity<Integer>(count, HttpStatus.OK);
+//	}
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {
 		e.printStackTrace();

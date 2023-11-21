@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { getUser } from '@/api/user';
+// import { getUser } from '@/api/follow';
 
 onMounted(() => {
   getUserInfo();
@@ -33,6 +34,7 @@ const getUserInfo = () => {
 </script>
 
 <template>
+
     <div>{{userInfo.userName}}</div>
     <div>이미지</div>
     <div>00명이 팔로잉 중</div>

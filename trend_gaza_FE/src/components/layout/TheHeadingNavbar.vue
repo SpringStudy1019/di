@@ -14,10 +14,10 @@ const { changeMenuState } = menuStore;
 const userStore = useUserStore();
 const { userLogout } = userStore;
 
-const logout = async () => {
+const logout = () => {
   console.log("로그아웃 시작!!");
-  await userLogout(userStore.userInfo.userId);
-  await changeMenuState();
+  // userLogout(userStore.userInfo.userId);
+  changeMenuState();
   console.log("로그아웃 종료!!");
 };
 
@@ -50,7 +50,7 @@ const logout = async () => {
         <!-- v-for 안에 v-if를 쓰고 싶으면, template을 2번 쓰면 된다! -->
       <template v-for="menu in menuList" :key="menu.routeName">
           <template v-if="menu.show">
-            <template v-if="userStore.userInfo && userStore.userInfo.userId === ''">
+            <template v-if="menu.routeName === 'user-logout'">
               <li class="nav-item">
                 <router-link to="/" @click.prevent="logout" class="nav-link">{{
                   menu.name
@@ -59,6 +59,9 @@ const logout = async () => {
             </template>
             <template v-else>
                 <li class="nav-item">
+                  <!-- <router-link :to="{ name: menu.routeName }" class="nav-link">{{
+                    menu.name
+                  }}</router-link> -->
                   <template v-if="menu.name === '로그아웃'">
                     <router-link :to="{ name: menu.routeName }" class="nav-link" @click="logout">{{
                       menu.name
