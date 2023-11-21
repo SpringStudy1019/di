@@ -57,16 +57,14 @@ public class FollowServiceImpl implements FollowService {
 		return followMapper.followCount(followerId);
 	}
 
-
-	@Override
-	public List<User> listRelated(FollowRequest followRequest) throws Exception {
-		return followMapper.listRelated(followRequest);
-	}
-
-
 	@Override
 	public Follow findFollow(FollowRequest followRequest) throws SQLException {
 		return followMapper.findFollow(followRequest);
+	}
+
+	@Override
+	public List<User> listRelated(String currentUserId, String followeeId) throws Exception {
+		return followMapper.listRelated(currentUserId, followeeId);
 	}
 
 	

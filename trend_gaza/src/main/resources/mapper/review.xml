@@ -132,9 +132,10 @@
 	<select id="getReviewsByUserId" parameterType="String" resultMap="review">
 		SELECT r.*, f.file_idx, f.save_file
 		FROM review r
-		JOIN file_info f ON r.review_idx = f.review_idx
+		LEFT JOIN file_info f ON r.review_idx = f.review_idx
 		WHERE r.user_id = #{userId}
 		ORDER BY r.review_idx DESC;
 	</select>
+	
 	
 </mapper>

@@ -74,7 +74,6 @@ public class AttractionServiceImpl implements AttractionService {
 	@Override
 	//@Transactional
 	public void registerAdminAttraction(AttractionAdminRequest attractionAdminRequest) {
-		
 		attractionMapper.registerAdminAttraction(attractionAdminRequest);
 		//AttractionDetail attractionDetail = new AttractionDetail();
 		//attractionDetail.setContentId(contentId);
@@ -215,7 +214,6 @@ public class AttractionServiceImpl implements AttractionService {
 
 	@Override
 	public int onBookmark(int attractionId, String userId) throws SQLException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -224,6 +222,12 @@ public class AttractionServiceImpl implements AttractionService {
 	public AttractionDetailResponse getAttractionDetail(int id) {
 		AttractionDetailResponse attractionDetailResponse = attractionMapper.getAttractionDetail(id);
 		return attractionDetailResponse;
+	}
+
+
+	@Override
+	public List<AttractionInfo> searchByword(String keyword) {
+		return attractionMapper.searchByword(keyword);
 	}
 
 

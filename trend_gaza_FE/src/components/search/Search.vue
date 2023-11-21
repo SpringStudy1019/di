@@ -25,7 +25,6 @@ const selectKeyword = (keyword) => {
 }
 
 // 다른 곳  클릭하면, 검색 리스트 사라지게 하기
-// Close search results when clicking outside the search input or result list
 const closeResults = (event) => {
   if (!event.target.closest(".search-container")) {
     searchResults.value = [];
@@ -37,6 +36,10 @@ onMounted(() => {
   document.body.addEventListener("click", closeResults);
 });
 
+// 검색 전체 조회 
+const search = (keyword) => {
+    router.push({name:'search-result', params: {word: keyword}});
+}
 </script>
 
 <template>
@@ -60,7 +63,9 @@ onMounted(() => {
                                 aria-expanded='false'
                                 aria-live='off'
                                 />
-                                <button class="btn btn-dark" type="button">검색</button>
+                                <button class="btn btn-dark" type="button" 
+                                @click="search(keyword)"
+                                >검색</button>
                             </div>
                         </form>
                         <!-- 검색 결과 표시 -->

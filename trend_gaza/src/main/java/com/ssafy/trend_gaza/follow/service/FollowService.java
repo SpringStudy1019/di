@@ -1,6 +1,5 @@
 package com.ssafy.trend_gaza.follow.service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -22,10 +21,9 @@ public interface FollowService {
 	/* 팔로워 숫자 */
 	int followCount(String followerId) throws Exception;
 	
-	/* 연관 친구들 불러오기 */
-	List<User> listRelated(FollowRequest followRequest) throws Exception;
-	
 	/* 팔로잉 여부 체크 */
-	Follow findFollow(FollowRequest followRequest) throws SQLException;
+	Follow findFollow(FollowRequest followRequest) throws Exception;
 
+	/* 연관 친구들 불러오기 */
+	List<User> listRelated(String currentUserId, String followeeId) throws Exception;
 }

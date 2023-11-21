@@ -118,4 +118,13 @@ public class AttractionController {
 		return ResponseEntity.ok().headers(header).body(response);
 	}
 	
+	/*
+	 * 검색어를 중점으로 두고 검색. 
+	 */
+	@GetMapping("/searchByWord")
+	public ResponseEntity<?> searchByWord(@RequestParam String keyword) {
+		List<AttractionInfo> list = attractionService.searchByword(keyword);
+		return ResponseEntity.ok(list);	
+	}
+	
 }

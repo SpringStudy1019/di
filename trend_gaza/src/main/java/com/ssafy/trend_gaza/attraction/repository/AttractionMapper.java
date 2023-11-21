@@ -18,6 +18,7 @@ import com.ssafy.trend_gaza.bookmark.entity.Bookmark;
 @Mapper
 public interface AttractionMapper {
 	List<AttractionInfo> searchAttractions(Map<String, Object> param);
+	List<AttractionInfo> searchByword(String keyword);
 	void registerAdminAttraction(AttractionAdminRequest attractionAdminRequest);
 	void registerAttractionDetail(AttractionAdminRequest attractionAdminRequest);
 	AttractionDetailResponse getAttractionDetail(int id);
