@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import {getModifyPlan, registerPlan} from "@/api/plan";
+import {getModifyPlan, registerPlan, getPlans} from "@/api/plan";
 
 const router = useRouter();
 
@@ -37,9 +37,7 @@ const onSubmit = () => {
 
 const writePlan = () => {
     registerPlan(plan.value,
-        ({ data }) => {
-            console.log(data);
-        },
+        router.push({ name: "plan-list" }),
         (error) => {
             console.log(error);
         });
