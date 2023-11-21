@@ -11,12 +11,19 @@ const router = createRouter({
     {
       path: '/plan',
       name: 'plan',
-      component: () => import("../views/ThePlanView.vue")
-    },
-    {
-      path: '/plan/list',
-      name: 'plan-list',
-      component: () => import("@/components/plan/PlanList.vue")
+      component: () => import("../views/ThePlanView.vue"),
+      children: [
+        {
+          path: "write",
+          name: "plan-write",
+          component: () => import("@/components/plan/PlanWrite.vue"),
+        },
+        {
+          path: '/plan/list',
+          name: 'plan-list',
+          component: () => import("@/components/plan/PlanList.vue")
+        },
+      ]
     },
     {
       path: '/category',
