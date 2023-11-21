@@ -13,6 +13,7 @@ import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
 import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
@@ -121,6 +122,17 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public PlanGetModifyResponse getModifyPlan(int planIdx) {
 		return planMapper.getModifyPlan(planIdx);
+	}
+
+	@Override
+	public int modifyPlan(int planIdx, PlanModifyRequest planModifyRequest) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("title", planModifyRequest.getTitle());
+		map.put("startDate", planModifyRequest.getStartDate());
+		map.put("endDate", planModifyRequest.getEndDate());
+		map.put("planIdx", planIdx);
+		
+		return planMapper.modifyPlan(map);
 	}
 	
 	

@@ -8,6 +8,7 @@ import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
 import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
@@ -42,5 +43,5 @@ public interface PlanService {
 	
 	PlanGetModifyResponse getModifyPlan(int planIdx);
 	
-	
+	int modifyPlan(int planIdx, PlanModifyRequest planModifyRequest);
 }
