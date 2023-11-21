@@ -1,5 +1,6 @@
 package com.ssafy.trend_gaza.review.service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,6 +116,11 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public List<Review> getReviewsByContentId(int contentId) throws Exception {
 		return reviewMapper.getReviewsByContentId(contentId);
+	}
+
+	@Override
+	public List<Review> getReviewsByUserId(String userId) throws Exception {
+		return reviewMapper.getReviewsByUserId(userId);
 	}
 
 
