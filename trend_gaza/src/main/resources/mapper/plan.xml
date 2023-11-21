@@ -136,5 +136,11 @@
 		join attraction_info at on jt.attractionId = at.content_id
 		where attraction_plan_id = #{attractionPlanId}
 	</select>
+	
+	<select id="getModifyPlan" parameterType="int" resultType="planGetModifyResponse">
+		select title, start_date, end_date
+		from plan
+		where plan_idx = #{planIdx}
+	</select>
 
 </mapper>
