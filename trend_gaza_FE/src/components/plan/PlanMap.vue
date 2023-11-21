@@ -2,7 +2,7 @@
 import { ref, watch, onMounted } from "vue";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
 import PageNavigation from '@/components/common/PageNavigation.vue'
-import { registerPlan } from "@/api/plan"
+import { registerAttractionPlan } from "@/api/plan"
 
 var map;
 const markers = ref([]);
@@ -234,7 +234,7 @@ const trasformRequestDTO = () => {
 }
 
 const savePlans = () => {
-  registerPlan(1, trasformRequestDTO(),
+  registerAttractionPlan(1, trasformRequestDTO(),
     ({ data }) => {
       console.log(data);
     }, (error) => {

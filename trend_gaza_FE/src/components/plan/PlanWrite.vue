@@ -16,7 +16,5 @@ import PlanFormItem from '@/components/plan/item/PlanFormItem.vue';
     padding: 0;
 }
 
-h2 {
-    text-align: center;
-}
+
 </style>

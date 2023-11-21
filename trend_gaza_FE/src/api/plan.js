@@ -21,9 +21,23 @@ function getCreatedPlan(userId, success, fail) {
     local.get(`${url}/created/${userId}`).then(success).catch(fail);
 }
 
-function registerPlan(planIdx, planRequest, success, fail) {
+// 여행 계획 등록
+function registerAttractionPlan(planIdx, planRequest, success, fail) {
     console.log(planRequest);
     local.post(`${url}/${planIdx}`, JSON.stringify(planRequest)).then(success).catch(fail);
+}
+
+function modifyPlan(attractionPlanId, success, fail) {
+    local.put(`${url}/${attractionPlanId}`).then(success).catch(fail);
+}
+
+function getModifyPlan(planIdx, success, fail) {
+    local.get(`${url}/modify/${planIdx}`).then(success).catch(fail);
+}
+
+// 방 만들기
+function registerPlan(setPlanRequest, success, fail) {
+    local.post(`${url}`, JSON.stringify(setPlanRequest)).then(success).catch(fail);
 }
 
 export {
@@ -31,5 +45,8 @@ export {
     getPlans,
     getInvitedPlan,
     getCreatedPlan,
+    registerAttractionPlan,
+    modifyPlan,
+    getModifyPlan,
     registerPlan
 };
