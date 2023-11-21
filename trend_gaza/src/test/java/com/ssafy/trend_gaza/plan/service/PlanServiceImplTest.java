@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 
@@ -167,5 +168,25 @@ public class PlanServiceImplTest {
 		// then
 		assertNotNull(result);
 	}
+	
+	@Test
+	@Transactional
+	@DisplayName("플랜 수정하기")
+	void testModifyPlan() {
+		// given
+		int planIdx = 1;
+		PlanModifyRequest planModifyRequest= PlanModifyRequest.builder()
+				.title("부산")
+				.startDate(LocalDate.now())
+				.endDate(LocalDate.now())
+				.build();
+		
+		// when
+		PlanGetModifyResponse result = planService.getModifyPlan(planIdx, );
+		
+		// then
+		assertNotNull(result);
+	}
+	
 
 }
