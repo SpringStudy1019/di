@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
+import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
 
@@ -131,6 +133,24 @@ public class PlanServiceImplTest {
 		
 		// then
 		assertEquals(2, result.size());
+	}
+	
+	@Test
+	@Transactional
+	@DisplayName("여행 계획 세우기 방 등록")
+	void testSetPlan() {
+		// given
+		SetPlanRequest setPlanRequest = new SetPlanRequest();
+		setPlanRequest.setTitle("부산 여행 가자");
+		setPlanRequest.setStartDate(LocalDate.now().toString());
+		setPlanRequest.setEndDate(LocalDate.now().plusDays(1).toString());
+		setPlanRequest.setUserId("alswjd");
+		
+		// when
+		int result = planService.setPlan(setPlanRequest);
+		
+		// then
+		assertEquals(1, result);
 	}
 
 }
