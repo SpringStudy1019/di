@@ -1,6 +1,5 @@
 package com.ssafy.trend_gaza.plan.dto;
 
-import java.time.LocalDate;
 
 import lombok.Builder;
 
@@ -8,12 +7,12 @@ import lombok.Builder;
 public class PlanGetModifyResponse {
 	
 	private String title;
-	private LocalDate startDate;
-	private LocalDate endDate;
+	private String startDate;
+	private String endDate;
 	
 	public PlanGetModifyResponse() {}
 
-	public PlanGetModifyResponse(String title, LocalDate startDate, LocalDate endDate) {
+	public PlanGetModifyResponse(String title, String startDate, String endDate) {
 		super();
 		this.title = title;
 		this.startDate = startDate;
@@ -24,11 +23,11 @@ public class PlanGetModifyResponse {
 		return title;
 	}
 
-	public LocalDate getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public LocalDate getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 	

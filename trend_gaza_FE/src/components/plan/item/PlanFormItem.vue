@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import {getModifyPlan, registerPlan, getPlans} from "@/api/plan";
 
@@ -26,9 +26,18 @@ const getModifyPlanFunc = () => {
     getModifyPlan(props.planIdx,
         ({ data }) => {
             console.log(data);
+            plan.value.title = data.title;
+            plan.value.startDate = formattingDate(data.startDate);
+            plan.value.endDate = formattingDate(data.endDate);
+            console.log(plan.value.endDate);
         }, (error) => {
             console.log(error);
         });
+}
+
+function formattingDate(date) {
+    const dateObject = new Date(date);
+    return dateObject.toISOString().split('T')[0];
 }
 
 const onSubmit = () => {
@@ -46,7 +55,10 @@ const writePlan = () => {
 
 <template>
     <div class='container'>
-        <h2><mark>플랜 등록</mark></h2>
+        <h2>
+            <mark v-if="type === 'regist'">플랜 등록</mark>
+            <mark v-else>플랜 수정</mark>
+        </h2>
         <div class='form-plan'>
             <div class='form-content'>
                 <form @submit.prevent='onSubmit'>
@@ -116,6 +128,13 @@ label {
 }
 
 .write-btn {
+    width: 300px;
+    background-color: plum;
+    color: white;
+    border-radius: 5%;
+}
+
+.modify-btn {
     width: 300px;
     background-color: plum;
     color: white;

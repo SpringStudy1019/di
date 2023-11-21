@@ -39,6 +39,12 @@
 		<result property="orderDate" column="orderDate" />
 	</resultMap>
 	
+	<resultMap id="planGetModifyResponse" type="planGetModifyResponse">
+		<result property="title" column="title" />
+		<result property="startDate" column="start_date" />
+		<result property="endDate" column="end_date" />
+	</resultMap>
+	
 	<insert id="registerPlan" parameterType="map">
 		insert into attraction_plan(attraction, plan_idx)
 		values(#{attraction}, #{planIdx})
@@ -137,7 +143,7 @@
 		where attraction_plan_id = #{attractionPlanId}
 	</select>
 	
-	<select id="getModifyPlan" parameterType="int" resultType="planGetModifyResponse">
+	<select id="getModifyPlan" parameterType="int" resultMap="planGetModifyResponse">
 		select title, start_date, end_date
 		from plan
 		where plan_idx = #{planIdx}

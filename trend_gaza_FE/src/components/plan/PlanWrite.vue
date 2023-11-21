@@ -5,7 +5,7 @@ import PlanFormItem from '@/components/plan/item/PlanFormItem.vue';
 <template>
     <div>       
         <div>
-            <PlanFormItem type='regist' :contentId="contentId"/>
+            <PlanFormItem type='regist'/>
         </div>
     </div>
 </template>
