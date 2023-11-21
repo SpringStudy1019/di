@@ -1,12 +1,14 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { ref, onMounted, watch } from "vue";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { useRouter } from "vue-router";
 import { getUser } from '@/api/user';
 import { getReviewsByUserId } from '@/api/review';
-import { countFollowers, listRelated, checkFollow } from '@/api/follow';
+import { countFollowers, listRelated, checkFollow, offFollow, onFollow } from '@/api/follow';
 import { useUserStore } from '@/stores/user'
 
 onMounted(() => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   getUserInfo();
   getcountFollowers();
   getReviews();
@@ -14,14 +16,17 @@ onMounted(() => {
 });
 
 const route = useRoute();
-const { userId } = route.params;
+const userId  = ref(route.params.userId);
+// var {userId}  = route.params;
+console.log("userId:::::::::::",userId.value);
 const store = useUserStore()
+const router = useRouter();
 
 const userInfo = ref({})
 
 const getUserInfo = () => {
     getUser(
-        userId,
+        userId.value,
         ({ data }) => { 
             userInfo.value = data;
             },
@@ -35,11 +40,9 @@ const getUserInfo = () => {
 const reviews = ref([])
 const getReviews = () => {
   getReviewsByUserId(
-    userId,
+    userId.value,
     ({ data }) => { 
-      reviews.value = data;
-      console.log(reviews.value);
-            },
+      reviews.value = data; },
         (error) => {
           console.log(error);
         }
@@ -50,7 +53,7 @@ const getReviews = () => {
 const count = ref(0)
 const getcountFollowers = () => {
   countFollowers(
-    userId,
+    userId.value,
     ({ data }) => { 
             count.value = data;
             },
@@ -70,14 +73,13 @@ const otherUsersToggle = ref(false)
 const followingStatus = ref(false)
 const followInfo = ref({
   "followeeId": store.userInfo.userId,
-  "followerId": userId
+  "followerId": userId.value
 })
 const checkFollowing = () => {
   checkFollow(
     followInfo.value.followerId,
     followInfo.value.followeeId,
     ({ data }) => { 
-      console.log("데이터::::",data);
       if (data === 1) followingStatus.value = true;  // 팔로잉 중 
       toggleButton()
           },
@@ -95,21 +97,80 @@ function toggleButton() {
   if (followingStatus.value) {
     followButton.textContent = 'Following';
     followButton.style.width = '95px';
-    followButton.style.backgroundColor = '#3399FF';
+    followButton.style.backgroundColor = '#8128d5';
     followButton.style.color = '#ffffff';
-    followButton.style.borderColor = '#3399FF';
+    followButton.style.borderColor = '#8128d5';
   } else {
     followButton.textContent = '+ Follow';
     followButton.style.width = '85px';
     followButton.style.backgroundColor = '#ffffff';
-    followButton.style.color = '#3399FF';
-    followButton.style.borderColor = '#3399FF';
+    followButton.style.color = '#8128d5';
+    followButton.style.borderColor = '#8128d5';
   }
 }
 
 // 팔로우 등록 및 취소 toggleButton() 추가
+const toggleFollowing = () => {
+  if (followingStatus.value) { // 팔로잉 중이라면 follow 취소 
+      offFollow(
+        followInfo.value.followerId,
+        followInfo.value.followeeId,
+        ({ data }) => { 
+          alert("팔로우가 취소되었습니다!")
+          followingStatus.value = !followingStatus.value
+          count.value = count.value-1
+          toggleButton()
+          },
+        (error) => {
+          console.log(error);
+        }
+      )
+  } else {
+    onFollow(
+      followInfo.value,
+      ({ data }) => { 
+          alert("팔로우를 시작했습니다!")
+          followingStatus.value = !followingStatus.value  // following status change
+          count.value = count.value+1  // follower count up
+          toggleButton()  // button toggle change
+          otherUsersToggle.value = !otherUsersToggle.value
+          getRelatedPeople()  // showing related people list 
+          },
+        (error) => {
+          console.log(error);
+        }
+      )
+  }
+}
 
+const relatedPeople = ref([])
+const getRelatedPeople = () => {
+  listRelated(
+    store.userInfo.userId,
+    userId.value,
+    ({ data }) => { 
+      relatedPeople.value = data
+      console.log("related people:::", data);
+          },
+        (error) => {
+          console.log(error);
+        }
+  )
+}
 
+const routeUpdate = function (relatedUserId) {
+  router.push({ name: 'user-yourpage', params: { userId: relatedUserId } })
+}
+
+onBeforeRouteUpdate((to, from) => {
+  userId.value = to.params.userId
+  getUserInfo();
+  getcountFollowers();
+  getReviews();
+  checkFollowing();
+  getRelatedPeople();
+  otherUsersToggle.value = !otherUsersToggle.value
+})
 </script>
 
 <template>
@@ -130,10 +191,23 @@ function toggleButton() {
         <div class="user-id">{{ userInfo.userId }}</div>
         <div class="follow-info">{{ count }}명이 팔로잉 중</div>
         <div class='margin-small'></div>
-        <button id="follow-button" @click='toggleFollow'>+ Follow</button>
+        <button id="follow-button" @click='toggleFollowing'>+ Follow</button>
 
         <!-- 팔로우 버튼을 누르면 관련 사용자 띄우기 -->
-        <div v-if='otherUsersToggle'>알 수도 있는 사람들</div>
+        <div v-if='otherUsersToggle && relatedPeople.length > 0' class="related-people-box">
+          <div class='margin-very-small'></div>
+          <h3>알 수도 있는 사람들</h3>
+          <div v-for="relatedPerson in relatedPeople" :key="relatedPerson.userId" class="related-person">
+            <div  class="user-info">
+            <img :src="relatedPerson.imgUrl" alt="User Image" class="user-image" />
+              <button class="fancy-button"
+              @click="routeUpdate(relatedPerson.userId)">
+              {{ relatedPerson.userName }} ({{ relatedPerson.userId }})
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class='margin-small'></div>
         <div>{{reviews.length}}개의 리뷰 작성</div>
       </div>
@@ -162,6 +236,47 @@ function toggleButton() {
 </template>
 
 <style scoped>
+.fancy-button {
+  margin-left: 5px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  background-color: #8128d5;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.fancy-button:hover {
+  background-color: #ffffff;
+  color: #8128d5;
+  outline-color: #8128d5;
+  border-color: #8128d5;
+}
+.related-person {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.user-image {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 30px; 
+  height: 30px; 
+  margin: 0 auto;
+}
+.related-people-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+#related-person {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
 .profile-container {
   display: flex;
 }
@@ -230,10 +345,14 @@ function toggleButton() {
   margin-bottom: 20px;
 }
 
+.margin-very-small {
+  margin-bottom: 10px;
+}
+
 /* 팔로잉 버튼 */
 #follow-button {
   display: inline-block;
-  color: #3399FF;
+  color: #8128d5;
   font-family: "Helvetica";
   font-size: 12pt;
   font-weight: bold;
@@ -249,4 +368,12 @@ function toggleButton() {
   transition: all 0.3s ease;
 }
 
+.user-link {
+  text-decoration: none; 
+  color: #333; 
+  transition: color 0.3s ease; 
+}
+.user-link:hover {
+  color: #83A2FF; 
+}
 </style>

@@ -51,8 +51,8 @@ public class FollowController {
 		}
 	}
 	
-	@DeleteMapping(value="/{followeeId}")
-	public ResponseEntity<?> offFollow(@PathVariable String followeeId, @RequestParam String followerId) {
+	@DeleteMapping(value="/{followerId}/{followeeId}")
+	public ResponseEntity<?> offFollow(@PathVariable String followerId, @PathVariable String followeeId) {
 		Map<String, String> param = new HashMap<>();
 		param.put("followeeId", followeeId);
 		param.put("followerId", followerId);
@@ -88,12 +88,6 @@ public class FollowController {
 		return new ResponseEntity<Integer>(count, HttpStatus.OK);
 	}
 	
-	@GetMapping(value="/related")
-	public ResponseEntity<?> listRelated(@RequestBody FollowRequest followRequest) throws Exception {
-		List<User> relatedPeople = followService.listRelated(followRequest);
-		return new ResponseEntity<List<User>>(relatedPeople, HttpStatus.OK);
-	}
-	
 	@GetMapping(value="/check/{followerId}/{followeeId}")
 	public ResponseEntity<?> findFollow(@PathVariable String followerId, @PathVariable String followeeId) throws Exception {
 		FollowRequest followRequest = new FollowRequest();
@@ -103,6 +97,12 @@ public class FollowController {
 		int result = 0; 
 		if (follow != null) result = 1; // 팔로잉 중 
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/related/{currentUserId}/{followeeId}")
+	public ResponseEntity<?> listRelated(@PathVariable String currentUserId, @PathVariable String followeeId) throws Exception {
+		List<User> relatedPeople = followService.listRelated(currentUserId, followeeId);
+		return new ResponseEntity<List<User>>(relatedPeople, HttpStatus.OK);
 	}
 	
 	private ResponseEntity<?> exceptionHandling(Exception e) {

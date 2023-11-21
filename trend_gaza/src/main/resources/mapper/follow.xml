@@ -38,13 +38,26 @@
 	<resultMap type="com.ssafy.trend_gaza.user.entity.User" id="user">
 		<result column="user_id" property="userId"/>
 		<result column="user_name" property="userName"/>
+		<result column="img_url" property="imgUrl"/>
 	</resultMap>
 	
 	<select id="listRelated" parameterType="String" resultMap="user">
-		SELECT u.user_id, u.user_name
-		FROM USER u
-		JOIN follow f ON u.user_id = f.followee_id
-		where follower_id =#{followerId} and not followee_id=#{followeeId};
+	<!-- 
+	사용자가 팔로잉을 클릭하면, 그 팔로잉한 사람이 팔로우하고 있는 사람들이 표시된다.
+	단, 이 사용자가 팔로우하고 있지 않은 사용자만 표시된다 (subQuery)
+	 -->
+		SELECT u.user_id, u.user_name, u.img_url
+	    FROM USER u
+	    JOIN follow f ON u.user_id = f.follower_id
+	    WHERE f.followee_id = #{followeeId} 
+	      AND u.user_id != #{currentUserId}
+	      AND NOT EXISTS (
+	        SELECT 1
+	        FROM follow f2
+	        WHERE f2.followee_id = #{currentUserId}
+	          AND f2.follower_id = u.user_id
+	      )
+	    LIMIT 4;
 	</select>
 	
 </mapper>
