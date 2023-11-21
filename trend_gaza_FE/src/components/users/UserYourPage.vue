@@ -2,12 +2,13 @@
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { getUser } from '@/api/user';
-// import { getUser } from '@/api/review';
+import { getReviewsByUserId } from '@/api/review';
 import { countFollowers, listRelated } from '@/api/follow';
 
 onMounted(() => {
   getUserInfo();
   getcountFollowers();
+  getReviews();
 });
 
 const route = useRoute();
@@ -15,7 +16,6 @@ const { userId } = route.params;
 
 const userInfo = ref({})
 const followers = ref([])
-const reviews = ref([])
 
 const getUserInfo = () => {
     getUser(
@@ -29,8 +29,20 @@ const getUserInfo = () => {
     )
 }
 
-// 리뷰 작성 수 & 이 사람이 올린 리뷰 (사진과 같이 카드 형식)
-
+// 사용자가 작성한 리뷰
+const reviews = ref([])
+const getReviews = () => {
+  getReviewsByUserId(
+    userId,
+    ({ data }) => { 
+      reviews.value = data;
+      console.log(reviews.value);
+            },
+        (error) => {
+          console.log(error);
+        }
+  )
+}
 
 
 // 팔로워 수 (팔로우 버튼)
@@ -97,14 +109,111 @@ function toggleFollow() {
 </script>
 
 <template>
+  <div class='margin-large'></div>
   
-    <div>{{userInfo.userName}}</div>
-    <div>이미지</div>
-    <div>{{count}}명이 팔로잉 중</div>
-    <div></div>
-    <button id="follow-button">+ Follow</button>	
+    <div class="profile-container">
+      <div class='margin-big'></div>
+    <div class="profile-left">
+      <div class="profile-image">
+        <!-- Use the actual user image source here -->
+        <img :src="userInfo.imgUrl"
+        alt="Profile Image">
+      </div>
+    </div>
+    <div class="profile-right">
+      <div class="user-info">
+        <div class="user-name">{{ userInfo.userName }}</div>
+        <div class="user-id">{{ userInfo.userId }}</div>
+        <div class="follow-info">{{ count }}명이 팔로잉 중</div>
+        <!-- Add other user information as needed -->
+      </div>
+      <button id="follow-button">+ Follow</button>
+    </div>
+    </div>
+  <div class='margin-big'></div>
+
+    <div class="row" >
+      <div class='margin-big'></div>
+      <div class="col-sm-6 col-md-4" v-for='review in reviews' :key='review.reviewIdx'>
+          <div class="card">
+            <img class="card-img-top" 
+            :src="review.fileInfos && review.fileInfos.length > 0 ? 
+            review.fileInfos[0].saveFile : 'https://instagramimages16.s3.ap-northeast-2.amazonaws.com/IMAGE/admin/no_image.jpg'" 
+            alt="Card image cap">
+              <router-link 
+                  :to="{ name: 'review-view', params: { reviewIdx: review.reviewIdx } }" 
+                  class="user-link"  
+                  >
+                    <div class="card-header" id='title'>{{ review.title }}</div>
+                </router-link>
+              </div>
+              <div class='margin-big'></div>
+      </div>
+    </div>
 </template>
 
 <style scoped>
+.profile-container {
+  display: flex;
+}
 
+.profile-left {
+  flex: 1;
+  text-align: center;
+}
+
+.profile-image {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 300px; 
+  height: 300px; 
+  margin: 0 auto;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-right {
+  flex: 1;
+  padding: 60px 30px;
+}
+
+.user-info {
+  text-align: left;
+}
+
+.user-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.user-id {
+  font-size: 18px;
+  color: #777;
+}
+
+.follow-info {
+  font-size: 16px;
+  color: #555;
+}
+.user-link {
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: none; 
+  color: #333; 
+  transition: color 0.3s ease; 
+}
+.user-link:hover {
+  color: #83A2FF; 
+}
+.margin-big {
+  margin-bottom: 50px;
+}
+
+.margin-large {
+  margin-bottom: 60px;
+}
 </style>

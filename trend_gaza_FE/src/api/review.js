@@ -43,6 +43,10 @@ function getScores(contentId, success, fail) {
 function getReviews(contentId, success, fail) {
     local.get(`${url}/content/${contentId}`).then(success).catch(fail);
 }
+
+function getReviewsByUserId(userId, success, fail) {
+    local.get(`${url}/${userId}`).then(success).catch(fail);
+}
     
 export {
     list,
@@ -54,5 +58,6 @@ export {
     getReviewImage,
     getHotplace,
     getScores,
-    getReviews
+    getReviews,
+    getReviewsByUserId
 }
