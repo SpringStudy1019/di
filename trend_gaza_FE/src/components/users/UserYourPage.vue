@@ -378,6 +378,6 @@ onBeforeRouteUpdate((to, from) => {
   transition: color 0.3s ease; 
 }
 .user-link:hover {
-  color: #83A2FF; 
+  color: #8128d5; 
 }
 </style>
