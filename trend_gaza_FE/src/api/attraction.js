@@ -30,6 +30,11 @@ function getUserImage(contentId, success, fail) {
     local.get(`${url}/image/${contentId}`).then(success).catch(fail);
 }
 
+// 여행 계획 세우기에 참여한 유저들이 북마크한 관광지 조회
+function getLikeAttractions(planIdx, success, fail) {
+    local.get(`${url}/plan/${planIdx}/bookmark`).then(success).catch(fail);
+}
+
 export {
     getAttractionDetail,
     searchAttraction,
@@ -38,4 +43,5 @@ export {
     searchAttractionsByCondition,
     searchByWord,
     getUserImage,
+    getLikeAttractions
 }
