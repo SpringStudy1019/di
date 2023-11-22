@@ -3,6 +3,7 @@ import { ref, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import PlanSearch from "@/components/plan/PlanSearch.vue";
 import { registerAttractionPlan, getAttractionPlan, modifyPlan } from "@/api/plan";
+import PageNavigation from "@/components/common/PageNavigation.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -18,6 +19,9 @@ const today = ref(formattingDate(new Date()));
 const totalPages = ref(1);
 const startDate = ref(formattingDate(new Date()));
 const endDate = ref("");
+const currentPage = ref(1);
+const totalPage = ref(0);
+const type = ref("plan-map");
 
 const position = {
   latitude: 37.57889445,
@@ -174,7 +178,9 @@ const moveCenter = (latitude, longitude) => {
 };
 
 const loadAttractionList = (data) => {
-  attractionList.value = data;
+  attractionList.value = data.attractions;
+  totalPage.value = data.totalPage;
+  currentPage.value = data.currentPage;
   loadMarkers(data);
 };
 
@@ -336,6 +342,12 @@ const getSelectedPlans = () => {
     }
   );
 };
+
+const onPageChange = (val) => {
+  // console.log(val + "번 페이지로 이동 준비 끝!!!");
+  currentPage.value = val;
+  param.value.pgno = val;
+};
 </script>
 
 <template>
@@ -395,6 +407,12 @@ const getSelectedPlans = () => {
             <button class="add-btn" @click="selectFunc(attraction)">추가</button>
           </div>
         </div>
+        <PageNavigation
+          :current-page="currentPage"
+          :total-page="totalPage"
+          :type="type"
+          @pageChange="onPageChange"
+        />
       </div>
     </div>
 

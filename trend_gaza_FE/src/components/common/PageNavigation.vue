@@ -1,10 +1,14 @@
 <script setup>
 import { computed } from "vue";
 
-const props = defineProps({ currentPage: Number, totalPage: Number });
+const props = defineProps({ currentPage: Number, totalPage: Number, type: String });
 const emit = defineEmits(["pageChange"]);
 
-const navigationSize = parseInt(import.meta.env.VITE_REVIEW_NAVIGATION_SIZE);
+//const navigationSize = parseInt(import.meta.env.VITE_REVIEW_NAVIGATION_SIZE);
+const navigationSize =
+  props.type === "plan-map"
+    ? parseInt(import.meta.env.VITE_SEARCH_ATTRACTION_LIST_SIZE)
+    : parseInt(import.meta.env.VITE_REVIEW_NAVIGATION_SIZE);
 
 const startPage = computed(() => {
   return parseInt((props.currentPage - 1) / navigationSize) * navigationSize + 1;
@@ -30,8 +34,8 @@ function range(start, end) {
 }
 
 function onPageChange(pg) {
-   // Scroll to the top of the page
-   window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Scroll to the top of the page
+  window.scrollTo({ top: 0, behavior: "smooth" });
   emit("pageChange", pg);
 }
 </script>
