@@ -18,6 +18,8 @@ public class AttractionInfo {
 	private String mlevel;
 	private Integer hit;
 	private Double distance;
+	private Integer currentPage;
+	private Integer totalPageCount;
 
 	public Integer getContentId() {
 		return contentId;
@@ -153,6 +155,22 @@ public class AttractionInfo {
 
 	public void setDistance(Double distance) {
 		this.distance = distance;
+	}
+	
+	public Integer getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(Integer currentPage) {
+		this.currentPage = currentPage;
+	}
+
+	public Integer getTotalPageCount() {
+		return totalPageCount;
+	}
+
+	public void setTotalPageCount(Integer totalPageCount) {
+		this.totalPageCount = totalPageCount;
 	}
 
 	@Override
