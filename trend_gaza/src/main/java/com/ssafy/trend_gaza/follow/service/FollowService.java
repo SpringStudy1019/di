@@ -16,7 +16,7 @@ public interface FollowService {
 	int offFollow(Map<String, String> param) throws Exception;
 
 	/* 팔로우 목록 */
-	List<String> listFollowers(String followeeId) throws Exception;
+	List<User> listFollowers(String followeeId) throws Exception;
 	
 	/* 팔로워 숫자 */
 	int followCount(String followerId) throws Exception;

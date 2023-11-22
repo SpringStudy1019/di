@@ -21,7 +21,7 @@ public interface FollowMapper {
 	int offFollow(Map<String, String> param) throws SQLException;
 
 	/* 내가 팔로우하고 있는 사람들 목록 */
-	List<String> listFollowers(String followeeId) throws SQLException;
+	List<User> listFollowers(String followeeId) throws SQLException;
 	
 	/* 팔로잉 여부 체크 */
 	Follow findFollow(FollowRequest followRequest) throws SQLException;

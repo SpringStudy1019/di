@@ -119,6 +119,7 @@ const toggleFollowing = () => {
           followingStatus.value = !followingStatus.value
           count.value = count.value-1
           toggleButton()
+          otherUsersToggle.value = !otherUsersToggle.value
           },
         (error) => {
           console.log(error);

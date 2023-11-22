@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { followList } from "@/api/follow";
 import { registNoti } from "@/api/notification";
 import { useUserStore } from '@/stores/user';
-import { getInvitedPlan, getCreatedPlan } from "@/api/plan";
+import { getInvitedPlan, getCreatedPlan, getPlanDetail } from "@/api/plan";
 
 onMounted(() => {
     getPlanRequest();
@@ -102,6 +102,26 @@ const getInvitedPlans = () => {
         console.log(error);
     });
 };
+
+// 여행 일정 상세 조회
+const showJourney = ref(false)
+const showJourneyToggle = () => {
+    showJourney.value = !showJourney.value
+}
+const journey = ref([])
+const planDetail = (planIdx) => {
+    showJourneyToggle();
+    getPlanDetail(
+        planIdx,
+        ({ data }) => {
+            journey.value = data;
+        },
+        (error) => {
+            console.log(error);
+        }
+    );
+}
+
 </script>
 
 <template>
@@ -131,7 +151,11 @@ const getInvitedPlans = () => {
                         class="btn btn-primary me-2">
                         여행계획짜기
                         </router-link>
-                        <button class="btn btn-warning me-2">여행일정</button>
+                        <button class="btn btn-warning me-2" 
+                        @click='planDetail(myPlan.planIdx)'
+                        >
+                        여행일정
+                        </button>
                         <button @click='showMyFriend' class="btn btn-success">친구 초대하기</button>
                         <!-- 친구 초대하기 버튼을 클릭하면 친구가 뜬다 -->
                         <div v-if='showFriend' >
@@ -147,10 +171,11 @@ const getInvitedPlans = () => {
                         </div>
                         <!-- 여행 일정 start -->
                         <!-- 여행 일정 버튼을 클릭하면 show -->
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" v-if='showJourney'>
                             <div class='margin-big'></div>
                             <div>
-                            <h3>여행 일정</h3>
+                                <h3>여행 일정</h3>
+                                {{ journey }}
                             </div>
                         </div>
                         <!-- 여행 일정 end -->

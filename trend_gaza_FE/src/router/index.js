@@ -27,7 +27,17 @@ const router = createRouter({
           path: "modify/:planIdx",
           name: "plan-modify",
           component: () => import("@/components/plan/PlanModify.vue"),
-        }
+        },
+        {
+          path: "map",
+          name: "plan-map",
+          component: () => import("@/components/plan/PlanMap.vue"),
+        },
+        {
+          path: "map/:planIdx",
+          name: "plan-saved-map",
+          component: () => import("@/components/plan/PlanMap.vue"),
+        },
       ]
     },
     {

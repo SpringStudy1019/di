@@ -71,9 +71,9 @@ public class FollowController {
 	@GetMapping(value="/{followeeId}")
 	public ResponseEntity<?> selectUsers(@PathVariable String followeeId) {
 		try {
-			List<String> result = followService.listFollowers(followeeId);
+			List<User> result = followService.listFollowers(followeeId);
 			if (result != null && !result.isEmpty()) {
-				return new ResponseEntity<List<String>>(result, HttpStatus.OK);				
+				return new ResponseEntity<List<User>>(result, HttpStatus.OK);				
 			} else {
 				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);				
 			}
