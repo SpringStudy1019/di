@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.trend_gaza.attraction.dto.AttractionAdminRequest;
 import com.ssafy.trend_gaza.attraction.dto.AttractionAutoSearchResponse;
+import com.ssafy.trend_gaza.attraction.dto.AttractionBookmarkResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionCategoryResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
@@ -35,6 +36,7 @@ public interface AttractionService {
 	List<AttractionPlanResponse> getAttractionPlanResponse(Map<String, String> param);
 	/* 북마크 */
 	int onBookmark(int attractionId, String userId) throws Exception;
+	List<AttractionBookmarkResponse> findBookmarkAndAttractionByUserIds(int planIdx);
 	
 	/* 사용자들이 올린 이미지 가져오기 */
 	List<Map<String, String>> getUserImage(int contentId) throws Exception;

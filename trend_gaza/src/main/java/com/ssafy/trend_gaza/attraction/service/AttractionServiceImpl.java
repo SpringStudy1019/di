@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.trend_gaza.attraction.dto.AttractionAdminRequest;
 import com.ssafy.trend_gaza.attraction.dto.AttractionAutoSearchResponse;
+import com.ssafy.trend_gaza.attraction.dto.AttractionBookmarkResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionCategoryResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
@@ -248,6 +249,12 @@ public class AttractionServiceImpl implements AttractionService {
 	@Override
 	public List<Map<String, String>> getUserImage(int contentId) throws Exception {
 		return attractionMapper.getUserImage(contentId);
+	}
+
+
+	@Override
+	public List<AttractionBookmarkResponse> findBookmarkAndAttractionByUserIds(int planIdx) {
+		return attractionMapper.findBookmarkAndAttractionByUserIds(planIdx);
 	}
 
 
