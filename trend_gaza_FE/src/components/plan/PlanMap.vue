@@ -16,6 +16,8 @@ const allSelect = ref([]);
 const curDay = ref(0);
 const today = ref(formattingDate(new Date()));
 const totalPages = ref(1);
+const startDate = ref("");
+const endDate = ref("");
 //const props = defineProps({latitude: Number, longitude: Number});
 
 const position = {
@@ -280,6 +282,15 @@ function formattingDate(date) {
     dateObject.setDate(dateObject.getDate() + 1);
     return dateObject.toISOString().split('T')[0];
 }
+
+const updateButtonCount = () => {
+  const start = new Date(startDate.value);
+  const end = new Date(endDate.value);
+  const diffInDays = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+
+  console.log("날짜의 차:" + diffInDays);
+  totalPages.value = diffInDays;
+}
 </script>
 
 <template>
@@ -320,8 +331,14 @@ function formattingDate(date) {
 
   <div class="offcanvas-body">
       <div class='date-group'>
-        <input type='date' :min="today"/>
-        <input type='date' :min="today"/>
+        <div class='start-date'>
+          <lable for='start-date'>출발일자 </lable>
+          <input type='date' class="start-date-input" id="start-date" v-model="startDate" :min="today" @change='updateButtonCount'/>
+        </div>
+        <div class='end-date'>
+          <lable for='end-date'>도착일자 </lable>
+          <input type='date' id="end-date" class="end-date-input" v-model="endDate" :min="today" @change='updateButtonCount'/>
+        </div>
       </div>
       <div class="page-nav">
         <nav  aria-label="Page navigation example">
@@ -470,5 +487,17 @@ function formattingDate(date) {
 
 .search-group {
   margin: 50px;
+}
+
+.start-date {
+  margin-bottom: 10px;
+}
+
+.start-date-input {
+  width: 80%;
+}
+
+.end-date-input {
+  width: 80%;
 }
 </style>
