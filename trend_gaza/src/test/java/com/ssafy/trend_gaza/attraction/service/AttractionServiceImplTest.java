@@ -113,7 +113,7 @@ class AttractionServiceImplTest {
 	@Test
 	@DisplayName("관광지 북마크하기")
 	@Transactional
-	void testOnBookmark() throws SQLException {
+	void testOnBookmark() throws Exception {
 
 		// given
 		String userId = "alswjd";
