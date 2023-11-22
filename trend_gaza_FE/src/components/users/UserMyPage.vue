@@ -397,7 +397,7 @@ const uploadRequest = (e) => {
   transition: color 0.3s ease; 
 }
 .user-link:hover {
-  color: #83A2FF; 
+  color: #8128d5; 
 }
 .user-id {
   font-size: 23px; 

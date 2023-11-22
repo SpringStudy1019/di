@@ -2,13 +2,17 @@
 </script>
 
 <template>
-    <h1>여행 계획을 세워볼까요?</h1>
+    <h1 class="travel-title">여행을 떠나볼까요?</h1>
     <router-view></router-view>
 </template>
 
 <style scoped>
-* {
-    margin: 0;
-    padding: 0;
+.travel-title {
+    margin-top: 50px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #8128d5;
 }
 </style>

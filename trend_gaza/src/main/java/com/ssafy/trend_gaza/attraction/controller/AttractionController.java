@@ -82,6 +82,11 @@ public class AttractionController {
 		return ResponseEntity.ok(attractionService.searchAttractions(map));	
 	}
 	
+	@GetMapping("/listByCategory")
+	public ResponseEntity<?> listByCategory(@RequestParam Map<String, String> map) {
+		return ResponseEntity.ok(attractionService.listByCategory(map));	
+	}
+	
 	@GetMapping("/auto-search")
 	public ResponseEntity<CommonResponse> AutoSearchAttractions(@RequestParam String keyword) {
 		Node node = attractionService.search(keyword);
@@ -110,14 +115,7 @@ public class AttractionController {
 		List<AttractionInfo> list = attractionService.searchByCategory(map);
 		return ResponseEntity.ok(list);	
 	}
-	
-	@GetMapping("/listByCategory")
-	public ResponseEntity<?> listByCategory(@RequestParam Map<String, String> map) {
-		AttractionCategoryResponse response = attractionService.listByCategory(map);
-		HttpHeaders header = new HttpHeaders();
-		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-		return ResponseEntity.ok().headers(header).body(response);
-	}
+
 	
 	/*
 	 * 검색어를 중점으로 두고 검색. 

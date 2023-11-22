@@ -84,7 +84,6 @@ function onDeleteArticle() {
     return;
   }
   const { reviewIdx } = route.params;
-  console.log(reviewIdx + "번글 삭제하러 가자!!!");
    // API 호출
    deleteReview(reviewIdx,
     ({data}) => {
@@ -103,44 +102,6 @@ const followingInfo = ref({
   followeeId: store.userInfo.userId, 
   followerId: ""
 })
-
-// 팔로잉 button 효과
-function toggleFollow() {
-  console.log(followingInfo.value);
-  const followButton = document.getElementById('follow-button');
-
-  if (followButton.textContent === '+ Follow') {
-    // State Change: To Following
-    followButton.textContent = 'Following';
-    followButton.style.width = '95px';
-    followButton.style.backgroundColor = '#3399FF';
-    followButton.style.color = '#ffffff';
-    followButton.style.borderColor = '#3399FF';
-    // API Call
-    onFollow(followingInfo.value,
-    (response) => {
-      router.push({ name: "review-view" });
-    }, (error) => {
-      console.log(error);
-    })
-  } else {
-    // State Change: Unfollow
-    followButton.textContent = '+ Follow';
-    followButton.style.width = '85px';
-    followButton.style.backgroundColor = '#ffffff';
-    followButton.style.color = '#3399FF';
-    followButton.style.borderColor = '#3399FF';
-    // API Call
-    offFollow(
-      followingInfo.value.followeeId,
-      followingInfo.value.followerId,
-    (response) => {
-      router.push({ name: "review-view" });
-    }, (error) => {
-      console.log(error);
-    })
-  }
-}
 
 // 다른 사용자 페이지 가기
 const goYourPage = (userId) => {
@@ -221,23 +182,6 @@ const goYourPage = (userId) => {
 </template>
 
 <style scoped>
-#follow-button {
-  display: inline-block;
-  color: #3399FF;
-  font-family: "Helvetica";
-  font-size: 10pt;
-  background-color: #ffffff;
-  border: 1px solid;
-  border-color: #3399FF;
-  border-radius: 3px;
-  width: 85px;
-  height: 30px;
-  top: 50px;
-  left: 50px;	
-  margin-left: 20px;
-  cursor: pointer;		
-  transition: all 0.3s ease;
-}
 
 .img-group {
     display: flex;

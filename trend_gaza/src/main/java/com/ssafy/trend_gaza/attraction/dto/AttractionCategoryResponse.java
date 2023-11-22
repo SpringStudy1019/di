@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 
+import lombok.Builder;
 
+@Builder
 public class AttractionCategoryResponse {
 
 	private List<AttractionInfo> attractions;
@@ -35,22 +37,6 @@ public class AttractionCategoryResponse {
 	public Integer getTotalPageCount() {
 		return totalPageCount;
 	}
-
-
-	public void setAttractions(List<AttractionInfo> attractions) {
-		this.attractions = attractions;
-	}
-
-
-	public void setCurrentPage(Integer currentPage) {
-		this.currentPage = currentPage;
-	}
-
-
-	public void setTotalPageCount(Integer totalPageCount) {
-		this.totalPageCount = totalPageCount;
-	}
-	
 	
 	
 }

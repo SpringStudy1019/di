@@ -5,9 +5,11 @@ import {useRoute} from "vue-router";
 import {listByCategory} from '@/api/attraction';
 import PageNavigation from "@/components/common/PageNavigation.vue";
 import TheCategoryListItem from '@/components/category/TheCategoryListItem.vue';
+const { VITE_ATTRACTION_LIST_SIZE } = import.meta.env;
 
 const route = useRoute();
-const {contentTypeId} = route.params;
+const contentTypeId = ref(route.params.contentTypeId);
+// console.log("content type id:::", contentType.value);
 
 const attractions = ref([]);
 
@@ -18,27 +20,24 @@ onMounted(() => {
 
 const currentPage = ref(1);
 const totalPage = ref(0);
-const { VITE_ATTRACTION_LIST_SIZE } = import.meta.env;
 
 const param = ref({
   contentTypeId: contentTypeId,
   pgno: currentPage.value,
   spp: VITE_ATTRACTION_LIST_SIZE,
   sido: "",
-  word: "",
+  keyword: "",
 });
 
 const getAttraction = () => {
-  console.log("contenttypeid", contentTypeId)
-  console.log("oh yeah!!")
   listByCategory(
     param.value,
     ({data}) => {
-      console.log("oooooooh yeah!!!!!!")
-        attractions.value = data
+        attractions.value = data.attractions; // data가 아닌 data.attractions이다! (postman에서 데이터 확인)
         currentPage.value = data.currentPage;
         totalPage.value = data.totalPageCount;
-        console.log(data);
+        console.log("current page:::", currentPage.value);
+        console.log("total page:::", totalPage.value);
     },
     (error) => {
         console.log(error);
@@ -55,7 +54,7 @@ const onPageChange = (val) => {
 
 // 관광지 이름 설정 (computed)
 const categoryName = computed(() => {
-    switch (contentTypeId) {
+    switch (contentTypeId.value) {
         case '14':
             return '문화시설';
         case '15':
@@ -84,12 +83,21 @@ const categoryName = computed(() => {
         Plus, we'll provide road view. 
     -->
   </div>
+
+  <div class="card mb-3" v-for="attraction in attractions" :key="attraction.contentId">
+        <div class="card-header text-center">
+        {{ attraction.title }}
+        </div>
+        <div class="card-body">
+        <h5 class="card-title">{{ attraction.addr1 }}</h5> 
+        </div>
+    </div>
   
-  <TheCategoryListItem
+  <!-- <TheCategoryListItem
     v-for="attraction in attractions"
     :key="attraction.contentId"
     :attraction="attraction"
-  ></TheCategoryListItem>
+  ></TheCategoryListItem> -->
 
   <PageNavigation
     :current-page="currentPage"

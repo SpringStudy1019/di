@@ -84,6 +84,43 @@ public class AttractionServiceImpl implements AttractionService {
 		return attractionSearchResponse;
 		//return result.stream().map(AttractionResponse::of).toList();
 	}
+	
+	/**
+	 * 카테고리별 리스트 조회(searchByCategory)를 이용한 페이지네이션 추가
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public AttractionCategoryResponse listByCategory(Map<String, String> param) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String sido = param.get("sido");
+		String contentTypeId = param.get("contentTypeId");
+		String keyword = param.get("keyword");
+		
+		map.put("sido", sido == null ? "" : sido);
+		map.put("contentTypeId", contentTypeId == null ? "" : contentTypeId);
+		map.put("keyword", keyword == null ? "" : keyword);
+		
+		int pgNo = Integer.parseInt(param.get("pgno") == null ? "1" : param.get("pgno"));
+		int currentPage = Integer.parseInt(param.get("pgno") == null ? "1" : param.get("pgno"));
+		int sizePerPage = Integer.parseInt(param.get("spp") == null ? "20" : param.get("spp"));
+
+		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
+		map.put("start", start);
+		map.put("listsize", SizeConstant.LIST_SIZE);
+
+		List<AttractionInfo> list = attractionMapper.searchByCategory(map);
+		
+		int totalAttractionCount = attractionMapper.getTotalAttractionCount(map);
+		int totalPageCount = (totalAttractionCount - 1) / sizePerPage + 1; 
+	
+		AttractionCategoryResponse response = AttractionCategoryResponse.builder()
+				.attractions(list)
+				.currentPage(currentPage)
+				.totalPageCount(totalPageCount)
+				.build();
+		return response;
+	}
 
 
 	@Override
@@ -160,55 +197,22 @@ public class AttractionServiceImpl implements AttractionService {
 	 * @return
 	 */
 	@Override
-	public List<AttractionInfo> searchByCategory(Map<String, String> map) {
-		Map<String, Object> param = new HashMap<String, Object>();
-		String sido = map.get("sido");
-		String contentTypeId = map.get("contentTypeId");
-		String word = map.get("word");
+	public List<AttractionInfo> searchByCategory(Map<String, String> param) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String sido = param.get("sido");
+		String contentTypeId = param.get("contentTypeId");
+		String keyword = param.get("keyword");
 		
-		param.put("sido", sido == null ? "" : sido);
-		param.put("contentTypeId", contentTypeId == null ? "" : contentTypeId);
-		param.put("word", word == null ? "" : word);
-
-		List<AttractionInfo> list = attractionMapper.searchByCategory(param);
+		map.put("sido", sido == null ? "" : sido);
+		map.put("contentTypeId", contentTypeId == null ? "" : contentTypeId);
+		map.put("keyword", keyword == null ? "" : keyword);
+		
+		List<AttractionInfo> list = attractionMapper.searchByCategory(map);
 
 		return list;
 	}
 
-	/**
-	 * 카테고리별 리스트 조회(searchByCategory)를 이용한 페이지네이션 추가
-	 * @param map
-	 * @return
-	 */
-	@Override
-	public AttractionCategoryResponse listByCategory(Map<String, String> map) {
-		Map<String, Object> param = new HashMap<String, Object>();
-		String sido = map.get("sido");
-		String contentTypeId = map.get("contentTypeId");
-		String word = map.get("word");
-		
-		param.put("sido", sido == null ? "" : sido);
-		param.put("contentTypeId", contentTypeId == null ? "" : contentTypeId);
-		param.put("word", word == null ? "" : word);
 
-		List<AttractionInfo> list = attractionMapper.searchByCategory(param);
-	
-		int currentPage = Integer.parseInt(map.get("pgno") == null ? "1" : map.get("pgno"));
-		int sizePerPage = Integer.parseInt(map.get("spp") == null ? "20" : map.get("spp"));
-		int start = currentPage * sizePerPage - sizePerPage;
-		param.put("start", start);
-		param.put("listsize", sizePerPage);
-		
-		int totalArticleCount = attractionMapper.getTotalAttractionCount(param);
-		int totalPageCount = (totalArticleCount - 1) / sizePerPage + 1;
-		
-		AttractionCategoryResponse response = new AttractionCategoryResponse();
-		response.setAttractions(list);
-		response.setCurrentPage(currentPage);
-		response.setTotalPageCount(totalPageCount);
-
-		return response;
-	}
 	
 	/*
 	 * 여행 계획 세울 때 보이는 여행지 리스트
