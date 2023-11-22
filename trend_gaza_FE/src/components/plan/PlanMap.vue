@@ -1,11 +1,12 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
 import PageNavigation from '@/components/common/PageNavigation.vue'
 import { registerAttractionPlan, getAttractionPlan } from "@/api/plan"
 
 const route = useRoute();
+const router = useRouter();
 const { planIdx } = route.params;
 
 var map;
@@ -16,7 +17,7 @@ const allSelect = ref([]);
 const curDay = ref(0);
 const today = ref(formattingDate(new Date()));
 const totalPages = ref(1);
-const startDate = ref("");
+const startDate = ref(formattingDate(new Date()));
 const endDate = ref("");
 //const props = defineProps({latitude: Number, longitude: Number});
 
@@ -230,6 +231,9 @@ const onDrop = (event, colNum) => {
 const trasformRequestDTO = () => {
   const requestList = [];
   for (let i = 0; i < allSelect.value.length; i++) {
+    if (allSelect.value[i] == null) {
+      break;
+    }
     for (let j=0; j < allSelect.value[i].length; j++) {
       let planRequest = {
         "attractionId": allSelect.value[i][j].contentId,
@@ -245,7 +249,8 @@ const trasformRequestDTO = () => {
 const savePlans = () => {
   registerAttractionPlan(1, trasformRequestDTO(),
     ({ data }) => {
-      console.log(data);
+      window.alert("여행 계획이 등록되었습니다.");
+      router.push({ name: "plan-list" });
     }, (error) => {
       console.log(error);
     })
@@ -283,12 +288,24 @@ function formattingDate(date) {
     return dateObject.toISOString().split('T')[0];
 }
 
+watch(
+  () => endDate.value,
+  (value) => {
+    if (startDate.value === '') {
+      window.alert("출발 일자를 먼저 선택하세요.");
+    }
+  },
+  {immediate: true}
+)
+
 const updateButtonCount = () => {
+  if (startDate.value === "" || endDate.value === "") {
+    return;
+  }
   const start = new Date(startDate.value);
   const end = new Date(endDate.value);
   const diffInDays = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
 
-  console.log("날짜의 차:" + diffInDays);
   totalPages.value = diffInDays;
 }
 </script>
@@ -332,12 +349,12 @@ const updateButtonCount = () => {
   <div class="offcanvas-body">
       <div class='date-group'>
         <div class='start-date'>
-          <lable for='start-date'>출발일자 </lable>
+          <label for='start-date'>출발일자 </label>
           <input type='date' class="start-date-input" id="start-date" v-model="startDate" :min="today" @change='updateButtonCount'/>
         </div>
         <div class='end-date'>
-          <lable for='end-date'>도착일자 </lable>
-          <input type='date' id="end-date" class="end-date-input" v-model="endDate" :min="today" @change='updateButtonCount'/>
+          <label for='end-date'>도착일자 </label>
+          <input type='date' id="end-date" class="end-date-input" v-model="endDate" :min="startDate" @change='updateButtonCount'/>
         </div>
       </div>
       <div class="page-nav">
@@ -494,10 +511,14 @@ const updateButtonCount = () => {
 }
 
 .start-date-input {
-  width: 80%;
+  width: 70%;
 }
 
 .end-date-input {
-  width: 80%;
+  width: 70%;
+}
+
+label {
+  margin-right: 10px;
 }
 </style>
