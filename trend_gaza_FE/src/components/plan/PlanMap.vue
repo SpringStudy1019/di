@@ -336,7 +336,9 @@ const updateButtonCount = () => {
     <div class="container" v-for="attraction in attractionList" :key="attraction.contentId">  
         <p class="title">{{attraction.title}}</p>
           <div class="img-content">
-              <img class="img" :src="attraction.firstImage"/>
+              <router-link :to="{name: 'attraction-view', params: {attractionIdx:attraction.contentId}}" target="_blank">
+                <img class="img" :src="attraction.firstImage"/>
+              </router-link>
           </div>
           <span>{{ attraction.addr1 }} </span>
           <div>
