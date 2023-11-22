@@ -1,6 +1,5 @@
 package com.ssafy.trend_gaza.attraction.service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -34,5 +33,8 @@ public interface AttractionService {
 	/* 여행 계획 세울 때 보이는 여행지 리스트 */
 	List<AttractionPlanResponse> getAttractionPlanResponse(Map<String, String> param);
 	/* 북마크 */
-	int onBookmark(int attractionId, String userId) throws SQLException;
+	int onBookmark(int attractionId, String userId) throws Exception;
+	
+	/* 사용자들이 올린 이미지 가져오기 */
+	List<String> getUserImage(int contentId) throws Exception;
 }

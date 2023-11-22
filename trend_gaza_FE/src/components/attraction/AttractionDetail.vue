@@ -111,6 +111,9 @@ const getReviewsInfo = () => {
     }
     );
 };
+
+// 사용자가 업로드한 이미지 가져오기
+
 </script>
 
 <template>
@@ -156,7 +159,14 @@ const getReviewsInfo = () => {
   <div class="margin"></div>
 
     <!-- 이미지 -->
-    <img :src="attraction.defaultImg">
+    <div class='image-carousel'>
+      <BCarousel fade controls indicators>
+        <BCarouselSlide :img-src="attraction.defaultImg" img-height="550px"/>
+        <BCarouselSlide img-src="https://picsum.photos/1024/480/?image=11" />
+        <BCarouselSlide img-src="https://picsum.photos/1024/480/?image=12" />
+      </BCarousel>
+    </div>
+    <!-- <img :src="attraction.defaultImg"> -->
     <div class="margin"></div>
 
     <h3 class="title2">지도에서 보기</h3>
@@ -239,6 +249,11 @@ const getReviewsInfo = () => {
 </template>
 
 <style scoped>
+.image-carousel {
+  margin: 0 auto;
+  margin-left: 200px;
+  margin-right: 200px;
+}
 
   .review {
     border: 1px solid #ccc;
@@ -276,7 +291,7 @@ img {
   text-align: center;
 }
 .margin {
-  margin-bottom: 50px;
+  margin-bottom: 80px;
 }
 .number {
   margin-left: 10px;

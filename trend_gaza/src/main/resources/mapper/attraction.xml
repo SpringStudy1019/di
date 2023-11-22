@@ -162,5 +162,12 @@
 		where content_type_id = #{contentTypeId}
 		<include refid="searchCategory"></include>	
 	</select>
+	
+	<select id="getUserImage" parameterType="int" resultType="String">
+		SELECT f.save_file
+		FROM review r
+		LEFT JOIN file_info f ON r.review_idx = f.review_idx
+		WHERE r.content_id = #{contentId} AND f.save_file IS NOT NULL;
+	</select>
 
 </mapper>
