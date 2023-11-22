@@ -1,8 +1,12 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
 import PageNavigation from '@/components/common/PageNavigation.vue'
 import { registerAttractionPlan, getAttractionPlan } from "@/api/plan"
+
+const route = useRoute();
+const { planIdx } = route.params;
 
 var map;
 const markers = ref([]);
@@ -245,10 +249,8 @@ const savePlans = () => {
 
 // 기존에 저장했던 여행 계획을 조회
 const getSelectedPlans = () => {
-  getAttractionPlan(13,
+  getAttractionPlan(planIdx,
     ({ data }) => {
-      console.log(data);
-      //allSelect.value = data;
       for (let i = 0; i < data.length; i++) {
         if(allSelect.value[data[i].orderDate - 1] == null) {
           allSelect.value[data[i].orderDate - 1] = [];
@@ -260,7 +262,6 @@ const getSelectedPlans = () => {
           contentId: data[i].contentId, 
         }
         allSelect.value[data[i].orderDate - 1].push(attraction);
-        console.log(data[i].orderDate - 1);
       }
     }, (error) => {
       console.log(error);
