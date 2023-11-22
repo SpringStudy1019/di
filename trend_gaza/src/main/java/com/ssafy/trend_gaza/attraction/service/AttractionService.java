@@ -10,11 +10,12 @@ import com.ssafy.trend_gaza.attraction.dto.AttractionAutoSearchResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionCategoryResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
+import com.ssafy.trend_gaza.attraction.dto.AttractionSearchResponse;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.util.TrieAlgorithmUtil.Node;
 
 public interface AttractionService {
-	List<AttractionInfo> searchAttractions(Map<String, String> param);
+	AttractionSearchResponse searchAttractions(Map<String, String> param);
 	List<AttractionInfo> searchByword(String keyword);
 	void registerAdminAttraction(AttractionAdminRequest attractionAdminRequest);
 	String uploadAttractionImage(MultipartFile multipartFile, String realPath) throws Exception;

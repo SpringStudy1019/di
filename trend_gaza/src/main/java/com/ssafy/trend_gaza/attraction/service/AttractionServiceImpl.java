@@ -16,8 +16,10 @@ import com.ssafy.trend_gaza.attraction.dto.AttractionAutoSearchResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionCategoryResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
+import com.ssafy.trend_gaza.attraction.dto.AttractionSearchResponse;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.attraction.repository.AttractionMapper;
+import com.ssafy.trend_gaza.plan.entity.Attraction;
 import com.ssafy.trend_gaza.review.dto.ReviewResponse;
 import com.ssafy.trend_gaza.review.entity.Review;
 import com.ssafy.trend_gaza.util.FileUtil;
@@ -51,7 +53,7 @@ public class AttractionServiceImpl implements AttractionService {
 
 
 	@Override
-	public List<AttractionInfo> searchAttractions(Map<String, String> param) {
+	public AttractionSearchResponse searchAttractions(Map<String, String> param) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String sido = param.get("sido");
 		String contentTypeId = param.get("contentTypeId");
@@ -62,11 +64,23 @@ public class AttractionServiceImpl implements AttractionService {
 		map.put("keyword", keyword == null ? "" : keyword);
 		
 		int pgNo = Integer.parseInt(param.get("pgno") == null ? "1" : param.get("pgno"));
+		int currentPage = Integer.parseInt(param.get("pgno") == null ? "1" : param.get("pgno"));
+		int sizePerPage = Integer.parseInt(param.get("spp") == null ? "20" : param.get("spp"));
+
 		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
 		map.put("start", start);
 		map.put("listsize", SizeConstant.LIST_SIZE);
 		
-		return attractionMapper.searchAttractions(map);
+		List<AttractionInfo> list = attractionMapper.searchAttractions(map);
+		int totalAttractionCount = attractionMapper.getTotalAttractionCount(map);
+		int totalPageCount = (totalAttractionCount - 1) / sizePerPage + 1; 
+		
+		AttractionSearchResponse attractionSearchResponse = AttractionSearchResponse.builder()
+				.attractions(list)
+				.currentPage(currentPage)
+				.totalPageCount(totalPageCount)
+				.build();
+		return attractionSearchResponse;
 		//return result.stream().map(AttractionResponse::of).toList();
 	}
 
