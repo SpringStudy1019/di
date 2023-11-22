@@ -43,7 +43,7 @@ function onPageChange(pg) {
 <template>
   <div class="row">
     <ul class="pagination justify-content-center">
-      <li class="page-item">
+      <li v-if="type != 'plan-map'" class="page-item">
         <a class="page-link" @click="onPageChange(1)">최신</a>
       </li>
       <li class="page-item">
@@ -57,7 +57,9 @@ function onPageChange(pg) {
       <li class="page-item">
         <a class="page-link" @click="onPageChange(endRange ? totalPage : endPage + 1)">다음</a>
       </li>
-      <li class="page-item"><a class="page-link" @click="onPageChange(totalPage)">마지막</a></li>
+      <li class="page-item" v-if="type != 'plan-map'">
+        <a class="page-link" @click="onPageChange(totalPage)">마지막</a>
+      </li>
     </ul>
   </div>
 </template>

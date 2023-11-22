@@ -407,6 +407,8 @@ const onPageChange = (val) => {
             <button class="add-btn" @click="selectFunc(attraction)">추가</button>
           </div>
         </div>
+      </div>
+      <div class="offcanvas-footer">
         <PageNavigation
           :current-page="currentPage"
           :total-page="totalPage"
