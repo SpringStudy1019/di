@@ -161,9 +161,14 @@ const loadMarkers = (data) => {
     }
 
     // 지도 중심을 이동 시킵니다
-    map.setCenter(new kakao.maps.LatLng(latitude, longitude));
+    moveCenter(latitude, longitude);
   }
 };
+
+// 지도 중심을 이동 시킵니다
+const moveCenter = (latitude, longitude) => {
+  map.setCenter(new kakao.maps.LatLng(latitude, longitude));
+}
 
 const loadAttractionList = (data) => {
   attractionList.value = data;
@@ -191,6 +196,7 @@ const selectFunc = (data) => {
     window.alert("하루에 최대 10개만 등록 가능합니다.");
     return;
   }
+  moveCenter(data.latitude, data.longitude);
   allSelect.value[curDay.value].push(data);
 }
 
@@ -330,7 +336,9 @@ const updateButtonCount = () => {
     <div class="container" v-for="attraction in attractionList" :key="attraction.contentId">  
         <p class="title">{{attraction.title}}</p>
           <div class="img-content">
-              <img class="img" :src="attraction.firstImage"/>
+              <router-link :to="{name: 'attraction-view', params: {attractionIdx:attraction.contentId}}" target="_blank">
+                <img class="img" :src="attraction.firstImage"/>
+              </router-link>
           </div>
           <span>{{ attraction.addr1 }} </span>
           <div>
