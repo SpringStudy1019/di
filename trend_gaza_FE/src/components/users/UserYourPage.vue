@@ -191,7 +191,11 @@ onBeforeRouteUpdate((to, from) => {
         <div class="user-id">{{ userInfo.userId }}</div>
         <div class="follow-info">{{ count }}명이 팔로잉 중</div>
         <div class='margin-small'></div>
-        <button id="follow-button" @click='toggleFollowing'>+ Follow</button>
+
+        <!-- 로그인한 사용자 아닌 경우에만 팔로잉 버튼을 보여줘야 함 -->
+        <div v-if='userInfo.userId !== store.userInfo.userId'>
+          <button id="follow-button" @click='toggleFollowing'>+ Follow</button>
+        </div>
 
         <!-- 팔로우 버튼을 누르면 관련 사용자 띄우기 -->
         <div v-if='otherUsersToggle && relatedPeople.length > 0' class="related-people-box">

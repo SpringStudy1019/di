@@ -163,10 +163,11 @@
 		<include refid="searchCategory"></include>	
 	</select>
 	
-	<select id="getUserImage" parameterType="int" resultType="String">
-		SELECT f.save_file
+	<select id="getUserImage" parameterType="int" resultType="map">
+		SELECT r.review_idx, r.title as review_title, a.title as attraction_title, f.save_file
 		FROM review r
 		LEFT JOIN file_info f ON r.review_idx = f.review_idx
+		LEFT JOIN attraction_info a ON r.content_id = a.content_id
 		WHERE r.content_id = #{contentId} AND f.save_file IS NOT NULL;
 	</select>
 

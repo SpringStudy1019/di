@@ -133,7 +133,8 @@ public class AttractionController {
 	 */
 	@GetMapping("/image/{contentId}")
 	public ResponseEntity<?> getUserImage(@PathVariable int contentId) throws Exception {
-		List<String> list = attractionService.getUserImage(contentId);
+		// reviewIdx와 이미지 경로 주소를 리턴해야 함
+		List<Map<String, String>> list = attractionService.getUserImage(contentId);
 		return ResponseEntity.ok(list);	
 	}
 	

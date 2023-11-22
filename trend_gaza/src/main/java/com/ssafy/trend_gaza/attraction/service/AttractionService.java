@@ -36,5 +36,5 @@ public interface AttractionService {
 	int onBookmark(int attractionId, String userId) throws Exception;
 	
 	/* 사용자들이 올린 이미지 가져오기 */
-	List<String> getUserImage(int contentId) throws Exception;
+	List<Map<String, String>> getUserImage(int contentId) throws Exception;
 }

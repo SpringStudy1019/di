@@ -232,7 +232,7 @@ public class AttractionServiceImpl implements AttractionService {
 
 
 	@Override
-	public List<String> getUserImage(int contentId) throws Exception {
+	public List<Map<String, String>> getUserImage(int contentId) throws Exception {
 		return attractionMapper.getUserImage(contentId);
 	}
 
