@@ -31,12 +31,12 @@ const router = createRouter({
         {
           path: "map",
           name: "plan-map",
-          component: () => import("@/components/plan/PlanMap.vue"),
+          component: () => import("@/components/plan/PlanMapWrite.vue"),         // 등록
         },
         {
           path: "map/:planIdx",
           name: "plan-saved-map",
-          component: () => import("@/components/plan/PlanMap.vue"),
+          component: () => import("@/components/plan/PlanMapModify.vue"),   // 수정
         },
       ]
     },
