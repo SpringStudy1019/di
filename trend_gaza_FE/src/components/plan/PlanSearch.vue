@@ -9,10 +9,14 @@ const markers = ref([]);
 
 const emit = defineEmits(["getAttractionData", "currentPage", "totalPage"]);
 
+const props = defineProps({ planSearchParam: Object });
+
 const param = ref({
   sido: "",
   contentTypeId: "",
   keyword: "",
+  currentPage: props.currentPage,
+  totalPage: props.totalPage,
 });
 
 onMounted(() => {

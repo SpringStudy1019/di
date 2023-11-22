@@ -9,6 +9,8 @@ const route = useRoute();
 const router = useRouter();
 const { planIdx } = route.params;
 
+const { VITE_SEARCH_ATTRACTION_LIST_SIZE } = import.meta.env;
+
 var map;
 const markers = ref([]);
 const attractionList = ref([]);
@@ -27,6 +29,11 @@ const position = {
   latitude: 37.57889445,
   longitude: 126.9770319,
 };
+
+const planSearchParam = ref({
+  pgno: currentPage.value,
+  spp: VITE_SEARCH_ATTRACTION_LIST_SIZE,
+});
 
 const props = defineProps({
   type: String,
@@ -347,6 +354,7 @@ const onPageChange = (val) => {
   // console.log(val + "번 페이지로 이동 준비 끝!!!");
   currentPage.value = val;
   param.value.pgno = val;
+  // 검색 호출
 };
 </script>
 
@@ -389,7 +397,7 @@ const onPageChange = (val) => {
         ></button>
       </div>
       <div class="offcanvas-body">
-        <PlanSearch @getAttractionData="loadAttractionList" />
+        <PlanSearch @getAttractionData="loadAttractionList" :planSearchParam="planSearchParam" />
 
         <!-- planSearchList -->
         <div class="container" v-for="attraction in attractionList" :key="attraction.contentId">
