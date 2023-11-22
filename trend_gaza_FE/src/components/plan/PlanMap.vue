@@ -14,6 +14,8 @@ const attractionList = ref([]);
 const selectList = ref([]);
 const allSelect = ref([]);
 const curDay = ref(0);
+const today = ref(formattingDate(new Date()));
+const totalPages = ref(1);
 //const props = defineProps({latitude: Number, longitude: Number});
 
 const position = {
@@ -272,6 +274,12 @@ const getSelectedPlans = () => {
 const moveNDay = (value) => {
   curDay.value = value;
 }
+
+function formattingDate(date) {
+    const dateObject = new Date(date);
+    dateObject.setDate(dateObject.getDate() + 1);
+    return dateObject.toISOString().split('T')[0];
+}
 </script>
 
 <template>
@@ -312,8 +320,8 @@ const moveNDay = (value) => {
 
   <div class="offcanvas-body">
       <div class='date-group'>
-        <input type='date'/>
-        <input type='date'/>
+        <input type='date' :min="today"/>
+        <input type='date' :min="today"/>
       </div>
       <div class="page-nav">
         <nav  aria-label="Page navigation example">
@@ -323,9 +331,12 @@ const moveNDay = (value) => {
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li class="page-item"><a class="page-link" @click='moveNDay(0)'>1</a></li>
+            <li class="page-item" v-for='index in totalPages' :key='index'>
+              <a class="page-link" @click='moveNDay(index - 1)'>{{ index }}</a>
+            </li>
+            <!-- <li class="page-item"><a class="page-link" @click='moveNDay(0)'>1</a></li>
             <li class="page-item"><a class="page-link" @click='moveNDay(1)'>2</a></li>
-            <li class="page-item"><a class="page-link" @click='moveNDay(2)'>3</a></li>
+            <li class="page-item"><a class="page-link" @click='moveNDay(2)'>3</a></li> -->
             <li class="page-item">
               <a class="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
