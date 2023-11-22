@@ -1,8 +1,12 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
 import PageNavigation from '@/components/common/PageNavigation.vue'
-import { registerAttractionPlan } from "@/api/plan"
+import { registerAttractionPlan, getAttractionPlan } from "@/api/plan"
+
+const route = useRoute();
+const { planIdx } = route.params;
 
 var map;
 const markers = ref([]);
@@ -37,7 +41,8 @@ onMounted(() => {
   }
 
   initArray();
-
+  getSelectedPlans();
+  //getAttractionPlan();
 });
 
 // 2차원 배열 초기화
@@ -241,6 +246,27 @@ const savePlans = () => {
       console.log(error);
     })
 };
+
+// 기존에 저장했던 여행 계획을 조회
+const getSelectedPlans = () => {
+  getAttractionPlan(planIdx,
+    ({ data }) => {
+      for (let i = 0; i < data.length; i++) {
+        if(allSelect.value[data[i].orderDate - 1] == null) {
+          allSelect.value[data[i].orderDate - 1] = [];
+        }
+        let attraction = {
+          title: data[i].title,
+          firstImage: data[i].imgUrl,
+          addr1: data[i].address,
+          contentId: data[i].contentId, 
+        }
+        allSelect.value[data[i].orderDate - 1].push(attraction);
+      }
+    }, (error) => {
+      console.log(error);
+  })
+}
 
 /* 버튼을 클릭하면 해당 일자에 작성한 계획으로 전환됨 */
 const moveNDay = (value) => {
