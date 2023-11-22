@@ -113,7 +113,7 @@
 	<!-- 내가 만든 여행 조회하기 -->
 	<select id="getCreatedPlans" parameterType="String" resultMap="planResponse">
 		SELECT p.plan_idx, p.title, p.start_date, p.end_date, COUNT(up.user_id) AS user_count
-			FROM plan p RIGHT JOIN user_plan up ON p.plan_idx = up.plan_idx
+			FROM plan p LEFT JOIN user_plan up ON p.plan_idx = up.plan_idx
 			WHERE p.user_id = #{userId}
 			GROUP BY p.plan_idx, p.title, p.start_date, p.end_date;
 	</select>

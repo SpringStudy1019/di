@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { followList } from "@/api/follow";
-import { getPlans } from "@/api/plan";
 import { registNoti } from "@/api/notification";
 import { useUserStore } from '@/stores/user';
 import { getInvitedPlan, getCreatedPlan } from "@/api/plan";
@@ -114,55 +113,62 @@ const getInvitedPlans = () => {
 
         <!-- part.1 start -->
         <h1>내가 계획한 여행</h1>
-        <div class="col-sm-6">
-        <div class="card text-center">
-        <div class="card-body">
-            <div v-if='myPlans.length > 0'>
-            <div v-for='myPlan in myPlans' :key='myPlan.planIdx'>
-                <h5 class="card-title">{{myPlan.title}}</h5>
-                <p class="card-text">
-                    {{ myPlan.userCount === 0 ? 
-                    "나 홀로 하는 여행" : `${myPlan.userCount}명과 함께하는 여행` }}
-                    <br>
-                    {{ formatDate(myPlan.startDate) }}부터 {{ formatDate(myPlan.endDate) }}까지
-                    ({{calculateDays(myPlan.startDate, myPlan.endDate)}}일)</p>
-                    <router-link 
-                    :to="{ name: 'plan'}" 
-                    class="btn btn-primary me-2">
-                    여행계획짜기
-                </router-link>
-                <button class="btn btn-warning me-2">여행일정</button>
-                <button @click='showMyFriend' class="btn btn-success">친구 초대하기</button>
-                <div class='margin'></div>
-                <!-- 친구 초대하기 버튼을 클릭하면 친구가 뜬다 -->
-                <div v-if='showFriend' >
-                <div>
-                    <div v-for="friend in friends" :key="friend">
-                        {{ friend }}
-                        <button @click="notificationRequest(friend, myPlan.title)" class="btn btn-warning">여행갈래?</button>
-                        <div class='margin-small'></div>
+        <div v-if='myPlans.length > 0'>
+            <div class='row'>
+            <div class="col-sm-6" v-for='myPlan in myPlans' :key='myPlan.planIdx'>
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">{{myPlan.title}}</h5>
+                        <p class="card-text">
+                            {{ myPlan.userCount === 0 ? 
+                            "나 홀로 하는 여행" : `${myPlan.userCount}명과 함께하는 여행` }}
+                            <br>
+                            {{ formatDate(myPlan.startDate) }}부터 {{ formatDate(myPlan.endDate) }}까지
+                            ({{calculateDays(myPlan.startDate, myPlan.endDate)}}일)
+                        </p>
+                        <router-link 
+                        :to="{ name: 'plan'}" 
+                        class="btn btn-primary me-2">
+                        여행계획짜기
+                        </router-link>
+                        <button class="btn btn-warning me-2">여행일정</button>
+                        <button @click='showMyFriend' class="btn btn-success">친구 초대하기</button>
+                        <!-- 친구 초대하기 버튼을 클릭하면 친구가 뜬다 -->
+                        <div v-if='showFriend' >
+                        <div>
+                            <div class='margin-small-friend'></div>
+                            <div v-for="friend in friends" :key="friend">
+                                {{ friend }}
+                                <button @click="notificationRequest(friend, myPlan.title)" 
+                                class="btn btn-outline-success">여행갈래?</button>
+                                <div class='margin-small'></div>
+                            </div>
+                        </div>
+                        </div>
+                        <!-- 여행 일정 start -->
+                        <!-- 여행 일정 버튼을 클릭하면 show -->
+                        <div class="col-sm-6">
+                            <div class='margin-big'></div>
+                            <div>
+                            <h3>여행 일정</h3>
+                            </div>
+                        </div>
+                        <!-- 여행 일정 end -->
                     </div>
                 </div>
-                </div>
-
-            </div>
-            </div>
-            <div v-else >
-                아직 여행 계획이 없어요!
+                <div class='margin'></div>
+                
             </div>
         </div>
-    </div>
-    <!-- 여행 일정 start -->
-    <!-- 여행 일정 버튼을 클릭하면 show -->
-    <div class="col-sm-6">
-      <div>
-        
-      </div>
-    </div>
-     <!-- 여행 일정 end -->
-</div>
-<div class='margin-big'></div>
+
+        </div>
+
+        <div v-else >
+            아직 여행 계획이 없어요!
+        </div>
+            
             <!-- part.1 end -->
+
             <!-- part.2 start -->
         <h1>내가 초대된 여행 계획</h1>
         <div class="col-sm-6">
@@ -189,9 +195,7 @@ const getInvitedPlans = () => {
         </div>
     </div>
             <!-- part.2 end -->
-        
-    
-        
+            
     </div>
     </div>
     
@@ -208,6 +212,10 @@ const getInvitedPlans = () => {
 }
 
 .margin-small {
+    margin-bottom: 10px;
+}
+
+.margin-small-friend {
     margin-bottom: 10px;
 }
 </style>
