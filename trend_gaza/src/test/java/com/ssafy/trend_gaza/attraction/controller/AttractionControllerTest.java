@@ -137,5 +137,17 @@ class AttractionControllerTest {
 //		
 //	}
 	
+	@Test
+	@DisplayName("여행 계획 세우기에 참여한 사용자들이 북마크한 관광지 조회")
+	void testGetParticipantsBookmarks() throws Exception {
+		// given
+		int planIdx = 1;
+		
+		mockMvc.perform(get("/attractions/plan/" + planIdx + "/bookmark"))
+		.andExpect(status().isOk())
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+		.andDo(print());
+	}
+	
 
 }

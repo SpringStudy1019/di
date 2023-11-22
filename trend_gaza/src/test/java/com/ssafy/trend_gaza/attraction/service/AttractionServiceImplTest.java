@@ -17,7 +17,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.trend_gaza.attraction.dto.AttractionAdminRequest;
+import com.ssafy.trend_gaza.attraction.dto.AttractionBookmarkResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
+import com.ssafy.trend_gaza.attraction.dto.AttractionSearchResponse;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,8 +44,8 @@ class AttractionServiceImplTest {
 		map.put("contentTypeId", "");
 		map.put("keyword", "");
 		
-		List<AttractionInfo> attractionInfo = attractionService.searchAttractions(map);
-		assertEquals(20, attractionInfo.size());
+		AttractionSearchResponse attractionSearchResponse = attractionService.searchAttractions(map);
+		assertEquals(20, attractionSearchResponse.getAttractions().size());
 		
 		// log.debug("관광지 조회 테스트 종료");
 	}
@@ -58,8 +60,8 @@ class AttractionServiceImplTest {
 		map.put("contentTypeId", "12");
 		map.put("keyword", "");
 		
-		List<AttractionInfo> attractionInfo = attractionService.searchAttractions(map);
-		assertEquals(20, attractionInfo.size());
+		AttractionSearchResponse attractionSearchResponse = attractionService.searchAttractions(map);
+		assertEquals(20, attractionSearchResponse.getAttractions().size());
 		
 		// log.debug("관광지 조회 테스트 종료");
 	}
@@ -74,8 +76,8 @@ class AttractionServiceImplTest {
 		map.put("contentTypeId", "12");
 		map.put("keyword", "국립");
 
-		List<AttractionInfo> attractionInfo = attractionService.searchAttractions(map);
-		assertEquals(15, attractionInfo.size());
+		AttractionSearchResponse attractionSearchResponse = attractionService.searchAttractions(map);
+		assertEquals(15, attractionSearchResponse.getAttractions().size());
 
 		// log.debug("관광지 조회 테스트 종료");
 	}
@@ -126,5 +128,20 @@ class AttractionServiceImplTest {
 		assertEquals(1, result);
 		
 	}
+	
+	@Test
+	@DisplayName("여행 계획에 참여한 사용자들이 북마크한 관광지 조회")
+	void testFindBookmarkAndAttractionByUserIds() throws Exception {
+		
+		// given
+		Integer planIdx = 1;
+		
+		// when
+		List<AttractionBookmarkResponse> attractionBookmarkResponse= attractionService.findBookmarkAndAttractionByUserIds(planIdx);
+		
+		// then
+		assertEquals(3, attractionBookmarkResponse.size());
+	}
+	
 
 }

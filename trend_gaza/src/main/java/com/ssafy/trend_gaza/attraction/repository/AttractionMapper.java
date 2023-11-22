@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.trend_gaza.attraction.dto.AttractionAdminRequest;
 import com.ssafy.trend_gaza.attraction.dto.AttractionAutoSearchResponse;
+import com.ssafy.trend_gaza.attraction.dto.AttractionBookmarkResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionCategoryResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionDetailResponse;
 import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
@@ -34,6 +35,7 @@ public interface AttractionMapper {
 	Bookmark findBookmark(BookmarkRequest bookmarkRequest) throws Exception;
 	int onBookmark(BookmarkRequest bookmarkRequest) throws Exception;
 	int getTotalAttractionCount(Map<String, Object> param);
+	List<AttractionBookmarkResponse> findBookmarkAndAttractionByUserIds(int planIdx);
 	
 	/* 사용자들이 올린 이미지 가져오기 */
 	List<Map<String, String>> getUserImage(int contentId) throws Exception;

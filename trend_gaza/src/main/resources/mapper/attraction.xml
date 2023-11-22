@@ -43,6 +43,15 @@
 		<result column="content_id" property="contentId"/>
 	</resultMap>
 	
+	<resultMap id="attractionBookmarkResponse" type="AttractionBookmarkResponse">
+		<result column="title" property="title"/>
+		<result column="content_id" property="contentId"/>
+		<result column="addr1" property="address"/>
+		<result column="first_image" property="imgUrl"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+	</resultMap>
+	
 	<sql id="search">
 		<if test="contentTypeId != null and contentTypeId != ''">
 			and content_type_id = #{contentTypeId}
@@ -169,6 +178,14 @@
 		LEFT JOIN file_info f ON r.review_idx = f.review_idx
 		LEFT JOIN attraction_info a ON r.content_id = a.content_id
 		WHERE r.content_id = #{contentId} AND f.save_file IS NOT NULL;
+	</select>
+	
+	<select id="findBookmarkAndAttractionByUserIds" parameterType="int" resultMap = "attractionBookmarkResponse">
+		select ai.content_id, title, addr1, first_image, latitude, longitude
+		from attraction_info ai join bookmark b on ai.content_id = b.content_id
+		where user_id in (select user_id
+		from user_plan
+		where plan_idx = #{planIdx});
 	</select>
 
 </mapper>
