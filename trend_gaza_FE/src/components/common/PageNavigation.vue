@@ -37,6 +37,7 @@ function onPageChange(pg) {
   // Scroll to the top of the page
   window.scrollTo({ top: 0, behavior: "smooth" });
   emit("pageChange", pg);
+  console.log("페이지 전환");
 }
 </script>
 

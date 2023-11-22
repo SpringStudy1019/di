@@ -3,6 +3,7 @@ import { ref, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import PlanSearch from "@/components/plan/PlanSearch.vue";
 import { registerAttractionPlan, getAttractionPlan, modifyPlan } from "@/api/plan";
+import { searchAttractionsByCondition } from "@/api/attraction.js";
 import PageNavigation from "@/components/common/PageNavigation.vue";
 
 const route = useRoute();
@@ -33,6 +34,9 @@ const position = {
 const planSearchParam = ref({
   pgno: currentPage.value,
   spp: VITE_SEARCH_ATTRACTION_LIST_SIZE,
+  sido: "",
+  contentTypeId: "",
+  keyword: "",
 });
 
 const props = defineProps({
@@ -350,11 +354,29 @@ const getSelectedPlans = () => {
   );
 };
 
+const searchAttractions = () => {
+  searchAttractionsByCondition(
+    planSearchParam.value,
+    ({ data }) => {
+      console.log(data);
+      attractionList.value = data.attractions;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+
+const getParam = (val) => {
+  planSearchParam.value.sido = val.value.sido;
+  planSearchParam.value.keyword = val.value.keyword;
+  planSearchParam.value.contentTypeId = val.value.contentId;
+}
+
 const onPageChange = (val) => {
-  // console.log(val + "번 페이지로 이동 준비 끝!!!");
   currentPage.value = val;
-  param.value.pgno = val;
-  // 검색 호출
+  planSearchParam.value.pgno = val;
+  searchAttractions();      // 검색 호출
 };
 </script>
 
@@ -397,7 +419,7 @@ const onPageChange = (val) => {
         ></button>
       </div>
       <div class="offcanvas-body">
-        <PlanSearch @getAttractionData="loadAttractionList" :planSearchParam="planSearchParam" />
+        <PlanSearch @getAttractionData="loadAttractionList" :planSearchParam="planSearchParam" @param="getParam" />
 
         <!-- planSearchList -->
         <div class="container" v-for="attraction in attractionList" :key="attraction.contentId">

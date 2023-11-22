@@ -7,7 +7,7 @@ const contentTypeId = ref("0");
 const keyword = ref("");
 const markers = ref([]);
 
-const emit = defineEmits(["getAttractionData", "currentPage", "totalPage"]);
+const emit = defineEmits(["getAttractionData", "currentPage", "totalPage", "param"]);
 
 const props = defineProps({ planSearchParam: Object });
 
@@ -54,6 +54,7 @@ const searchAttractions = () => {
   searchAttractionsByCondition(
     param.value,
     ({ data }) => {
+      emit("param", param);     // 검색 조건
       emit("getAttractionData", data);
       emit("currentPage", data.currentPage);
       emit("totalPage", data.totalPageCount);
