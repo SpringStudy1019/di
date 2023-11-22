@@ -49,6 +49,10 @@ function updatePlan(planIdx, planModifyRequest, success, fail) {
     local.put(`${url}/modify/${planIdx}`, JSON.stringify(planModifyRequest)).then(success).catch(fail);
 }
 
+function getPlanDetail(planIdx, success, fail) {
+    local.get(`${url}/${planIdx}`).then(success).catch(fail);
+}
+
 export {
     joinPlan,
     getPlans,
@@ -59,5 +63,6 @@ export {
     getModifyPlan,
     registerPlan,
     updatePlan,
+    getPlanDetail
     getAttractionPlan
 };

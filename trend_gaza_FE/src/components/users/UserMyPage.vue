@@ -212,7 +212,7 @@ const uploadRequest = (e) => {
             <div class="col-md-4">
               <img
                 :src="store.userInfo.imgUrl"
-                class="img-fluid rounded-start"
+                class="img-fluid"
                 alt="..."
               />
               <button class="upload-button" @click='uploadToggle'>사진 업로드</button>
@@ -262,16 +262,16 @@ const uploadRequest = (e) => {
               <div class="card">
                 <div class="card-body">
                   <img
-                  :src="store.userInfo.imgUrl"
-                    class="img-fluid rounded-start"
+                  :src="followee.imgUrl"
+                    class="img-fluid rounded"
                     alt="..."  style="height: 100px; width: 100px;"
                   />
                   <!-- 팔로워 정보 자세히 보기 -->
                   <router-link 
-                  :to="{ name: 'user-yourpage', params: { userId: followee } }" 
+                  :to="{ name: 'user-yourpage', params: { userId: followee.userId } }" 
                   class="user-link"  
                   >
-                    <h5 class="user-id">{{ followee }}</h5>
+                    <h5 class="user-id">{{ followee.userName }}({{ followee.userId }})</h5>
                 </router-link>
                   <!-- <h5 class="card-title" >{{ followee }}</h5> -->
                   <div>
