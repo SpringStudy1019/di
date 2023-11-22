@@ -138,4 +138,9 @@ public class AttractionController {
 		return ResponseEntity.ok(list);	
 	}
 	
+	@GetMapping("/plan/{planIdx}/bookmark")
+	public ResponseEntity<?> getParticipantsBookmarks(@PathVariable int planIdx) throws Exception {
+		return ResponseEntity.ok(attractionService.findBookmarkAndAttractionByUserIds(planIdx));
+	}
+	
 }
