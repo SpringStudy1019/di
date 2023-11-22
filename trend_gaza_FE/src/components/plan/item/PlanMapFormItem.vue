@@ -3,10 +3,14 @@ import { ref, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import PlanSearch from "@/components/plan/PlanSearch.vue";
 import { registerAttractionPlan, getAttractionPlan, modifyPlan } from "@/api/plan";
+import { searchAttractionsByCondition } from "@/api/attraction.js";
+import PageNavigation from "@/components/common/PageNavigation.vue";
 
 const route = useRoute();
 const router = useRouter();
 const { planIdx } = route.params;
+
+const { VITE_SEARCH_ATTRACTION_LIST_SIZE } = import.meta.env;
 
 var map;
 const markers = ref([]);
@@ -18,11 +22,22 @@ const today = ref(formattingDate(new Date()));
 const totalPages = ref(1);
 const startDate = ref(formattingDate(new Date()));
 const endDate = ref("");
+const currentPage = ref(1);
+const totalPage = ref(0);
+const type = ref("plan-map");
 
 const position = {
   latitude: 37.57889445,
   longitude: 126.9770319,
 };
+
+const planSearchParam = ref({
+  pgno: currentPage.value,
+  spp: VITE_SEARCH_ATTRACTION_LIST_SIZE,
+  sido: "",
+  contentTypeId: "",
+  keyword: "",
+});
 
 const props = defineProps({
   type: String,
@@ -174,7 +189,9 @@ const moveCenter = (latitude, longitude) => {
 };
 
 const loadAttractionList = (data) => {
-  attractionList.value = data;
+  attractionList.value = data.attractions;
+  totalPage.value = data.totalPage;
+  currentPage.value = data.currentPage;
   loadMarkers(data);
 };
 
@@ -336,6 +353,31 @@ const getSelectedPlans = () => {
     }
   );
 };
+
+const searchAttractions = () => {
+  searchAttractionsByCondition(
+    planSearchParam.value,
+    ({ data }) => {
+      console.log(data);
+      attractionList.value = data.attractions;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+
+const getParam = (val) => {
+  planSearchParam.value.sido = val.value.sido;
+  planSearchParam.value.keyword = val.value.keyword;
+  planSearchParam.value.contentTypeId = val.value.contentId;
+}
+
+const onPageChange = (val) => {
+  currentPage.value = val;
+  planSearchParam.value.pgno = val;
+  searchAttractions();      // 검색 호출
+};
 </script>
 
 <template>
@@ -377,7 +419,7 @@ const getSelectedPlans = () => {
         ></button>
       </div>
       <div class="offcanvas-body">
-        <PlanSearch @getAttractionData="loadAttractionList" />
+        <PlanSearch @getAttractionData="loadAttractionList" :planSearchParam="planSearchParam" @param="getParam" />
 
         <!-- planSearchList -->
         <div class="container" v-for="attraction in attractionList" :key="attraction.contentId">
@@ -395,6 +437,14 @@ const getSelectedPlans = () => {
             <button class="add-btn" @click="selectFunc(attraction)">추가</button>
           </div>
         </div>
+      </div>
+      <div class="offcanvas-footer">
+        <PageNavigation
+          :current-page="currentPage"
+          :total-page="totalPage"
+          :type="type"
+          @pageChange="onPageChange"
+        />
       </div>
     </div>
 
