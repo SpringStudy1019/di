@@ -63,6 +63,6 @@ export {
     getModifyPlan,
     registerPlan,
     updatePlan,
-    getPlanDetail
+    getPlanDetail,
     getAttractionPlan
 };
