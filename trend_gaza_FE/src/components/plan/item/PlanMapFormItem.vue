@@ -378,6 +378,19 @@ const onPageChange = (val) => {
   planSearchParam.value.pgno = val;
   searchAttractions();      // 검색 호출
 };
+
+const getBookmarks = (data) => {
+  for(let i=0; i<data.length; i++) {
+    let attraction = {
+      title: data[i].title,
+      firstImage: data[i].imgUrl,
+      addr1: data[i].address,
+      contentId: data[i].contentId,
+    };
+    console.log(attraction);
+    attractionList.value.push(attraction);
+  }
+}
 </script>
 
 <template>
@@ -419,7 +432,8 @@ const onPageChange = (val) => {
         ></button>
       </div>
       <div class="offcanvas-body">
-        <PlanSearch @getAttractionData="loadAttractionList" :planSearchParam="planSearchParam" @param="getParam" />
+        <PlanSearch @getAttractionData="loadAttractionList" :planSearchParam="planSearchParam" 
+        @param="getParam" :planIdx = "planIdx" @bookmarks="getBookmarks"/>
 
         <!-- planSearchList -->
         <div class="container" v-for="attraction in attractionList" :key="attraction.contentId">

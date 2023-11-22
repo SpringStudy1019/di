@@ -1,15 +1,15 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { searchAttractionsByCondition } from "@/api/attraction.js";
+import { searchAttractionsByCondition, getLikeAttractions } from "@/api/attraction.js";
 
 const sido = ref("0");
 const contentTypeId = ref("0");
 const keyword = ref("");
 const markers = ref([]);
 
-const emit = defineEmits(["getAttractionData", "currentPage", "totalPage", "param"]);
+const emit = defineEmits(["getAttractionData", "currentPage", "totalPage", "param", "bookmarks"]);
 
-const props = defineProps({ planSearchParam: Object });
+const props = defineProps({ planSearchParam: Object, planIdx: String });
 
 const param = ref({
   sido: "",
@@ -64,6 +64,16 @@ const searchAttractions = () => {
       console.log(error);
     }
   );
+};
+
+const searchLike = () => {
+  getLikeAttractions(props.planIdx,
+  ({data}) => {
+    emit("bookmarks", data);
+  }, (error) => {
+    console.log(error);
+  }
+  )
 };
 </script>
 
@@ -124,6 +134,7 @@ const searchAttractions = () => {
       >
         검색
       </button>
+      <button id="btn-like" @click="searchLike">찜한 관광지 보기</button>
     </form>
   </div>
 </template>
