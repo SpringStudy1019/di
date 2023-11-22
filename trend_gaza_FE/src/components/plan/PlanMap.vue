@@ -1,11 +1,12 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import PlanSearch from '@/components/plan/PlanSearch.vue'
 import PageNavigation from '@/components/common/PageNavigation.vue'
 import { registerAttractionPlan, getAttractionPlan } from "@/api/plan"
 
 const route = useRoute();
+const router = useRouter();
 const { planIdx } = route.params;
 
 var map;
@@ -14,6 +15,10 @@ const attractionList = ref([]);
 const selectList = ref([]);
 const allSelect = ref([]);
 const curDay = ref(0);
+const today = ref(formattingDate(new Date()));
+const totalPages = ref(1);
+const startDate = ref(formattingDate(new Date()));
+const endDate = ref("");
 //const props = defineProps({latitude: Number, longitude: Number});
 
 const position = {
@@ -226,6 +231,9 @@ const onDrop = (event, colNum) => {
 const trasformRequestDTO = () => {
   const requestList = [];
   for (let i = 0; i < allSelect.value.length; i++) {
+    if (allSelect.value[i] == null) {
+      break;
+    }
     for (let j=0; j < allSelect.value[i].length; j++) {
       let planRequest = {
         "attractionId": allSelect.value[i][j].contentId,
@@ -241,7 +249,8 @@ const trasformRequestDTO = () => {
 const savePlans = () => {
   registerAttractionPlan(1, trasformRequestDTO(),
     ({ data }) => {
-      console.log(data);
+      window.alert("여행 계획이 등록되었습니다.");
+      router.push({ name: "plan-list" });
     }, (error) => {
       console.log(error);
     })
@@ -272,6 +281,33 @@ const getSelectedPlans = () => {
 const moveNDay = (value) => {
   curDay.value = value;
 }
+
+function formattingDate(date) {
+    const dateObject = new Date(date);
+    dateObject.setDate(dateObject.getDate() + 1);
+    return dateObject.toISOString().split('T')[0];
+}
+
+watch(
+  () => endDate.value,
+  (value) => {
+    if (startDate.value === '') {
+      window.alert("출발 일자를 먼저 선택하세요.");
+    }
+  },
+  {immediate: true}
+)
+
+const updateButtonCount = () => {
+  if (startDate.value === "" || endDate.value === "") {
+    return;
+  }
+  const start = new Date(startDate.value);
+  const end = new Date(endDate.value);
+  const diffInDays = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+
+  totalPages.value = diffInDays;
+}
 </script>
 
 <template>
@@ -291,16 +327,16 @@ const moveNDay = (value) => {
     <PlanSearch @getAttractionData="loadAttractionList" />
 
     <!-- planSearchList -->
-    <div class="container" v-for="attraction in attractionList" :key="attraction.contentId">
-        <span class="title">{{attraction.title}}</span>
-        <div class="img-content">
-            <img class="img" :src="attraction.firstImage"/>
-        </div>
-        <span>{{ attraction.addr1 }} </span>
-        <div class="add-btn" >
-            <button @click="selectFunc(attraction)">추가</button>
-        </div>
-      </div>
+    <div class="container" v-for="attraction in attractionList" :key="attraction.contentId">  
+        <p class="title">{{attraction.title}}</p>
+          <div class="img-content">
+              <img class="img" :src="attraction.firstImage"/>
+          </div>
+          <span>{{ attraction.addr1 }} </span>
+          <div>
+            <button class="add-btn" @click="selectFunc(attraction)">추가</button>
+          </div> 
+    </div>
   </div>  
 </div>
 
@@ -308,38 +344,53 @@ const moveNDay = (value) => {
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasRightLabel">🎒현재 코스 리스트</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      <nav class="page-nav" aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" @click='moveNDay(0)'>1</a></li>
-          <li class="page-item"><a class="page-link" @click='moveNDay(1)'>2</a></li>
-          <li class="page-item"><a class="page-link" @click='moveNDay(2)'>3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
   </div>
 
   <div class="offcanvas-body">
+      <div class='date-group'>
+        <div class='start-date'>
+          <label for='start-date'>출발일자 </label>
+          <input type='date' class="start-date-input" id="start-date" v-model="startDate" :min="today" @change='updateButtonCount'/>
+        </div>
+        <div class='end-date'>
+          <label for='end-date'>도착일자 </label>
+          <input type='date' id="end-date" class="end-date-input" v-model="endDate" :min="startDate" @change='updateButtonCount'/>
+        </div>
+      </div>
+      <div class="page-nav">
+        <nav  aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item" v-for='index in totalPages' :key='index'>
+              <a class="page-link" @click='moveNDay(index - 1)'>{{ index }}</a>
+            </li>
+            <!-- <li class="page-item"><a class="page-link" @click='moveNDay(0)'>1</a></li>
+            <li class="page-item"><a class="page-link" @click='moveNDay(1)'>2</a></li>
+            <li class="page-item"><a class="page-link" @click='moveNDay(2)'>3</a></li> -->
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     <!-- PlanSelectList -->
     <!--<div class="container" v-for="(allSelectItem, idx) in allSelect" :key="idx">-->
-      <div v-for="(selectItem, idx) in allSelect[curDay]" :key="selectItem.contentId">
+      <div class='selected-group' v-for="(selectItem, idx) in allSelect[curDay]" :key="selectItem.contentId">
         <div class="container" @drop.prevent="onDrop($event, idx)" @dragover.prevent>
             <div @dragstart="startDrag($event, selectItem)" draggable="true">
-                <span class="title">{{selectItem.title}}</span>
+                <p class="title">{{selectItem.title}}</p>
                 <div class="img-content">
                     <img class="img" :src="selectItem.firstImage"/>
                 </div>
                 <span>{{ selectItem.addr1 }} </span>
-                <div class="delete-btn">
-                    <button @click='deleteItem(selectItem)'>삭제</button>
+                <div>
+                    <button class="delete-btn" @click='deleteItem(selectItem)'>삭제</button>
                 </div>
             </div>
       </div>
@@ -348,7 +399,7 @@ const moveNDay = (value) => {
   </div>
 
   <div class='offcanvas-footer'>
-    <button @click='savePlans'>저장</button>
+    <button class='save-btn' @click='savePlans'>저장</button>
   </div>
 </div>
 
@@ -368,9 +419,9 @@ const moveNDay = (value) => {
     }
 
     .left-section {
-  flex: 1; /* Takes up all available space in the flex container */
-  padding: 20px; /* Adjust padding as needed */
-  width: 30%;
+    flex: 1; /* Takes up all available space in the flex container */
+    padding: 20px; /* Adjust padding as needed */
+    width: 30%;
     background-color: aqua;
     display: flex;
     flex-direction: column;
@@ -383,17 +434,22 @@ const moveNDay = (value) => {
 
 /* PlanSearchList */
 .container {
-    border: 1px solid black;
-    margin: 10px;
+    border: 1px solid gainsboro;
+    /*margin: 10 10px;*/
+    margin-bottom: 25px;
     width: 300px;
-    height: 300px;
+    height: 350px;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .img {
     width: 250px;
     height: 200px;
     display: block;
+    border-radius: 5%;
 }
 
 .img-content {
@@ -404,17 +460,65 @@ const moveNDay = (value) => {
 }
 
 .title {
-    font-size: 20px;
+  font-size: 20px;
+  text-align: center;
+  margin: 0;
 }
 
 .add-btn {
-    text-align: right;
-    display: inline;
+  text-align: right;
+  display: inline;
+  background-color: plum;
+  color: white;
+  border: white;
 }
 
 .page-nav {
-  position: fixed;
-  top: 50px;
-  right: 110px;
+  margin: 0 auto;
+  justify-content: center;
+  display: flex;
+}
+
+.selected-group {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.date-group {
+  margin-bottom: 20px; 
+}
+
+.delete-btn {
+  background-color: plum;
+  color: white;
+  border: white;
+}
+
+.save-btn {
+  background-color: plum;
+  color: white;
+  border: white;
+}
+
+.search-group {
+  margin: 50px;
+}
+
+.start-date {
+  margin-bottom: 10px;
+}
+
+.start-date-input {
+  width: 70%;
+}
+
+.end-date-input {
+  width: 70%;
+}
+
+label {
+  margin-right: 10px;
 }
 </style>
