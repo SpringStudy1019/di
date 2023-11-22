@@ -40,7 +40,9 @@ const getPlanRequest = () => {
         store.userInfo.userId,
         ({ data }) => {  
                 myPlans.value = data;
-                console.log("내가 계획한 여행", myPlans.value)
+            console.log("내가 계획한 여행", myPlans.value)
+            // console.log("내가 계획한 여행 개수", myPlans.value.length)
+            showMyJourney.value = Array(myPlans.value.length).fill(false);
         },
         (error) => {
             console.log(error);
@@ -103,18 +105,20 @@ const getInvitedPlans = () => {
     });
 };
 
-// 여행 일정 상세 조회
-const showJourney = ref(false)
-const showJourneyToggle = () => {
-    showJourney.value = !showJourney.value
+// 내가 만든 여행 일정 상세 조회
+const showMyJourney = ref([]);
+
+const showJourneyToggle = (planIdx) => {
+    showMyJourney.value[planIdx] = !showMyJourney.value[planIdx];
 }
 const journey = ref([])
 const planDetail = (planIdx) => {
-    showJourneyToggle();
+    showJourneyToggle(planIdx);
     getPlanDetail(
         planIdx,
         ({ data }) => {
             journey.value = data;
+            console.log("journey:::::::::", journey)
         },
         (error) => {
             console.log(error);
@@ -122,6 +126,12 @@ const planDetail = (planIdx) => {
     );
 }
 
+// 친구가 만든 여행 일정 상세 조회
+const showYourJourney = ref([]);
+
+// TASK 2
+// attraction_plan에서 이미 저장한 데이터가 있다면
+// 여행계획짜기에서 다시 불러와서 수정 api를 써야 함.
 </script>
 
 <template>
@@ -135,10 +145,10 @@ const planDetail = (planIdx) => {
         <h1>내가 계획한 여행</h1>
         <div v-if='myPlans.length > 0'>
             <div class='row'>
-            <div class="col-sm-6" v-for='myPlan in myPlans' :key='myPlan.planIdx'>
+            <div class="col-sm-6" v-for='(myPlan, index) in myPlans' :key='index'>
                 <div class="card text-center">
                     <div class="card-body">
-                        <h5 class="card-title">{{myPlan.title}}</h5>
+                        <h5 class="card-title">{{ myPlan.title }}</h5>
                         <p class="card-text">
                             {{ myPlan.userCount === 0 ? 
                             "나 홀로 하는 여행" : `${myPlan.userCount}명과 함께하는 여행` }}
@@ -146,36 +156,41 @@ const planDetail = (planIdx) => {
                             {{ formatDate(myPlan.startDate) }}부터 {{ formatDate(myPlan.endDate) }}까지
                             ({{calculateDays(myPlan.startDate, myPlan.endDate)}}일)
                         </p>
-                        <router-link 
+                        <!-- 먼저 짜놓은 계획이 있는지 확인 -->
+                        <!-- <router-link 
                         :to="{ name: 'plan-map'}" 
                         class="btn btn-primary me-2">
                         여행계획짜기
                         </router-link>
+                        <router-link 
+                        :to="{ name: 'plan-modify', params: { planIdx: myPlan.planIdx } }" 
+                        class="btn btn-primary me-2">
+                        여행계획수정
+                        </router-link> -->
                         <button class="btn btn-warning me-2" 
                         @click='planDetail(myPlan.planIdx)'
-                        >
-                        여행일정
-                        </button>
+                        >여행일정</button>
                         <button @click='showMyFriend' class="btn btn-success">친구 초대하기</button>
                         <!-- 친구 초대하기 버튼을 클릭하면 친구가 뜬다 -->
                         <div v-if='showFriend' >
-                        <div>
-                            <div class='margin-small-friend'></div>
-                            <template v-for="friend in friends" :key="friend">
-                                {{ friend.userName }} ({{friend.userId}})
-                                <button @click="notificationRequest(friend.userId, myPlan.title)" 
-                                class="btn btn-outline-success">여행갈래?</button>
-                                <div class='margin-small'></div>
-                            </template>
+                            <div>
+                                <div class='margin-small-friend'></div>
+                                <template v-for="friend in friends" :key="friend">
+                                    {{ friend.userName }} ({{friend.userId}})
+                                    <button @click="notificationRequest(friend.userId, myPlan.title)" 
+                                    class="btn btn-outline-success">여행갈래?</button>
+                                    <div class='margin-small'></div>
+                                </template>
+                            </div>
                         </div>
-                        </div>
-                        <!-- 여행 일정 start -->
-                        <!-- 여행 일정 버튼을 클릭하면 show -->
-                        <div class="col-sm-6" v-if='showJourney'>
+                        <!-- 여행 일정 start --><!-- 여행 일정 버튼을 클릭하면 show -->
+                        <div class="col-sm-6" v-if='showMyJourney[myPlan.planIdx]'>
                             <div class='margin-big'></div>
                             <div>
                                 <h3>여행 일정</h3>
-                                {{ journey }}
+                                <div v-for='place in journey' :key='place.contentId'>
+                                    {{ place.title }}
+                                </div>
                             </div>
                         </div>
                         <!-- 여행 일정 end -->
