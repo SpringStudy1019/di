@@ -26,6 +26,12 @@ function registerAttractionPlan(planIdx, planRequest, success, fail) {
     local.post(`${url}/${planIdx}`, JSON.stringify(planRequest)).then(success).catch(fail);
 }
 
+// 여행 계획 조회
+function getAttractionPlan(attractionPlanId, success, fail) {
+    console.log("여행 계획 조회 API 요청");
+    local.get(`${url}/${attractionPlanId}`).then(success).catch(fail);
+}
+
 function modifyPlan(attractionPlanId, success, fail) {
     local.put(`${url}/${attractionPlanId}`).then(success).catch(fail);
 }
@@ -52,5 +58,6 @@ export {
     modifyPlan,
     getModifyPlan,
     registerPlan,
-    updatePlan
+    updatePlan,
+    getAttractionPlan
 };
