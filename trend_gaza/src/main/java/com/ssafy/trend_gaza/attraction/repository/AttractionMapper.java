@@ -14,6 +14,7 @@ import com.ssafy.trend_gaza.attraction.dto.AttractionPlanResponse;
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
 import com.ssafy.trend_gaza.bookmark.dto.BookmarkRequest;
 import com.ssafy.trend_gaza.bookmark.entity.Bookmark;
+import com.ssafy.trend_gaza.plan.entity.Attraction;
 
 @Mapper
 public interface AttractionMapper {
