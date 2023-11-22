@@ -98,7 +98,8 @@ const deleteRequest = (userIdFrom) => {
             <div v-for="notification in notifications" :key="notification.notificationIdx">
                 <li 
                 class="list-group-item d-flex align-items-center">
-                    {{notification.userIdFrom}}이 "{{notification.message}}"라고 요청을 보내왔어요!
+                    {{notification.userIdFrom}}님이 "{{notification.message}}" 
+                    여행을 가자고 요청을 보내왔어요! 
                     <div class="button-class">
                         <button type="button" class="btn btn-outline-info mt-1 mb-3 me-2" 
                         @click="accept(notification.userIdFrom, notification.message)" >수락</button>

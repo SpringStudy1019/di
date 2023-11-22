@@ -1,6 +1,5 @@
 package com.ssafy.trend_gaza.attraction.repository;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +30,10 @@ public interface AttractionMapper {
 	List<AttractionPlanResponse> attractionPlan(Map<String, Object> param);
 	
 	/* 북마크 */
-	Bookmark findBookmark(BookmarkRequest bookmarkRequest) throws SQLException;
-	int onBookmark(BookmarkRequest bookmarkRequest) throws SQLException;
+	Bookmark findBookmark(BookmarkRequest bookmarkRequest) throws Exception;
+	int onBookmark(BookmarkRequest bookmarkRequest) throws Exception;
 	int getTotalAttractionCount(Map<String, Object> param);
+	
+	/* 사용자들이 올린 이미지 가져오기 */
+	List<Map<String, String>> getUserImage(int contentId) throws Exception;
 }

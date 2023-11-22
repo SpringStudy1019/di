@@ -46,11 +46,6 @@ const router = createRouter({
       component: () => import("../views/TheMainView.vue"),
     },
     {
-      path: '/attraction',
-      name: 'attraction',
-      component: () => import("../views/TheAttractionView.vue"),
-    },
-    {
       path: "/user",
       name: "user",
       component: () => import("@/views/TheUserView.vue"),
@@ -119,7 +114,12 @@ const router = createRouter({
           path: "view/:attractionIdx",
           name: "attraction-view",
           component: () => import("@/components/attraction/AttractionDetail.vue"),
-        }
+        },
+        {
+          path: "image/:attractionIdx",
+          name: "attraction-view-image",
+          component: () => import("@/components/attraction/AttractionDetailImage.vue"),
+        },
       ]
     },
     {

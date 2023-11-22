@@ -145,7 +145,7 @@ function toggleFollow() {
 // 다른 사용자 페이지 가기
 const goYourPage = (userId) => {
   if (store.userInfo.userId != userId) {
-    router.push(`/user/${userId}`);
+    router.push(`/${userId}`);
   }
 }
 </script>

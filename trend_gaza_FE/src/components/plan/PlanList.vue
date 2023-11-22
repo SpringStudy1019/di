@@ -147,7 +147,7 @@ const planDetail = (planIdx) => {
                             ({{calculateDays(myPlan.startDate, myPlan.endDate)}}일)
                         </p>
                         <router-link 
-                        :to="{ name: 'plan'}" 
+                        :to="{ name: 'plan-map'}" 
                         class="btn btn-primary me-2">
                         여행계획짜기
                         </router-link>
@@ -161,12 +161,12 @@ const planDetail = (planIdx) => {
                         <div v-if='showFriend' >
                         <div>
                             <div class='margin-small-friend'></div>
-                            <div v-for="friend in friends" :key="friend">
-                                {{ friend }}
-                                <button @click="notificationRequest(friend, myPlan.title)" 
+                            <template v-for="friend in friends" :key="friend">
+                                {{ friend.userName }} ({{friend.userId}})
+                                <button @click="notificationRequest(friend.userId, myPlan.title)" 
                                 class="btn btn-outline-success">여행갈래?</button>
                                 <div class='margin-small'></div>
-                            </div>
+                            </template>
                         </div>
                         </div>
                         <!-- 여행 일정 start -->
@@ -210,7 +210,11 @@ const planDetail = (planIdx) => {
                     class="btn btn-primary me-2">
                     여행계획짜기
                 </router-link>
-                <button class="btn btn-warning">여행일정</button>
+                <button class="btn btn-warning me-2" 
+                    @click='planDetail(invitation.planIdx)'
+                    >
+                    여행일정
+                </button>
             </div>
         </div>
         <div v-else>

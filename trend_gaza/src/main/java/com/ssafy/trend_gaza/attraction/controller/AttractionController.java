@@ -1,6 +1,7 @@
 package com.ssafy.trend_gaza.attraction.controller;
 
 import java.nio.charset.Charset;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +125,16 @@ public class AttractionController {
 	@GetMapping("/searchByWord")
 	public ResponseEntity<?> searchByWord(@RequestParam String keyword) {
 		List<AttractionInfo> list = attractionService.searchByword(keyword);
+		return ResponseEntity.ok(list);	
+	}
+	
+	/*
+	 * 사용자들이 올린 이미지 가져오기
+	 */
+	@GetMapping("/image/{contentId}")
+	public ResponseEntity<?> getUserImage(@PathVariable int contentId) throws Exception {
+		// reviewIdx와 이미지 경로 주소를 리턴해야 함
+		List<Map<String, String>> list = attractionService.getUserImage(contentId);
 		return ResponseEntity.ok(list);	
 	}
 	

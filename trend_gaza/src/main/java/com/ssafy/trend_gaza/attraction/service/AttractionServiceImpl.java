@@ -231,6 +231,12 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 
 
+	@Override
+	public List<Map<String, String>> getUserImage(int contentId) throws Exception {
+		return attractionMapper.getUserImage(contentId);
+	}
+
+
 //	@Override
 //	public int onBookmark(int contentId, String userId) throws SQLException {
 //		int result = 0;

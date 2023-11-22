@@ -2,7 +2,7 @@
 import {ref, onMounted, computed} from 'vue';
 import {useRoute, useRouter} from "vue-router";
 import AttractionMap from './item/AttractionMap.vue';
-import {getAttractionDetail} from '@/api/attraction';
+import { getAttractionDetail, getUserImage } from '@/api/attraction';
 import { getScores, getReviews} from '@/api/review';
 import { searchVideos } from "@/api/youtube";
 
@@ -16,6 +16,7 @@ onMounted(() => {
     getAttraction();
     getScoresInfo();
     getReviewsInfo();
+    getImages();
 });
 
 const getAttraction = () => {
@@ -111,6 +112,22 @@ const getReviewsInfo = () => {
     }
     );
 };
+
+// 사용자가 업로드한 이미지 가져오기
+const userImages = ref([])
+const getImages = () => {
+  getUserImage(
+    attractionIdx,
+    ({ data }) => {
+      userImages.value = data;
+      // console.log(userImages.value)
+    },
+    (error) => {
+      console.log(error);
+    }
+  )
+};
+
 </script>
 
 <template>
@@ -126,7 +143,7 @@ const getReviewsInfo = () => {
             여행지 소개 ✋  </a>
             <a class="list-group-item list-group-item-action" id="list-messages-list" 
             data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="messages">
-               주소
+              주소
             </a>
             <a class="list-group-item list-group-item-action" id="list-profile-list" 
             data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="profile">
@@ -156,10 +173,42 @@ const getReviewsInfo = () => {
   <div class="margin"></div>
 
     <!-- 이미지 -->
-    <img :src="attraction.defaultImg">
+    <div v-if='attraction.defaultImg !== "" && userImages.length === 1'>
+      <div class='image-carousel'>
+        <BCarousel fade controls indicators>
+          <BCarouselSlide :img-src="attraction.defaultImg" img-height="550px"/>
+          <BCarouselSlide :img-src="userImages[0].save_file" />
+        </BCarousel>
+      </div>
+    </div>
+    <div v-else-if='attraction.defaultImg !== "" && userImages.length > 1'>
+      <div class='image-carousel'>
+        <BCarousel fade controls indicators>
+          <BCarouselSlide :img-src="attraction.defaultImg" img-height="550px"/>
+          <BCarouselSlide :img-src="userImages[0].save_file" />
+          <BCarouselSlide :img-src="userImages[1].save_file" />
+        </BCarousel>
+      </div>
+      <div class="margin-big"></div>
+      <router-link 
+          :to="{ name: 'attraction-view-image', 
+          params: { attractionIdx: attraction.contentId } }" 
+          class="image-button">
+          이미지 더보기
+        </router-link>
+      <!-- <button class='image-button' 
+      @click='showImage(attraction.contentId)'>이미지 더보기</button> -->
+    </div>
+    <div v-else-if='attraction.defaultImg !== ""'>
+      <img :src="attraction.defaultImg">
+    </div>
+    <div v-else>
+      <img src="https://instagramimages16.s3.ap-northeast-2.amazonaws.com/IMAGE/admin/no_image.jpg">
+    </div>
+
     <div class="margin"></div>
 
-    <h3 class="title2">지도에서 보기</h3>
+    <!-- <h3 class="title2">지도에서 보기</h3> -->
     <!-- 지도 -->
     <div v-if='attraction.latitude && attraction.longitude'>
         <AttractionMap :longitude="attraction.longitude" :latitude="attraction.latitude"/>
@@ -205,8 +254,8 @@ const getReviewsInfo = () => {
       </div>
     </div>
     <div class="margin-big"></div>
-    <!-- 사용자들의 리뷰 내용 -->
-    <div v-for="review in reviews" :key="review.reviewIdx">
+    <!-- 사용자들의 리뷰 내용: 최대 5개까지만 보이게 -->
+    <div v-for="review in reviews.slice(0, 5)" :key="review.reviewIdx">
       <div class="review">
         <router-link 
           :to="{ name: 'review-view', params: { reviewIdx: review.reviewIdx } }" 
@@ -239,6 +288,11 @@ const getReviewsInfo = () => {
 </template>
 
 <style scoped>
+.image-carousel {
+  margin: 0 auto;
+  margin-left: 200px;
+  margin-right: 200px;
+}
 
   .review {
     border: 1px solid #ccc;
@@ -276,7 +330,7 @@ img {
   text-align: center;
 }
 .margin {
-  margin-bottom: 50px;
+  margin-bottom: 80px;
 }
 .number {
   margin-left: 10px;
@@ -334,4 +388,27 @@ img {
 .bottom-margin {
   margin-bottom: 50px;
 }
+
+.image-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px; 
+  height: 40px; 
+  border-radius: 20px; 
+  background-color: #ffffff; 
+  border: 2px solid #8128d5;
+  color: #8128d5; 
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0 auto;
+}
+
+.image-button:hover {
+  background-color: #8128d5; /* Purple background color on hover */
+  color: #ffffff; /* White text color on hover */
+}
+
 </style>
