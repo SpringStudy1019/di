@@ -26,11 +26,16 @@ function searchByWord(keyword, success, fail) {
     local.get(`${url}/searchByWord?keyword=${keyword}`).then(success).catch(fail);
 }
 
+function getUserImage(contentId, success, fail) {
+    local.get(`${url}/image/${contentId}`).then(success).catch(fail);
+}
+
 export {
     getAttractionDetail,
     searchAttraction,
     listByCategory,
     //searchByCategory,
     searchAttractionsByCondition,
-    searchByWord
+    searchByWord,
+    getUserImage,
 }

@@ -2,7 +2,7 @@
 import {ref, onMounted, computed} from 'vue';
 import {useRoute, useRouter} from "vue-router";
 import AttractionMap from './item/AttractionMap.vue';
-import {getAttractionDetail} from '@/api/attraction';
+import { getAttractionDetail, getUserImage } from '@/api/attraction';
 import { getScores, getReviews} from '@/api/review';
 import { searchVideos } from "@/api/youtube";
 
@@ -16,6 +16,7 @@ onMounted(() => {
     getAttraction();
     getScoresInfo();
     getReviewsInfo();
+    getImages();
 });
 
 const getAttraction = () => {
@@ -113,7 +114,20 @@ const getReviewsInfo = () => {
 };
 
 // 사용자가 업로드한 이미지 가져오기
-
+const userImages = ref([])
+const getImages = () => {
+  getUserImage(
+    attractionIdx,
+    ({data}) => {
+      userImages.value = data;
+      console.log(userImages.value);
+      console.log(userImages.value.length);
+    },
+    (error) => {
+      console.log(error);
+    }
+  )
+}
 </script>
 
 <template>
@@ -159,14 +173,32 @@ const getReviewsInfo = () => {
   <div class="margin"></div>
 
     <!-- 이미지 -->
-    <div class='image-carousel'>
-      <BCarousel fade controls indicators>
-        <BCarouselSlide :img-src="attraction.defaultImg" img-height="550px"/>
-        <BCarouselSlide img-src="https://picsum.photos/1024/480/?image=11" />
-        <BCarouselSlide img-src="https://picsum.photos/1024/480/?image=12" />
-      </BCarousel>
+    <div v-if='attraction.defaultImg !== "" && userImages.length === 1'>
+      <div class='image-carousel'>
+        <BCarousel fade controls indicators>
+          <BCarouselSlide :img-src="attraction.defaultImg" img-height="550px"/>
+          <BCarouselSlide :img-src="userImages[0]" />
+        </BCarousel>
+      </div>
     </div>
-    <!-- <img :src="attraction.defaultImg"> -->
+    <div v-else-if='attraction.defaultImg !== "" && userImages.length > 1'>
+      <div class='image-carousel'>
+        <BCarousel fade controls indicators>
+          <BCarouselSlide :img-src="attraction.defaultImg" img-height="550px"/>
+          <BCarouselSlide :img-src="userImages[0]" />
+          <BCarouselSlide :img-src="userImages[1]" />
+        </BCarousel>
+      </div>
+      <div class="margin-big"></div>
+      <button>이미지 더보기</button>
+    </div>
+    <div v-else-if='attraction.defaultImg !== ""'>
+      <img :src="attraction.defaultImg">
+    </div>
+    <div v-else>
+      <img src="https://instagramimages16.s3.ap-northeast-2.amazonaws.com/IMAGE/admin/no_image.jpg">
+    </div>
+
     <div class="margin"></div>
 
     <h3 class="title2">지도에서 보기</h3>
