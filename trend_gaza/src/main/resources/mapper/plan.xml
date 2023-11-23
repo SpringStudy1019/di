@@ -182,7 +182,7 @@
 	    WHERE up.plan_idx = #{planIdx}
 	</select>
 
-	<select id="getAttractionPlanId" parameterType="int" resultType="int">
+	<select id="getAttractionPlanId" parameterType="int" resultType="integer">
 		select attraction_plan_id
 		from attraction_plan
 		where plan_idx = #{planIdx}

@@ -51,5 +51,5 @@ public interface PlanMapper {
 	
 	List<User> getParticipant(int planIdx);
 	
-	int getAttractionPlanId(int planIdx);
+	Integer getAttractionPlanId(int planIdx);
 }
