@@ -12,17 +12,19 @@ public class PlanResponse {
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
 	private Integer userCount;
+	private Integer attractionPlanId;
 	
 	public PlanResponse() {}
 
 	public PlanResponse(Integer planIdx, String title, LocalDateTime startDate,
-			LocalDateTime endDate, Integer userCount) {
+			LocalDateTime endDate, Integer userCount, Integer attractionPlanId) {
 		super();
 		this.planIdx = planIdx;
 		this.title = title;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.userCount = userCount;
+		this.attractionPlanId = attractionPlanId;
 	}
 
 	public Integer getPlanIdx() {
@@ -44,5 +46,11 @@ public class PlanResponse {
 	public Integer getUserCount() {
 		return userCount;
 	}
+
+	public Integer getAttractionPlanId() {
+		return attractionPlanId;
+	}
+	
+	
 	
 }

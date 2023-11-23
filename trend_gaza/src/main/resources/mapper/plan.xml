@@ -28,6 +28,7 @@
 		<result property="startDate" column="start_date"/>
 		<result property="endDate" column="end_date"/>
 		<result property="userCount" column="user_count"/>
+		<result property="attractionPlanId" column="attraction_plan_id" />
 	</resultMap>
 	
 	<resultMap id="selectAttractionPlanResponse" type="selectAttractionPlanResponse">
@@ -115,10 +116,11 @@
 	
 	<!-- 내가 만든 여행 조회하기 -->
 	<select id="getCreatedPlans" parameterType="String" resultMap="planResponse">
-		SELECT p.plan_idx, p.title, p.start_date, p.end_date, COUNT(up.user_id) AS user_count
+		SELECT p.plan_idx, p.title, p.start_date, p.end_date, COUNT(up.user_id) AS user_count, ap.attraction_plan_id
 		FROM plan p LEFT JOIN user_plan up ON p.plan_idx = up.plan_idx
+		LEFT JOIN attraction_plan ap ON p.plan_idx = ap.plan_idx
 		WHERE p.user_id = #{userId}
-		GROUP BY p.plan_idx, p.title, p.start_date, p.end_date;
+		GROUP BY p.plan_idx, p.title, p.start_date, p.end_date, ap.attraction_plan_id;
 	</select>
 	
 	<!-- 여행 일정 상세보기 -->
