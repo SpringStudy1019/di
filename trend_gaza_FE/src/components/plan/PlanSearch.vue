@@ -155,15 +155,15 @@ const searchLike = () => {
 }
 
 .btn-like {
-  background-color: plum;
-  color: white;
+  border-color: plum;
+  background-color: white;
 }
 
 .btn-search {
   width: 100px;
   margin: 10px;
-  background-color: plum;
-  color: white;
+  border-color: plum;
+  background-color: white;
 }
 
 .sido-select {
@@ -192,6 +192,6 @@ const searchLike = () => {
 
 .condition-btn {
   margin-bottom: 5px;
-  margin-left: 10px;
+  margin-left: 4px;
 }
 </style>
