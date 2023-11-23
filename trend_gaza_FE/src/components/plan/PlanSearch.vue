@@ -155,43 +155,43 @@ const searchLike = () => {
 }
 
 .btn-like {
-  border-color: plum;
+  border-color: gainsboro;
   background-color: white;
 }
 
 .btn-search {
   width: 100px;
   margin: 10px;
-  border-color: plum;
+  border-color: gainsboro;
   background-color: white;
 }
 
 .sido-select {
   width: 80%;
-  margin: 10px;
+  margin: 20px;
   display: flex;
   justify-content: center;
 }
 
 .type-select {
   width: 80%;
-  margin: 10px;
+  margin: 20px;
   display: flex;
   justify-content: center;
 }
 
 .keyword-input {
-  width: 85%;
+  width: 90%;
   border: gainsboro solid 2px;
   border-radius: 5%;
 }
 
 .keyword {
-  margin: 10px;
+  margin: 20px;
 }
 
 .condition-btn {
   margin-bottom: 5px;
-  margin-left: 4px;
+  margin-left: 10px;
 }
 </style>
