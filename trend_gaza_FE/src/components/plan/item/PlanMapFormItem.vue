@@ -23,6 +23,7 @@ const totalPages = ref(1);
 const startDate = ref(formattingDate(new Date()));
 const endDate = ref(formattingDate(new Date()));
 const currentPage = ref(1);
+const rightCurrentPage = ref(1);
 const totalPage = ref(0);
 const type = ref("plan-map");
 
@@ -395,6 +396,11 @@ const onPageChange = (val) => {
   searchAttractions(); // 검색 호출
 };
 
+
+const onPageChangeAtRightBar = (val) => {
+  currentPage.value = val;
+};
+
 const getBookmarks = (data) => {
   for (let i = 0; i < data.length; i++) {
     let attraction = {
@@ -553,7 +559,7 @@ const endRange = computed(() => {
           <nav aria-label="Page navigation example">
             <ul class="pagination">
               <li class="page-item">
-                <a class="page-link" @click="onPageChange(startPage == 1 ? 1 : startPage - 1)" href="#" aria-label="Previous">
+                <a class="page-link" @click="onPageChangeAtRightBar(startPage == 1 ? 1 : startPage - 1)" href="#" aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
@@ -561,7 +567,7 @@ const endRange = computed(() => {
                 <a class="page-link" href="#" @click="moveNDay(index - 1)">{{ index }}</a>
               </li>
               <li class="page-item">
-                <a class="page-link" @click="onPageChange(endRange ? totalPage : endPage + 1)" href="#" aria-label="Next">
+                <a class="page-link" @click="onPageChangeAtRightBar(endRange ? totalPage : endPage + 1)" href="#" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                 </a>
               </li>
