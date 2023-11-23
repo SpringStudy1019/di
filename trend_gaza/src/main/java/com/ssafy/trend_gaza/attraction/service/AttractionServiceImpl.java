@@ -110,10 +110,9 @@ public class AttractionServiceImpl implements AttractionService {
 		map.put("listsize", SizeConstant.LIST_SIZE);
 
 		List<AttractionInfo> list = attractionMapper.searchByCategory(map);
-		
 		int totalAttractionCount = attractionMapper.getTotalAttractionCount(map);
 		int totalPageCount = (totalAttractionCount - 1) / sizePerPage + 1; 
-	
+		
 		AttractionCategoryResponse response = AttractionCategoryResponse.builder()
 				.attractions(list)
 				.currentPage(currentPage)

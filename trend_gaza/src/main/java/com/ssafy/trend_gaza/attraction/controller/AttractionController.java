@@ -82,11 +82,6 @@ public class AttractionController {
 		return ResponseEntity.ok(attractionService.searchAttractions(map));	
 	}
 	
-//	@GetMapping("/listByCategory")
-//	public ResponseEntity<?> listByCategory(@RequestParam Map<String, String> map) {
-//		return ResponseEntity.ok(attractionService.listByCategory(map));	
-//	}
-	
 	@GetMapping("/auto-search")
 	public ResponseEntity<CommonResponse> AutoSearchAttractions(@RequestParam String keyword) {
 		Node node = attractionService.search(keyword);
