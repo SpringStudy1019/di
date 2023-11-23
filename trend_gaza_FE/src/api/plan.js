@@ -23,7 +23,7 @@ function getCreatedPlan(userId, success, fail) {
 
 // 여행 계획 등록
 function registerAttractionPlan(planIdx, planRequest, success, fail) {
-    local.post(`${url}/${planIdx}`, JSON.stringify(planRequest)).then(success).catch(fail);
+    local.post(`${url}/attraction/${planIdx}`, JSON.stringify(planRequest)).then(success).catch(fail);
 }
 
 // 여행 계획 조회

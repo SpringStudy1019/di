@@ -48,11 +48,11 @@ const formType = ref("");
 formType.value = props.type;
 console.log("form type::::::::", formType.value);
 
-if (props.type === "modify") {
-  onMounted(() => {
-    getSelectedPlans();
-  });
-}
+// if (props.type === "modify") {
+//   onMounted(() => {
+//     getSelectedPlans();
+//   });
+// }
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -70,6 +70,10 @@ onMounted(() => {
   initArray();
   //getSelectedPlans();
   //getAttractionPlan();
+
+  if (props.type === "modify") {
+      getSelectedPlans();
+  }
 });
 
 // 2차원 배열 초기화
@@ -334,9 +338,11 @@ const updateButtonCount = () => {
 
 // 기존에 저장했던 여행 계획을 조회
 const getSelectedPlans = () => {
+  console.log("저장된 계획 가져오기");
   getAttractionPlan(
     planIdx,
     ({ data }) => {
+      console.log(data);
       for (let i = 0; i < data.length; i++) {
         if (allSelect.value[data[i].orderDate - 1] == null) {
           allSelect.value[data[i].orderDate - 1] = [];

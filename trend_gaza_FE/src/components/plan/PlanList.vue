@@ -134,7 +134,7 @@ const yourPlanDetail = (planIdx) => {
 }
 
 // 여행 계획 등록 또는 수정 
-const checkPlan = (attractionPlanIdx) => {
+const checkPlan = (attractionPlanIdx, planIdx) => {
     // getPlanDetail(
     //     planIdx,
     //     ({ data }) => {
@@ -146,7 +146,7 @@ const checkPlan = (attractionPlanIdx) => {
     // )
     //if (journey.value.length === 0) {
     if(attractionPlanIdx === null) {
-        router.push({ name: "plan-map", params: { planIdx: attractionPlanIdx }  }) // 등록 
+        router.push({ name: "plan-map", params: { planIdx: planIdx }  }) // 등록 
     } else {
         router.push({ name: "plan-saved-map", params: { planIdx: attractionPlanIdx } }); // 수정 
     }
@@ -244,7 +244,7 @@ const requestFriends = (planIdx) => {
                         </p>
                         <!-- 먼저 짜놓은 계획이 있는지 확인 -->
                         <button class="btn btn-primary me-2" 
-                        @click="checkPlan(myPlan.attractionPlanId)">여행계획짜기</button>
+                        @click="checkPlan(myPlan.attractionPlanId, myPlan.planIdx)">여행계획짜기</button>
                       
                         <button class="btn btn-warning me-2" 
                         @click='planDetail(myPlan.planIdx)'
