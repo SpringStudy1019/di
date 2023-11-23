@@ -333,6 +333,12 @@ const updateButtonCount = () => {
   const end = new Date(endDate.value);
   const diffInDays = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
 
+  if (diffInDays > 30) {
+    window.alert("최대 30일까지만 여행계획을 세울 수 있습니다.");
+    endDate.value = formattingDate(new Date());
+    return;
+  }
+
   totalPages.value = diffInDays;
 };
 
