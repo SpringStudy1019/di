@@ -26,6 +26,7 @@ import com.ssafy.trend_gaza.review.dto.ReviewRegisterRequest;
 import com.ssafy.trend_gaza.review.dto.ReviewResponse;
 import com.ssafy.trend_gaza.review.entity.Review;
 import com.ssafy.trend_gaza.review.service.ReviewService;
+import com.ssafy.trend_gaza.util.AuthenticationUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,6 +45,7 @@ public class ReviewController {
 	@PostMapping
 	public ResponseEntity<?> register(@RequestBody ReviewRegisterRequest reviewRegisterRequest) {
 		try {
+			reviewRegisterRequest.setUserId(AuthenticationUtil.getCurrentUserSocialId());
 			reviewService.register(reviewRegisterRequest);
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		} catch (Exception e) {
