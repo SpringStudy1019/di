@@ -53,6 +53,10 @@ function getPlanDetail(planIdx, success, fail) {
     local.get(`${url}/${planIdx}`).then(success).catch(fail);
 }
 
+function getParticipant(planIdx, success, fail) {
+    local.get(`${url}/people/${planIdx}`).then(success).catch(fail);
+}
+
 export {
     joinPlan,
     getPlans,
@@ -64,5 +68,6 @@ export {
     registerPlan,
     updatePlan,
     getPlanDetail,
-    getAttractionPlan
+    getAttractionPlan,
+    getParticipant
 };

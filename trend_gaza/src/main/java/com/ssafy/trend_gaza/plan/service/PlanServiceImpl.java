@@ -10,15 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
-import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
+import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
 import com.ssafy.trend_gaza.plan.entity.Plan;
 import com.ssafy.trend_gaza.plan.repository.PlanMapper;
+import com.ssafy.trend_gaza.user.entity.User;
 
 @Service
 public class PlanServiceImpl implements PlanService {
@@ -133,6 +134,11 @@ public class PlanServiceImpl implements PlanService {
 		map.put("planIdx", planIdx);
 		
 		return planMapper.modifyPlan(map);
+	}
+
+	@Override
+	public List<User> getParticipant(int planIdx) {
+		return planMapper.getParticipant(planIdx);
 	}
 	
 	

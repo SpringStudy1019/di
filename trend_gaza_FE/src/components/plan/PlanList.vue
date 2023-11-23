@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 import { followList } from "@/api/follow";
 import { registNoti } from "@/api/notification";
 import { useUserStore } from '@/stores/user';
-import { getInvitedPlan, getCreatedPlan, getPlanDetail, getAttractionPlan } from "@/api/plan";
+import { getInvitedPlan, getCreatedPlan, getPlanDetail, getAttractionPlan, getParticipant } from "@/api/plan";
 
 onMounted(() => {
     getPlanRequest();
@@ -13,27 +13,6 @@ onMounted(() => {
 
 const store = useUserStore()
 const router = useRouter();
-
-// 친구 보였다가, 안 보였다하는 상태
-const showFriend = ref(false);
-const showMyFriend = () => {
-    showFriend.value = !showFriend.value
-    if (showFriend.value) {
-        requestFriends()
-    }
-}
-
-const friends = ref([])
-const requestFriends = () => {
-   // API 호출
-   followList(store.userInfo.userId,
-      ({ data }) => {  
-          friends.value = data;
-    },
-    (error) => {
-        console.log(error);
-    });
-};
 
 // 날짜 계산
 function calculateDays(startDateStr, endDateStr) {
@@ -198,6 +177,44 @@ const sortedJourney = computed(() => {
 
     return result;
 });
+
+
+// 친구 보였다가, 안 보였다하는 상태
+const showFriend = ref(false);
+const showMyFriend = (planIdx) => {
+    showFriend.value = !showFriend.value
+    if (showFriend.value) {
+        requestFriends(planIdx)
+    }
+}
+
+const friends = ref([])
+const participantsInfo = ref([])
+const remainFriends = ref([])
+const requestFriends = (planIdx) => {
+   // API 호출
+   followList(store.userInfo.userId,
+      ({ data }) => {  
+          friends.value = data;
+          // 그 여행을 같이 가는 친구와 비교해서 여행을 같이 안 가는 친구만 친구 초대 리스트에 뜨도록 computed 만들기
+          getParticipant(
+              planIdx,
+              ({ data }) => {
+                  participantsInfo.value = data
+                  console.log(participantsInfo.value);
+                },
+                (error) => {
+                    console.log(error);
+                }
+          )
+
+          
+    },
+    (error) => {
+        console.log(error);
+    });
+};
+
 </script>
 
 <template>
@@ -229,7 +246,7 @@ const sortedJourney = computed(() => {
                         <button class="btn btn-warning me-2" 
                         @click='planDetail(myPlan.planIdx)'
                         >여행일정</button>
-                        <button @click='showMyFriend' class="btn btn-success">친구 초대하기</button>
+                        <button @click='showMyFriend(myPlan.planIdx)' class="btn btn-success">친구 초대하기</button>
                         <!-- 친구 초대하기 버튼을 클릭하면 친구가 뜬다 -->
                         <!-- -->
                         <div v-if='showFriend' >

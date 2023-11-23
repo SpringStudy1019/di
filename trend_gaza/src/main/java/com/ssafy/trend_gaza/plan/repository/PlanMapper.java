@@ -5,15 +5,15 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ssafy.trend_gaza.plan.entity.Plan;
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
-import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
+import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
+import com.ssafy.trend_gaza.plan.entity.Plan;
+import com.ssafy.trend_gaza.user.entity.User;
 
 
 @Mapper
@@ -47,6 +47,7 @@ public interface PlanMapper {
 	List<SelectAttractionPlanResponse> getSelectAttractionPlan(int attractionPlanId);
 	
 	PlanGetModifyResponse getModifyPlan(int planIdx);
-	
 	int modifyPlan(Map<String, Object> map);
+	
+	List<User> getParticipant(int planIdx);
 }

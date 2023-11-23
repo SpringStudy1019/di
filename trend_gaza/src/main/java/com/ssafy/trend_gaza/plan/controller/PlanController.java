@@ -142,5 +142,13 @@ public class PlanController {
 	public ResponseEntity<?> modifyPlan(@PathVariable int planIdx, @RequestBody PlanModifyRequest planModifyRequest) {
 		return ResponseEntity.ok().body(planService.modifyPlan(planIdx, planModifyRequest));
 	}
+	
+	/*
+	 * 여행 참여자 조회
+	 */
+	@GetMapping("/people/{planIdx}")
+	public ResponseEntity<?> getParticipant(@PathVariable int planIdx) {
+		return ResponseEntity.ok().body(planService.getParticipant(planIdx));
+	}
 
 }

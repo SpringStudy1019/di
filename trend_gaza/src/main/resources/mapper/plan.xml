@@ -168,4 +168,16 @@
 		where plan_idx = #{planIdx}
 	</update>
 
+	<resultMap id="user" type="com.ssafy.trend_gaza.user.entity.User">
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+	</resultMap>
+	
+	<select id="getParticipant" parameterType="int" resultMap="user">
+		SELECT up.user_id, u.user_name
+	    FROM user_plan up
+	    JOIN user u ON up.user_id = u.user_id
+	    WHERE up.plan_idx = #{planIdx}
+	</select>
+
 </mapper>
