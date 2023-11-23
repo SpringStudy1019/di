@@ -337,11 +337,11 @@ const getSelectedPlans = () => {
   getAttractionPlan(
     planIdx,
     ({ data }) => {
-      startDate.value = data.startDate; // DB에서 조인해서 가져와야 함
-      endDate.value = data.endDate;
       for (let i = 0; i < data.length; i++) {
         if (allSelect.value[data[i].orderDate - 1] == null) {
           allSelect.value[data[i].orderDate - 1] = [];
+          startDate.value = data[i].startDate; // DB에서 조인해서 가져와야 함
+          endDate.value = data[i].endDate;
         }
         let attraction = {
           title: data[i].title,

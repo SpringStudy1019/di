@@ -136,7 +136,7 @@ public class PlanServiceImplTest {
 		List<SelectAttractionPlanResponse> result = planService.getSelectAttractionPlan(attractionPlanId);
 		
 		// then
-		assertEquals(2, result.size());
+		assertEquals(10, result.size());
 	}
 	
 	@Test

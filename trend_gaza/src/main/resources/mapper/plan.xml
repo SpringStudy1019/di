@@ -37,6 +37,8 @@
 		<result property="contentId" column="content_id" />
 		<result property="order" column="orderNum" />
 		<result property="orderDate" column="orderDate" />
+		<result property="startDate" column="start_date" />
+		<result property="endDate" column="end_date"/>
 	</resultMap>
 	
 	<resultMap id="planGetModifyResponse" type="planGetModifyResponse">
@@ -133,7 +135,7 @@
 	
 	<!-- 여행 계획 조회 -->
 	<select id="getSelectAttractionPlan" parameterType="int" resultMap="selectAttractionPlanResponse">
-		SELECT attractionId, at.title, at.first_image, at.addr1, at.content_id, orderNum, orderDate
+		SELECT attractionId, at.title, at.first_image, at.addr1, at.content_id, orderNum, orderDate, p.start_date, p.end_date
 		FROM enjoytrip.attraction_plan ap
 		JOIN json_table(ap.attraction, '$[*]' COLUMNS (
 		    attractionId int path '$.attractionId',
