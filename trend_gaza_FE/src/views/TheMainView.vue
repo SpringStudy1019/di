@@ -12,23 +12,28 @@ const router = useRouter();
 
 <template>
 
-        <!-- 검색바 -->
-        <Search />
+    <!-- 검색바 -->
+    <Search />
 
-        <!-- 카테고리 -->
-        <TheCategory />
-        
-        <!-- 추천 여행지 -->
-        <AttractionRecommend />
-        
+    <!-- 카테고리 -->
+    <TheCategory />
+    
+    <!-- 추천 여행지 -->
+    <AttractionRecommend />
 
+    <div class='margin-big'></div>
+        
 
 </template>
 
 <style scoped>
 .search {
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 20px;
+}
+
+.margin-big{
+  margin-bottom: 40px;
 }
 
 </style>

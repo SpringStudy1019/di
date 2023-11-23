@@ -64,36 +64,65 @@ const bookmarkRequest = (contentId) => {
         <div class="row">
             <div class="col-1"></div>
             <div class="col-10">
-                <h2>사용자들이 가장 많은 리뷰를 남긴 여행지에요</h2>
+                <h2 class='subtitle'>사용자들이 가장 많은 리뷰를 남긴 여행지에요</h2>
+                <div class='margin-small'></div>
                 <!-- 여행지 TOP5-->
-                <div class="card" style="width: 18rem;" v-for="hotplace in hotplaces" :key="hotplace.contentId">
-                    <img class="card-img-top" :src="hotplace.firstImage" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ hotplace.title }} </h5>
-                        <router-link 
-                        :to="{ name: 'attraction-view', params: { attractionIdx: hotplace.contentId } }" 
-                        class="btn btn-primary me-2">
-                            자세히 보기
-                        </router-link>
-                        <button 
-                        class="btn btn-primary" 
-                        @click="bookmarkRequest(hotplace.contentId)">
-                            찜하기
-                        </button>
-                    </div>
-                    </div>
+                <div class="card-columns">
+                <div v-for='hotplace in hotplaces' :key="hotplace.contentId">
+                <div class="card mb-3">
+                <div class="image">
+                    <div v-if="hotplace.firstImage === ''">
+                        <img class="card-img-top" 
+                            src="https://instagramimages16.s3.ap-northeast-2.amazonaws.com/IMAGE/admin/no_image.jpg" />
+                        </div>
+                        <div v-else>
+                            <img class="card-img-top" :src="hotplace.firstImage" />
+                        </div>
+                </div>
+                <div class="card-header text-center">
+                    {{hotplace.title}}
+                </div>
+
+                <div class="card-footer text-muted text-center">
+                <router-link
+                    :to="{ name: 'attraction-view', params: { attractionIdx: hotplace.contentId } }"
+                    class="btn btn-primary me-2"
+                >
+                    자세히 보기
+                </router-link>
+                <button 
+                class="btn btn-primary" 
+                @click="bookmarkRequest(hotplace.contentId)">
+                    찜하기
+                </button>
+                </div>
+                </div>
             </div>
+        </div>
+            <!-- 여행지 TOP5-->
+              
             <div class="col-1"></div>
         </div>
     </div>
-   
+   </div>
 </template>
 
 <style scoped>
+.image img {
+    width: 343px;
+    height: 300px; 
+    object-fit: cover;
+}
+.subtitle {
+    font-weight: 600;
+}
 #top {
     margin-top: 50px;
 }
 
+.margin-small {
+    margin-bottom: 30px;
+}
 
 
 </style>

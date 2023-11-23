@@ -8,7 +8,11 @@ const props = defineProps({ attraction: Object });
 <template>
    <div class="card mb-3">
         <div class="card-header text-center">
-        {{ attraction.title }}
+        <router-link 
+        :to="{ name: 'attraction-view', params: { attractionIdx: hotplace.contentId } }" 
+        class="btn btn-primary me-2">
+            {{ attraction.title }}
+        </router-link>
         </div>
         <div class="card-body">
         <h5 class="card-title">{{ attraction.addr1 }}</h5> 

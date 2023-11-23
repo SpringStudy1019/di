@@ -5,14 +5,15 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
-import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
+import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
 import com.ssafy.trend_gaza.plan.entity.Plan;
+import com.ssafy.trend_gaza.user.entity.User;
 
 public interface PlanService {
 	int registerPlan(List<PlanRequest> planRequest, int planIdx);
@@ -44,4 +45,6 @@ public interface PlanService {
 	PlanGetModifyResponse getModifyPlan(int planIdx);
 	
 	int modifyPlan(int planIdx, PlanModifyRequest planModifyRequest);
+	
+	List<User> getParticipant(int planIdx);
 }

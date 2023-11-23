@@ -82,7 +82,7 @@
 			and sido_code = #{sido} 
 		</if>
 		<if test="keyword != null and keyword != ''">
-			and title like concat(#{keyword}, '%')
+			and title LIKE CONCAT('%', #{keyword}, '%')
 		</if>
 	</sql>
 	
@@ -91,9 +91,10 @@
 		from attraction_info
 		where content_type_id = #{contentTypeId}
 		<include refid="searchCategory"></include>	
+		limit #{start}, #{listsize}
 	</select>
 	
-		<select id="listByCategory" parameterType="map" resultMap="attraction">
+	<select id="listByCategory" parameterType="map" resultMap="attraction">
 		select content_id, content_type_id, title, addr1, tel, first_image, latitude, longitude
 		from attraction_info
 		where content_type_id = #{contentTypeId}

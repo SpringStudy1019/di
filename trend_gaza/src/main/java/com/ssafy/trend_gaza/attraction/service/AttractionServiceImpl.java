@@ -93,12 +93,12 @@ public class AttractionServiceImpl implements AttractionService {
 	@Override
 	public AttractionCategoryResponse listByCategory(Map<String, String> param) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		String sido = param.get("sido");
-		String contentTypeId = param.get("contentTypeId");
+		String sido =param.get("sido");
+		int contentTypeId = Integer.parseInt(param.get("contentTypeId"));
 		String keyword = param.get("keyword");
 		
 		map.put("sido", sido == null ? "" : sido);
-		map.put("contentTypeId", contentTypeId == null ? "" : contentTypeId);
+		map.put("contentTypeId", contentTypeId == 0 ? "" : contentTypeId);
 		map.put("keyword", keyword == null ? "" : keyword);
 		
 		int pgNo = Integer.parseInt(param.get("pgno") == null ? "1" : param.get("pgno"));
@@ -110,10 +110,9 @@ public class AttractionServiceImpl implements AttractionService {
 		map.put("listsize", SizeConstant.LIST_SIZE);
 
 		List<AttractionInfo> list = attractionMapper.searchByCategory(map);
-		
 		int totalAttractionCount = attractionMapper.getTotalAttractionCount(map);
 		int totalPageCount = (totalAttractionCount - 1) / sizePerPage + 1; 
-	
+		
 		AttractionCategoryResponse response = AttractionCategoryResponse.builder()
 				.attractions(list)
 				.currentPage(currentPage)
