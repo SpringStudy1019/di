@@ -21,7 +21,7 @@ const curDay = ref(0);
 const today = ref(formattingDate(new Date()));
 const totalPages = ref(1);
 const startDate = ref(formattingDate(new Date()));
-const endDate = ref("");
+const endDate = ref(formattingDate(new Date()));
 const currentPage = ref(1);
 const totalPage = ref(0);
 const type = ref("plan-map");
@@ -46,7 +46,7 @@ const props = defineProps({
 
 const formType = ref("");
 formType.value = props.type;
-console.log("form type::::::::", formType.value)
+console.log("form type::::::::", formType.value);
 
 if (props.type === "modify") {
   onMounted(() => {
@@ -272,7 +272,6 @@ const trasformRequestDTO = () => {
   return requestList;
 };
 
-
 const savePlans = () => {
   registerAttractionPlan(
     planIdx,
@@ -376,16 +375,16 @@ const getParam = (val) => {
   planSearchParam.value.sido = val.value.sido;
   planSearchParam.value.keyword = val.value.keyword;
   planSearchParam.value.contentTypeId = val.value.contentId;
-}
+};
 
 const onPageChange = (val) => {
   currentPage.value = val;
   planSearchParam.value.pgno = val;
-  searchAttractions();      // 검색 호출
+  searchAttractions(); // 검색 호출
 };
 
 const getBookmarks = (data) => {
-  for(let i=0; i<data.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     let attraction = {
       title: data[i].title,
       firstImage: data[i].imgUrl,
@@ -395,7 +394,7 @@ const getBookmarks = (data) => {
     console.log(attraction);
     attractionList.value.push(attraction);
   }
-}
+};
 </script>
 
 <template>
@@ -437,8 +436,13 @@ const getBookmarks = (data) => {
         ></button>
       </div>
       <div class="offcanvas-body">
-        <PlanSearch @getAttractionData="loadAttractionList" :planSearchParam="planSearchParam" 
-        @param="getParam" :planIdx = "planIdx" @bookmarks="getBookmarks"/>
+        <PlanSearch
+          @getAttractionData="loadAttractionList"
+          :planSearchParam="planSearchParam"
+          @param="getParam"
+          :planIdx="planIdx"
+          @bookmarks="getBookmarks"
+        />
 
         <!-- planSearchList -->
         <div class="container" v-for="attraction in attractionList" :key="attraction.contentId">
