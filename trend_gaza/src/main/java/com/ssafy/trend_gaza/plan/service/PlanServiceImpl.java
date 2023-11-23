@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
+import com.ssafy.trend_gaza.plan.dto.PlanAttractionModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanInvitedResponse;
@@ -49,14 +50,15 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public int modifySelectPlan(List<PlanRequest> planRequest, int planIdx) {
+	@Transactional
+	public int modifySelectPlan(PlanAttractionModifyRequest planAttractionModifyRequest, int attractionPlanId) {
 		int result = 0;
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			String json = objectMapper.writeValueAsString(planRequest);
+			String json = objectMapper.writeValueAsString(planAttractionModifyRequest.getList());
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("attraction", json);
-			param.put("attractionPlanId", planIdx);
+			param.put("attractionPlanId", attractionPlanId);
 			result = planMapper.modifySelectPlan(param);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -68,7 +70,6 @@ public class PlanServiceImpl implements PlanService {
 	 * 여행 계획을 세운 사람이 탈퇴하면 관련된 데이터들을 모두 지운다.
 	 */
 	@Override
-	@Transactional
 	public int deletePlan(int planIdx, String userId) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("planIdx", planIdx);
@@ -154,6 +155,17 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public List<User> getParticipant(int planIdx) {
 		return planMapper.getParticipant(planIdx);
+	}
+
+	@Override
+	@Transactional
+	public int modifyPlanDate(String startDate, String endDate, int attractionPlanId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		map.put("planIdx", planMapper.getPlanIdx(attractionPlanId));
+		
+		return planMapper.modifyPlanDate(map);
 	}
 	
 	

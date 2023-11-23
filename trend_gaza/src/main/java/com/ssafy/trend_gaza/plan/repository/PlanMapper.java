@@ -52,4 +52,7 @@ public interface PlanMapper {
 	List<User> getParticipant(int planIdx);
 	
 	Integer getAttractionPlanId(int planIdx);
+	int getPlanIdx(int attractionPlanId);
+	
+	int modifyPlanDate(Map<String, Object> map);
 }

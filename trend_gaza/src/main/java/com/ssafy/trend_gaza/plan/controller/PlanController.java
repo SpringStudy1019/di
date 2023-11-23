@@ -2,6 +2,7 @@ package com.ssafy.trend_gaza.plan.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
+import com.ssafy.trend_gaza.plan.dto.PlanAttractionModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanInvitedResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
@@ -46,8 +48,10 @@ public class PlanController {
 	 */
 	@PutMapping("/{attractionPlanId}")
 	public ResponseEntity<?> modifySelectPlan(@PathVariable int attractionPlanId,
-			@RequestBody List<PlanRequest> planRequest) {
-		planService.modifySelectPlan(planRequest, attractionPlanId);
+			@RequestBody PlanAttractionModifyRequest planAttractionModifyRequest) {
+		int result1 = planService.modifySelectPlan(planAttractionModifyRequest, attractionPlanId);
+		int result2 = planService.modifyPlanDate(planAttractionModifyRequest.getStartDate(),
+				planAttractionModifyRequest.getEndDate(), attractionPlanId);
 		return ResponseEntity.ok().build();
 	}
 	

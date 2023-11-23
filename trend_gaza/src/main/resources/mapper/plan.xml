@@ -177,4 +177,16 @@
 		from attraction_plan
 		where plan_idx = #{planIdx}
 	</select>
+	
+	<update id="modifyPlanDate" parameterType="map">
+		update plan
+		set start_date = #{startDate}, end_date = #{endDate}
+		where plan_idx = #{planIdx}
+	</update>
+	
+	<select id="getPlanIdx" parameterType="int" resultType="int">
+		select plan_idx
+		from attraction_plan
+		where attraction_plan_id = #{attractionPlanId}
+	</select>
 </mapper>
