@@ -45,8 +45,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/review/hotplace", "/").permitAll()
                 .antMatchers("/user/refresh", "/user/send-email", "/user/view/*").hasRole("USER")
-                .antMatchers("/review", "/review/*", "/review/content/*", "/review/modify/*", "/review/score/*",
-                		"/review/view/*").hasRole("USER")
+                .antMatchers("/review", "/review/*", "/review/modify/*", "/review/view/*").hasRole("USER")
                 .antMatchers("/plans/**").hasRole("USER")
                 .antMatchers("/notification/*").hasRole("USER")
                 .antMatchers("/like/**").hasRole("USER")
