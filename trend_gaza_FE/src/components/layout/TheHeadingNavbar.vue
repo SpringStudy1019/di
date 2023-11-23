@@ -3,12 +3,10 @@ import { ref, onMounted, computed } from "vue";
 import { useMenuStore } from "@/stores/menu";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/stores/user";
-import { listNoti } from "@/api/notification";
 
 // heading navbar 메뉴
 const menuStore = useMenuStore();
 const { menuList } = storeToRefs(menuStore);
-//const { changeMenuState } = menuStore;
 const { loginState } = menuStore;
 const { logoutState } = menuStore;
 
@@ -16,7 +14,7 @@ const { logoutState } = menuStore;
 const userStore = useUserStore();
 const { userLogout, isLogin, userInfo } = userStore;
 
-const isLoginUser = ref(true);
+const isLoginUser = ref(false);
 
 const logout = () => {
   console.log("로그아웃 시작!!");
@@ -25,16 +23,13 @@ const logout = () => {
     return;
   }
   userLogout(userStore.userInfo.userId);
-  //changeMenuState();
 
   sessionStorage.removeItem("access-token");
   sessionStorage.removeItem("refresh-token");
 
   logoutState();
 
-  //isLoginUser.value = false;
-
-  console.log("로그아웃 종료!!");
+  isLoginUser.value = false;
 };
 
 onMounted(() => {
@@ -44,11 +39,11 @@ onMounted(() => {
   // "isLogin" 속성의 값 가져오기
   var isLoginValue = userStoreObject.isLogin;
 
-  // 결과 출력
-  console.log(isLoginValue);
-
-  if (isLoginUser) {
+  if (isLoginValue === true) {
+    isLoginUser.value = true;
     loginState();
+  } else {
+    logoutState();
   }
 });
 </script>
