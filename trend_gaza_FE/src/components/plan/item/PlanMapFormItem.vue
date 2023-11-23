@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import PlanSearch from "@/components/plan/PlanSearch.vue";
 import { registerAttractionPlan, getAttractionPlan, modifyPlan } from "@/api/plan";
@@ -409,6 +409,29 @@ const getBookmarks = (data) => {
     attractionList.value.push(attraction);
   }
 };
+
+const navigationSize = 5;
+
+function range(start, end) {
+  const list = [];
+  for (let i = start; i <= end; i++) list.push(i);
+  return list;
+}
+
+const startPage = computed(() => {
+  return parseInt((currentPage.value - 1) / navigationSize) * navigationSize + 1;
+});
+
+const endPage = computed(() => {
+  let lastPage =
+    parseInt((currentPage.value - 1) / navigationSize) * navigationSize + navigationSize;
+  return totalPages.value < lastPage ? totalPages.value : lastPage;
+});
+
+const endRange = computed(() => {
+  return parseInt((totalPages.value - 1) / navigationSize) * navigationSize < currentPage.value;
+});
+
 </script>
 
 <template>
@@ -530,15 +553,15 @@ const getBookmarks = (data) => {
           <nav aria-label="Page navigation example">
             <ul class="pagination">
               <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
+                <a class="page-link" @click="onPageChange(startPage == 1 ? 1 : startPage - 1)" href="#" aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
-              <li class="page-item" v-for="index in totalPages" :key="index">
+              <li class="page-item" v-for="index in range(startPage, endPage)" :key="index">
                 <a class="page-link" href="#" @click="moveNDay(index - 1)">{{ index }}</a>
               </li>
               <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
+                <a class="page-link" @click="onPageChange(endRange ? totalPage : endPage + 1)" href="#" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                 </a>
               </li>
