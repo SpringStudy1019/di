@@ -108,7 +108,7 @@
 	    JOIN review r ON ai.content_id = r.content_id
 	    GROUP BY r.content_id
 	    ORDER BY COUNT(r.review_idx) DESC
-	    LIMIT 5;
+	    LIMIT 6;
   	</select>
   	
   	<select id="countScores" resultType="com.ssafy.trend_gaza.review.dto.ScoreCountResponse">

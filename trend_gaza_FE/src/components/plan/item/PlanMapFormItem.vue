@@ -44,6 +44,10 @@ const props = defineProps({
   attractionPlanId: String,
 });
 
+const formType = ref("");
+formType.value = props.type;
+console.log("form type::::::::", formType.value)
+
 if (props.type === "modify") {
   onMounted(() => {
     getSelectedPlans();
@@ -268,9 +272,10 @@ const trasformRequestDTO = () => {
   return requestList;
 };
 
+
 const savePlans = () => {
   registerAttractionPlan(
-    1,
+    planIdx,
     trasformRequestDTO(),
     ({ data }) => {
       window.alert("여행 계획이 등록되었습니다.");
@@ -546,7 +551,7 @@ const getBookmarks = (data) => {
       </div>
 
       <div class="offcanvas-footer">
-        <button class="save-btn" @click="savePlans" v-if="type === 'regist'">등록</button>
+        <button class="save-btn" @click="savePlans" v-if="formType === 'regist'">등록</button>
         <button class="save-btn" @click="modifyPlansFunc" v-else>수정</button>
       </div>
     </div>

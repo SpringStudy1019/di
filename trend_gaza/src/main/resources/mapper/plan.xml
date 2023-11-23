@@ -133,6 +133,17 @@
 	
 	<!-- 여행 계획 조회 -->
 	<select id="getSelectAttractionPlan" parameterType="int" resultMap="selectAttractionPlanResponse">
+		SELECT attractionId, at.title, at.first_image, at.addr1, at.content_id, orderNum, orderDate
+		FROM enjoytrip.attraction_plan ap
+		JOIN json_table(ap.attraction, '$[*]' COLUMNS (
+		    attractionId int path '$.attractionId',
+		    orderNum int path '$.order',
+		    orderDate int path '$.orderDate'
+		)) AS jt 
+		JOIN enjoytrip.plan p ON ap.plan_idx = p.plan_idx
+		JOIN attraction_info at ON jt.attractionId = at.content_id
+		WHERE ap.plan_idx = #{planIdx};
+		<!-- 
 		select attractionId, at.title, at.first_image, at.addr1, at.content_id, orderNum, orderDate
 		from enjoytrip.attraction_plan ap,
 		json_table(ap.attraction, '$[*]' columns (
@@ -142,6 +153,7 @@
 		)) as jt
 		join attraction_info at on jt.attractionId = at.content_id
 		where attraction_plan_id = #{attractionPlanId}
+		 -->
 	</select>
 	
 	<select id="getModifyPlan" parameterType="int" resultMap="planGetModifyResponse">

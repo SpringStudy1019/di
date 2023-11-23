@@ -108,7 +108,7 @@ const planDetail = (planIdx) => {
         planIdx,
         ({ data }) => {
             journey.value = data;
-            // console.log("journey:::::::::", journey)
+            console.log("journey:::::::::", journey)
         },
         (error) => {
             console.log(error);
@@ -164,7 +164,7 @@ const checkPlan = (planIdx) => {
         }
     )
     if (journey.value.length === 0) {
-        router.push({ name: "plan-map" }) // 등록 
+        router.push({ name: "plan-map", params: { planIdx: planIdx }  }) // 등록 
     } else {
         router.push({ name: "plan-saved-map", params: { planIdx: planIdx } }); // 수정 
     }
@@ -223,7 +223,8 @@ const sortedJourney = computed(() => {
                             ({{calculateDays(myPlan.startDate, myPlan.endDate)}}일)
                         </p>
                         <!-- 먼저 짜놓은 계획이 있는지 확인 -->
-                        <button class="btn btn-primary me-2" @click="checkPlan(myPlan.planIdx)">여행계획짜기</button>
+                        <button class="btn btn-primary me-2" 
+                        @click="checkPlan(myPlan.planIdx)">여행계획짜기</button>
                       
                         <button class="btn btn-warning me-2" 
                         @click='planDetail(myPlan.planIdx)'
@@ -294,7 +295,8 @@ const sortedJourney = computed(() => {
                         ({{calculateDays(invitation.startDate, invitation.endDate)}}일)</p>
         
                         <!-- 먼저 짜놓은 계획이 있는지 확인 -->
-                        <button class="btn btn-primary me-2" @click="checkPlan(invitation.planIdx)">여행계획짜기</button>
+                        <button class="btn btn-primary me-2" 
+                        @click="checkPlan(invitation.planIdx)">여행계획짜기</button>
                       
                         <button class="btn btn-warning me-2" 
                         @click='yourPlanDetail(invitation.planIdx)'
