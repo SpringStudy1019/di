@@ -107,7 +107,7 @@ const searchLike = () => {
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div>
         <div>
           <select id="search-content-id" class="type-select" v-model="contentTypeId">
             <option value="0" selected>관광지 유형</option>
