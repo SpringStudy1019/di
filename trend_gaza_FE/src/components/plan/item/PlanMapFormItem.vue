@@ -523,7 +523,7 @@ const getBookmarks = (data) => {
                 </a>
               </li>
               <li class="page-item" v-for="index in totalPages" :key="index">
-                <a class="page-link" @click="moveNDay(index - 1)">{{ index }}</a>
+                <a class="page-link" href="#" @click="moveNDay(index - 1)">{{ index }}</a>
               </li>
               <li class="page-item">
                 <a class="page-link" href="#" aria-label="Next">
