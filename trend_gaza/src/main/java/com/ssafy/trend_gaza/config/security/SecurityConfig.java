@@ -43,7 +43,18 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/review/hotplace", "/").permitAll()
+                .antMatchers("/user/refresh", "/user/send-email", "/user/view/*").hasRole("USER")
+                .antMatchers("/review", "/review/*", "/review/content/*", "/review/modify/*", "/review/score/*",
+                		"/review/view/*").hasRole("USER")
+                .antMatchers("/plans/**").hasRole("USER")
+                .antMatchers("/notification/*").hasRole("USER")
+                .antMatchers("/like/**").hasRole("USER")
+                .antMatchers("/images").hasRole("USER")
+                .antMatchers("/follow/**").hasRole("USER")
+                .antMatchers("/comment/**").hasRole("USER")
+                .antMatchers("/bookmark/*").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
 
                 .and()
                 .exceptionHandling()
