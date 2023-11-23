@@ -34,7 +34,7 @@ public class PlanController {
 		this.planService = planService;
 	}
 	
-	@PostMapping("/{planIdx}")
+	@PostMapping("/attraction/{planIdx}")
 	public ResponseEntity<?> registerPlan(@PathVariable int planIdx,
 			@RequestBody List<PlanRequest> planRequest) {
 		planService.registerPlan(planRequest, planIdx);

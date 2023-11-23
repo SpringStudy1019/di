@@ -56,7 +56,7 @@ public class PlanServiceImpl implements PlanService {
 			String json = objectMapper.writeValueAsString(planRequest);
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("attraction", json);
-			param.put("planIdx", planIdx);
+			param.put("attractionPlanId", planIdx);
 			result = planMapper.modifySelectPlan(param);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
