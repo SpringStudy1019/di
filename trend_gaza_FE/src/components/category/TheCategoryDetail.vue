@@ -4,7 +4,7 @@ import {useRoute} from "vue-router";
 // import AttractionMap from './item/AttractionMap.vue';
 import {listByCategory} from '@/api/attraction';
 import PageNavigation from "@/components/common/PageNavigation.vue";
-import TheCategoryListItem from '@/components/category/TheCategoryListItem.vue';
+// import TheCategoryListItem from '@/components/category/TheCategoryListItem.vue';
 const { VITE_ATTRACTION_LIST_SIZE } = import.meta.env;
 
 const route = useRoute();
@@ -22,14 +22,15 @@ const currentPage = ref(1);
 const totalPage = ref(0);
 
 const param = ref({
-  contentTypeId: contentTypeId,
-  pgno: currentPage.value,
-  spp: VITE_ATTRACTION_LIST_SIZE,
+  contentTypeId: "",
   sido: "",
   keyword: "",
+  pgno: currentPage.value,
+  spp: VITE_ATTRACTION_LIST_SIZE,
 });
 
 const getAttraction = () => {
+  param.value.contentTypeId = contentTypeId.value;
   listByCategory(
     param.value,
     ({data}) => {

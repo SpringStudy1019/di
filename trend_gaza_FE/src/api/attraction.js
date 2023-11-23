@@ -13,7 +13,7 @@ function searchAttraction(keyword, success, fail) {
 }
 
 function listByCategory(param, success, fail) {
-    local.get(`${url}/listByCategory`, { params: param })
+    local.get(`${url}/searchByCategory`, { params: param })
     .then(success)
     .catch(fail);
 }
