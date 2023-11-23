@@ -1,5 +1,6 @@
 package com.ssafy.trend_gaza.plan.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanInvitedResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
@@ -54,7 +56,7 @@ public class PlanServiceImpl implements PlanService {
 			String json = objectMapper.writeValueAsString(planRequest);
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("attraction", json);
-			param.put("planIdx", planIdx);
+			param.put("attractionPlanId", planIdx);
 			result = planMapper.modifySelectPlan(param);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -96,8 +98,21 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public List<Plan> getInvitedPlans(String userId) {
-		return planMapper.getInvitedPlans(userId);
+	public List<PlanInvitedResponse> getInvitedPlans(String userId) {
+		List<Plan> plans = planMapper.getInvitedPlans(userId);
+		List<PlanInvitedResponse> planInvitedResponses = new ArrayList<PlanInvitedResponse>();
+		for (Plan plan : plans) {
+			PlanInvitedResponse result = PlanInvitedResponse.builder()
+			.planIdx(plan.getPlanIdx())
+			.title(plan.getTitle())
+			.startDate(plan.getStartDate())
+			.endDate(plan.getEndDate())
+			.userId(plan.getUserId())
+			.attractionPlanId(planMapper.getAttractionPlanId(plan.getPlanIdx()))
+			.build();
+			planInvitedResponses.add(result);
+		}
+		return planInvitedResponses;
 	}
 
 	@Override

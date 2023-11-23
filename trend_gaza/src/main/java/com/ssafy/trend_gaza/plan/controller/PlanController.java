@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
+import com.ssafy.trend_gaza.plan.dto.PlanInvitedResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
@@ -33,7 +34,7 @@ public class PlanController {
 		this.planService = planService;
 	}
 	
-	@PostMapping("/{planIdx}")
+	@PostMapping("/attraction/{planIdx}")
 	public ResponseEntity<?> registerPlan(@PathVariable int planIdx,
 			@RequestBody List<PlanRequest> planRequest) {
 		planService.registerPlan(planRequest, planIdx);
@@ -98,8 +99,7 @@ public class PlanController {
 	public ResponseEntity<?> getInvitedPlans(@PathVariable String userId) {
 		// userId를 받으면 user_plan 테이블에서 plan_idx를 받아오기. 
 		// plan_idx로 plan 관련된 정보 뽑아오기
-		List<Plan> list = planService.getInvitedPlans(userId);
-		return new ResponseEntity<List<Plan>>(list, HttpStatus.OK);		
+		return new ResponseEntity<List<PlanInvitedResponse>>(planService.getInvitedPlans(userId), HttpStatus.OK);		
 	}
 	
 	/*

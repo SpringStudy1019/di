@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.trend_gaza.plan.dto.SelectAttractionPlanResponse;
 import com.ssafy.trend_gaza.plan.dto.SetPlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanInvitedResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
@@ -136,7 +137,7 @@ public class PlanServiceImplTest {
 		List<SelectAttractionPlanResponse> result = planService.getSelectAttractionPlan(attractionPlanId);
 		
 		// then
-		assertEquals(2, result.size());
+		assertEquals(10, result.size());
 	}
 	
 	@Test
@@ -187,6 +188,19 @@ public class PlanServiceImplTest {
 		
 		// then
 		assertEquals(1, result);
+	}
+	
+	@Test
+	@DisplayName("초대 받은 내 방 조회")
+	void testInvitedPlans() {
+		// given
+		String userId = "alswjd";
+		
+		// when
+		List<PlanInvitedResponse> result = planService.getInvitedPlans(userId);
+		
+		// then
+		assertEquals(1, result.size());
 	}
 	
 

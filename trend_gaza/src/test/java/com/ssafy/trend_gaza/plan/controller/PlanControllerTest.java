@@ -120,4 +120,17 @@ public class PlanControllerTest {
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 			.andDo(print());
 	}
+	
+	@Test
+	@DisplayName("내가 초대받은 여행 계획 조회")
+	void testGetInvitedPlans() throws Exception {
+		// given
+		String userId = "alswjd";
+		
+		// when, then
+		mockMvc.perform(get("/plans/invite/" + userId))
+		.andExpect(status().isOk())
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+		.andDo(print());
+	}
 }

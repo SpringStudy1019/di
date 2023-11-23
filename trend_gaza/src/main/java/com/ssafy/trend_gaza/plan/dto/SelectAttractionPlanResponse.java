@@ -1,5 +1,7 @@
 package com.ssafy.trend_gaza.plan.dto;
 
+import java.time.LocalDate;
+
 import lombok.Builder;
 
 /*
@@ -14,12 +16,14 @@ public class SelectAttractionPlanResponse {
 	private Integer contentId;
 	private Integer order;			// 방문 순서
 	private Integer orderDate;		// 방문일자
+	private LocalDate startDate;
+	private LocalDate endDate;
 	
 	
 	public SelectAttractionPlanResponse() {}
 
 	public SelectAttractionPlanResponse(String title, String imgUrl, String address, Integer contentId, Integer order,
-			Integer orderDate) {
+			Integer orderDate, LocalDate startDate, LocalDate endDate) {
 		super();
 		this.title = title;
 		this.imgUrl = imgUrl;
@@ -27,6 +31,8 @@ public class SelectAttractionPlanResponse {
 		this.contentId = contentId;
 		this.order = order;
 		this.orderDate = orderDate;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 
 	public String getTitle() {
@@ -52,6 +58,16 @@ public class SelectAttractionPlanResponse {
 	public Integer getOrderDate() {
 		return orderDate;
 	}
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+	
+	
 	
 	
 }

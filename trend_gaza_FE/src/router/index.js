@@ -29,7 +29,7 @@ const router = createRouter({
           component: () => import("@/components/plan/PlanModify.vue"),
         },
         {
-          path: "map/:planIdx",
+          path: "map/attraction/:planIdx",
           name: "plan-map",
           component: () => import("@/components/plan/PlanMapWrite.vue"),         // 등록
         },

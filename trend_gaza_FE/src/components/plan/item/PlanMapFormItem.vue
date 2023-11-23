@@ -48,11 +48,11 @@ const formType = ref("");
 formType.value = props.type;
 console.log("form type::::::::", formType.value);
 
-if (props.type === "modify") {
-  onMounted(() => {
-    getSelectedPlans();
-  });
-}
+// if (props.type === "modify") {
+//   onMounted(() => {
+//     getSelectedPlans();
+//   });
+// }
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -70,6 +70,10 @@ onMounted(() => {
   initArray();
   //getSelectedPlans();
   //getAttractionPlan();
+
+  if (props.type === "modify") {
+      getSelectedPlans();
+  }
 });
 
 // 2차원 배열 초기화
@@ -334,14 +338,16 @@ const updateButtonCount = () => {
 
 // 기존에 저장했던 여행 계획을 조회
 const getSelectedPlans = () => {
+  console.log("저장된 계획 가져오기");
   getAttractionPlan(
     planIdx,
     ({ data }) => {
-      startDate.value = data.startDate; // DB에서 조인해서 가져와야 함
-      endDate.value = data.endDate;
+      console.log(data);
       for (let i = 0; i < data.length; i++) {
         if (allSelect.value[data[i].orderDate - 1] == null) {
           allSelect.value[data[i].orderDate - 1] = [];
+          startDate.value = data[i].startDate; // DB에서 조인해서 가져와야 함
+          endDate.value = data[i].endDate;
         }
         let attraction = {
           title: data[i].title,
@@ -523,7 +529,7 @@ const getBookmarks = (data) => {
                 </a>
               </li>
               <li class="page-item" v-for="index in totalPages" :key="index">
-                <a class="page-link" @click="moveNDay(index - 1)">{{ index }}</a>
+                <a class="page-link" href="#" @click="moveNDay(index - 1)">{{ index }}</a>
               </li>
               <li class="page-item">
                 <a class="page-link" href="#" aria-label="Next">
