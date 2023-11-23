@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.ssafy.trend_gaza.plan.dto.AcceptInvitationRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanDetailResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanGetModifyResponse;
+import com.ssafy.trend_gaza.plan.dto.PlanInvitedResponse;
 import com.ssafy.trend_gaza.plan.dto.PlanModifyRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanRequest;
 import com.ssafy.trend_gaza.plan.dto.PlanResponse;
@@ -28,7 +29,7 @@ public interface PlanService {
 	int setPlan(@RequestBody SetPlanRequest setPlanRequest);
 	
 	/* 초대된 여행 전체 조회하기 */
-	List<Plan> getInvitedPlans(String userId);
+	List<PlanInvitedResponse> getInvitedPlans(String userId);
 	
 	/* 초대 수락할 여행 1개의 plan_idx 조회하기 */
 	int getInvitedPlan(AcceptInvitationRequest acceptInvitationRequest);
