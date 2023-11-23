@@ -263,7 +263,8 @@ const trasformRequestDTO = () => {
   const requestList = [];
   for (let i = 0; i < allSelect.value.length; i++) {
     if (allSelect.value[i] == null) {
-      break;
+      window.alert(`${i+1}일차 코스를 선택하세요.`);
+      return;       // 서버에 요청을 안 보내고 싶은데 알림 띄운 후 서버에 요청을 보내는 게 문제
     }
     for (let j = 0; j < allSelect.value[i].length; j++) {
       let planRequest = {
