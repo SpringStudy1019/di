@@ -14,6 +14,8 @@ onMounted(() => {
 const store = useUserStore()
 const router = useRouter();
 
+console.log("로그인!!", store.userInfo.userId);
+
 // 날짜 계산
 function calculateDays(startDateStr, endDateStr) {
   const startDate = new Date(startDateStr);
@@ -365,6 +367,9 @@ const requestFriends = (planIdx) => {
 </template>
 
 <style scoped>
+html, body {
+    height: 100%
+}
 .place-title {
     text-decoration: none; 
   color: #333; 

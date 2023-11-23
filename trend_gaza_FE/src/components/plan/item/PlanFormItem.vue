@@ -1,9 +1,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import {getModifyPlan, registerPlan, getPlans, updatePlan} from "@/api/plan";
+import { useUserStore } from '@/stores/user'
 import { getModifyPlan, registerPlan, getPlans, updatePlan } from "@/api/plan";
 
 const router = useRouter();
+const store = useUserStore()
 
 const props = defineProps({
   type: String,
@@ -11,9 +14,10 @@ const props = defineProps({
 });
 
 const plan = ref({
-  endDate: "",
-  startDate: "",
-  title: "",
+    endDate: "",
+    startDate: "",
+    title: "",
+    userId: store.userInfo.userId
 });
 
 const today = ref(formattingDate(new Date()));
@@ -51,11 +55,11 @@ const onSubmit = () => {
 };
 
 const writePlanFunc = () => {
-  registerPlan(
-    plan.value,
-    ({ data }) => {
-      window.alert("플랜이 등록되었습니다.");
-      router.push({ name: "plan-list" });
+    registerPlan(
+        plan.value,
+    ({data}) => {
+        window.alert("플랜이 등록되었습니다.")
+        router.push({ name: "plan-list" });
     },
     (error) => {
       console.log(error);
