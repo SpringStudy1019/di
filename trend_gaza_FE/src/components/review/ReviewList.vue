@@ -3,7 +3,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 import VSelect from "@/components/common/VSelect.vue";
-import ReviewListItem from '@/components/review/item/ReviewListItem.vue';
+import ReviewListItem from "@/components/review/item/ReviewListItem.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
 import { list } from "@/api/review";
 
@@ -28,21 +28,24 @@ const param = ref({
 });
 
 onMounted(() => {
-    getReviewList();
+  getReviewList();
 });
 
 const getReviewList = () => {
-    // console.log("서버에서 글목록 얻어오자!");
-   // API 호출
-    list(param.value,
-      ({ data }) => {   
-        reviews.value = data.reviews;
-        currentPage.value = data.currentPage;
-        totalPage.value = data.totalPageCount;
+  // console.log("서버에서 글목록 얻어오자!");
+  // API 호출
+  list(
+    param.value,
+    ({ data }) => {
+      reviews.value = data.reviews;
+      currentPage.value = data.currentPage;
+      totalPage.value = data.totalPageCount;
     },
     (error) => {
-        console.log(error);
-    });
+      router.push({ name: "user-login" });
+      console.log(error);
+    }
+  );
 };
 
 const changeKey = (val) => {
@@ -56,15 +59,12 @@ const onPageChange = (val) => {
   param.value.pgno = val;
   getReviewList();
 };
-
 </script>
 
 <template>
-    <div class="container">
+  <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10">
-      
-      </div>
+      <div class="col-lg-10"></div>
       <div class="col-lg-10">
         <div class="row align-self-center mb-2">
           <div class="col-md-2 text-start">
@@ -87,7 +87,7 @@ const onPageChange = (val) => {
               </div>
             </form>
           </div>
-        </div> 
+        </div>
 
         <div class="card-columns">
           <ReviewListItem
@@ -96,7 +96,6 @@ const onPageChange = (val) => {
             :review="review"
           ></ReviewListItem>
         </div>
-
       </div>
 
       <PageNavigation
@@ -108,6 +107,4 @@ const onPageChange = (val) => {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
