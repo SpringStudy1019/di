@@ -390,6 +390,8 @@ const getBookmarks = (data) => {
       firstImage: data[i].imgUrl,
       addr1: data[i].address,
       contentId: data[i].contentId,
+      latitude: data[i].latitude,
+      longitude: data[i].longitude,
     };
     console.log(attraction);
     attractionList.value.push(attraction);
