@@ -148,9 +148,14 @@ const getRelatedPeople = () => {
   listRelated(
     store.userInfo.userId,
     userId.value,
+    
     ({ data }) => { 
       relatedPeople.value = data
       console.log("related people:::", data);
+      if (otherUsersToggle.value === false) {
+        otherUsersToggle.value = !otherUsersToggle.value
+      }
+
           },
         (error) => {
           console.log(error);

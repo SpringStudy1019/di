@@ -1,9 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { getModifyPlan, registerPlan, getPlans, updatePlan } from "@/api/plan";
+import {getModifyPlan, registerPlan, getPlans, updatePlan} from "@/api/plan";
+import { useUserStore } from '@/stores/user'
 
 const router = useRouter();
+const store = useUserStore()
 
 const props = defineProps({
   type: String,

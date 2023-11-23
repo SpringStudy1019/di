@@ -53,7 +53,7 @@
 	<update id="modifySelectPlan" parameterType="map">
 		update attraction_plan
 		set attraction = #{attraction}
-		where attraction_plan_id = #{attractionPlanId}
+		where plan_idx = #{planIdx}
 	</update>
 	
 	<delete id="deleteMyPlan" parameterType="map">

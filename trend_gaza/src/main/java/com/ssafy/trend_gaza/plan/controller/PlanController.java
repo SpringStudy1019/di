@@ -86,7 +86,7 @@ public class PlanController {
 	 */
 	@PostMapping
 	public ResponseEntity<?> setPlan(@RequestBody SetPlanRequest setPlanRequest) {
-		setPlanRequest.setUserId(AuthenticationUtil.getCurrentUserSocialId());
+//		setPlanRequest.setUserId(AuthenticationUtil.getCurrentUserSocialId());
 		planService.setPlan(setPlanRequest);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
