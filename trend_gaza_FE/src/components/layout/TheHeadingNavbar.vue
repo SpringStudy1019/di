@@ -37,7 +37,10 @@ onMounted(() => {
   var userStoreObject = JSON.parse(userStore);
 
   // "isLogin" 속성의 값 가져오기
-  var isLoginValue = userStoreObject.isLogin;
+  var isLoginValue = false;
+  if (userStoreObject !== null) {
+    isLoginValue = userStoreObject.isLogin;
+  }
 
   if (isLoginValue === true) {
     isLoginUser.value = true;
