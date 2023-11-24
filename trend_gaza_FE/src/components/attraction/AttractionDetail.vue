@@ -23,7 +23,7 @@ const getAttraction = () => {
     getAttractionDetail(attractionIdx,
     ({data}) => {
         attraction.value = data;
-        // searchYoutube();    // 과도한 api 사용을 막기 위해 잠시 주석처리. 
+        searchYoutube();    // 과도한 api 사용을 막기 위해 잠시 주석처리. 
         window.scrollTo({ top: 0, behavior: 'smooth' });
     },
     (error) => {
@@ -260,7 +260,6 @@ const getImages = () => {
         <router-link 
           :to="{ name: 'review-view', params: { reviewIdx: review.reviewIdx } }" 
           class="btn btn-outline-primary me-2">
-              자세히 보기
               {{ review.content }}
           </router-link>
       </div>
