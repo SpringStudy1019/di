@@ -113,16 +113,17 @@ const getInvitedPlans = () => {
     });
 };
 
-const showYourJourneyToggle = (planIdx) => {
-    showYourJourney.value[planIdx] = !showYourJourney.value[planIdx];
+const showYourJourneyToggle = (attractionPlanId) => {
+    showYourJourney.value[attractionPlanId] = !showYourJourney.value[attractionPlanId];
 }
 
 // 친구가 만든 여행 일정 상세 조회
-const yourPlanDetail = (planIdx) => {
-    showYourJourneyToggle(planIdx)
+const yourPlanDetail = (attractionPlanId) => {
+    console.log("내가 확인할 것" + attractionPlanId);
+    showYourJourneyToggle(attractionPlanId)
     console.log("showjourney toggle", showYourJourney.value)
     getPlanDetail(
-        planIdx,
+        attractionPlanId,
         ({ data }) => {
             journey.value = data;
             console.log("찬구가 만든 journey:::::::::", journey)
@@ -247,7 +248,7 @@ const requestFriends = (planIdx) => {
                         @click="checkPlan(myPlan.attractionPlanId, myPlan.planIdx)">여행계획짜기</button>
                       
                         <button class="btn btn-warning me-2" 
-                        @click='planDetail(myPlan.planIdx)'
+                        @click='planDetail(myPlan.attractionPlanId)'
                         >여행일정</button>
                         <button @click='showMyFriend(myPlan.planIdx)' class="btn btn-success">친구 초대하기</button>
                         <!-- 친구 초대하기 버튼을 클릭하면 친구가 뜬다 -->
@@ -265,7 +266,7 @@ const requestFriends = (planIdx) => {
                             </div>
                         </div>
                         <!-- 여행 일정 start --><!-- 여행 일정 버튼을 클릭하면 show -->
-                        <div v-if='showMyJourney[myPlan.planIdx]'>
+                        <div v-if='showMyJourney[myPlan.attractionPlanId]'>
                             <div class='margin-big'></div>
                             <div>
                                 <h3>여행 일정</h3>
@@ -319,7 +320,7 @@ const requestFriends = (planIdx) => {
                         @click="checkPlan(invitation.attractionPlanId)">여행계획짜기</button>
                       
                         <button class="btn btn-warning me-2" 
-                        @click='yourPlanDetail(invitation.planIdx)'
+                        @click='yourPlanDetail(invitation.attractionPlanId)'
                         >여행일정</button>
                        
                         <!-- 여행 일정 start --><!-- 여행 일정 버튼을 클릭하면 show -->
