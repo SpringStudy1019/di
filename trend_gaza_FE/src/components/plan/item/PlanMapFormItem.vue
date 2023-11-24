@@ -73,7 +73,7 @@ onMounted(() => {
   //getAttractionPlan();
 
   if (props.type === "modify") {
-      getSelectedPlans();
+    getSelectedPlans();
   }
 });
 
@@ -263,10 +263,10 @@ const trasformRequestDTO = () => {
   const requestList = [];
   for (let i = 0; i < allSelect.value.length - 1; i++) {
     if (allSelect.value[i] == null) {
-      window.alert(`${i+1}일차 코스를 선택하세요.`);
-      return;       // 서버에 요청을 안 보내고 싶은데 알림 띄운 후 서버에 요청을 보내는 게 문제
+      window.alert(`${i + 1}일차 코스를 선택하세요.`);
+      return; // 서버에 요청을 안 보내고 싶은데 알림 띄운 후 서버에 요청을 보내는 게 문제
     }
-    for (let j = 0; j < allSelect.value[i].length; j++) {
+    for (let j = 0; j < allSelect.value[i].length - 1; j++) {
       let planRequest = {
         attractionId: allSelect.value[i][j].contentId,
         order: j + 1,
@@ -397,7 +397,6 @@ const onPageChange = (val) => {
   searchAttractions(); // 검색 호출
 };
 
-
 const onPageChangeAtRightBar = (val) => {
   currentPage.value = val;
 };
@@ -438,7 +437,6 @@ const endPage = computed(() => {
 const endRange = computed(() => {
   return parseInt((totalPages.value - 1) / navigationSize) * navigationSize < currentPage.value;
 });
-
 </script>
 
 <template>
@@ -560,7 +558,12 @@ const endRange = computed(() => {
           <nav aria-label="Page navigation example">
             <ul class="pagination">
               <li class="page-item">
-                <a class="page-link" @click="onPageChangeAtRightBar(startPage == 1 ? 1 : startPage - 1)" href="#" aria-label="Previous">
+                <a
+                  class="page-link"
+                  @click="onPageChangeAtRightBar(startPage == 1 ? 1 : startPage - 1)"
+                  href="#"
+                  aria-label="Previous"
+                >
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
@@ -568,7 +571,12 @@ const endRange = computed(() => {
                 <a class="page-link" href="#" @click="moveNDay(index - 1)">{{ index }}</a>
               </li>
               <li class="page-item">
-                <a class="page-link" @click="onPageChangeAtRightBar(endRange ? totalPage : endPage + 1)" href="#" aria-label="Next">
+                <a
+                  class="page-link"
+                  @click="onPageChangeAtRightBar(endRange ? totalPage : endPage + 1)"
+                  href="#"
+                  aria-label="Next"
+                >
                   <span aria-hidden="true">&raquo;</span>
                 </a>
               </li>
