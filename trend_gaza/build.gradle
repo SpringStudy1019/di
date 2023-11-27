@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.17'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	id 'com.diffplug.spotless' version '6.10.0'
+	id "io.freefair.lombok" version "8.4"
 }
 
 group = 'comssafy'
@@ -50,10 +51,6 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
-	
-	// https://mvnrepository.com/artifact/org.projectlombok/lombok
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
 	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
