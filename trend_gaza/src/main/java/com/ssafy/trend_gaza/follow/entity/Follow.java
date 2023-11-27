@@ -2,35 +2,39 @@ package com.ssafy.trend_gaza.follow.entity;
 
 public class Follow {
 
-	private Integer followIdx;
-	private String followeeId; // star
-	private String followerId; // fan
-	
-	public Follow() {}
+    private Integer followIdx;
+    private String followeeId; // star
+    private String followerId; // fan
 
-	public Follow(Integer followIdx, String followeeId, String followerId) {
-		super();
-		this.followIdx = followIdx;
-		this.followeeId = followeeId;
-		this.followerId = followerId;
-	}
+    public Follow() {}
 
-	
-	public Integer getFollowIdx() {
-		return followIdx;
-	}
+    public Follow(Integer followIdx, String followeeId, String followerId) {
+        super();
+        this.followIdx = followIdx;
+        this.followeeId = followeeId;
+        this.followerId = followerId;
+    }
 
-	public String getFolloweeId() {
-		return followeeId;
-	}
+    public Integer getFollowIdx() {
+        return followIdx;
+    }
 
-	public String getFollowerId() {
-		return followerId;
-	}
+    public String getFolloweeId() {
+        return followeeId;
+    }
 
-	@Override
-	public String toString() {
-		return "Follow [followIdx=" + followIdx + ", followeeId=" + followeeId + ", followerId=" + followerId + "]";
-	}
-	
+    public String getFollowerId() {
+        return followerId;
+    }
+
+    @Override
+    public String toString() {
+        return "Follow [followIdx="
+                + followIdx
+                + ", followeeId="
+                + followeeId
+                + ", followerId="
+                + followerId
+                + "]";
+    }
 }

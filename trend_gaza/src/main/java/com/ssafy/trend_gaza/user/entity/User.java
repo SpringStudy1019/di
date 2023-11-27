@@ -1,96 +1,106 @@
 package com.ssafy.trend_gaza.user.entity;
 
+
 import lombok.Builder;
 
 @Builder
 public class User {
 
-	private String userId;
-	private String userName;
-	private String password;
-	private String mobile;
-	private String emailId;
-	private String emailDomain;
-	private String gender;
-	private AuthorityType authority;
-	private String joinDate;
-	private String socialId;
-	private PlatformType platform;
-	private String refreshToken;
-	private String imgUrl;
-	
-	public User() {}
-	
-	public User(String userId, String userName, String password, String mobile, String emailId, String emailDomain,
-			String gender, AuthorityType authority, String joinDate, String socialId, PlatformType platform,
-			String refreshToken, String imgUrl) {
-		super();
-		this.userId = userId;
-		this.userName = userName;
-		this.password = password;
-		this.mobile = mobile;
-		this.emailId = emailId;
-		this.emailDomain = emailDomain;
-		this.gender = gender;
-		this.authority = authority;
-		this.joinDate = joinDate;
-		this.socialId = socialId;
-		this.platform = platform;
-		this.refreshToken = refreshToken;
-		this.imgUrl = imgUrl;
-	}
+    private String userId;
+    private String userName;
+    private String password;
+    private String mobile;
+    private String emailId;
+    private String emailDomain;
+    private String gender;
+    private AuthorityType authority;
+    private String joinDate;
+    private String socialId;
+    private PlatformType platform;
+    private String refreshToken;
+    private String imgUrl;
 
-	
-	public PlatformType getPlatform() {
-		return platform;
-	}
+    public User() {}
 
-	public String getUserId() {
-		return userId;
-	}
+    public User(
+            String userId,
+            String userName,
+            String password,
+            String mobile,
+            String emailId,
+            String emailDomain,
+            String gender,
+            AuthorityType authority,
+            String joinDate,
+            String socialId,
+            PlatformType platform,
+            String refreshToken,
+            String imgUrl) {
+        super();
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.mobile = mobile;
+        this.emailId = emailId;
+        this.emailDomain = emailDomain;
+        this.gender = gender;
+        this.authority = authority;
+        this.joinDate = joinDate;
+        this.socialId = socialId;
+        this.platform = platform;
+        this.refreshToken = refreshToken;
+        this.imgUrl = imgUrl;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public PlatformType getPlatform() {
+        return platform;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public String getMobile() {
-		return mobile;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public String getEmailId() {
-		return emailId;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getEmailDomain() {
-		return emailDomain;
-	}
+    public String getMobile() {
+        return mobile;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    public String getEmailId() {
+        return emailId;
+    }
 
-	public AuthorityType getAuthority() {
-		return authority;
-	}
+    public String getEmailDomain() {
+        return emailDomain;
+    }
 
-	public String getJoinDate() {
-		return joinDate;
-	}
+    public String getGender() {
+        return gender;
+    }
 
-	public String getSocialId() {
-		return socialId;
-	}
+    public AuthorityType getAuthority() {
+        return authority;
+    }
 
-	public String getRefreshToken() {
-		return refreshToken;
-	}
-	
-	public String getImgUrl() {
-		return imgUrl;
-	}
-	
+    public String getJoinDate() {
+        return joinDate;
+    }
+
+    public String getSocialId() {
+        return socialId;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
 }

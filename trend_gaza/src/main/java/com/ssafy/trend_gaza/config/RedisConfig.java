@@ -1,7 +1,7 @@
 package com.ssafy.trend_gaza.config;
 
-import java.time.Duration;
 
+import java.time.Duration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -19,40 +19,40 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @EnableRedisRepositories
 public class RedisConfig {
-	
-	@Value("${redis.host}")
-	private String redisHost;
-	
-	@Value("${redis.port}")
-	private int redisPort;
-	
-	@Bean
-	public RedisConnectionFactory redisConnectionFactory() {
-		return new LettuceConnectionFactory(redisHost, redisPort);
-	}
-	
-	@Bean
-	public RedisTemplate<?, ?> redisTemplate() {
-		RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
-		redisTemplate.setConnectionFactory(redisConnectionFactory());
-		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		return redisTemplate;
-	}
-	
-	@Bean
-	public CacheManager oidcCacheManager(RedisConnectionFactory cf) {
-		RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-				.serializeKeysWith(
-						RedisSerializationContext.SerializationPair.fromSerializer(
-								new StringRedisSerializer()))
-				.serializeValuesWith(
-						RedisSerializationContext.SerializationPair.fromSerializer(
-						new GenericJackson2JsonRedisSerializer()))
-				.entryTtl(Duration.ofHours(1L));
-				
-		return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(cf)
-				.cacheDefaults(redisCacheConfiguration)
-				.build();		
-	}
 
+    @Value("${redis.host}")
+    private String redisHost;
+
+    @Value("${redis.port}")
+    private int redisPort;
+
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+        return new LettuceConnectionFactory(redisHost, redisPort);
+    }
+
+    @Bean
+    public RedisTemplate<?, ?> redisTemplate() {
+        RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        return redisTemplate;
+    }
+
+    @Bean
+    public CacheManager oidcCacheManager(RedisConnectionFactory cf) {
+        RedisCacheConfiguration redisCacheConfiguration =
+                RedisCacheConfiguration.defaultCacheConfig()
+                        .serializeKeysWith(
+                                RedisSerializationContext.SerializationPair.fromSerializer(
+                                        new StringRedisSerializer()))
+                        .serializeValuesWith(
+                                RedisSerializationContext.SerializationPair.fromSerializer(
+                                        new GenericJackson2JsonRedisSerializer()))
+                        .entryTtl(Duration.ofHours(1L));
+
+        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(cf)
+                .cacheDefaults(redisCacheConfiguration)
+                .build();
+    }
 }

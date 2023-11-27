@@ -2,50 +2,52 @@ package com.ssafy.trend_gaza.comment.entity;
 
 public class Comment {
 
-	private Integer commentIdx;
-	private String content;
-	private String registerDate;
-	private String modifyDate;
-	private String userId;
-	private Integer reviewIdx;
-	
-	
-	public Comment() {}
+    private Integer commentIdx;
+    private String content;
+    private String registerDate;
+    private String modifyDate;
+    private String userId;
+    private Integer reviewIdx;
 
-	public Comment(Integer commentIdx, String content, String registerDate, String modifyDate, String userId,
-			Integer reviewIdx) {
-		super();
-		this.commentIdx = commentIdx;
-		this.content = content;
-		this.registerDate = registerDate;
-		this.modifyDate = modifyDate;
-		this.userId = userId;
-		this.reviewIdx = reviewIdx;
-	}
+    public Comment() {}
 
-	
-	public Integer getCommentIdx() {
-		return commentIdx;
-	}
+    public Comment(
+            Integer commentIdx,
+            String content,
+            String registerDate,
+            String modifyDate,
+            String userId,
+            Integer reviewIdx) {
+        super();
+        this.commentIdx = commentIdx;
+        this.content = content;
+        this.registerDate = registerDate;
+        this.modifyDate = modifyDate;
+        this.userId = userId;
+        this.reviewIdx = reviewIdx;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public Integer getCommentIdx() {
+        return commentIdx;
+    }
 
-	public String getRegisterDate() {
-		return registerDate;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public String getModifyDate() {
-		return modifyDate;
-	}
+    public String getRegisterDate() {
+        return registerDate;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public String getModifyDate() {
+        return modifyDate;
+    }
 
-	public Integer getReviewIdx() {
-		return reviewIdx;
-	}
-	
+    public String getUserId() {
+        return userId;
+    }
+
+    public Integer getReviewIdx() {
+        return reviewIdx;
+    }
 }
