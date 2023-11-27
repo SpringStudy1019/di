@@ -31,7 +31,7 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
         arguments: build
-        gradle-version: current
+        gradle-version: wrapper
         build-root-directory: ./trend_gaza
 
     - name: Setup Gradle
