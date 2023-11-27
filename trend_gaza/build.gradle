@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.17'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'com.diffplug.spotless' version '6.10.0'
 }
 
 group = 'comssafy'
@@ -60,4 +61,16 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+spotless {
+	java {
+		target("**/*.java")
+		targetExclude("**/SecurityConfig.java", "**/SwaggerConfiguration.java")
+		googleJavaFormat().aosp()  // 구글 자바 포맷 적용
+		importOrder()  // import 순서 정의
+		removeUnusedImports()   // 사용하지 않는 import 제거
+		trimTrailingWhitespace()   // 공백 제거
+		endWithNewline()  // 끝부분 New Line 처리
+	}
 }

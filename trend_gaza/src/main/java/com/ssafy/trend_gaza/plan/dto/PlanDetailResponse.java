@@ -1,56 +1,58 @@
 package com.ssafy.trend_gaza.plan.dto;
 
-import java.util.List;
 
 import com.ssafy.trend_gaza.plan.entity.Attraction;
 import com.ssafy.trend_gaza.user.entity.User;
+import java.util.List;
 
 public class PlanDetailResponse {
 
-	private Integer planIdx;
-	private String title;
-	private List<Attraction> attractions;
-	private String startDate;
-	private String endDate;
-	private List<User> participants;
-	
-	
-	public PlanDetailResponse() {}
+    private Integer planIdx;
+    private String title;
+    private List<Attraction> attractions;
+    private String startDate;
+    private String endDate;
+    private List<User> participants;
 
-	public PlanDetailResponse(Integer planIdx, List<Attraction> attractions, String title, String startDate,
-			String endDate, List<User> participants) {
-		super();
-		this.planIdx = planIdx;
-		this.attractions = attractions;
-		this.title = title;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.participants = participants;
-	}
+    public PlanDetailResponse() {}
 
-	
-	public Integer getPlanIdx() {
-		return planIdx;
-	}
+    public PlanDetailResponse(
+            Integer planIdx,
+            List<Attraction> attractions,
+            String title,
+            String startDate,
+            String endDate,
+            List<User> participants) {
+        super();
+        this.planIdx = planIdx;
+        this.attractions = attractions;
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.participants = participants;
+    }
 
-	public List<Attraction> getAttractions() {
-		return attractions;
-	}
+    public Integer getPlanIdx() {
+        return planIdx;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public List<Attraction> getAttractions() {
+        return attractions;
+    }
 
-	public String getStartDate() {
-		return startDate;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getEndDate() {
-		return endDate;
-	}
+    public String getStartDate() {
+        return startDate;
+    }
 
-	public List<User> getParticipants() {
-		return participants;
-	}
-	
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public List<User> getParticipants() {
+        return participants;
+    }
 }

@@ -1,30 +1,28 @@
 package com.ssafy.trend_gaza.config.security.filter;
 
-import java.io.IOException;
 
+import com.ssafy.trend_gaza.common.CustomExceptionStatus;
+import com.ssafy.trend_gaza.util.JWTUtil;
+import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.ssafy.trend_gaza.common.CustomExceptionStatus;
-import com.ssafy.trend_gaza.util.JWTUtil;
-
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-	
-	private final JWTUtil jwtUtil;
-	
-	public JwtRequestFilter(JWTUtil jwtUtil) {
-		this.jwtUtil = jwtUtil;
-	}
-	
-	@Override
+
+    private final JWTUtil jwtUtil;
+
+    public JwtRequestFilter(JWTUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
+    @Override
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -39,6 +37,4 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
-	
-	
 }

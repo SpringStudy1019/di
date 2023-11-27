@@ -2,52 +2,50 @@ package com.ssafy.trend_gaza.plan.dto;
 
 public class SetPlanRequest {
 
-	private String title;
-	private String startDate;
-	private String endDate;
-	private String userId;
-	
-	public SetPlanRequest() {}
+    private String title;
+    private String startDate;
+    private String endDate;
+    private String userId;
 
-	public SetPlanRequest(String title, String startDate, String endDate, String userId) {
-		super();
-		this.title = title;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.userId = userId;
-	}
+    public SetPlanRequest() {}
 
-	
-	public String getTitle() {
-		return title;
-	}
+    public SetPlanRequest(String title, String startDate, String endDate, String userId) {
+        super();
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.userId = userId;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getStartDate() {
-		return startDate;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
+    public String getStartDate() {
+        return startDate;
+    }
 
-	public String getEndDate() {
-		return endDate;
-	}
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
 
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
+    public String getEndDate() {
+        return endDate;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

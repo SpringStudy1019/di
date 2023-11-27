@@ -1,10 +1,8 @@
 package com.ssafy.trend_gaza.attraction.dto;
 
-import java.util.List;
 
 import com.ssafy.trend_gaza.attraction.entity.AttractionInfo;
-import com.ssafy.trend_gaza.plan.entity.Attraction;
-
+import java.util.List;
 import lombok.Builder;
 
 /*
@@ -13,30 +11,29 @@ import lombok.Builder;
 @Builder
 public class AttractionSearchResponse {
 
-	private List<AttractionInfo> attractions;
-	private Integer currentPage;
-	private Integer totalPageCount;
-	
-	public AttractionSearchResponse() {}
+    private List<AttractionInfo> attractions;
+    private Integer currentPage;
+    private Integer totalPageCount;
 
-	public AttractionSearchResponse(List<AttractionInfo> attractions, Integer currentPage, Integer totalPageCount) {
-		super();
-		this.attractions = attractions;
-		this.currentPage = currentPage;
-		this.totalPageCount = totalPageCount;
-	}
+    public AttractionSearchResponse() {}
 
-	public List<AttractionInfo> getAttractions() {
-		return attractions;
-	}
+    public AttractionSearchResponse(
+            List<AttractionInfo> attractions, Integer currentPage, Integer totalPageCount) {
+        super();
+        this.attractions = attractions;
+        this.currentPage = currentPage;
+        this.totalPageCount = totalPageCount;
+    }
 
-	public Integer getCurrentPage() {
-		return currentPage;
-	}
+    public List<AttractionInfo> getAttractions() {
+        return attractions;
+    }
 
-	public Integer getTotalPageCount() {
-		return totalPageCount;
-	}
-	
-	
+    public Integer getCurrentPage() {
+        return currentPage;
+    }
+
+    public Integer getTotalPageCount() {
+        return totalPageCount;
+    }
 }

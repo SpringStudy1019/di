@@ -1,17 +1,16 @@
 package com.ssafy.trend_gaza.config.security;
 
+
+import com.ssafy.trend_gaza.user.entity.User;
 import java.util.ArrayList;
 import java.util.Collection;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.ssafy.trend_gaza.user.entity.User;
-
 public class CustomUserDetails implements UserDetails {
 
-	private User user;
+    private User user;
 
     public User getUser() {
         return user;

@@ -2,25 +2,22 @@ package com.ssafy.trend_gaza.user.dto;
 
 public class LoginRequest {
 
-	private  String userId;
-	private  String userPwd;
-	
-	public LoginRequest() {}
+    private String userId;
+    private String userPwd;
 
-	public LoginRequest(String userId, String userPwd) {
-		super();
-		this.userId = userId;
-		this.userPwd = userPwd;
-	}
+    public LoginRequest() {}
 
-	
-	public String getUserId() {
-		return userId;
-	}
-	
-	public String getUserPwd() {
-		return userPwd;
-	}
-	
-	
+    public LoginRequest(String userId, String userPwd) {
+        super();
+        this.userId = userId;
+        this.userPwd = userPwd;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getUserPwd() {
+        return userPwd;
+    }
 }
