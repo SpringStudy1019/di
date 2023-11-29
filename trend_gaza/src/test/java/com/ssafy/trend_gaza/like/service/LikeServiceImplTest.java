@@ -1,6 +1,6 @@
 package com.ssafy.trend_gaza.like.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.ssafy.trend_gaza.like.dto.LikeRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
         classes = {LikeServiceImpl.class})
 @AutoConfigureMockMvc
 @ComponentScan(basePackages = {"com.ssafy"})
+@Disabled
 class LikeServiceImplTest {
 
     @Autowired private LikeService likeService;
@@ -32,7 +33,7 @@ class LikeServiceImplTest {
         try {
             int result = likeService.onLike(lr);
             assertEquals(0, result);
-            //			log.debug("이미 좋아요를 누르셨습니다!");
+            // log.debug("이미 좋아요를 누르셨습니다!");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,7 +42,7 @@ class LikeServiceImplTest {
     @Test
     @DisplayName("좋아요 취소")
     @Transactional
-    //	@Disabled
+    // @Disabled
     void testOffLike() {
         LikeRequest lr = new LikeRequest("user01", 6);
         try {

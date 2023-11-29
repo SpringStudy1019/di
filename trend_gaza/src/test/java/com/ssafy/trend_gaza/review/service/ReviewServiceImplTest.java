@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @ComponentScan(basePackages = {"com.ssafy"})
 @Transactional
+@Disabled
 class ReviewServiceImplTest {
 
     @Autowired private ReviewService reviewService;

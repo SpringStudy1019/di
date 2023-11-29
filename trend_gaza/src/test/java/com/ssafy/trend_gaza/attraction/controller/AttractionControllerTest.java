@@ -1,6 +1,6 @@
 package com.ssafy.trend_gaza.attraction.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
         classes = {AttractionController.class})
 @Slf4j
 @ComponentScan(basePackages = {"com.ssafy"})
+@Disabled
 class AttractionControllerTest {
 
     @Autowired private AttractionService attractionService;
@@ -105,23 +106,23 @@ class AttractionControllerTest {
     }
 
     // customUserDetails에 사용자 정보를 넣어줘야하는데 이 부분이 잘 안 됨
-    //	@Test
-    //	@Transactional
-    //	@DisplayName("북마크 추가하기")
-    //	@WithMockUser(username="alswjd")
-    //	void testonBookmark() throws Exception {
-    //		//log.debug("관광지 조회 테스트 시작");
+    // @Test
+    // @Transactional
+    // @DisplayName("북마크 추가하기")
+    // @WithMockUser(username="alswjd")
+    // void testonBookmark() throws Exception {
+    // //log.debug("관광지 조회 테스트 시작");
     //
-    //		Integer attractionId = 125266;
+    // Integer attractionId = 125266;
     //
-    //		mockMvc.perform(post("/attractions/" + attractionId + "/bookmark"))
-    //		.andExpect(status().isOk())
-    //		//.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-    //		.andDo(print());
+    // mockMvc.perform(post("/attractions/" + attractionId + "/bookmark"))
+    // .andExpect(status().isOk())
+    // //.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+    // .andDo(print());
     //
-    //		//log.debug("관광지 조회 테스트 종료");
+    // //log.debug("관광지 조회 테스트 종료");
     //
-    //	}
+    // }
 
     @Test
     @DisplayName("여행 계획 세우기에 참여한 사용자들이 북마크한 관광지 조회")

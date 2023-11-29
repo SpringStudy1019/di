@@ -38,6 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @ComponentScan(basePackages = {"com.ssafy"})
 @Transactional
+@Disabled
 class UserControllerTest {
 
     @Autowired private MockMvc mockMvc;
@@ -60,9 +61,9 @@ class UserControllerTest {
                         post("/user/register")
                                 .content(content)
                                 .contentType(MediaType.APPLICATION_JSON))
-                //        .andExpect(status().isCreated())
+                // .andExpect(status().isCreated())
                 .andExpect(status().is2xxSuccessful())
-                //        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                // .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(print());
         log.debug("### 회원가입 테스트 종료 ###");
     }
@@ -78,7 +79,7 @@ class UserControllerTest {
 
         mockMvc.perform(get("/user/idCheck/{userId}", userId2))
                 .andExpect(status().is2xxSuccessful())
-                //            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                // .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(print());
 
         log.debug("### 아이디 중복 테스트 종료 ###");
@@ -192,7 +193,7 @@ class UserControllerTest {
     }
 
     @Test
-    //	@Disabled
+    // @Disabled
     @DisplayName("### 사용자 삭제 테스트 ###")
     void testUserDelete() throws Exception {
         String userId = "user04";

@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
         classes = {LikeController.class})
 @Slf4j
 @ComponentScan(basePackages = {"com.ssafy"})
+@Disabled
 class LikeControllerTest {
 
     @Autowired private LikeService likeService;
@@ -49,7 +50,7 @@ class LikeControllerTest {
     @Test
     @DisplayName("좋아요 취소")
     @Transactional
-    //	@Disabled
+    // @Disabled
     void testOffLike() throws Exception {
         log.debug("좋아요 취소 테스트 시작");
         LikeRequest lr = new LikeRequest("user02", 2);

@@ -11,7 +11,7 @@ import com.ssafy.trend_gaza.user.entity.User;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Optional;
-import org.mapstruct.Mapper;
+import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
@@ -46,7 +46,7 @@ public interface UserMapper {
     /* 아이디 찾기: 이름과 핸드폰번호로 아이디 찾기 */
     String findId(FindIdRequest findIdRequest) throws SQLException;
 
-    /* 비밀번호 찾기: 아이디, 이름, 핸드폰 번호 입력하면, 임시 비밀번호 발급  */
+    /* 비밀번호 찾기: 아이디, 이름, 핸드폰 번호 입력하면, 임시 비밀번호 발급 */
     String findPwd(FindPwdRequest findPwdRequest) throws SQLException;
 
     /* 내 정보 조회: 세션에 저장된 사용자 아이디를 받아서 entity 리턴 */
@@ -58,7 +58,7 @@ public interface UserMapper {
     /* 내 프로필 이미지 수정 */
     int modifyProfileImage(Map<String, String> params) throws SQLException;
 
-    /* 비밀번호 변경: 현재 비밀번호와 새로운 비밀번호 받기  */
+    /* 비밀번호 변경: 현재 비밀번호와 새로운 비밀번호 받기 */
     int changePwd(ChangePwdRequest changePwdRequest) throws SQLException;
 
     /* 회원탈퇴 */
