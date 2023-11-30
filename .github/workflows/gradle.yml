@@ -7,7 +7,10 @@ on:
     branches: [ "master" ]
 
 permissions:
+  contents: read
+  issues: read
   checks: write
+  pull-requests: write
 
 jobs:
   build:
@@ -29,6 +32,7 @@ jobs:
       with:
         java-version: '8'
         distribution: 'temurin'
+        build-root-directory: ./trend_gaza
 
     - name: Run chmod to make gradlew executable
       run: chmod +x ./trend_gaza/gradlew
@@ -49,7 +53,7 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
-        files: '**/build/test-results/test/TEST-*.xml'
+        files: '**/test-results/**/*.xml'
 
     - name: If the test fails, register a check comment in the failed code line
       uses: mikepenz/action-junit-report@v3
