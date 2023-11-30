@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ "master" ]
 
+permissions:
+  contents: read
+  issues: read
+  checks: write
+  pull-requests: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,6 +32,7 @@ jobs:
       with:
         java-version: '8'
         distribution: 'temurin'
+        build-root-directory: ./trend_gaza
 
     - name: Run chmod to make gradlew executable
       run: chmod +x ./trend_gaza/gradlew
@@ -42,4 +49,22 @@ jobs:
         arguments: build test
         build-root-directory: ./trend_gaza
 
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: '**/test-results/**/*.xml'
+
+    - name: If the test fails, register a check comment in the failed code line
+      uses: mikepenz/action-junit-report@v3
+      if: always()
+      with:
+        report_paths: '**/build/test-results/test/TEST-*.xml'
+        token: ${{ github.token }}
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: '**/build/reports/jacoco/applicationCodeCoverageReport/html/index.html'
   
