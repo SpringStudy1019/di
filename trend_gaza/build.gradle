@@ -64,7 +64,7 @@ tasks.named('test') {
 }
 
 application {
-    mainClass = 'org.gradle.MyMain'
+    mainClass = 'com.ssafy.trend_gaza.TrendGazaApplication'
 }
 
 jacoco {
