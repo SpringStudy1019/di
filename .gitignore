@@ -42,3 +42,4 @@ out/
 application-mail.properties
 application-aws.properties
 application-prod.properties
+application-local.properties
