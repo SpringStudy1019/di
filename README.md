@@ -15,5 +15,7 @@
 
 
 ## 🪄 CI/CD
+![trend_gaza CI_CD](https://github.com/SpringStudy1019/trend_gaza/assets/46569105/4908bf8e-44ec-49a5-9171-c7ceec6a4999)
+
 
 ## 👯‍♀️ Ground Rules
