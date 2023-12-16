@@ -32,9 +32,8 @@ jobs:
 
       - name: create zip 
         run: |
-          cd dist
-          zip -r dist.zip .
-          mv dist.zip ../trend_gaza_FE/
+          zip -r dist.zip ./dist
+          mv dist.zip ../trend_gaza_FE
         shell: bash
 
       - name: Configure AWS credentials
