@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - release/fe 
+      
 env:
   S3_BUCKET_NAME : ${{secrets.S3_BUCKET_NAME}}
   CODE_DEPLOY_APPLICATION_NAME: ${{secrets.CODE_DEPLOY_APPLICATION_NAME}}
@@ -29,8 +30,7 @@ jobs:
 
       - name: create zip 
         run: |
-          cd dist
-          zip -r ./dist.zip .
+          zip -r dist.zip ./dist
         shell: bash
 
       - name: Configure AWS credentials
