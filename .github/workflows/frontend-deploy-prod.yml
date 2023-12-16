@@ -34,7 +34,7 @@ jobs:
         run: |
           cd dist
           zip -r dist.zip .
-          mv dist.zip ../trend_gaza_FE
+          mv dist.zip ../trend_gaza_FE/
         shell: bash
 
       - name: Configure AWS credentials
@@ -49,7 +49,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          aws s3 cp --region ap-northeast-2 dist.zip s3://$S3_BUCKET_NAME/dist.zip
+          aws s3 cp --region ap-northeast-2 ./dist.zip s3://$S3_BUCKET_NAME/dist.zip
 
       - name: Code Deploy
         run: |
