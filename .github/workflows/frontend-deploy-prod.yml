@@ -3,9 +3,9 @@ on:
   push:
     branches:
       - release/fe 
-  pull_request:
-    branches:
-      - master
+  #pull_request:
+   # branches:
+    #  - master
   
 env:
   S3_BUCKET_NAME : ${{secrets.S3_BUCKET_NAME}}
