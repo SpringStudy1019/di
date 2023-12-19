@@ -9,37 +9,37 @@
 <div class="col-10">
     <div class="category">
     <div class="category-card">
-        <img src="https://instagramimages16.s3.ap-northeast-2.amazonaws.com/IMAGE/admin/museum.png" width="40" height="40" alt="">
+        <img src="http://d2qe2q8v1imxmh.cloudfront.net/admin/museum.png" width="40" height="40" alt="">
         <router-link :to="{ name: 'category-view', params: { contentTypeId: 14 } }"  style="text-decoration: none">
             <span class="icon-text">문화시설</span>
         </router-link>
     </div>
     <div class="category-card">
-        <img src="https://instagramimages16.s3.ap-northeast-2.amazonaws.com/IMAGE/admin/concert.png" width="40" height="40" alt="">
+        <img src="http://d2qe2q8v1imxmh.cloudfront.net/admin/concert.png" width="40" height="40" alt="">
         <router-link :to="{ name: 'category-view', params: { contentTypeId: 15 } }"  style="text-decoration: none">
             <span class="icon-text">축제공연행사</span>
         </router-link>
     </div>
     <div class="category-card">
-        <img src="https://instagramimages16.s3.ap-northeast-2.amazonaws.com/IMAGE/admin/skiing.png" width="40" height="40" alt="">
+        <img src="http://d2qe2q8v1imxmh.cloudfront.net/admin/skiing.png" width="40" height="40" alt="">
         <router-link :to="{ name: 'category-view', params: { contentTypeId: 28 } }"  style="text-decoration: none">
             <span class="icon-text">레포츠</span>
         </router-link>
     </div>
     <div class="category-card">
-        <img src="https://instagramimages16.s3.ap-northeast-2.amazonaws.com/IMAGE/admin/hotel.png" width="40" height="40" alt="">
+        <img src="http://d2qe2q8v1imxmh.cloudfront.net/admin/hotel.png" width="40" height="40" alt="">
         <router-link :to="{ name: 'category-view', params: { contentTypeId: 32 } }"  style="text-decoration: none">
             <span class="icon-text">숙박</span>
         </router-link>
     </div>
     <div class="category-card">
-        <img src="https://instagramimages16.s3.ap-northeast-2.amazonaws.com/IMAGE/admin/shopping-cart.png" width="40" height="40" alt="">
+        <img src="http://d2qe2q8v1imxmh.cloudfront.net/admin/shopping-cart.png" width="40" height="40" alt="">
         <router-link :to="{ name: 'category-view', params: { contentTypeId: 38 } }"  style="text-decoration: none">
             <span class="icon-text">쇼핑</span>
         </router-link>
     </div>
     <div class="category-card">
-        <img src="https://instagramimages16.s3.ap-northeast-2.amazonaws.com/IMAGE/admin/restaurant.png" width="40" height="40" alt="">
+        <img src="http://d2qe2q8v1imxmh.cloudfront.net/admin/restaurant.png" width="40" height="40" alt="">
         <router-link :to="{ name: 'category-view', params: { contentTypeId: 39 } }"  style="text-decoration: none">
             <span class="icon-text">음식점</span>
         </router-link>
