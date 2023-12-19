@@ -3,7 +3,10 @@ on:
   push:
     branches:
       - release/fe 
-      
+  #pull_request:
+   # branches:
+    #  - master
+  
 env:
   S3_BUCKET_NAME : ${{secrets.S3_BUCKET_NAME}}
   CODE_DEPLOY_APPLICATION_NAME: ${{secrets.CODE_DEPLOY_APPLICATION_NAME}}
@@ -30,7 +33,7 @@ jobs:
 
       - name: create zip 
         run: |
-          zip -r dist.zip ./dist
+          zip -r fe.zip .
         shell: bash
 
       - name: Configure AWS credentials
@@ -45,7 +48,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          aws s3 cp --region ap-northeast-2 ./dist.zip s3://$S3_BUCKET_NAME/dist.zip
+          aws s3 cp --region ap-northeast-2 ./fe.zip s3://$S3_BUCKET_NAME/fe.zip
 
       - name: Code Deploy
         run: |
@@ -53,4 +56,4 @@ jobs:
             --deployment-config-name CodeDeployDefault.AllAtOnce \
             --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
             --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
-            --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=dist.zip
+            --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=fe.zip
