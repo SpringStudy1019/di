@@ -1,4 +1,3 @@
-
 [![Java CI with Gradle](https://github.com/SpringStudy1019/di/actions/workflows/gradle.yml/badge.svg)](https://github.com/SpringStudy1019/di/actions)
 
 <h1 align="center">TrendGaza</h1>
@@ -11,7 +10,7 @@
 
 | 프론트엔드, 백엔드  | 프론트엔드, 백엔드 |
 | ------------- | ------------- |
-| [루비](https://github.com/likelasttime)  | [줄리](https://github.com/JulieOnIsland)  |
+| [민정](https://github.com/likelasttime)  | [줄리](https://github.com/JulieOnIsland)  |
 
 <br>
 
@@ -26,9 +25,15 @@
 그렇다면 트렌드 가자의 기능들을 살펴볼까요?
 
 ### 👫 Service
+![services](img/services.jpg)
 
 
 ### ⚒️ Skills
+![BackEnd](img/1.png)
+![FrontEnd](img/2.png)
 
+### ERD
+![erd](img/erd.png)
 
 ### 📝 Ground Rules
+![rules](img/rules.jpg)
