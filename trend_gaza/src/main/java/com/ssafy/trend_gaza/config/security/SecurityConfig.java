@@ -16,71 +16,58 @@ import com.ssafy.trend_gaza.config.security.exception.CustomAccessDeniedHandler;
 import com.ssafy.trend_gaza.config.security.exception.CustomAuthenticationEntryPoint;
 import com.ssafy.trend_gaza.config.security.filter.JwtRequestFilter;
 
-
 @EnableWebSecurity
 public class SecurityConfig {
-	
+
 	private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
-    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+	private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
-    private final JwtRequestFilter jwtRequestFilter;
-    
-    public SecurityConfig(CustomAuthenticationEntryPoint customAuthenticationEntryPoint,
-    		CustomAccessDeniedHandler customAccessDeniedHandler, JwtRequestFilter jwtRequestFilter) {
-    	this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
-    	this.customAccessDeniedHandler = customAccessDeniedHandler;
-    	this.jwtRequestFilter = jwtRequestFilter;
-    }
+	private final JwtRequestFilter jwtRequestFilter;
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.httpBasic().disable()
-                .cors()
-                .and()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	public SecurityConfig(CustomAuthenticationEntryPoint customAuthenticationEntryPoint,
+			CustomAccessDeniedHandler customAccessDeniedHandler, JwtRequestFilter jwtRequestFilter) {
+		this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
+		this.customAccessDeniedHandler = customAccessDeniedHandler;
+		this.jwtRequestFilter = jwtRequestFilter;
+	}
 
-                .and()
-                .authorizeRequests()
-                .antMatchers("/review/hotplace", "/").permitAll()
-                .antMatchers("/user/refresh", "/user/send-email", "/user/view/*").hasRole("USER")
-                .antMatchers("/review", "/review/*", "/review/modify/*", "/review/view/*").hasRole("USER")
-                .antMatchers("/plans/**").hasRole("USER")
-                .antMatchers("/notification/*").hasRole("USER")
-                .antMatchers("/like/**").hasRole("USER")
-                .antMatchers("/images").hasRole("USER")
-                .antMatchers("/follow/**").hasRole("USER")
-                .antMatchers("/comment/**").hasRole("USER")
-                .antMatchers("/bookmark/*").hasRole("USER")
-                .antMatchers("/admin/**").hasRole("ADMIN")
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		return http.httpBasic().disable().cors().and().csrf().disable().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                .and()
-                .exceptionHandling()
-                    .accessDeniedHandler(customAccessDeniedHandler)
-                    .authenticationEntryPoint(customAuthenticationEntryPoint)
+				.and().authorizeRequests().antMatchers("/review/hotplace", "/").permitAll()
+				.antMatchers("/user/refresh", "/user/send-email", "/user/view/*").hasRole("USER")
+				.antMatchers("/review", "/review/*", "/review/modify/*", "/review/view/*").hasRole("USER")
+				.antMatchers("/plans/**").hasRole("USER").antMatchers("/notification/*").hasRole("USER")
+				.antMatchers("/like/**").hasRole("USER").antMatchers("/images").hasRole("USER")
+				.antMatchers("/follow/**").hasRole("USER").antMatchers("/comment/**").hasRole("USER")
+				.antMatchers("/bookmark/*").hasRole("USER").antMatchers("/admin/**").hasRole("ADMIN")
 
-                .and()
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
+				.and().exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
+				.authenticationEntryPoint(customAuthenticationEntryPoint)
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
+				.and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).build();
+	}
 
-        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:5173", "http://localhost:5174"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setExposedHeaders(Arrays.asList("*"));
-        // 쿠키를 전송하려면 이 값을 true로 설정해야합니다.
-        configuration.setAllowCredentials(true);
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
 
-        // pre-flight 요청의 캐시 기간을 설정합니다.
-        configuration.setMaxAge(43200L);
+		configuration.setAllowedOriginPatterns(
+				Arrays.asList("http://localhost:5173", "http://localhost:5174", "https://likelasttime.shop"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+		configuration.setAllowedHeaders(Arrays.asList("*"));
+		configuration.setExposedHeaders(Arrays.asList("*"));
+		// 쿠키를 전송하려면 이 값을 true로 설정해야합니다.
+		configuration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+		// pre-flight 요청의 캐시 기간을 설정합니다.
+		configuration.setMaxAge(43200L);
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
 }

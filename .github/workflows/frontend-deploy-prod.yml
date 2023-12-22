@@ -1,0 +1,59 @@
+name: Deploy Front-end
+on: 
+  push:
+    branches:
+      - release/fe 
+  #pull_request:
+   # branches:
+    #  - master
+  
+env:
+  S3_BUCKET_NAME : ${{secrets.S3_BUCKET_NAME}}
+  CODE_DEPLOY_APPLICATION_NAME: ${{secrets.CODE_DEPLOY_APPLICATION_NAME}}
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ${{secrets.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME}}
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: trend_gaza_FE
+    steps:
+      - name: Checkout source code. 
+        uses: actions/checkout@v3
+
+      - name: Check Node v
+        run: node -v
+
+      - name: Install Dependencies 
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: create zip 
+        run: |
+          zip -r fe.zip .
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload to S3 
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 cp --region ap-northeast-2 ./fe.zip s3://$S3_BUCKET_NAME/fe.zip
+
+      - name: Code Deploy
+        run: |
+          aws deploy create-deployment \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+            --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+            --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=fe.zip
